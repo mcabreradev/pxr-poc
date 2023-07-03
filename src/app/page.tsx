@@ -20,15 +20,15 @@ export default function Home() {
     document.cookie = `i18next=${i18n.language}`;
   };
   return (
-    <main className="flex flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">{t('test')}</h1>
+    <main className='flex flex-col items-center justify-between p-24'>
+      <h1 className='text-4xl font-bold'>{t('test')}</h1>
       <button
-        className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+        className='hover:bg-blue-100 rounded bg-blue px-4 py-2 font-bold text-white'
         onClick={onClick}
       >
         Click {i18n.language}
       </button>
-      <Alert color="info">Alert!</Alert>
+      <Alert color='info'>Alert!</Alert>
     </main>
   );
 }

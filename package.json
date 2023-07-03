@@ -2,6 +2,14 @@
   "name": "paxer-ecomm",
   "version": "0.1.0",
   "private": true,
+  "description": "hola",
+  "main": "index.js",
+  "repository": "https://github.com/Prinhotels/Paxer-ecomm",
+  "author": "Paxer",
+  "license": "MIT",
+  "resolutions": {
+    "styled-components": "^5"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

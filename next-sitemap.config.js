@@ -3,9 +3,7 @@
  * @see https://github.com/iamvishnusankar/next-sitemap#readme
  */
 module.exports = {
-  // !STARTERCONF Change the siteUrl
-  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  siteUrl: 'https://tsnext-tw.thcl.dev',
+  siteUrl: process.env.PAXER_APP_URL || 'http://localhost:3000',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],

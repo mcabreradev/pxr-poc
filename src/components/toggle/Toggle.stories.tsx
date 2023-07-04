@@ -17,6 +17,6 @@ type Story = StoryObj<typeof Toggle>;
 export const Primary: Story = {
   args: {
     className: '',
-    label: 'Toggle',
+    label: 'Toggle me',
   },
 };

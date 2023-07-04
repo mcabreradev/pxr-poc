@@ -1,9 +1,10 @@
 /** @type {import('tailwindcss').Config} */
+import withMT from '@material-tailwind/react/utils/withMT';
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
-export default {
+export default withMT({
   darkMode: ['class'],
   content: [
     './src/**/*.{js,jsx,ts,tsx}',
@@ -12,6 +13,8 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './node_modules/flowbite/**/*.js',
     './node_modules/flowbite-react/**/*.js',
+    './node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}',
     './stories/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
@@ -56,4 +59,4 @@ export default {
     require('tailwindcss-animate'),
     require('flowbite/plugin'),
   ],
-} satisfies Config;
+} satisfies Config);

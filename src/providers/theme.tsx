@@ -1,5 +1,6 @@
 'use client';
 
+import { ThemeProvider as MaterialProvider } from '@material-tailwind/react';
 import { Flowbite } from 'flowbite-react';
 
 export default function ThemeProvider({
@@ -7,5 +8,9 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  return <Flowbite>{children}</Flowbite>;
+  return (
+    <Flowbite>
+      <MaterialProvider>{children}</MaterialProvider>
+    </Flowbite>
+  );
 }

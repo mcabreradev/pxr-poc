@@ -34,6 +34,7 @@
     "postdoctoc:check": "mv v-README.md.orig README.md"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.0.4",
     "clsx": "^1.2.1",
     "doctoc": "^2.2.1",
     "next": "^13.4.7",

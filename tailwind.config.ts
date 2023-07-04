@@ -18,6 +18,7 @@ export default {
     extend: {
       fontFamily: {
         primary: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
+        sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         'paxer-white': '#fff',

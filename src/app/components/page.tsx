@@ -11,9 +11,9 @@ import {
   HiPlus,
 } from 'react-icons/hi';
 
-import Button from '@/components/buttons/Button';
-import IconButton from '@/components/buttons/IconButton';
-import TextButton from '@/components/buttons/TextButton';
+import Button from '@/components/button/Button';
+import IconButton from '@/components/button/IconButton';
+import TextButton from '@/components/button/TextButton';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
 import PrimaryLink from '@/components/links/PrimaryLink';

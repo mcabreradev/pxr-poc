@@ -1,8 +1,30 @@
-# Paxer Ecommerce
-
 <div align="center">
   <img src="https://acontraluz.paxer.com/media/paxer/img/logo_completo/with-bg/logo_paxer_bg_white-320.png" />
 </div>
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Stack](#stack)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [1. Clone the repository:](#1-clone-the-repository)
+  - [2. Install dependencies](#2-install-dependencies)
+  - [3. Run the development server](#3-run-the-development-server)
+  - [4. Run the build script](#4-run-the-build-script)
+  - [5. Run the production server](#5-run-the-production-server)
+  - [6. Commit Message Convention](#6-commit-message-convention)
+- [Styleguide](#styleguide)
+  - [React Functional Components](#react-functional-components)
+  - [Styled Components](#styled-components)
+  - [Tailwind CSS](#tailwind-css)
+  - [Tailwind CSS with Styled Components](#tailwind-css-with-styled-components)
+- [i18n](#i18n)
+- [Storybook](#storybook)
+- [Testing](#testing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Stack
 
@@ -25,6 +47,8 @@
 - Formik
 - Storybook
 - Yarn
+- ~~Docker~~
+- ~~PNPM~~
 
 ---
 
@@ -197,7 +221,7 @@ function Hotel() {
 
 For more information follow [this guide](https://www.npmjs.com/package/tailwind-styled-components)
 
-### i18n
+## i18n
 
 This project use [i18next](https://react.i18next.com/) to enable internationalization, but primary use here will be enable quick change and maintainability of wording of the app.
 
@@ -211,7 +235,7 @@ function MyComponent() {
 }
 ```
 
-### Storybook
+## Storybook
 
 Storybook is a tool for UI development. It makes development faster and easier by isolating components.
 
@@ -221,7 +245,7 @@ yarn stoybook
 
 Open [http://localhost:6006](http://localhost:6006) with your browser to see the result.
 
-### Testing
+## Testing
 
 Testing is a very important part of the development process. We use Jest as our test runner and React Testing Library to test our components.
 

@@ -27,10 +27,15 @@
     "prepare": "husky install && chmod ug+x .husky/*",
     "storybook:postinstall": "node node_modules/@storybook/addon-styling/bin/postinstall.js",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "doctoc": "doctoc --title='## Table of Contents' --github README.md",
+    "predoctoc:check": "cp README.md v-README.md.orig && npm run doctoc",
+    "doctoc:check": "diff -q README.md v-README.md.orig",
+    "postdoctoc:check": "mv v-README.md.orig README.md"
   },
   "dependencies": {
     "clsx": "^1.2.1",
+    "doctoc": "^2.2.1",
     "next": "^13.4.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

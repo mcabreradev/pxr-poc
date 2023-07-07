@@ -10,7 +10,7 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   children: React.ReactNode;
-  fullWidth: boolean;
+  fullWidth?: boolean;
   type?:
     | 'primary'
     | 'secondary'
@@ -24,17 +24,17 @@ const commonClasses = `
   transition duration-100 delay-150 hover:delay-100
   shadow-none hover:shadow-none
   hover:opacity-[0.90]
-  py-2 px-4
+  py-2 px-6
 `;
 
 const buttonStyles = {
-  primary: 'bg-green',
+  primary: 'bg-pax-green',
   secondary:
-    'bg-white hover:bg-white-smoke text-black border-[1px] border-solid border-gray',
-  alternative: 'bg-blue',
-  warning: 'bg-orange',
-  danger: 'bg-red',
-  text: 'bg-white text-black underline hover:bg-white-smoke border-[1px] border-solid border-white',
+    'bg-pax-white hover:bg-gray-100 text-black border-[1px] border-solid border-pax-gray',
+  alternative: 'bg-pax-blue',
+  warning: 'bg-pax-orange',
+  danger: 'bg-pax-red',
+  text: 'bg-pax-white text-black underline hover:opacity-[0.60] border-[1px] border-solid border-white',
 };
 
 const Label = tw.span`

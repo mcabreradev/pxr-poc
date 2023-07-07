@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import withMT from '@material-tailwind/react/utils/withMT';
 import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default withMT({
@@ -23,19 +24,14 @@ export default withMT({
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        'green-light': '#28D099',
-        green: '#27A97E',
-        'blue-light': '#39ABFE',
-        blue: '#2970FF',
-        'orange-light': '#FFD358',
-        orange: '#FFBC00',
-        'red-light': '#FF6C60',
-        red: '#EA4335',
-        'gray-light': '#ADADAD',
-        gray: '#797979',
-        'white-smoke': '#F8F8F8',
-        black: '#212529',
-        white: '#FFFFFF',
+        ...colors,
+        'pax-green': '#27A97E',
+        'pax-blue': '#2970FF',
+        'pax-orange': '#FFBC00',
+        'pax-red': '#EA4335',
+        'pax-gray': '#797979',
+        'pax-black': '#212529',
+        'pax-white': '#FFFFFF',
       },
       fontSize: {
         '2xs': '11px',

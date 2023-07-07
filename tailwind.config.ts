@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import withMT from '@material-tailwind/react/utils/withMT';
 import type { Config } from 'tailwindcss';
-import colors from 'tailwindcss/colors';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default withMT({
@@ -24,23 +23,19 @@ export default withMT({
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        'paxer-white': '#fff',
-        'paxer-silver': '#bdbdbd',
-        'paxer-dimgray': '#646464',
-        'paxer-gray-100': '#848484',
-        'paxer-gray-200': '#787878',
-        'paxer-gray-300': '#2b2b2b',
-        'paxer-gray-400': '#242424',
-        'paxer-gray-500': '#667085',
-        'paxer-gray-900': '#101828',
-        'paxer-green': '#16b364',
-        'paxer-blue': '#1B74E8',
-        'paxer-royalblue': '#2970ff',
-        'paxer-darkgray': '#adadad',
-        'paxer-darkslategray': '#3a3a3a',
-        'paxer-papayawhip': '#fff2d3',
-        'paxer-dark': '#222222',
-        ...colors,
+        'green-light': '#28D099',
+        green: '#27A97E',
+        'blue-light': '#39ABFE',
+        blue: '#2970FF',
+        'orange-light': '#FFD358',
+        orange: '#FFBC00',
+        'red-light': '#FF6C60',
+        red: '#EA4335',
+        'gray-light': '#ADADAD',
+        gray: '#797979',
+        'white-smoke': '#F8F8F8',
+        black: '#212529',
+        white: '#FFFFFF',
       },
       fontSize: {
         '2xs': '11px',
@@ -51,6 +46,9 @@ export default withMT({
         xs: '12px',
         '3xs': '10px',
         '5xl': '24px',
+      },
+      borderRadius: {
+        '980xl': '999px',
       },
     },
   },

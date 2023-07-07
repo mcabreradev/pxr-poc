@@ -1,17 +1,41 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Domine&family=Poppins:wght@400;600&display=swap'); */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --font-sans: 'Poppins', sans-serif;
+  --tw-color-black: #212529;
+  --tw-color-blue-light: #39abfe;
+  --tw-color-blue: #2970ff;
+  --tw-color-gray-dark: #797979;
+  --tw-color-gray-light: #f8f8f8;
+  --tw-color-gray: #adadad
+  --tw-color-green-light: #28d099;
+  --tw-color-green: #27a97e;
+  --tw-color-orange-light: #ffd358;
+  --tw-color-orange: #ffbc00;
+  --tw-color-red-light: #ff6c60;
+  --tw-color-red: #ea4335;
+  --tw-color-white: #ffffff;
+
+  --color-black: var(--tw-color-black);
+  --color-blue-light: var(--tw-color-blue-light);
+  --color-blue: var(--tw-color-blue);
+  --color-gray-dark: var(--tw-color-gray-dark);
+  --color-gray-light: var(--tw-color-gray-light);
+  --color-gray: var(--tw-color-gray);
+  --color-green-light: var(--tw-color-green-light);
+  --color-green: var(--tw-color-green);
+  --color-orange-light: var(--tw-color-orange-light);
+  --color-orange: var(--tw-color-orange);
+  --color-red-light: var(--tw-color-red-light);
+  --color-red: var(--tw-color-red);
+  --color-white: var(--tw-color-white);
 }
 
 @layer base {
-  /* inter var - latin */
   @font-face {
-    font-family: 'Poppins';
+    font-family: var(--font-sans);
     font-style: normal;
     font-weight: 100 900;
     font-display: optional;
@@ -61,30 +85,5 @@
   /* Class to adjust with sticky footer */
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
-  }
-}
-
-@layer utilities {
-  .animated-underline {
-    background-image: linear-gradient(#33333300, #33333300),
-      linear-gradient(
-        to right,
-        var(--color-primary-400),
-        var(--color-primary-500)
-      );
-    background-size: 100% 2px, 0 2px;
-    background-position: 100% 100%, 0 100%;
-    background-repeat: no-repeat;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .animated-underline {
-      transition: 0.3s ease;
-      transition-property: background-size, color, background-color,
-        border-color;
-    }
-  }
-  .animated-underline:hover,
-  .animated-underline:focus-visible {
-    background-size: 0 2px, 100% 2px;
   }
 }

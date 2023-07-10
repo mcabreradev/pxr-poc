@@ -13,10 +13,38 @@ const meta: Meta<typeof Toggle> = {
 export default meta;
 type Story = StoryObj<typeof Toggle>;
 
-// More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-    className: '',
-    label: 'Toggle me',
+    label: 'Label',
+  },
+};
+
+export const ToggleWithSubtitle: Story = {
+  args: {
+    ...Default.args,
+    subtitle: 'Subtitle',
+  },
+};
+
+export const ToogledByDefault: Story = {
+  args: {
+    ...Default.args,
+    toggled: true,
+  },
+};
+
+export const ReadOnly: Story = {
+  args: {
+    ...Default.args,
+    toggled: false,
+    readonly: true,
+  },
+};
+
+export const ReadOnlyToggled: Story = {
+  args: {
+    ...Default.args,
+    toggled: true,
+    readonly: true,
   },
 };

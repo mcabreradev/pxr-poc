@@ -23,7 +23,7 @@ export default function Home() {
     <main className='flex flex-col items-center justify-between p-24'>
       <h1 className='text-4xl font-bold'>{t('test')}</h1>
       <button
-        className='hover:bg-blue-100 rounded bg-blue px-4 py-2 font-bold text-white'
+        className='bg-blue rounded px-4 py-2 font-bold text-white hover:bg-blue-100'
         onClick={onClick}
       >
         Click {i18n.language}

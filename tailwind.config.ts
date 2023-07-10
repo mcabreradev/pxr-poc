@@ -51,7 +51,7 @@ export default withMT({
           900: '#001848',
           950: '#000E2C',
         },
-        yellow: {
+        orange: {
           DEFAULT: '#FFBC00',
           50: '#FFECB8',
           100: '#FFE7A3',

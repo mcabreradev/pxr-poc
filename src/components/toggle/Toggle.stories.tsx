@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import Toggle from './Toggle';
 
-// More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
+/** Renders a Toggle component that allows the user to switch between two states*/
 const meta: Meta<typeof Toggle> = {
   title: 'Components/Toggle',
   component: Toggle,
@@ -13,12 +13,14 @@ const meta: Meta<typeof Toggle> = {
 export default meta;
 type Story = StoryObj<typeof Toggle>;
 
+/** default state untoggled */
 export const Default: Story = {
   args: {
     label: 'Label',
   },
 };
 
+/** default state untoggled with subtitle */
 export const ToggleWithSubtitle: Story = {
   args: {
     ...Default.args,
@@ -26,6 +28,7 @@ export const ToggleWithSubtitle: Story = {
   },
 };
 
+/** default state toggled */
 export const ToogledByDefault: Story = {
   args: {
     ...Default.args,
@@ -33,6 +36,7 @@ export const ToogledByDefault: Story = {
   },
 };
 
+/** default state untoggled and readonly */
 export const ReadOnly: Story = {
   args: {
     ...Default.args,
@@ -41,6 +45,7 @@ export const ReadOnly: Story = {
   },
 };
 
+/** default state toggled and readonly */
 export const ReadOnlyToggled: Story = {
   args: {
     ...Default.args,

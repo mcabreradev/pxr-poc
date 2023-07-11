@@ -2,8 +2,7 @@ import { Switch as Base } from '@headlessui/react';
 import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 
-import { cn } from '@/lib/utils';
-interface Props {
+interface ToggleProps {
   className?: string;
   label?: string;
   name?: string;
@@ -28,11 +27,13 @@ const Subtitle = tw.span`
   text-xs leading-[160%] text-gray-500
 `;
 
-const Switch = tw(Base)`
+const Switch = tw(Base)<{ enabled?: boolean }>`
+  ${(p) => (p.enabled ? 'bg-green' : 'bg-gray-50')};
   relative mr-4 inline-flex h-6 w-11 items-center rounded-full shrink-0
 `;
 
-const Dot = tw.span`
+const SwitchDot = tw.span<{ enabled?: boolean }>`
+  ${(p) => (p.enabled ? 'translate-x-5' : 'translate-x-[2px]')};
   inline-block h-5 w-5 transform rounded-full bg-white transition
 `;
 
@@ -44,7 +45,7 @@ export default function Toogle({
   subtitle,
   toggled = false,
   readonly = false,
-}: Props) {
+}: ToggleProps) {
   const [enabled, setEnabled] = useState(toggled);
 
   const onChangeHandler = () => {
@@ -59,10 +60,11 @@ export default function Toogle({
         value={value}
         checked={enabled}
         onChange={onChangeHandler}
-        className={cn(enabled ? 'bg-green' : 'bg-gray-50', className)}
+        className={className}
+        enabled={enabled}
         data-testid='test-element'
       >
-        <Dot className={cn(enabled ? 'translate-x-5' : 'translate-x-[2px]')} />
+        <SwitchDot enabled={enabled} />
       </Switch>
       <LabelContainer>
         {!!label && <Label>{label}</Label>}

@@ -3,6 +3,7 @@ import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 interface Props {
+  id?: string;
   className?: string;
   label?: string;
   name?: string;
@@ -32,6 +33,7 @@ w-4 focus:ring-0 focus:ring-green text-green rounded-980xl bg-white box-border h
 `;
 
 export default function RadioComponent({
+  id,
   className,
   label,
   name,
@@ -44,11 +46,12 @@ export default function RadioComponent({
     <Content>
       <Radio
         className={cn(commonClasses, className)}
-        id='react'
+        id={id}
         name={name}
         value={value}
         disabled={disabled}
         checked={checked ? true : undefined}
+        data-testid='test-element'
       />
       <LabelContainer>
         {!!label && <Label>{label}</Label>}

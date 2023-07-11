@@ -1,13 +1,12 @@
-import { fireEvent, render } from '@testing-library/react';
-import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import Button from './Button';
 
 describe('Button component', () => {
   it('renders button correctly', () => {
-    const { getByText } = render(<Button>Click me</Button>);
-    const buttonElement = getByText('Click me');
-    expect(buttonElement).toBeInTheDocument();
+    render(<Button>Click me</Button>);
+    const element = screen.getByTestId('test-element');
+    expect(element).toBeInTheDocument();
   });
 
   it('fires onClick event when clicked', () => {

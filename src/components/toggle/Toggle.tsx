@@ -60,6 +60,7 @@ export default function Toogle({
         checked={enabled}
         onChange={onChangeHandler}
         className={cn(enabled ? 'bg-green' : 'bg-gray-50', className)}
+        data-testid='test-element'
       >
         <Dot className={cn(enabled ? 'translate-x-5' : 'translate-x-[2px]')} />
       </Switch>

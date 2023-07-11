@@ -1,6 +1,6 @@
 'use client';
 
-import { Button as ButtonBase } from '@material-tailwind/react';
+import { Button } from '@material-tailwind/react';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
@@ -41,19 +41,20 @@ const Label = tw.span`
   text-[14px] font-normal font-poppins normal-case
 `;
 
-export default function Button({
+export default function ButtonComponent({
   className,
   children,
   type = 'primary',
   ...props
 }: ButtonProps) {
   return (
-    <ButtonBase
+    <Button
       className={cn(commonClasses, buttonStyles[type], className)}
       ripple={false}
+      data-testid='test-element'
       {...props}
     >
       <Label>{children}</Label>
-    </ButtonBase>
+    </Button>
   );
 }

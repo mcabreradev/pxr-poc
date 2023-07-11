@@ -12,9 +12,39 @@ const meta: Meta<typeof Radio> = {
 export default meta;
 type Story = StoryObj<typeof Radio>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     className: '',
-    label: 'Toggle me',
+    label: 'Label',
+  },
+};
+
+export const WithSubtitle: Story = {
+  args: {
+    ...Default.args,
+    subtitle: 'Subtitle',
+  },
+};
+
+export const SelectedByDefault: Story = {
+  args: {
+    ...Default.args,
+    checked: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    ...Default.args,
+    checked: false,
+    disabled: true,
+  },
+};
+
+export const SelectedAndDisbled: Story = {
+  args: {
+    ...Default.args,
+    checked: true,
+    disabled: true,
   },
 };

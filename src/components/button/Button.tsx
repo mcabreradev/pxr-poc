@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@material-tailwind/react';
+import { Button as Base } from '@material-tailwind/react';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
@@ -20,14 +20,16 @@ interface ButtonProps {
     | 'text';
 }
 
-const commonClasses = `
+const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   transition duration-100 delay-100 hover:delay-100
   shadow-none hover:shadow-none
   hover:opacity-[0.90]
-  py-2 px-6
+  py-2 px-6 rounded 
+
+  ${(props) => props.fullWidth && 'w-full'}
 `;
 
-const buttonStyles = {
+const buttonTypes = {
   primary: 'bg-green-500',
   secondary:
     'bg-white hover:opacity-[0.70] text-black border-[0.5px] border-solid border-gray',
@@ -41,20 +43,22 @@ const Label = tw.span`
   text-[14px] font-normal font-poppins normal-case
 `;
 
-export default function ButtonComponent({
+export default function Button({
   className,
   children,
   type = 'primary',
+  fullWidth = false,
   ...props
 }: ButtonProps) {
   return (
-    <Button
-      className={cn(commonClasses, buttonStyles[type], className)}
+    <ButtonComponent
+      className={cn(buttonTypes[type], className)}
       ripple={false}
+      fullWidth={fullWidth}
       data-testid='test-element'
       {...props}
     >
       <Label>{children}</Label>
-    </Button>
+    </ButtonComponent>
   );
 }

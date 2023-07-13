@@ -11,7 +11,7 @@ interface ButtonProps {
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
-  enabled?: boolean;
+  disabled?: boolean;
   type?:
     | 'primary'
     | 'secondary'
@@ -26,10 +26,10 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   shadow-none hover:shadow-none py-2 px-6 rounded 
   text-[14px] font-normal font-poppins normal-case
   ${({ fullWidth }) => fullWidth && 'w-full'}
-  ${({ enabled }) =>
-    enabled
-      ? 'transition hover:delay-100 hover:opacity-[0.90] duration-100 delay-100 '
-      : 'opacity-[0.90] cursor-not-allowed'}
+  ${({ disabled }) =>
+    disabled
+      ? 'opacity-[0.90] cursor-not-allowed'
+      : 'transition hover:delay-100 hover:opacity-[0.90] duration-100 delay-100 '}
 `;
 
 const buttonTypes = {
@@ -47,7 +47,7 @@ export default function Button({
   children,
   type = 'primary',
   fullWidth = false,
-  enabled = true,
+  disabled = false,
   ...props
 }: ButtonProps) {
   return (
@@ -56,7 +56,7 @@ export default function Button({
       ripple={false}
       fullWidth={fullWidth}
       data-testid='test-element'
-      enabled={enabled}
+      disabled={disabled}
       {...props}
     >
       {children}

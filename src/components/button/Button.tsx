@@ -11,6 +11,7 @@ interface ButtonProps {
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
+  enabled?: boolean;
   type?:
     | 'primary'
     | 'secondary'
@@ -21,12 +22,14 @@ interface ButtonProps {
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
-  transition duration-100 delay-100 hover:delay-100
-  shadow-none hover:shadow-none
-  hover:opacity-[0.90]
-  py-2 px-6 rounded 
-
-  ${(props) => props.fullWidth && 'w-full'}
+  cursor-pointer
+  shadow-none hover:shadow-none py-2 px-6 rounded 
+  text-[14px] font-normal font-poppins normal-case
+  ${({ fullWidth }) => fullWidth && 'w-full'}
+  ${({ enabled }) =>
+    enabled
+      ? 'transition hover:delay-100 hover:opacity-[0.90] duration-100 delay-100 '
+      : 'opacity-[0.90] cursor-not-allowed'}
 `;
 
 const buttonTypes = {
@@ -39,15 +42,12 @@ const buttonTypes = {
   text: 'bg-white text-black underline hover:opacity-[0.60] border-[1px] border-solid border-white',
 };
 
-const Label = tw.span`
-  text-[14px] font-normal font-poppins normal-case
-`;
-
 export default function Button({
   className,
   children,
   type = 'primary',
   fullWidth = false,
+  enabled = true,
   ...props
 }: ButtonProps) {
   return (
@@ -56,9 +56,10 @@ export default function Button({
       ripple={false}
       fullWidth={fullWidth}
       data-testid='test-element'
+      enabled={enabled}
       {...props}
     >
-      <Label>{children}</Label>
+      {children}
     </ButtonComponent>
   );
 }

@@ -19,6 +19,7 @@ module.exports = {
         'revert',
         'wip',
         'cleanup',
+        'build',
       ],
     ],
   },

@@ -221,7 +221,7 @@
       "`;",
       "export default function ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}Component({ className }: Props) {",
       "  return <Container className={cn(className)}>",
-      "    ",
+      "    ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}",
       "  </Container>;",
       "}",
       ""
@@ -234,7 +234,7 @@
     "body": [
       "import type { Meta, StoryObj } from '@storybook/react';",
       "",
-      "import ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}';",
+      "import ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/} from './",
       "",
       "const meta: Meta<typeof ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}> = {",
       "  title: 'Components/${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}',",
@@ -261,7 +261,7 @@
     "body": [
       "import { render, screen } from '@testing-library/react';",
       "",
-      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/}';",
+      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './';",
       "",
       "describe('${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} component', () => {",
       "  it('renders ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} correctly', () => {",
@@ -270,6 +270,17 @@
       "    expect(element).toBeInTheDocument();",
       "  });",
       "});",
+      ""
+    ],
+    "description": "Paxer Test"
+  },
+
+  "Paxer Import Export": {
+    "prefix": "paxer import export, ie, import, export, paxer",
+    "body": [
+      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/}';",
+      "",
+      "export default ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/};",
       ""
     ],
     "description": "Paxer Test"

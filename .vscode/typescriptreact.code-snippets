@@ -278,7 +278,7 @@
   "Paxer Import Export": {
     "prefix": "paxer import export, ie, import, export, paxer",
     "body": [
-      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/}';",
+      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
       "",
       "export default ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/};",
       ""

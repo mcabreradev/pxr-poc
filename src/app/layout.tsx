@@ -1,4 +1,4 @@
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 
 import '@/styles/globals.css';
 
@@ -6,7 +6,6 @@ import { fontPoppins } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import Footer from '@/components/footer';
-import Loading from '@/components/loading';
 
 import { Providers } from '@/providers';
 const { SITE_NAME, SITE_DESCRIPTION } = process.env;
@@ -33,12 +32,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={cn('z-0 flex min-h-screen flex-col bg-white antialiased')}
       >
-        <Suspense fallback={<Loading />}>
-          <Providers>
-            {children}
-            <Footer />
-          </Providers>
-        </Suspense>
+        <Providers>
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

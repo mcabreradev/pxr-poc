@@ -17,11 +17,11 @@ const Content = tw.div`
   flex items-center
 `;
 const LabelContainer = tw.div`
-  flex flex-1 flex-col items-start justify-center gap-[2px] px-0 pb-0 pt-px ml-4 
+  ml-4 flex flex-1 flex-col items-start justify-center gap-[2px] px-0 pb-0 pt-px 
 `;
 
 const Label = tw.span`
-  text-sm leading-[160%] font-semibold text-gray-900
+  text-sm font-semibold leading-[160%] text-gray-900
 `;
 
 const Subtitle = tw.span`

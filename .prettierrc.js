@@ -1,11 +1,21 @@
-module.exports = {
+module.exports ={
+  tabWidth: 2,
   arrowParens: 'always',
   singleQuote: true,
   jsxSingleQuote: true,
-  tabWidth: 2,
   semi: true,
   printWidth: 80,
-  tabWidth: 2,
-  useTabs: false,
-  trailingComma: 'es5',
-};
+  trailingComma: es5,
+  tailwindFunctions: [
+    'tw',
+    'clsx',
+    'className'
+  ],
+  tailwindConfig: './tailwind.config.js',
+  plugins: [
+    'prettier-plugin-tailwindcss'
+  ],
+  pluginSearchDirs: false
+}
+
+

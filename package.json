@@ -104,7 +104,7 @@
     "postcss": "^8.4.25",
     "postcss-import": "^15.1.0",
     "prettier": "^3.0.0",
-    "prettier-plugin-tailwindcss": "^0.4.0",
+    "prettier-plugin-tailwindcss": "^0.4.1",
     "prop-types": "^15.8.1",
     "react-i18next": "^13.0.2",
     "react-redux": "^8.1.1",

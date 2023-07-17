@@ -140,5 +140,6 @@ export default withMT({
     require('@tailwindcss/forms'),
     require('tailwindcss-animate'),
     require('flowbite/plugin'),
+    require('tailwindcss-animated'),
   ],
 } satisfies Config);

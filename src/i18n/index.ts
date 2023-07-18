@@ -18,12 +18,12 @@ type Resources = {
 };
 
 const LANGUAGES: Languages = {
-  en: require('./en'),
-  es: require('./es'),
+  en: require('./en.json'),
+  es: require('./es.json'),
   // Add other languages
 };
 
-const defaultLanguage = 'en';
+const defaultLanguage = 'es';
 
 const getResources = () => {
   const resources: Resources = {};

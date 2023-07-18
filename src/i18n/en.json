@@ -1,5 +1,6 @@
 {
-  "approve": "Approve",
-  "reject": "Reject",
-  "test": "This is test of i18n"
+  "link": {
+    "language": "English",
+    "termsandconditions": "Terms and Conditions"
+  }
 }

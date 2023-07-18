@@ -43,4 +43,5 @@ sitemap-*.xml
 
 # others
 .swc
-storybook-static
+tsconfig.tsbuildinfo
+build-storybook.log

@@ -40,3 +40,7 @@ CHANGELOG.md
 # Ignore artifacts:
 build
 coverage
+
+# Ignore Storybook's static dir:
+.storybook/static
+/storybook-static

@@ -1,43 +1,38 @@
-import { fireEvent, render } from '@testing-library/react';
-import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
-import Toggle from './Toggle';
+import Toggle from './';
 
-describe('Toggle component', () => {
-  it('renders without errors', () => {
+describe('toggle component', () => {
+  it('should renders toogle without errors', () => {
     render(<Toggle />);
+    const element = screen.getByTestId('test-element');
+    expect(element).toBeInTheDocument();
   });
 
-  test('initially unchecked', () => {
-    const label = 'Toggle me';
-    const { getByLabelText } = render(<Toggle label={label} />);
-    const checkbox = getByLabelText(label);
-    expect(checkbox?.checked).toBe(false);
+  it('should renders initially unchecked', () => {
+    render(<Toggle />);
+    const element = screen.getByTestId('test-element');
+    expect(element).not.toBeChecked();
   });
 
-  it('renders toogle component correctly', () => {
-    const label = 'Toggle me';
-    const { getByText } = render(<Toggle label={label} />);
-    const toggleElement = getByText('Toggle me');
-    expect(toggleElement).toBeInTheDocument();
+  test('should changes value on click', () => {
+    render(<Toggle />);
+    const element = screen.getByTestId('test-element');
+    fireEvent.click(element);
+    expect(element).toBeChecked();
   });
 
-  test('changes value on click', () => {
-    const label = 'Toggle me';
-    const { getByLabelText } = render(<Toggle label={label} />);
-    const checkbox = getByLabelText(label);
-    fireEvent.click(checkbox);
-    expect(checkbox?.checked).toBe(true);
+  it('should checks if toggle is readonly and unchecked', () => {
+    render(<Toggle readonly={true} />);
+    const element = screen.getByTestId('test-element');
+    fireEvent.click(element);
+    expect(element).not.toBeChecked();
   });
 
-  test('calls onClick callback', () => {
-    const label = 'Toggle me';
-    const handleClick = jest.fn();
-    const { getByLabelText } = render(
-      <Toggle label={label} onClick={handleClick} />
-    );
-    const checkbox = getByLabelText(label);
-    fireEvent.click(checkbox);
-    expect(handleClick).toHaveBeenCalledTimes(1);
+  it('should checks if toggle is readonly and checked', () => {
+    render(<Toggle toggled={true} readonly={true} />);
+    const element = screen.getByTestId('test-element');
+    fireEvent.click(element);
+    expect(element).toBeChecked();
   });
 });

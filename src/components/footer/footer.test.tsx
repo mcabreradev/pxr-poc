@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import I18nProvider from '@/providers/i18n-provider';
 
-import Footer from './';
+import Footer from '.';
 
 describe('Footer component', () => {
   const renderComponent = () =>

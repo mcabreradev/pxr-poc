@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import Loading from './';
+import Loading from '.';
 
 describe('Loading component', () => {
   it('should renders Loading component correctly', () => {

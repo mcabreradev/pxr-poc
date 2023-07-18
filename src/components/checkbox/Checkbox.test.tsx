@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import Checkbox from './Checkbox';
+import Checkbox from './checkbox';
 
 describe('Checkbox component', () => {
   it('should renders Checkbox correctly', () => {

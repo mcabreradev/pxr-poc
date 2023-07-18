@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Toggle from '.';
+import Toggle from './';
 
 /** Renders a Toggle component that allows the user to switch between two states*/
 const meta: Meta<typeof Toggle> = {

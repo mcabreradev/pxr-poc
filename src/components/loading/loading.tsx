@@ -1,4 +1,4 @@
-export default function Loading() {
+export default function LoadingComponent() {
   return (
     <div
       className='flex h-screen items-center justify-center'

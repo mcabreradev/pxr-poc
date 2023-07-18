@@ -5,7 +5,7 @@ import '@/styles/globals.css';
 import { fontPoppins } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
-import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/footer';
 
 import { Providers } from '@/providers';
 const { SITE_NAME, SITE_DESCRIPTION } = process.env;

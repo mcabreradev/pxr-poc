@@ -1,15 +1,15 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import Button from './Button';
+import Button from './';
 
 describe('Button component', () => {
-  it('renders button correctly', () => {
+  it('should renders button correctly', () => {
     render(<Button>Click me</Button>);
     const element = screen.getByTestId('test-element');
     expect(element).toBeInTheDocument();
   });
 
-  it('fires onClick event when clicked', () => {
+  it('should fires onClick event when clicked', () => {
     const handleClick = jest.fn();
     const { getByText } = render(
       <Button onClick={handleClick}>Click me</Button>,

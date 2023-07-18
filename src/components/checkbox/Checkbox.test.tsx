@@ -1,21 +1,21 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import Checkbox from './Checkbox';
+import Checkbox from './checkbox';
 
 describe('Checkbox component', () => {
-  it('renders Checkbox correctly', () => {
+  it('should renders Checkbox correctly', () => {
     render(<Checkbox />);
     const element = screen.getByTestId('test-element');
     expect(element).toBeInTheDocument();
   });
 
-  it('initially unchecked', () => {
+  it('should renders initially unchecked', () => {
     render(<Checkbox />);
     const element = screen.getByTestId('test-element');
     expect(element).not.toBeChecked();
   });
 
-  test('changes value on click', () => {
+  test('should changes value on click', () => {
     render(<Checkbox />);
     const element = screen.getByTestId('test-element');
     fireEvent.click(element);

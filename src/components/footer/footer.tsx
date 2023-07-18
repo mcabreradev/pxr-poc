@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineInstagram } from 'react-icons/ai';
 import {
@@ -36,13 +37,13 @@ const Text = tw.span`
 `;
 export default function FooterComponent() {
   const { t, i18n } = useTranslation();
-  // const [hydrated, setHydrated] = useState(false);
-  // useEffect(() => {
-  //   setHydrated(true);
-  // }, []);
-  // if (!hydrated) {
-  //   return null;
-  // }
+  const [hydrated, setHydrated] = React.useState(false);
+  React.useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) {
+    return null;
+  }
 
   const onClickHandler = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
@@ -54,7 +55,11 @@ export default function FooterComponent() {
       <Col className='font-semibold'>
         <Col className='w-full'>
           <VscGlobe size='18px' />
-          <Text className='hover:cursor-pointer' onClick={onClickHandler}>
+          <Text
+            className='hover:cursor-pointer'
+            onClick={onClickHandler}
+            data-testid='test-link'
+          >
             {t('link.language')}
           </Text>
         </Col>

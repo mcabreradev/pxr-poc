@@ -234,7 +234,7 @@
     "body": [
       "import type { Meta, StoryObj } from '@storybook/react';",
       "",
-      "import ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/} from './",
+      "import ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/} from './';",
       "",
       "const meta: Meta<typeof ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}> = {",
       "  title: 'Components/${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}',",
@@ -264,7 +264,7 @@
       "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './';",
       "",
       "describe('${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} component', () => {",
-      "  it('renders ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} correctly', () => {",
+      "  it('should renders ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} component correctly', () => {",
       "    render(<${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} />);",
       "    const element = screen.getByTestId('test-element');",
       "    expect(element).toBeInTheDocument();",
@@ -283,6 +283,6 @@
       "export default ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/};",
       ""
     ],
-    "description": "Paxer Test"
+    "description": "Paxer Import Export"
   }
 }

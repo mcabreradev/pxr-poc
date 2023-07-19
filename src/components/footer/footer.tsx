@@ -35,7 +35,7 @@ const Col = tw.div`
 const Text = tw.span`
   pl-[5px]
 `;
-export default function FooterComponent() {
+export default function Footer() {
   const { t, i18n } = useTranslation();
   const [hydrated, setHydrated] = React.useState(false);
   React.useEffect(() => {

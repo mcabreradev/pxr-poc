@@ -37,7 +37,7 @@ const SwitchDot = tw.span<{ enabled?: boolean }>`
   inline-block h-5 w-5 transform rounded-full bg-white transition
 `;
 
-export default function ToogleComponent({
+export default function Toogle({
   className,
   label,
   name,

@@ -1,4 +1,4 @@
-import { Radio } from 'flowbite-react';
+import { Radio as Component } from 'flowbite-react';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
@@ -17,7 +17,7 @@ const Content = tw.div`
   flex items-center
 `;
 const LabelContainer = tw.div`
-  ml-4 flex flex-1 flex-col items-start justify-center gap-[2px] px-0 pb-0 pt-px 
+  ml-4 flex flex-1 flex-col items-start justify-center gap-[2px] px-0 pb-0 pt-px
 `;
 
 const Label = tw.span`
@@ -32,7 +32,7 @@ const commonClasses = `
 w-4 focus:ring-0 focus:ring-green text-green rounded-980xl bg-white box-border h-4 overflow-hidden shrink-0 border-[1px] border-solid border-gray-500
 `;
 
-export default function RadioComponent({
+export default function Radio({
   id,
   className,
   label,
@@ -44,7 +44,7 @@ export default function RadioComponent({
 }: Props) {
   return (
     <Content>
-      <Radio
+      <Component
         className={cn(commonClasses, className)}
         id={id}
         name={name}

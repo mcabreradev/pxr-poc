@@ -5,8 +5,7 @@ import '@/styles/globals.css';
 import { fontPoppins } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
-import Footer from '@/components/footer';
-
+// import Footer from '@/components/footer';
 import { Providers } from '@/providers';
 const { SITE_NAME, SITE_DESCRIPTION } = process.env;
 
@@ -34,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       >
         <Providers>
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </Providers>
       </body>
     </html>

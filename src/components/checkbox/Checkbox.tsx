@@ -1,4 +1,4 @@
-import { Checkbox } from 'flowbite-react';
+import { Checkbox as Component } from 'flowbite-react';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
@@ -17,7 +17,7 @@ const Content = tw.div`
   flex items-center
 `;
 const LabelContainer = tw.div`
-  ml-4 flex flex-1 flex-col items-start justify-center gap-[2px] px-0 pb-0 pt-px 
+  ml-4 flex flex-1 flex-col items-start justify-center gap-[2px] px-0 pb-0 pt-px
 `;
 
 const Label = tw.span`
@@ -28,11 +28,11 @@ const Subtitle = tw.span`
   text-xs leading-[160%] text-gray-500
 `;
 
-const commonClasses = ` 
+const commonClasses = `
 h-4 w-4 rounded border border-gray-300 bg-white focus:ring-0 focus:ring-green text-green
 `;
 
-export default function CheckboxComponent({
+export default function Checkbox({
   id,
   className,
   label,
@@ -44,7 +44,7 @@ export default function CheckboxComponent({
 }: Props) {
   return (
     <Content>
-      <Checkbox
+      <Component
         className={cn(commonClasses, className)}
         id={id}
         name={name}

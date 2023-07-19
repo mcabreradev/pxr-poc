@@ -235,6 +235,9 @@ devDependencies:
   react-redux:
     specifier: ^8.1.1
     version: 8.1.1(@types/react-dom@18.2.6)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+  react-test-renderer:
+    specifier: ^18.2.0
+    version: 18.2.0(react@18.2.0)
   storybook:
     specifier: ^7.1.0
     version: 7.1.0(encoding@0.1.13)
@@ -11847,6 +11850,27 @@ packages:
   /react-refresh@0.11.0:
     resolution: {integrity: sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /react-shallow-renderer@16.15.0(react@18.2.0):
+    resolution: {integrity: sha512-oScf2FqQ9LFVQgA73vr86xl2NaOIX73rh+YFqcOp68CWj56tSfgtGKrEbyhCj0rSijyG9M1CYprTh39fBi5hzA==}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      object-assign: 4.1.1
+      react: 18.2.0
+      react-is: 18.2.0
+    dev: true
+
+  /react-test-renderer@18.2.0(react@18.2.0):
+    resolution: {integrity: sha512-JWD+aQ0lh2gvh4NM3bBM42Kx+XybOxCpgYK7F8ugAlpaTSnWsX+39Z4XkOykGZAHrjwwTZT3x3KxswVWxHPUqA==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      react: 18.2.0
+      react-is: 18.2.0
+      react-shallow-renderer: 16.15.0(react@18.2.0)
+      scheduler: 0.23.0
     dev: true
 
   /react@18.2.0:

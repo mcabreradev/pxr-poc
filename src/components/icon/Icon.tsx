@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import icons_list from './Icon.data.json';
 
 interface Props {
+  id?: string;
   className?: string;
   icon?: string;
   width?: string | number;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function IconComponent({
+  id,
   className,
   icon = 'hotel',
   width,
@@ -19,6 +21,7 @@ export default function IconComponent({
 }: Props) {
   return (
     <Icon
+      id={id}
       icon={icons_list[icon]}
       width={width}
       height={height}

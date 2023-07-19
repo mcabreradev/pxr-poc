@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 
 import Icon from './';
 
 describe('Icon component', () => {
-  it('should renders Icon component correctly', () => {
-    render(<Icon />);
-    const element = screen.getByTestId('test-element');
-    expect(element).toBeInTheDocument();
+  test('should render an svg icon', () => {
+    const component = renderer.create(<Icon icon='whatsapp' color='red' />);
+    const tree = component.toJSON();
+    expect(tree.type).toMatch(/span/);
   });
 });

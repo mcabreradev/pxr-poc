@@ -219,8 +219,8 @@
       "const Container = tw.div`",
       "  flex ",
       "`;",
-      "export default function ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}Component({ className }: Props) {",
-      "  return <Container className={cn(className)}>",
+      "export default function ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}({ className }: Props) {",
+      "  return <Container className={cn(className)} data-testid='test-element'>",
       "    ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}",
       "  </Container>;",
       "}",
@@ -278,7 +278,7 @@
   "Paxer Import Export": {
     "prefix": "paxer import export, ie, import, export, paxer",
     "body": [
-      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
+      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/}';",
       "",
       "export default ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/};",
       ""

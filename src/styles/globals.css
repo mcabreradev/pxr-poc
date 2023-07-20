@@ -38,16 +38,14 @@
     font-style: normal;
     font-weight: 100 900;
     font-display: optional;
+    color: var(--color-black);
   }
 
   /* #region  /**=========== Typography =========== */
-  .h0 {
-    @apply font-primary text-3xl font-bold md:text-5xl;
-  }
 
   h1,
   .h1 {
-    @apply font-primary text-2xl font-bold md:text-4xl;
+    @apply text-[24px] font-semibold leading-[160%] text-gray-900;
   }
 
   h2,

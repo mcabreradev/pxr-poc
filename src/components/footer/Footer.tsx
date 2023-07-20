@@ -2,16 +2,9 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AiOutlineInstagram } from 'react-icons/ai';
-import {
-  MdFacebook,
-  MdOpenInNew,
-  MdOutlineEmail,
-  MdOutlinePhone,
-  MdOutlineWhatsapp,
-} from 'react-icons/md';
-import { VscGlobe } from 'react-icons/vsc';
 import tw from 'tailwind-styled-components';
+
+import Icon from '@/components/icon';
 
 const Container = tw.footer`
   relative
@@ -22,7 +15,7 @@ const Container = tw.footer`
   flex-col
   justify-around
   overflow-hidden
-  border-t-[1px] border-solid border-gray
+  border-t-[0.5px] border-solid border-gray-300
   bg-white-100
   p-4
   text-left text-sm text-black
@@ -54,7 +47,7 @@ export default function Footer() {
     <Container data-testid='test-element'>
       <Col className='font-semibold'>
         <Col className='w-full'>
-          <VscGlobe size='18px' />
+          <Icon icon='globe' width='18px' />
           <Text
             className='hover:cursor-pointer'
             onClick={onClickHandler}
@@ -66,25 +59,25 @@ export default function Footer() {
         <span className='w-full'>$ USD</span>
       </Col>
       <Col>
-        <MdOpenInNew size='18px' />
+        <Icon icon='open_in_new' width='18px' />
         <Text>www.terrazasposta.com</Text>
       </Col>
       <Col>
-        <MdOutlineEmail size='18px' />
+        <Icon icon='email' width='18px' />
         <Text>kyamashita@terrazasposta.com</Text>
       </Col>
       <Col>
-        <MdOutlinePhone size='18px' />
+        <Icon icon='phone' width='18px' />
         <Text>+54 388 490-8053</Text>
       </Col>
       <Col>
-        <MdOutlineWhatsapp size='18px' />
+        <Icon icon='whatsapp' width='18px' />
         <Text>Whatsapp</Text>
       </Col>
       <Col>
-        <MdFacebook size='18px' />
+        <Icon icon='facebook_round' width='18px' />
         <Text></Text>
-        <AiOutlineInstagram size='18px' />
+        <Icon icon='instagram' width='18px' />
       </Col>
       <Col>{t('link.termsandconditions')}</Col>
       <Col>© {new Date().getFullYear()} Paxer LLC</Col>

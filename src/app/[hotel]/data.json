@@ -1,0 +1,33 @@
+{
+  "images": [
+    "https://paxer.com/static/production/HOI/00/1079/30106/hash-gtlXXc6XKh-paxer.jpeg",
+    "https://paxer.com/static/production/HOI/00/1079/20558/hash-XlmCW9pLUX-paxer.jpg",
+    "https://paxer.com/static/production/HOI/00/1079/20561/hash-7c9AG8sEZE-paxer.jpg"
+  ],
+  "name": "Terrazas de La Posta",
+  "rate": 4.5,
+  "address": "Pje Santa Rosa de Lima s/n, Purmamarca, Argentina",
+  "description": "Ad consequat elit adipisicing labore et veniam voluptate ullamco nostrud eiusmod. In reprehenderit quis magna velit ex. Ut eu laboris magna nisi cillum voluptate velit deserunt officia nulla consequat do officia. Aute sunt deserunt reprehenderit eu nostrud nisi ullamco veniam aliqua enim. Incididunt irure aliqua elit tempor commodo pariatur minim voluptate ullamco et duis ut. Pariatur duis sit nostrud commodo. Aliquip enim do ea commodo irure deserunt cupidatat.",
+  "reviews": [
+    {
+      "name": "Rocio Vizcarra",
+      "rate": 5,
+      "comment": "Nostrud adipisicing eiusmod fugiat laborum est minim amet voluptate ipsum eu id laboris labore. Sint tempor quis officia velit anim eu fugiat Lorem veniam fugiat. Pariatur pariatur labore occaecat consequat enim laborum sint minim aute occaecat. Dolore nostrud culpa quis consequat eu tempor tempor est et reprehenderit. Dolore minim aliquip velit voluptate ullamco cillum anim eu duis.",
+      "date": "Oct 2022",
+      "avatar": "https://i.pravatar.cc/300"
+    },
+    {
+      "name": "Jessie Xu",
+      "rate": 4,
+      "comment": "Labore sit non ea proident laborum minim duis qui. Nulla duis nostrud qui cillum ullamco officia duis veniam. Laborum non Lorem nulla eiusmod laboris.",
+      "date": "Oct 2022",
+      "avatar": "https://i.pravatar.cc/300"
+    }
+  ],
+  "contact": {
+    "web": "http://www.paginax.com",
+    "phone": "+1 123 456 7890",
+    "email": "fakeemail@algorithm.com",
+    "whatsapp": "+1 123 456 7890"
+  }
+}

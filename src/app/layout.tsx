@@ -5,7 +5,9 @@ import '@/styles/globals.css';
 import { fontPoppins } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
-// import Footer from '@/components/footer';
+import Footer from '@/components/footer';
+import Header from '@/components/header';
+
 import { Providers } from '@/providers';
 const { SITE_NAME, SITE_DESCRIPTION } = process.env;
 
@@ -29,11 +31,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning={true}
     >
       <body
-        className={cn('z-0 flex min-h-screen flex-col bg-white antialiased')}
+        className={cn(
+          'z-0 flex min-h-screen flex-col bg-white text-left antialiased',
+        )}
       >
         <Providers>
+          <Header />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </Providers>
       </body>
     </html>

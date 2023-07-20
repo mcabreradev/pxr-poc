@@ -10,7 +10,7 @@ export default function Page({ params }: { params: { hotel: string } }) {
   const { hotel } = params;
 
   return (
-    <div className='pt-[1px]' data-id-test='test-componet'>
+    <div className='pt-[1px]' data-id-test='test-componet' title={hotel}>
       <Carousel>
         {data.images.map((image) => (
           <Image

@@ -110,7 +110,7 @@ export default withMT({
           DEFAULT: '#FFFFFF',
           50: '#FFFFFF',
           100: '#F1F1F1',
-          200: '#D5D5D5',
+          200: '#e6e6e6',
           300: '#B9B9B9',
           400: '#9D9D9D',
           500: '#818181',

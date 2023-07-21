@@ -2,9 +2,10 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import Button from '@/components/button';
 import Carousel from '@/components/carousel';
 import Icon from '@/components/icon';
+
+import RoomSwiper from '@/features/hotel/room-swiper';
 
 import data from './hotel.data.json';
 
@@ -119,40 +120,9 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         <HorizontalLine />
       </section>
 
-      <section className='p-4 pt-2'>
+      <section className='p-4 pr-0 pt-2'>
         <div className='text-[20px]'>¿Dónde quieres dormir?</div>
-
-        <div className='no-scrollbar flex overflow-x-scroll scroll-smooth py-10'>
-          <div className='flex flex-nowrap gap-x-[30px]'>
-            {data.rooms.map((room, index) => (
-              <div
-                key={`holtel-room-${index}`}
-                className='box-border h-auto w-[271px] border-[1px] border-solid border-gray-200 bg-white shadow '
-              >
-                <Image
-                  alt={room.image.alt}
-                  src={room.image.url}
-                  width={271}
-                  height={235}
-                  className='w-full object-cover'
-                />
-                <div className='p-4'>
-                  <div className='pb-4 text-base font-medium'>{room.name}</div>
-                  <div className='pb-1 text-sm'>{room.subtitle}</div>
-                  <div className='pb-4 text-sm'>{room.desc}</div>
-                  <div className='pb-6 text-sm font-medium underline'>
-                    {room.date}
-                  </div>
-                  <div className='pb-5 text-base'>
-                    desde <b>${room.price}</b>/noche
-                  </div>
-                  <Button className='mb-4 w-full'>Reservar</Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
+        <RoomSwiper rooms={data.rooms} />
         <HorizontalLine />
       </section>
 

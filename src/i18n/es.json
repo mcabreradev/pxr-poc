@@ -1,6 +1,17 @@
 {
+  "button": {
+    "reserve": "Reservar"
+  },
+  "from": "de",
   "link": {
     "language": "Español",
     "termsandconditions": "Términos y condiciones"
-  }
+  },
+  "night": {
+    "prural": "noches",
+    "singular": "noche"
+  },
+  "since": "desde",
+  "to": "a",
+  "until": "hasta"
 }

@@ -28,6 +28,76 @@
     "web": "http://www.paginax.com",
     "phone": "+1 123 456 7890",
     "email": "fakeemail@algorithm.com",
-    "whatsapp": "+1 123 456 7890"
-  }
+    "whatsapp": "+1 123 456 7890",
+    "facebook": "https://www.facebook.com"
+  },
+  "services": [
+    {
+      "name": "Wifi",
+      "icon": "wifi"
+    },
+    {
+      "name": "Spa",
+      "icon": "spa"
+    },
+    {
+      "name": "Televisor",
+      "icon": "tv"
+    },
+    {
+      "name": "Restaurante",
+      "icon": "restaurant"
+    },
+    {
+      "name": "Gym",
+      "icon": "gym"
+    },
+    {
+      "name": "Bar",
+      "icon": "bar"
+    },
+    {
+      "name": "Piscina",
+      "icon": "pool"
+    },
+    {
+      "name": "Taxi",
+      "icon": "taxi"
+    }
+  ],
+  "rooms": [
+    {
+      "name": "Habitación Simple ",
+      "subtitle": "Max 2 personas",
+      "desc": "Cama Matrimonial",
+      "price": "100.00",
+      "date": "mar 01 - 07 • 2 personas",
+      "image": {
+        "url": "/svg/placeholder.svg",
+        "alt": "placeholder"
+      }
+    },
+    {
+      "name": "Habitación Triple ",
+      "subtitle": "Max 3 personas",
+      "desc": "2 Cama Matrimonial",
+      "price": "300.00",
+      "date": "mar 01 - 07 • 3 personas",
+      "image": {
+        "url": "/svg/placeholder.svg",
+        "alt": "placeholder"
+      }
+    },
+    {
+      "name": "Habitación King",
+      "subtitle": "Max 5 personas",
+      "desc": "3 Cama King",
+      "price": "500.00",
+      "date": "mar 01 - 07 • 5 personas",
+      "image": {
+        "url": "/svg/placeholder.svg",
+        "alt": "placeholder"
+      }
+    }
+  ]
 }

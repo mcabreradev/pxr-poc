@@ -97,6 +97,7 @@
     "i18next": "^23.2.9",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.1",
+    "jabber": "^1.5.3",
     "jest": "^29.6.1",
     "jest-environment-jsdom": "^29.6.1",
     "lint-staged": "^13.2.3",

@@ -190,6 +190,9 @@ devDependencies:
   i18next-http-backend:
     specifier: ^2.2.1
     version: 2.2.1(encoding@0.1.13)
+  jabber:
+    specifier: ^1.5.3
+    version: 1.5.3
   jest:
     specifier: ^29.6.1
     version: 29.6.1(@types/node@20.4.1)(ts-node@10.9.1)
@@ -9240,6 +9243,11 @@ packages:
     dependencies:
       html-escaper: 2.0.2
       istanbul-lib-report: 3.0.0
+    dev: true
+
+  /jabber@1.5.3:
+    resolution: {integrity: sha512-4g5zZ9kF10oWNZzeKJqwh9yFHsee7CMWe3pXRJTdibvaMPNFWAJlLf1dno4Osxw/t9+fk0bEbEOJcscHziGX+w==}
+    hasBin: true
     dev: true
 
   /jackspeak@2.2.1:

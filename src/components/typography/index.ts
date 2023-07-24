@@ -21,7 +21,7 @@ import {
   Title,
   TitleBold,
   TitleMedium,
-} from './text';
+} from './typography';
 
 export {
   Heading,

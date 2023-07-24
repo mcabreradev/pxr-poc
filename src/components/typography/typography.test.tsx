@@ -2,7 +2,7 @@
 import 'jest-styled-components';
 import renderer from 'react-test-renderer';
 
-import { Text } from './';
+import { Text } from '.';
 
 describe('Text component', () => {
   it('should renders Text component correctly', () => {

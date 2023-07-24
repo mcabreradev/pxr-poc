@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { mapObject } from '@/lib/utils';
 
-import { TextXs3 } from '@/components/text';
+import { TextXs3 } from '@/components/typography';
 
 import Icon from './';
 import data from './Icon.data.json';

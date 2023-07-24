@@ -23,7 +23,7 @@ import {
   Title,
   TitleBold,
   TitleMedium,
-} from '@/components/text';
+} from '@/components/typography';
 
 const meta: Meta<typeof Text> = {
   title: 'Components/Text',

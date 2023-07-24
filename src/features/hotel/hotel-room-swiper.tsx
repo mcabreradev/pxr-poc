@@ -4,7 +4,7 @@ import tw from 'tailwind-styled-components';
 
 import Button from '@/components/button';
 import Swiper from '@/components/swiper';
-import { Text, TextSm } from '@/components/text';
+import { Text, TextSm } from '@/components/typography';
 
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-200 bg-white shadow

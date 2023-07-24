@@ -6,7 +6,7 @@ import tw from 'tailwind-styled-components';
 import Button from '@/components/button';
 import Carousel from '@/components/carousel';
 import Icon from '@/components/icon';
-import { Heading, Title } from '@/components/text';
+import { Heading, Title } from '@/components/typography';
 
 import Footer from './hotel-footer';
 import RoomSwiper from './hotel-room-swiper';

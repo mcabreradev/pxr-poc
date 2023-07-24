@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
   tags: ['autodocs'],
   argTypes: {
     fullWidth: { control: 'boolean' },
-    type: {
+    variant: {
       control: 'select',
       options: [
         'primary',
@@ -30,7 +30,7 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    type: 'primary',
+    variant: 'primary',
     onClick: () => null,
   },
 };
@@ -38,34 +38,34 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    type: 'secondary',
+    variant: 'secondary',
   },
 };
 
 export const Alternative: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    type: 'alternative',
+    variant: 'alternative',
   },
 };
 
 export const Text: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    type: 'text',
+    variant: 'text',
   },
 };
 
 export const Warning: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    type: 'warning',
+    variant: 'warning',
   },
 };
 
 export const Danger: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    type: 'danger',
+    variant: 'danger',
   },
 };

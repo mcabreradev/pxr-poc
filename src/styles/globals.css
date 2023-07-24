@@ -70,7 +70,7 @@
 
   hr,
   .hr {
-    @apply box-border h-px w-full border-t-[1px] border-solid border-white-200;
+    @apply m-4 box-border h-px border-t-[1px] border-solid border-white-200;
   }
   /* #endregion  /**======== Typography =========== */
 
@@ -91,16 +91,14 @@
 }
 
 @layer utilities {
-  @variants responsive {
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    /* Hide scrollbar for IE, Edge and Firefox */
-    .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

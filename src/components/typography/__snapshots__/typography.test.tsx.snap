@@ -2,8 +2,9 @@
 
 exports[`Text component should renders Text component correctly 1`] = `
 <div
-  className="text-base font-normal leading-[160%]"
+  className="font-normal text-base"
   style={{}}
+  variant={6}
 >
   Hello Paxer!
 </div>

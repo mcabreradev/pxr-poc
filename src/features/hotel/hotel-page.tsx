@@ -190,6 +190,71 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         </Swiper>
       </Section>
 
+      <hr />
+
+      <Section className='p-4 pb-0 pr-0 pt-2'>
+        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          Nuestra ubicación exacta
+        </Typography>
+        <div className='flex justify-start space-x-2 pt-3'>
+          <Icon icon='marker' className='mt-1' />
+          <Typography variant={TextVariant.sm} weight={TextFontWeight.light}>
+            {data.address}
+          </Typography>
+        </div>
+      </Section>
+
+      <hr />
+
+      <Section className='p-4 pb-0 pt-2'>
+        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          Sitios de interés cercanos
+        </Typography>
+        <div className='flex justify-start space-x-3 pb-5 pt-3'>
+          <Icon icon='camera' width={24} />
+          <Typography variant={TextVariant.base} className='underline'>
+            Actividades
+          </Typography>
+        </div>
+        {data.attractions.map((activity, key) => (
+          <div
+            key={`$attractions-${key}`}
+            className='flex justify-between py-2'
+          >
+            <Typography>{activity.name}</Typography>
+            <Typography weight={TextFontWeight.light}>
+              {activity.distance}
+            </Typography>
+          </div>
+        ))}
+        <Button className='my-4 w-full font-semibold' variant='secondary'>
+          Mostrar todos los sitios
+        </Button>
+      </Section>
+
+      <hr />
+
+      <Section className='p-4 pb-4 pt-2'>
+        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          Reglas del hotel
+        </Typography>
+
+        <div className='my-4'>
+          {data.rules.map((rule, key) => (
+            <div key={`$rules-${key}`} className='flex justify-between py-2'>
+              <Typography>{rule.name}</Typography>
+              <Typography weight={TextFontWeight.light}>
+                {rule.description}
+              </Typography>
+            </div>
+          ))}
+        </div>
+
+        <Typography weight={TextFontWeight.medium} className='underline'>
+          Mostrar más
+        </Typography>
+      </Section>
+
       <Footer />
     </div>
   );

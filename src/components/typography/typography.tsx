@@ -1,6 +1,31 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
+export enum TextVariant {
+  xl5,
+  xl,
+  h1,
+  h2,
+  h3,
+  h4,
+  base,
+  sm,
+  sm2,
+  xs,
+  xs2,
+  xs3,
+}
+
+export enum TextFontWeight {
+  bold,
+  semibold,
+  medium,
+  normal,
+  light,
+  extralight,
+  thin,
+}
+
 const getFontWeight = (weight: TextFontWeight | undefined) => {
   switch (weight) {
     case TextFontWeight.bold:
@@ -13,6 +38,10 @@ const getFontWeight = (weight: TextFontWeight | undefined) => {
       return `font-normal`;
     case TextFontWeight.light:
       return `font-light`;
+    case TextFontWeight.extralight:
+      return `font-extralight`;
+    case TextFontWeight.thin:
+      return `font-thin`;
   }
 };
 
@@ -59,29 +88,6 @@ const getVariant = (variant: TextVariant | undefined) => {
       return `text-3xs`;
   }
 };
-
-export enum TextVariant {
-  xl5,
-  xl,
-  h1,
-  h2,
-  h3,
-  h4,
-  base,
-  sm,
-  sm2,
-  xs,
-  xs2,
-  xs3,
-}
-
-export enum TextFontWeight {
-  bold,
-  semibold,
-  medium,
-  normal,
-  light,
-}
 
 export type TextProps = {
   variant?: TextVariant;

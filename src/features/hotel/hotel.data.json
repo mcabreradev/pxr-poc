@@ -120,5 +120,41 @@
         "alt": "placeholder"
       }
     }
+  ],
+  "map": {
+    "lat": -23.744,
+    "lng": -65.495
+  },
+  "attractions": [
+    {
+      "name": "Cerro El Porito ",
+      "distance": "100 m"
+    },
+    {
+      "name": "Purmamarca Jujuy",
+      "distance": "270 m"
+    },
+    {
+      "name": "Algarrobo Histórico",
+      "distance": "300 m"
+    },
+    {
+      "name": "Santa Rosa de Lima Church",
+      "distance": "390 m"
+    }
+  ],
+  "rules": [
+    {
+      "name": "Check-in:",
+      "description": "03:00pm"
+    },
+    {
+      "name": "Check-out:",
+      "description": "12:00pm"
+    },
+    {
+      "name": "Mascotas",
+      "description": "Se admiten con previo aviso"
+    }
   ]
 }

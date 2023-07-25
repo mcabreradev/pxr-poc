@@ -1,14 +1,16 @@
-import {
+import Typography, {
   Heading,
   HeadingBold,
   HeadingMedium,
   Text,
   TextBold,
+  TextFontWeight,
   TextMedium,
   TextSm,
   TextSmBold,
   TextSmLight,
   TextSmMedium,
+  TextVariant,
   TextXs,
   TextXs2,
   TextXs2Light,
@@ -29,11 +31,13 @@ export {
   HeadingMedium,
   Text,
   TextBold,
+  TextFontWeight,
   TextMedium,
   TextSm,
   TextSmBold,
   TextSmLight,
   TextSmMedium,
+  TextVariant,
   TextXs,
   TextXs2,
   TextXs2Light,
@@ -47,3 +51,5 @@ export {
   TitleBold,
   TitleMedium,
 };
+
+export default Typography;

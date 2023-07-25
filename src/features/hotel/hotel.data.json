@@ -11,24 +11,38 @@
   "reviews": [
     {
       "name": "Rocio Vizcarra",
-      "rate": 5,
-      "comment": "Nostrud adipisicing eiusmod fugiat laborum est minim amet voluptate ipsum eu id laboris labore. Sint tempor quis officia velit anim eu fugiat Lorem veniam fugiat. Pariatur pariatur labore occaecat consequat enim laborum sint minim aute occaecat. Dolore nostrud culpa quis consequat eu tempor tempor est et reprehenderit. Dolore minim aliquip velit voluptate ullamco cillum anim eu duis.",
-      "date": "Oct 2022",
-      "avatar": "https://i.pravatar.cc/300"
+      "rate": 4.9,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine",
+      "date": "Abr 2021",
+      "avatar": "https://i.pravatar.cc/50?img=39"
     },
     {
       "name": "Jessie Xu",
-      "rate": 4,
-      "comment": "Labore sit non ea proident laborum minim duis qui. Nulla duis nostrud qui cillum ullamco officia duis veniam. Laborum non Lorem nulla eiusmod laboris.",
-      "date": "Oct 2022",
-      "avatar": "https://i.pravatar.cc/300"
+      "rate": 4.5,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine",
+      "date": "Oct 2023",
+      "avatar": ""
     },
     {
       "name": "Jessie Xu",
-      "rate": 4,
-      "comment": "Labore sit non ea proident laborum minim duis qui. Nulla duis nostrud qui cillum ullamco officia duis veniam. Laborum non Lorem nulla eiusmod laboris.",
-      "date": "Oct 2022",
-      "avatar": "https://i.pravatar.cc/300"
+      "rate": 3.6,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine.",
+      "date": "Ene 2021",
+      "avatar": "https://i.pravatar.cc/50?img=51"
+    },
+    {
+      "name": "Jessie Xu",
+      "rate": 4.9,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine.",
+      "date": "Ene 2021",
+      "avatar": ""
+    },
+    {
+      "name": "Jessie Xu",
+      "rate": 4.01,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine.",
+      "date": "Ene 2021",
+      "avatar": "https://i.pravatar.cc/50?img=36"
     }
   ],
   "contact": {

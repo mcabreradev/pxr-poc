@@ -13,7 +13,7 @@ const Container = tw.div`
 `;
 
 const Inner = tw.div`
-  flex flex-nowrap gap-x-[30px]
+  mr-[25px] flex flex-nowrap gap-x-[25px]
 `;
 
 export default function Swiper({ className, innerClassName, children }: Props) {

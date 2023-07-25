@@ -6,7 +6,11 @@ import tw from 'tailwind-styled-components';
 import Button from '@/components/button';
 import Carousel from '@/components/carousel';
 import Icon from '@/components/icon';
-import { Heading, Title } from '@/components/typography';
+import Swiper from '@/components/swiper';
+import Typography, {
+  TextFontWeight,
+  TextVariant,
+} from '@/components/typography';
 
 import Footer from './hotel-footer';
 import RoomSwiper from './hotel-room-swiper';
@@ -42,8 +46,8 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         ))}
       </Carousel>
 
-      <Section>
-        <Heading>{data.name}</Heading>
+      <Section className='pt-3'>
+        <Typography variant={TextVariant.h1}>{data.name}</Typography>
         <div className='flex flex-row items-center text-[14px]'>
           <Icon icon='star' width='16px' />
           <p className='p-1'>{data.rate}</p>•
@@ -70,8 +74,10 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         <p className='my-2 text-2sm'>{data.description}</p>
       </Section>
 
-      <Section>
-        <Title className='pt-5'>Nuestro hotel ofrece</Title>
+      <Section className='pt-4'>
+        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          Nuestro hotel ofrece
+        </Typography>
         <div className='flex flex-wrap justify-between py-4'>
           {data.services.map((service) => (
             <div
@@ -91,7 +97,9 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr className='mb-9 mt-6' />
 
       <Section className='p-4 py-0'>
-        <Title>Reserva con Nosotros</Title>
+        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          Reserva con Nosotros
+        </Typography>
         <div className='flex flex-col items-start py-4 pl-2 text-base leading-[50px]'>
           <Row>
             <Icon icon='emoticon_cool' width={24} />
@@ -110,12 +118,77 @@ export default function HotelPage({ hotel }: HotelPageProps) {
 
       <hr />
 
-      <Section className='p-4 pr-0 pt-2'>
-        <Title>¿Dónde quieres dormir?</Title>
+      <Section className='p-4 pb-0 pr-0 pt-2'>
+        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          ¿Dónde quieres dormir?
+        </Typography>
         <RoomSwiper rooms={data.rooms} />
       </Section>
 
       <hr />
+
+      <Section className='p-4 pb-0 pr-0 pt-2'>
+        <div className='flex flex-row items-center'>
+          <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+            Reseñas
+          </Typography>
+          <Icon icon='star' width='22px' className='ml-2' />
+          <Typography
+            className='p-1'
+            variant={TextVariant.h2}
+            weight={TextFontWeight.medium}
+          >
+            {data.rate}
+          </Typography>
+        </div>
+
+        <Swiper>
+          {data.reviews.map((review, i) => (
+            <div
+              key={`reviews-${i}-box`}
+              className='box-border flex h-auto w-[271px] flex-col space-y-4 border-[1px] border-solid border-gray-50 bg-white p-3'
+            >
+              <div className='flex space-x-2'>
+                {review.avatar ? (
+                  <Image
+                    alt={review.name}
+                    src={review.avatar}
+                    width={45}
+                    height={45}
+                    className='h-10 w-10 rounded-full'
+                  />
+                ) : (
+                  <span className='inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-600'>
+                    <span className='text-xs font-medium leading-none text-white'>
+                      AC
+                    </span>
+                  </span>
+                )}
+                <div className='flex flex-col'>
+                  <Typography variant={TextVariant.sm2}>
+                    {review.name}
+                  </Typography>
+                  <Typography
+                    variant={TextVariant.sm2}
+                    weight={TextFontWeight.light}
+                  >
+                    {review.rate}
+                  </Typography>
+                  <Typography
+                    variant={TextVariant.sm2}
+                    weight={TextFontWeight.light}
+                  >
+                    {review.date}
+                  </Typography>
+                </div>
+              </div>
+              <Typography variant={TextVariant.xs2}>
+                {review.comment}
+              </Typography>
+            </div>
+          ))}
+        </Swiper>
+      </Section>
 
       <Footer />
     </div>

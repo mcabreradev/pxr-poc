@@ -192,7 +192,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
 
       <hr />
 
-      <Section className='p-4 pb-0 pr-0 pt-2'>
+      <Section className='p-4 pb-0 pt-2'>
         <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
           Nuestra ubicación exacta
         </Typography>
@@ -201,6 +201,22 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           <Typography variant={TextVariant.sm} weight={TextFontWeight.light}>
             {data.address}
           </Typography>
+        </div>
+
+        <div>
+          {/* <iframe src={data.map.url} className='mt-3 h-[300px] w-full' /> */}
+          <iframe
+            title='Mapa de ubicaci\xF3n del alojamiento'
+            loading='lazy'
+            className='mt-3 h-[300px] w-full'
+            src={data.map.url}
+            width='100%'
+            height='300'
+            style={{ border: '0' }}
+            allowFullScreen
+            aria-hidden='false'
+            tabIndex={0}
+          ></iframe>
         </div>
       </Section>
 
@@ -234,7 +250,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
 
       <hr />
 
-      <Section className='p-4 pb-4 pt-2'>
+      <Section className='p-4 pb-6 pt-2'>
         <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
           Reglas del hotel
         </Typography>

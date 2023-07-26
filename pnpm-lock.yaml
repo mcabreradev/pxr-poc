@@ -23,12 +23,18 @@ dependencies:
   '@storybook/theming':
     specifier: ^7.1.0
     version: 7.1.0(react-dom@18.2.0)(react@18.2.0)
+  '@types/react-test-renderer':
+    specifier: ^18.0.0
+    version: 18.0.0
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
   doctoc:
     specifier: ^2.2.1
     version: 2.2.1
+  jest-styled-components:
+    specifier: ^7.1.1
+    version: 7.1.1(styled-components@5.0.0)
   next:
     specifier: ^13.4.9
     version: 13.4.9(@babel/core@7.22.8)(react-dom@18.2.0)(react@18.2.0)
@@ -190,6 +196,9 @@ devDependencies:
   i18next-http-backend:
     specifier: ^2.2.1
     version: 2.2.1(encoding@0.1.13)
+  jabber:
+    specifier: ^1.5.3
+    version: 1.5.3
   jest:
     specifier: ^29.6.1
     version: 29.6.1(@types/node@20.4.1)(ts-node@10.9.1)
@@ -269,7 +278,6 @@ packages:
 
   /@adobe/css-tools@4.2.0:
     resolution: {integrity: sha512-E09FiIft46CmH5Qnjb0wsW54/YQd69LsxeKUOWawmws1XWvyFGURnAChH0mlr7YPFR1ofwvUQfcL0J3lMxXqPA==}
-    dev: true
 
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -335,7 +343,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/types': 7.22.5
-    dev: true
 
   /@babel/helper-builder-binary-assignment-operator-visitor@7.22.5:
     resolution: {integrity: sha512-m1EP3lVOPptR+2DwD125gziZNcmoNSHGmJROKoy87loWUQyJaVXDgpmruWqDARZSmtYQ+Dl25okU8+qhVzuykw==}
@@ -455,7 +462,6 @@ packages:
   /@babel/helper-plugin-utils@7.22.5:
     resolution: {integrity: sha512-uLls06UVKgFG9QD4OeFYLEGteMIAa5kpTPcFL28yuCIIzsf6ZyKZMllKVOCZFhiZ5ptnwX4mtKdWCBE/uT4amg==}
     engines: {node: '>=6.9.0'}
-    dev: true
 
   /@babel/helper-remap-async-to-generator@7.22.9(@babel/core@7.22.8):
     resolution: {integrity: sha512-8WWC4oR4Px+tr+Fp0X3RHDVfINGpF3ad1HIbrc8A77epiR6eMMc6jsgozkzT2uDiOOdoS9cLIQ+XD2XvI2WSmQ==}
@@ -769,7 +775,6 @@ packages:
     dependencies:
       '@babel/core': 7.22.8
       '@babel/helper-plugin-utils': 7.22.5
-    dev: true
 
   /@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.22.8):
     resolution: {integrity: sha512-d8waShlpFDinQ5MtvGU9xDAOzKH47+FFoney2baFIoMr952hKOLp1HR7VszoZvOsV/4+RRszNY7D17ba0te0ig==}
@@ -2001,11 +2006,9 @@ packages:
 
   /@emotion/stylis@0.8.5:
     resolution: {integrity: sha512-h6KtPihKFn3T9fuIrwvXXUOwlx3rfUvfZIcP5a6rh8Y7zjE3O06hT5Ss4S/YI1AYhuZ1kjaE/5EaOOI2NqSylQ==}
-    dev: true
 
   /@emotion/unitless@0.7.5:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
-    dev: true
 
   /@emotion/unitless@0.8.1:
     resolution: {integrity: sha512-KOEGMu6dmJZtpadb476IsZBclKvILjopjUii3V+7MnXIQCYh8W3NgNcgwo21n9LXZX6EDIKvqfjYxXebDwxKmQ==}
@@ -4675,7 +4678,6 @@ packages:
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
 
   /@types/qs@6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
@@ -4689,17 +4691,21 @@ packages:
       '@types/react': 18.2.14
     dev: true
 
+  /@types/react-test-renderer@18.0.0:
+    resolution: {integrity: sha512-C7/5FBJ3g3sqUahguGi03O79b8afNeSD6T8/GU50oQrJCU0bVCCGQHaGKUbg2Ce8VQEEqTw8/HiS6lXHHdgkdQ==}
+    dependencies:
+      '@types/react': 18.2.14
+    dev: false
+
   /@types/react@18.2.14:
     resolution: {integrity: sha512-A0zjq+QN/O0Kpe30hA1GidzyFjatVvrpIvWLxD+xv67Vt91TWWgco9IvrJBkeyHm1trGaFS/FSGqPlhyeZRm0g==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
-    dev: true
 
   /@types/scheduler@0.16.3:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
-    dev: true
 
   /@types/semver@7.5.0:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
@@ -5672,7 +5678,6 @@ packages:
       styled-components: 5.0.0(@babel/core@7.22.8)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - '@babel/core'
-    dev: true
 
   /babel-preset-current-node-syntax@1.0.1(@babel/core@7.22.8):
     resolution: {integrity: sha512-M7LQ0bxarkxQoN+vz5aJPsLBn77n8QgTFmo8WK0/44auK2xlCXrYcUxHFxgU7qW5Yzw/CjmLRK2uJzaCd7LvqQ==}
@@ -6001,7 +6006,6 @@ packages:
 
   /camelize@1.0.1:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
-    dev: true
 
   /caniuse-lite@1.0.30001516:
     resolution: {integrity: sha512-Wmec9pCBY8CWbmI4HsjBeQLqDTqV91nFVR83DnZpYyRnPI1wePDsTg0bGLPC5VU/3OIZV1fmxEea1b+tFKe86g==}
@@ -6514,7 +6518,6 @@ packages:
   /css-color-keywords@1.0.0:
     resolution: {integrity: sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==}
     engines: {node: '>=4'}
-    dev: true
 
   /css-loader@6.8.1(webpack@5.88.2):
     resolution: {integrity: sha512-xDAXtEVGlD0gJ07iclwWVkLoZOpEvAWaSyf6W18S2pOC//K8+qUDIx8IIT3D+HjnmkJPQeesOPv5aiUaJsCM2g==}
@@ -6559,7 +6562,6 @@ packages:
       camelize: 1.0.1
       css-color-keywords: 1.0.0
       postcss-value-parser: 4.2.0
-    dev: true
 
   /css-tree@2.2.1:
     resolution: {integrity: sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA==}
@@ -6615,7 +6617,6 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
-    dev: true
 
   /damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -8595,7 +8596,6 @@ packages:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
       react-is: 16.13.1
-    dev: true
 
   /hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
@@ -9242,6 +9242,11 @@ packages:
       istanbul-lib-report: 3.0.0
     dev: true
 
+  /jabber@1.5.3:
+    resolution: {integrity: sha512-4g5zZ9kF10oWNZzeKJqwh9yFHsee7CMWe3pXRJTdibvaMPNFWAJlLf1dno4Osxw/t9+fk0bEbEOJcscHziGX+w==}
+    hasBin: true
+    dev: true
+
   /jackspeak@2.2.1:
     resolution: {integrity: sha512-MXbxovZ/Pm42f6cDIDkl3xpwv1AGwObKwfmjs2nQePiy85tP3fatofl3FC1aBsOtP/6fq5SbtgHwWcMsLP+bDw==}
     engines: {node: '>=14'}
@@ -9624,6 +9629,16 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /jest-styled-components@7.1.1(styled-components@5.0.0):
+    resolution: {integrity: sha512-OUq31R5CivBF8oy81dnegNQrRW13TugMol/Dz6ZnFfEyo03exLASod7YGwyHGuayYlKmCstPtz0RQ1+NrAbIIA==}
+    engines: {node: '>= 12'}
+    peerDependencies:
+      styled-components: '>= 5'
+    dependencies:
+      '@adobe/css-tools': 4.2.0
+      styled-components: 5.0.0(@babel/core@7.22.8)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+    dev: false
 
   /jest-util@29.6.1:
     resolution: {integrity: sha512-NRFCcjc+/uO3ijUVyNOQJluf8PtGCe/W6cix36+M3cTFgiYqFOOW5MgN4JOOcvbUhcKTYVd1CvHz/LWi8d16Mg==}
@@ -11811,7 +11826,6 @@ packages:
 
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
-    dev: true
 
   /react-redux@8.1.1(@types/react-dom@18.2.6)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1):
     resolution: {integrity: sha512-5W0QaKtEhj+3bC0Nj0NkqkhIv8gLADH/2kYFMTHxCVqQILiWzLv6MaLuV5wJU3BQEdHKzTfcvPN0WMS6SC1oyA==}
@@ -12451,7 +12465,6 @@ packages:
 
   /shallowequal@1.1.0:
     resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
-    dev: true
 
   /shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -12831,7 +12844,6 @@ packages:
       supports-color: 5.5.0
     transitivePeerDependencies:
       - '@babel/core'
-    dev: true
 
   /styled-jsx@5.1.1(@babel/core@7.22.8)(react@18.2.0):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}

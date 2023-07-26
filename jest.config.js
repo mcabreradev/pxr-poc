@@ -23,7 +23,7 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^~/(.*)$': '<rootDir>/public/$1',
     '\\.(scss|sass|css)$': 'identity-obj-proxy',
-    '^.+\\.(svg)$': '<rootDir>/src/__mocks__/svg.tsx',
+    '^.+\\.(svg)$': '<rootDir>/src/__tests__/__mocks__/svg.tsx',
   },
 
   testPathIgnorePatterns: [

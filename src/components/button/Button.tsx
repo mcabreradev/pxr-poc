@@ -12,7 +12,7 @@ interface ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
-  type?:
+  variant?:
     | 'primary'
     | 'secondary'
     | 'alternative'
@@ -35,7 +35,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
 const buttonTypes = {
   primary: 'bg-green-500',
   secondary:
-    'bg-white hover:opacity-[0.70] text-black border-[0.5px] border-solid border-gray',
+    'bg-white hover:opacity-[0.70] text-black border-[1px] border-solid border-gray',
   alternative: 'bg-blue',
   warning: 'bg-orange',
   danger: 'bg-red',
@@ -45,14 +45,14 @@ const buttonTypes = {
 export default function Button({
   className,
   children,
-  type = 'primary',
+  variant = 'primary',
   fullWidth = false,
   disabled = false,
   ...props
 }: ButtonProps) {
   return (
     <ButtonComponent
-      className={cn(buttonTypes[type], className)}
+      className={cn(buttonTypes[variant], className)}
       ripple={false}
       fullWidth={fullWidth}
       data-testid='test-element'

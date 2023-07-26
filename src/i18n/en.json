@@ -1,6 +1,17 @@
 {
+  "button": {
+    "reserve": "Book Now"
+  },
+  "from": "from",
   "link": {
     "language": "English",
     "termsandconditions": "Terms and Conditions"
-  }
+  },
+  "night": {
+    "prural": "nights",
+    "singular": "night"
+  },
+  "since": "since",
+  "to": "to",
+  "until": "until"
 }

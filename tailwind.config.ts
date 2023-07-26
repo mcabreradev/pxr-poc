@@ -22,6 +22,16 @@ export default withMT({
         primary: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
+      fontSize: {
+        '3xs': '10px',
+        '2xs': '11px',
+        xs: '12px',
+        '2sm': '13px',
+        sm: '14px',
+        base: '16px',
+        xl: '20px',
+        '5xl': '24px',
+      },
       colors: {
         green: {
           DEFAULT: '#27A97E',
@@ -120,16 +130,6 @@ export default withMT({
           900: '#111111',
           950: '#030303',
         },
-      },
-      fontSize: {
-        '3xs': '10px',
-        '2xs': '11px',
-        xs: '12px',
-        '2sm': '13px',
-        sm: '14px',
-        base: '16px',
-        xl: '20px',
-        '5xl': '24px',
       },
       borderRadius: {
         '980xl': '999px',

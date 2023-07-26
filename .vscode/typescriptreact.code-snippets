@@ -205,8 +205,8 @@
   },
 
   //*=========== Paxer Snippets ===========
-  "Paxer Component": {
-    "prefix": ["paxer component", "pc", "component", "paxer"],
+  "Paxer Component full": {
+    "prefix": ["paxer component full"],
     "body": [
       "import tw from 'tailwind-styled-components';",
       "",
@@ -217,7 +217,7 @@
       "}",
       "",
       "const Container = tw.div`",
-      "  flex ",
+      " ",
       "`;",
       "export default function ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}({ className }: Props) {",
       "  return <Container className={cn(className)} data-testid='test-element'>",
@@ -226,11 +226,24 @@
       "}",
       ""
     ],
+    "description": "Paxer Component Props Styled Component"
+  },
+
+  "Paxer Component": {
+    "prefix": ["paxer component"],
+    "body": [
+      "export default function ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}() {",
+      "  return <div data-testid='test-element'>",
+      "    ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}",
+      "  </div>;",
+      "}",
+      ""
+    ],
     "description": "Paxer Component"
   },
 
   "Paxer Storybook": {
-    "prefix": "paxer storybook, psb, storybook, paxer",
+    "prefix": "paxer storybook",
     "body": [
       "import type { Meta, StoryObj } from '@storybook/react';",
       "",
@@ -257,7 +270,7 @@
   },
 
   "Paxer Test": {
-    "prefix": "paxer test, pst, test, paxer",
+    "prefix": ["paxer test"],
     "body": [
       "import { render, screen } from '@testing-library/react';",
       "",
@@ -276,9 +289,9 @@
   },
 
   "Paxer Import Export": {
-    "prefix": "paxer import export, ie, import, export, paxer",
+    "prefix": "paxer import export",
     "body": [
-      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/}';",
+      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
       "",
       "export default ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/};",
       ""

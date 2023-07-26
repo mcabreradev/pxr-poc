@@ -67,6 +67,11 @@
   .p {
     @apply font-primary text-sm md:text-base;
   }
+
+  hr,
+  .hr {
+    @apply m-4 box-border h-px border-t-[1px] border-solid border-white-200;
+  }
   /* #endregion  /**======== Typography =========== */
 
   .layout {
@@ -82,5 +87,18 @@
   /* Class to adjust with sticky footer */
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

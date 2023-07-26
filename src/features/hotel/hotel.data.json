@@ -1,0 +1,161 @@
+{
+  "images": [
+    "https://paxer.com/static/production/HOI/00/1079/30106/hash-gtlXXc6XKh-paxer.jpeg",
+    "https://paxer.com/static/production/HOI/00/1079/20558/hash-XlmCW9pLUX-paxer.jpg",
+    "https://paxer.com/static/production/HOI/00/1079/20561/hash-7c9AG8sEZE-paxer.jpg"
+  ],
+  "name": "Terrazas de La Posta",
+  "rate": 4.5,
+  "address": "Pje Santa Rosa de Lima s/n, Purmamarca, Argentina",
+  "description": "Ad consequat elit adipisicing labore et veniam voluptate ullamco nostrud eiusmod. In reprehenderit quis magna velit ex. Ut eu laboris magna nisi cillum voluptate velit deserunt officia nulla consequat do officia. Aute sunt deserunt reprehenderit eu nostrud nisi ullamco veniam aliqua enim. Incididunt irure aliqua elit tempor commodo pariatur minim voluptate ullamco et duis ut. Pariatur duis sit nostrud commodo. Aliquip enim do ea commodo irure deserunt cupidatat.",
+  "reviews": [
+    {
+      "name": "Rocio Vizcarra",
+      "rate": 4.9,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine",
+      "date": "Abr 2021",
+      "avatar": "https://i.pravatar.cc/50?img=39"
+    },
+    {
+      "name": "Jessie Xu",
+      "rate": 4.5,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine",
+      "date": "Oct 2023",
+      "avatar": ""
+    },
+    {
+      "name": "Jessie Xu",
+      "rate": 3.6,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine.",
+      "date": "Ene 2021",
+      "avatar": "https://i.pravatar.cc/50?img=51"
+    },
+    {
+      "name": "Jessie Xu",
+      "rate": 4.9,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine.",
+      "date": "Ene 2021",
+      "avatar": ""
+    },
+    {
+      "name": "Jessie Xu",
+      "rate": 4.01,
+      "comment": "I stayed for one night in August, excellent services and super comfortable rooms. Very friendly staff and excellent cleanliness. Breakfast very complete and varied, super rich everything! The location is very good because it is close to the downtown area and there are very close places to dine.",
+      "date": "Ene 2021",
+      "avatar": "https://i.pravatar.cc/50?img=36"
+    }
+  ],
+  "contact": {
+    "web": "http://www.paginax.com",
+    "phone": "+1 123 456 7890",
+    "email": "fakeemail@algorithm.com",
+    "whatsapp": "+1 123 456 7890",
+    "facebook": "https://www.facebook.com"
+  },
+  "services": [
+    {
+      "name": "Wifi",
+      "icon": "wifi"
+    },
+    {
+      "name": "Spa",
+      "icon": "spa"
+    },
+    {
+      "name": "Televisor",
+      "icon": "tv"
+    },
+    {
+      "name": "Restaurante",
+      "icon": "restaurant"
+    },
+    {
+      "name": "Gym",
+      "icon": "gym"
+    },
+    {
+      "name": "Bar",
+      "icon": "bar"
+    },
+    {
+      "name": "Piscina",
+      "icon": "pool"
+    },
+    {
+      "name": "Taxi",
+      "icon": "taxi"
+    }
+  ],
+  "rooms": [
+    {
+      "name": "Habitación Simple ",
+      "subtitle": "Max 2 personas",
+      "desc": "Cama Matrimonial",
+      "price": "100.00",
+      "date": "mar 01 - 07 • 2 personas",
+      "image": {
+        "url": "/svg/placeholder.svg",
+        "alt": "placeholder"
+      }
+    },
+    {
+      "name": "Habitación Triple ",
+      "subtitle": "Max 3 personas",
+      "desc": "2 Cama Matrimonial",
+      "price": "300.00",
+      "date": "mar 01 - 07 • 3 personas",
+      "image": {
+        "url": "/svg/placeholder.svg",
+        "alt": "placeholder"
+      }
+    },
+    {
+      "name": "Habitación King",
+      "subtitle": "Max 5 personas",
+      "desc": "3 Cama King",
+      "price": "500.00",
+      "date": "mar 01 - 07 • 5 personas",
+      "image": {
+        "url": "/svg/placeholder.svg",
+        "alt": "placeholder"
+      }
+    }
+  ],
+  "map": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.9393725382456!2d-58.36613412382726!3d-34.605694557603286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a335ef4809ceef%3A0x3945c8c351477a54!2sHilton%20Buenos%20Aires!5e0!3m2!1sen!2sar!4v1690390110880!5m2!1sen!2sar",
+    "lat": -23.744,
+    "lng": -65.495
+  },
+  "attractions": [
+    {
+      "name": "Cerro El Porito ",
+      "distance": "100 m"
+    },
+    {
+      "name": "Purmamarca Jujuy",
+      "distance": "270 m"
+    },
+    {
+      "name": "Algarrobo Histórico",
+      "distance": "300 m"
+    },
+    {
+      "name": "Santa Rosa de Lima Church",
+      "distance": "390 m"
+    }
+  ],
+  "rules": [
+    {
+      "name": "Check-in:",
+      "description": "03:00pm"
+    },
+    {
+      "name": "Check-out:",
+      "description": "12:00pm"
+    },
+    {
+      "name": "Mascotas",
+      "description": "Se admiten con previo aviso"
+    }
+  ]
+}

@@ -76,7 +76,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
 
       <Section className='pt-4'>
         <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
-          Nuestro hotel ofrece
+          {t('Nuestro hotel ofrece')}
         </Typography>
         <div className='flex flex-wrap justify-between py-4'>
           {data.services.map((service) => (

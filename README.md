@@ -4,17 +4,18 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
-  - [Stack](#stack)
-  - [Prerequisites](#prerequisites)
-  - [Getting Started](#getting-started)
-    - [1. Clone the repository:](#1-clone-the-repository)
-    - [2. Install dependencies](#2-install-dependencies)
-    - [3. Run the development server](#3-run-the-development-server)
-    - [4. Run the build script](#4-run-the-build-script)
-    - [5. Run the production server](#5-run-the-production-server)
-    - [6. Commit Message Convention](#6-commit-message-convention)
+- [Stack](#stack)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [1. Clone the repository:](#1-clone-the-repository)
+  - [2. Install dependencies](#2-install-dependencies)
+  - [3. Run the development server](#3-run-the-development-server)
+  - [4. Run the build script](#4-run-the-build-script)
+  - [5. Run the production server](#5-run-the-production-server)
+  - [6. Commit Message Convention](#6-commit-message-convention)
 - [Styleguide](#styleguide)
   - [React Functional Components](#react-functional-components)
   - [Styled Components](#styled-components)
@@ -59,6 +60,7 @@
 - 🛃 Github Actions
 
 TODO:
+
 - ~~PNPM~~
 - ~~Docker~~
 
@@ -326,7 +328,7 @@ import { useQuery } from 'react-query';
 
 function App() {
   const { isLoading, error, data } = useQuery('repoData', () =>
-    fetch('http://api.service').then((res) => res.json())
+    fetch('http://api.service').then((res) => res.json()),
   );
 
   if (isLoading) return 'Loading...';

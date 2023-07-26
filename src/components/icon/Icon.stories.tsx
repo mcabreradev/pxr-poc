@@ -2,7 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { mapObject } from '@/lib/utils';
 
-import { TextXs3 } from '@/components/typography';
+import Typography, {
+  TextFontWeight,
+  TextVariant,
+} from '@/components/typography';
 
 import Icon from './';
 import data from './Icon.data.json';
@@ -26,7 +29,13 @@ export const Default: Story = {
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
           <Icon icon={key} width='20px' />
-          <TextXs3 className='mt-2 text-gray-600'>{key}</TextXs3>
+          <Typography
+            variant={TextVariant.xs}
+            weight={TextFontWeight.light}
+            className='mt-2 text-gray-600'
+          >
+            {key}
+          </Typography>
         </div>
       ))}
     </div>
@@ -42,7 +51,13 @@ export const Large: Story = {
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
           <Icon icon={key} width='30' />
-          <TextXs3 className='mt-2 text-gray-600'>{key}</TextXs3>
+          <Typography
+            variant={TextVariant.xs}
+            weight={TextFontWeight.light}
+            className='mt-2 text-gray-600'
+          >
+            {key}
+          </Typography>
         </div>
       ))}
     </div>
@@ -58,7 +73,13 @@ export const Medium: Story = {
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
           <Icon icon={key} width='20' />
-          <TextXs3 className='mt-2 text-gray-600'>{key}</TextXs3>
+          <Typography
+            variant={TextVariant.xs}
+            weight={TextFontWeight.light}
+            className='mt-2 text-gray-600'
+          >
+            {key}
+          </Typography>
         </div>
       ))}
     </div>
@@ -74,7 +95,13 @@ export const Small: Story = {
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
           <Icon icon={key} width='15' />
-          <TextXs3 className='mt-2 text-gray-600'>{key}</TextXs3>
+          <Typography
+            variant={TextVariant.xs}
+            weight={TextFontWeight.light}
+            className='mt-2 text-gray-600'
+          >
+            {key}
+          </Typography>
         </div>
       ))}
     </div>

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import Toggle from './';
+import Toggle from '.';
 
 describe('toggle component', () => {
   it('should renders toogle without errors', () => {

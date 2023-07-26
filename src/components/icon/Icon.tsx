@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 
-import icons_list from './Icon.data.json';
+import icons_list from './icon.data.json';
 
 interface Props {
   id?: string;

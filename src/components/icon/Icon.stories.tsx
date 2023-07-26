@@ -7,8 +7,8 @@ import Typography, {
   TextVariant,
 } from '@/components/typography';
 
-import Icon from './';
-import data from './Icon.data.json';
+import Icon from '.';
+import data from './icon.data.json';
 
 const meta: Meta<typeof Icon> = {
   title: 'Components/Icon',

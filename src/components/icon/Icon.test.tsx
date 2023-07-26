@@ -1,6 +1,6 @@
 import renderer from 'react-test-renderer';
 
-import Icon from './';
+import Icon from '.';
 
 describe('Icon component', () => {
   test('should render an svg icon', () => {

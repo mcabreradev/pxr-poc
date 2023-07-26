@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import Carousel from './';
+import Carousel from '.';
 
 describe('Carousel component', () => {
   it('should renders Carousel component correctly', () => {

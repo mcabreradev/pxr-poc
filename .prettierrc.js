@@ -4,8 +4,9 @@ module.exports = {
   singleQuote: true,
   jsxSingleQuote: true,
   semi: true,
-  tailwindFunctions: ['tw', 'clsx', 'className'],
+  tailwindFunctions: ['tw', 'clsx', 'className', 'cn'],
+  tailwindAttributes: ['tw', 'cn'],
   tailwindConfig: './tailwind.config.ts',
-  plugins: ['prettier-plugin-tailwindcss'],
+  plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-tailwindcss'],
   pluginSearchDirs: false,
 };

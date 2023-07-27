@@ -28,7 +28,7 @@ export const Default: Story = {
           key={`key-${value}`}
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
-          <Icon icon={key} width='20px' />
+          <Icon variant={key} width='20px' />
           <Typography
             variant={TextVariant.xs}
             weight={TextFontWeight.light}
@@ -50,7 +50,7 @@ export const Large: Story = {
           key={`key-${value}`}
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
-          <Icon icon={key} width='30' />
+          <Icon variant={key} width='30' />
           <Typography
             variant={TextVariant.xs}
             weight={TextFontWeight.light}
@@ -72,7 +72,7 @@ export const Medium: Story = {
           key={`key-${value}`}
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
-          <Icon icon={key} width='20' />
+          <Icon variant={key} width='20' />
           <Typography
             variant={TextVariant.xs}
             weight={TextFontWeight.light}
@@ -94,7 +94,7 @@ export const Small: Story = {
           key={`key-${value}`}
           className='flex h-24 w-24 flex-col items-center justify-center rounded-lg border-[0.5px] border-gray-200 shadow drop-shadow-md'
         >
-          <Icon icon={key} width='15' />
+          <Icon variant={key} width='15' />
           <Typography
             variant={TextVariant.xs}
             weight={TextFontWeight.light}

@@ -5,7 +5,7 @@ import icons_list from './icon.data.json';
 interface Props {
   id?: string;
   className?: string;
-  icon?: string;
+  variant?: string;
   width?: string | number;
   height?: string | number;
   color?: string;
@@ -14,7 +14,7 @@ interface Props {
 export default function IconComponent({
   id,
   className,
-  icon = 'hotel',
+  variant = 'hotel',
   width,
   height,
   color = '#000000',
@@ -22,7 +22,7 @@ export default function IconComponent({
   return (
     <Icon
       id={id}
-      icon={icons_list[icon]}
+      icon={icons_list[variant]}
       width={width}
       height={height}
       className={className}

@@ -49,7 +49,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <Section className='pt-3'>
         <Typography variant={TextVariant.h1}>{data.name}</Typography>
         <div className='flex flex-row items-center text-[14px]'>
-          <Icon icon='star' width='16px' />
+          <Icon variant='star' width='16px' />
           <p className='p-1'>{data.rate}</p>•
           <p className='pl-1 underline hover:cursor-pointer'>{`${
             data.reviews.length
@@ -62,7 +62,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           <span className='pr-1'>Contacto</span>
           {Object.entries(data?.contact).map(([key, value]) => (
             <a key={`contacto-${key}-${value}`} className='px-1' href={value}>
-              <Icon icon={key} width='18px' color='gray' />
+              <Icon variant={key} width='18px' color='gray' />
             </a>
           ))}
         </div>
@@ -84,7 +84,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
               key={`service-${service.icon}`}
               className='flex w-1/2 flex-row py-[5px]'
             >
-              <Icon icon={service.icon} width='18px' color='#949494' />
+              <Icon variant={service.icon} width='18px' color='#949494' />
               <p className='pl-[5px] text-2sm'>{service.name}</p>
             </div>
           ))}
@@ -102,15 +102,15 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         </Typography>
         <div className='flex flex-col items-start py-4 pl-2 text-base leading-[50px]'>
           <Row>
-            <Icon icon='emoticon_cool' width={24} />
+            <Icon variant='emoticon_cool' width={24} />
             <div className='pl-[5px]'>Mejor tarifa garantizada</div>
           </Row>
           <Row>
-            <Icon icon='check-decagram' width={24} />
+            <Icon variant='check-decagram' width={24} />
             <div className='pl-[5px]'>Reserva directo sin intermediarios</div>
           </Row>
           <Row>
-            <Icon icon='percent' width={24} />
+            <Icon variant='percent' width={24} />
             <div className='pl-[5px]'>Ofertas y beneficios exclusivos</div>
           </Row>
         </div>
@@ -132,7 +132,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
             Reseñas
           </Typography>
-          <Icon icon='star' width='22px' className='ml-2' />
+          <Icon variant='star' width='22px' className='ml-2' />
           <Typography
             className='p-1'
             variant={TextVariant.h2}
@@ -197,7 +197,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           Nuestra ubicación exacta
         </Typography>
         <div className='flex justify-start space-x-2 pt-3'>
-          <Icon icon='marker' className='mt-1' />
+          <Icon variant='marker' className='mt-1' />
           <Typography variant={TextVariant.sm} weight={TextFontWeight.light}>
             {data.address}
           </Typography>
@@ -227,7 +227,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           Sitios de interés cercanos
         </Typography>
         <div className='flex justify-start space-x-3 pb-5 pt-3'>
-          <Icon icon='camera' width={24} />
+          <Icon variant='camera' width={24} />
           <Typography variant={TextVariant.base} className='underline'>
             Actividades
           </Typography>

@@ -180,6 +180,14 @@
     "prefix": "iml",
     "body": ["import Link from 'next/link';"]
   },
+  "Import className lib": {
+    "prefix": "icn",
+    "body": ["import { cn } from '@/lib/utils';"]
+  },
+  "Import Typography": {
+    "prefix": "itypo",
+    "body": ["import Typography, {TextFontWeight, TextVariant} from '@/components/typography';"]
+  },
   //#endregion  //*======== Next.js ===========
 
   //#region  //*=========== Snippet Wrap ===========
@@ -187,13 +195,25 @@
     "prefix": "ff",
     "body": ["<>", "\t${TM_SELECTED_TEXT}", "</>"]
   },
-  "Wrap with clsx": {
-    "prefix": "cx",
-    "body": ["{clsx([${TM_SELECTED_TEXT}$0])}"]
+  "Wrap with cn": {
+    "prefix": "cn",
+    "body": ["{cn([${TM_SELECTED_TEXT}$0])}"]
   },
-  "Wrap with clsxm": {
-    "prefix": "cxm",
-    "body": ["{clsxm([${TM_SELECTED_TEXT}$0, className])}"]
+  "Wrap with div": {
+    "prefix": "di",
+    "body": ["<div className='$0'></div>"]
+  },
+  "Wrap with div and cn": {
+    "prefix": "di",
+    "body": ["<div className={cn($0)}></div>"]
+  },
+  "Wrap with Typography": {
+    "prefix": "typo",
+    "body": ["<Typography>$0</Typography>"]
+  },
+  "Wrap with Typography with variant and weight": {
+    "prefix": "typovw",
+    "body": ["<Typography variant={TextVariant.base} weight={TextFontWeight.normal}>$0</Typography>"]
   },
   //#endregion  //*======== Snippet Wrap ===========
 
@@ -204,7 +224,7 @@
     ]
   },
 
-  //*=========== Paxer Snippets ===========
+  //#region //*=========== Paxer Snippets ===========
   "Paxer Component full": {
     "prefix": ["paxer component full"],
     "body": [
@@ -216,12 +236,11 @@
       "  className?: string;",
       "}",
       "",
-      "const Container = tw.div`",
-      " ",
-      "`;",
-      "export default function ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}({ className }: Props) {",
+      "const Container = tw.div``;",
+      "",
+      "export default function ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/}Component({ className }: Props) {",
       "  return <Container className={cn(className)} data-testid='test-element'>",
-      "    ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}",
+      "    Hi I'm ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} Component",
       "  </Container>;",
       "}",
       ""
@@ -232,9 +251,9 @@
   "Paxer Component": {
     "prefix": ["paxer component"],
     "body": [
-      "export default function ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}() {",
+      "export default function ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/}Component() {",
       "  return <div data-testid='test-element'>",
-      "    ${TM_FILENAME/(.*)\\..+$/${1:/capitalize}/}",
+      "    Hi I'm ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} Component",
       "  </div>;",
       "}",
       ""
@@ -247,17 +266,17 @@
     "body": [
       "import type { Meta, StoryObj } from '@storybook/react';",
       "",
-      "import ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/} from './';",
+      "import ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} from './';",
       "",
-      "const meta: Meta<typeof ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}> = {",
+      "const meta: Meta<typeof ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/}> = {",
       "  title: 'Components/${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}',",
-      "  component: ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/},",
+      "  component: ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/},",
       "  tags: ['autodocs'],",
       "  argTypes: {},",
       "};",
       "",
       "export default meta;",
-      "type Story = StoryObj<typeof ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}>;",
+      "type Story = StoryObj<typeof ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/}>;",
       "",
       "export const Default: Story = {",
       "  args: {",
@@ -274,11 +293,11 @@
     "body": [
       "import { render, screen } from '@testing-library/react';",
       "",
-      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './';",
+      "import ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} from './';",
       "",
-      "describe('${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} component', () => {",
-      "  it('should renders ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} component correctly', () => {",
-      "    render(<${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} />);",
+      "describe('${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} component', () => {",
+      "  it('should renders ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} component correctly', () => {",
+      "    render(<${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} />);",
       "    const element = screen.getByTestId('test-element');",
       "    expect(element).toBeInTheDocument();",
       "  });",
@@ -291,11 +310,12 @@
   "Paxer Import Export": {
     "prefix": "paxer import export",
     "body": [
-      "import ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
+      "import ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
       "",
-      "export default ${TM_DIRECTORY/^.+\\\\/(.*)$/${1:/capitalize}/};",
+      "export default ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/};",
       ""
     ],
     "description": "Paxer Import Export"
   }
+  //#region //*=========== Paxer Snippets ===========
 }

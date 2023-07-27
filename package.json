@@ -8,7 +8,8 @@
   "author": "Paxer",
   "license": "MIT",
   "resolutions": {
-    "styled-components": "^5"
+    "styled-components": "^5",
+    "semver": "^7.5.2"
   },
   "scripts": {
     "dev": "next dev",
@@ -42,6 +43,7 @@
     "@storybook/manager-api": "^7.1.0",
     "@storybook/theming": "^7.1.0",
     "@types/react-test-renderer": "^18.0.0",
+    "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "doctoc": "^2.2.1",
     "jest-styled-components": "^7.1.1",
@@ -118,6 +120,7 @@
     "react-redux": "^8.1.1",
     "react-test-renderer": "^18.2.0",
     "storybook": "^7.1.0",
+    "semver": "^7.5.2",
     "styled-components": "^6.0.3",
     "tailwind-merge": "^1.13.2",
     "tailwind-styled-components": "^2.2.0",

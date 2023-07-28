@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Button from '.';
+import Button, { ButtonVariant } from '.';
 
 /** Renders a Button component */
 const meta: Meta<typeof Button> = {
@@ -11,14 +11,7 @@ const meta: Meta<typeof Button> = {
     fullWidth: { control: 'boolean' },
     variant: {
       control: 'select',
-      options: [
-        'primary',
-        'secondary',
-        'alternative',
-        'warning',
-        'danger',
-        'text',
-      ],
+      options: ButtonVariant,
     },
   },
 };
@@ -30,7 +23,7 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    variant: 'primary',
+    variant: ButtonVariant.PRIMARY,
     onClick: () => null,
   },
 };
@@ -38,34 +31,34 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    variant: 'secondary',
+    variant: ButtonVariant.SECONDARY,
   },
 };
 
 export const Alternative: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    variant: 'alternative',
+    variant: ButtonVariant.ALTERNATIVE,
   },
 };
 
 export const Text: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    variant: 'text',
+    variant: ButtonVariant.TEXT,
   },
 };
 
 export const Warning: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    variant: 'warning',
+    variant: ButtonVariant.WARNING,
   },
 };
 
 export const Danger: Story = {
   args: {
     children: 'Confirmar y Reserva',
-    variant: 'danger',
+    variant: ButtonVariant.DANGER,
   },
 };

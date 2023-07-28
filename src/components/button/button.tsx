@@ -6,19 +6,22 @@ import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
-interface ButtonProps {
+interface  ButtonProps {
   onClick?: () => void;
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'alternative'
-    | 'warning'
-    | 'danger'
-    | 'text';
+  variant?: ButtonVariant | undefined;
+}
+
+export enum ButtonVariant {
+  PRIMARY,
+  SECONDARY,
+  ALTERNATIVE,
+  WARNING,
+  DANGER,
+  TEXT,
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
@@ -32,27 +35,24 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
       : 'transition hover:delay-100 hover:opacity-[0.90] duration-100 delay-100 '}
 `;
 
-const buttonTypes = {
-  primary: 'bg-green-500',
-  secondary:
-    'bg-white hover:opacity-[0.70] text-black border-[1px] border-solid border-gray',
-  alternative: 'bg-blue',
-  warning: 'bg-orange',
-  danger: 'bg-red',
-  text: 'bg-white text-black underline hover:opacity-[0.60] border-[1px] border-solid border-white',
-};
-
 export default function Button({
   className,
   children,
-  variant = 'primary',
+  variant = ButtonVariant.PRIMARY,
   fullWidth = false,
   disabled = false,
   ...props
 }: ButtonProps) {
   return (
     <ButtonComponent
-      className={cn(buttonTypes[variant], className)}
+      className={cn(className, `
+        ${variant === ButtonVariant.PRIMARY && 'bg-green-500'}
+        ${variant === ButtonVariant.SECONDARY && 'bg-white hover:opacity-[0.70] text-black border-[1px] border-solid border-gray'}
+        ${variant === ButtonVariant.ALTERNATIVE && 'bg-blue'}
+        ${variant === ButtonVariant.WARNING && 'bg-orange'}
+        ${variant === ButtonVariant.DANGER && 'bg-red'}
+        ${variant === ButtonVariant.TEXT && 'bg-white text-black underline hover:opacity-[0.60] border-[1px] border-solid border-white'}
+      `)}
       ripple={false}
       fullWidth={fullWidth}
       data-testid='test-element'

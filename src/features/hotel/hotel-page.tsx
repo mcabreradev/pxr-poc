@@ -102,7 +102,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         </Typography>
         <div className='flex flex-col items-start py-4 pl-2 text-base leading-[50px]'>
           <Row>
-            <Icon variant='emoticon_cool' width={24} />
+            <Icon variant='emoticon-cool' width={24} />
             <div className='pl-[5px]'>Mejor tarifa garantizada</div>
           </Row>
           <Row>

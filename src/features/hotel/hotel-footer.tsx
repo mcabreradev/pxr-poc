@@ -46,7 +46,7 @@ export default function FooterComponent() {
         <span className='w-full'>$ USD</span>
       </Row>
       <Row>
-        <Icon variant='open_in_new' width='18px' />
+        <Icon variant='open-in-new' width='18px' />
         <div className='pl-[5px]'>www.terrazasposta.com</div>
       </Row>
       <Row>
@@ -62,7 +62,7 @@ export default function FooterComponent() {
         <div className='pl-[5px]'>Whatsapp</div>
       </Row>
       <Row>
-        <Icon variant='facebook_round' width='18px' />
+        <Icon variant='facebook-round' width='18px' />
         <div className='pl-[5px]'></div>
         <Icon variant='instagram' width='18px' />
       </Row>

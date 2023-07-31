@@ -12,16 +12,12 @@ interface  ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
-  variant?: ButtonVariant | undefined;
-}
-
-export enum ButtonVariant {
-  PRIMARY,
-  SECONDARY,
-  ALTERNATIVE,
-  WARNING,
-  DANGER,
-  TEXT,
+  variant?: 'primary'
+  | 'secondary'
+  | 'alternative'
+  | 'warning'
+  | 'danger'
+  | 'text';
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
@@ -38,7 +34,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
 export default function Button({
   className,
   children,
-  variant = ButtonVariant.PRIMARY,
+  variant = 'primary',
   fullWidth = false,
   disabled = false,
   ...props
@@ -46,12 +42,12 @@ export default function Button({
   return (
     <ButtonComponent
       className={cn(className, `
-        ${variant === ButtonVariant.PRIMARY && 'bg-green-500'}
-        ${variant === ButtonVariant.SECONDARY && 'bg-white hover:opacity-[0.70] text-black border-[1px] border-solid border-gray'}
-        ${variant === ButtonVariant.ALTERNATIVE && 'bg-blue'}
-        ${variant === ButtonVariant.WARNING && 'bg-orange'}
-        ${variant === ButtonVariant.DANGER && 'bg-red'}
-        ${variant === ButtonVariant.TEXT && 'bg-white text-black underline hover:opacity-[0.60] border-[1px] border-solid border-white'}
+        ${variant === 'primary' && 'bg-green-500'}
+        ${variant === 'secondary' && 'bg-white hover:opacity-[0.70] text-black border-[1px] border-solid border-gray'}
+        ${variant === 'alternative' && 'bg-blue'}
+        ${variant === 'warning' && 'bg-orange'}
+        ${variant === 'danger' && 'bg-red'}
+        ${variant === 'text' && 'bg-white text-black underline hover:opacity-[0.60] border-[1px] border-solid border-white'}
       `)}
       ripple={false}
       fullWidth={fullWidth}

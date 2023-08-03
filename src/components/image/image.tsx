@@ -12,7 +12,7 @@ type Props = {
   alt: string;
 } & (
   | { width: string | number; height: string | number }
-  | { layout: 'fill'; width?: string | number; height?: string | number }
+  | { fill: boolean; width?: string | number; height?: string | number }
 ) &
   ImageProps;
 
@@ -29,29 +29,32 @@ export default function Image({
   alt,
   className,
   classNames,
+  fill = false,
   ...rest
 }: Props) {
   const [status, setStatus] = React.useState(
-    useSkeleton ? 'loading' : 'complete'
+    useSkeleton ? 'loading' : 'complete',
   );
   const widthIsSet = className?.includes('w-') ?? false;
 
   return (
     <figure
       style={!widthIsSet ? { width: `${width}px` } : undefined}
-      className={className}
-      data-testid="test-element"
+      className={cn('w-full', className)}
+      data-testid='test-element'
     >
       <NextImage
         className={cn(
+          'relative !h-[unset] !w-full !object-contain',
           classNames?.image,
-          status === 'loading' && cn('animate-pulse', classNames?.blur)
+          status === 'loading' && cn('animate-pulse', classNames?.blur),
         )}
         src={src}
         width={width}
         height={height}
         alt={alt}
         onLoadingComplete={() => setStatus('complete')}
+        fill={fill}
         {...rest}
       />
     </figure>

@@ -1,23 +1,27 @@
 'use client';
 
 import { Button as Base } from '@material-tailwind/react';
+import Link from 'next/link';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
-interface  ButtonProps {
+interface ButtonProps {
+  type?: 'submit' | 'link' | 'button';
   onClick?: () => void;
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
-  variant?: 'primary'
-  | 'secondary'
-  | 'alternative'
-  | 'warning'
-  | 'danger'
-  | 'text';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'alternative'
+    | 'warning'
+    | 'danger'
+    | 'text';
+  href?: string;
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
@@ -32,27 +36,52 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
 `;
 
 export default function Button({
+  type = 'button',
   className,
   children,
   variant = 'primary',
   fullWidth = false,
   disabled = false,
+  onClick,
+  href,
   ...props
 }: ButtonProps) {
+  const styling = {
+    primary: 'bg-green-500',
+    secondary:
+      'border-[1px] border-solid border-gray bg-white text-black hover:opacity-[0.70]',
+    alternative: 'bg-blue',
+    warning: 'bg-orange',
+    danger: 'bg-red',
+    text: 'border-[1px] border-solid border-white bg-white text-black underline hover:opacity-[0.60]',
+  };
+
+  if (type === 'link') {
+    return (
+      <Link href={href || '/'}>
+        <ButtonComponent
+          className={cn(className, styling[variant])}
+          ripple={false}
+          fullWidth={fullWidth}
+          data-testid='test-element'
+          disabled={disabled}
+          {...props}
+        >
+          {children}
+        </ButtonComponent>
+      </Link>
+    );
+  }
+
   return (
     <ButtonComponent
-      className={cn(className, `
-        ${variant === 'primary' && 'bg-green-500'}
-        ${variant === 'secondary' && 'bg-white hover:opacity-[0.70] text-black border-[1px] border-solid border-gray'}
-        ${variant === 'alternative' && 'bg-blue'}
-        ${variant === 'warning' && 'bg-orange'}
-        ${variant === 'danger' && 'bg-red'}
-        ${variant === 'text' && 'bg-white text-black underline hover:opacity-[0.60] border-[1px] border-solid border-white'}
-      `)}
+      type={type}
+      className={cn(className, styling[variant])}
       ripple={false}
       fullWidth={fullWidth}
       data-testid='test-element'
       disabled={disabled}
+      onClick={onClick}
       {...props}
     >
       {children}

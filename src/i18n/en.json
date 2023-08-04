@@ -1,8 +1,28 @@
 {
   "button": {
-    "reserve": "Book Now"
+    "reserve": "Book Now",
+    "view-all": "View all",
+    "view-all-services": "View all services"
+  },
+  "date": {
+    "check-in": "Check-in date",
+    "check-out": "Check-out date",
+    "prural": "Dates",
+    "singular": "Date"
   },
   "from": "from",
+  "guest": {
+    "adult": {
+      "prural": "adults",
+      "singular": "adult"
+    },
+    "childre": {
+      "prural": "childrens",
+      "singular": "child"
+    },
+    "prural": "Guests",
+    "singular": "Guest"
+  },
   "link": {
     "language": "English",
     "termsandconditions": "Terms and Conditions"
@@ -12,6 +32,13 @@
     "singular": "night"
   },
   "since": "since",
+  "title": {
+    "edit": "Edit",
+    "my-trip": "My Trip",
+    "room-amemnities": "Room Amenities",
+    "room-details": "Room Details",
+    "search": "Search"
+  },
   "to": "to",
   "until": "until"
 }

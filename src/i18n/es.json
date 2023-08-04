@@ -1,8 +1,28 @@
 {
   "button": {
-    "reserve": "Reservar"
+    "reserve": "Reservar",
+    "view-all": "Ver todo",
+    "view-all-services": "Ver todos los servicios"
+  },
+  "date": {
+    "check-in": "Fecha de entrada",
+    "check-out": "Fecha de salida",
+    "prural": "Fechas",
+    "singular": "Fecha"
   },
   "from": "de",
+  "guest": {
+    "adult": {
+      "prural": "adultos",
+      "singular": "adulto"
+    },
+    "childre": {
+      "prural": "niños",
+      "singular": "niño"
+    },
+    "prural": "Huéspedes",
+    "singular": "Huésped"
+  },
   "link": {
     "language": "Español",
     "termsandconditions": "Términos y condiciones"
@@ -12,6 +32,13 @@
     "singular": "noche"
   },
   "since": "desde",
+  "title": {
+    "edit": "Editar",
+    "my-trip": "Mi viaje",
+    "room-amemnities": "Nuestra habitación ofrece",
+    "room-details": "Detalle de la habitación",
+    "search": "Busca tu hotel"
+  },
   "to": "a",
   "until": "hasta"
 }

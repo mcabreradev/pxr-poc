@@ -1,11 +1,11 @@
 /* eslint-disable simple-import-sort/imports */
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import Button from '@/components/button';
 import Carousel from '@/components/carousel';
 import Icon from '@/components/icon';
+import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography, {
   TextFontWeight,

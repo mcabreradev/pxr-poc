@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import Button from '@/components/button';
+import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography, {
   TextFontWeight,
@@ -46,7 +46,9 @@ export default function RoomSwiper({ rooms }) {
               {t('from')} <b>${room.price}/</b>
               {t('night.singular')}
             </Typography>
-            <Button className='mb-4 w-full'>{t('button.reserve')}</Button>
+            <Button type='link' href='/room' className='mb-4 w-full'>
+              {t('button.reserve')}
+            </Button>
           </div>
         </Rooms>
       ))}

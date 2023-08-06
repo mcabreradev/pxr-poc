@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils';
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
+import Radio from '@/components/radio';
+import Toggle from '@/components/toggle';
 import Typography, {
   TextFontWeight,
   TextVariant,
@@ -22,6 +24,10 @@ interface Props {
 }
 
 const Container = tw.div`
+
+`;
+
+const Wrapper = tw.div`
 
 `;
 
@@ -75,19 +81,17 @@ export default function RoomTypeComponent({
         </div>
       </section>
 
-      <section>
-        <div className='px-4 pt-6'>
+      <Wrapper className='px-4'>
+        <section className='pt-6'>
           <Typography variant={TextVariant.h1}>{data.name}</Typography>
           <Typography
             variant={TextVariant.sm}
           >{`${data.subtitle} • ${data.desc}`}</Typography>
-        </div>
-      </section>
+        </section>
 
-      <hr />
+        <hr />
 
-      <section>
-        <div className='px-4 pt-0'>
+        <section>
           <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
             {t('title.room-amemnities')}
           </Typography>
@@ -105,13 +109,11 @@ export default function RoomTypeComponent({
           <Button className='w-full font-semibold' variant='secondary'>
             {t('button.view-all-services')}
           </Button>
-        </div>
-      </section>
+        </section>
 
-      <hr />
+        <hr />
 
-      <section>
-        <div className='px-4 pt-0'>
+        <section>
           <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
             {t('title.my-trip')}
           </Typography>
@@ -155,9 +157,132 @@ export default function RoomTypeComponent({
               {t('title.edit')}
             </Typography>
           </div>
-        </div>
-      </section>
+        </section>
 
+        <hr />
+
+        <section>
+          <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+            {t('title.price-details')}
+          </Typography>
+          <div className='flex flex-wrap justify-between py-3'>
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              $ 100.00 x 4 noches
+            </Typography>
+
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              $ 400.00
+            </Typography>
+          </div>
+          <div className='flex flex-wrap justify-between pb-0 pt-2'>
+            <div>
+              <Typography
+                variant={TextVariant.sm}
+                weight={TextFontWeight.semibold}
+                className='text-neutral-400'
+              >
+                Políticas de cancelación
+              </Typography>
+            </div>
+          </div>
+          <div className='flex flex-wrap justify-between py-1'>
+            <Radio label='No reembolsable' />
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              +$ 0.00
+            </Typography>
+          </div>
+          <div className='flex flex-wrap justify-between py-1'>
+            <Radio
+              label='Reembolsable'
+              subtitle='Cancelación gratuita antes de las 15:00 del 5 agosto'
+            />
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              +$ 0.00
+            </Typography>
+          </div>
+
+          <div className='flex flex-wrap justify-between pb-0 pt-2'>
+            <div>
+              <Typography
+                variant={TextVariant.sm}
+                weight={TextFontWeight.semibold}
+                className='text-neutral-400'
+              >
+                Extras
+              </Typography>
+            </div>
+          </div>
+
+          <div className='flex flex-wrap justify-between py-1'>
+            <Toggle label='Desayuno' />
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              +$ 10.00
+            </Typography>
+          </div>
+
+          <div className='flex flex-wrap justify-between pb-0 pt-4'>
+            <div>
+              <Typography
+                variant={TextVariant.sm}
+                weight={TextFontWeight.semibold}
+                className='text-neutral-400'
+              >
+                Impuestos
+              </Typography>
+            </div>
+          </div>
+
+          <div className='flex flex-wrap justify-between py-1'>
+            <Typography
+              variant={TextVariant.xs}
+              className='w-3/4 text-neutral-500'
+            >
+              Los impuestos deben ser pagados a tu llegada al hotel
+            </Typography>
+
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              +$ 50.00
+            </Typography>
+          </div>
+
+          <div className='flex flex-wrap justify-between py-3'>
+            <Typography
+              variant={TextVariant.sm}
+              className='font-semibold text-neutral-500'
+            >
+              Total (USD)
+            </Typography>
+
+            <Typography
+              variant={TextVariant.sm}
+              className='font-semibold text-neutral-500'
+            >
+              $ 450.00
+            </Typography>
+          </div>
+
+          <div className='flex flex-wrap justify-between py-3'>
+            <Button className='w-full font-semibold' variant='primary'>
+              Proceder al pago
+            </Button>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <div className=''>
+            <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+              Políticas de cancelación
+            </Typography>
+          </div>
+          <div className=''>
+            <Typography variant={TextVariant.base} className='text-neutral-500'>
+              No reembolsable
+            </Typography>
+          </div>
+        </section>
+      </Wrapper>
       <Footer />
     </Container>
   );

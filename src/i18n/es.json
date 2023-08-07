@@ -37,7 +37,9 @@
     "my-trip": "Mi viaje",
     "room-amemnities": "Nuestra habitación ofrece",
     "room-details": "Detalle de la habitación",
-    "search": "Busca tu hotel"
+    "search": "Busca tu hotel",
+    "price": "Precio",
+    "price-details": "Detalle de precio"
   },
   "to": "a",
   "until": "hasta"

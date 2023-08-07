@@ -79,7 +79,7 @@
 
   hr,
   .hr {
-    @apply m-4 box-border h-px border-t-[1px] border-solid border-white-200;
+    @apply my-4 box-border h-px border-t-[1px] border-solid border-white-200;
   }
   /* #endregion  /**======== Typography =========== */
 

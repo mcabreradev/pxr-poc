@@ -14,14 +14,14 @@ interface Props {
 }
 
 const Content = tw.div`
-  flex items-center
+  flex w-3/4
 `;
 const LabelContainer = tw.div`
-  ml-4 flex flex-1 flex-col items-start justify-center gap-[2px] px-0 pb-0 pt-px
+  ml-3 flex flex-col
 `;
 
 const Label = tw.span`
-  text-sm font-semibold leading-[160%] text-gray-900
+  text-sm leading-[160%] text-neutral-500
 `;
 
 const Subtitle = tw.span`

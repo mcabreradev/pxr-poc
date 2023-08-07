@@ -271,14 +271,51 @@ export default function RoomTypeComponent({
         <hr />
 
         <section>
-          <div className=''>
+          <div className='py-2'>
             <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
               Políticas de cancelación
             </Typography>
-          </div>
-          <div className=''>
-            <Typography variant={TextVariant.base} className='text-neutral-500'>
+            <div className='my-3' />
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
               No reembolsable
+            </Typography>
+          </div>
+        </section>
+
+        <section>
+          <div className='py-5'>
+            <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+              Detalles de los impuestos
+            </Typography>
+            <div className='my-3' />
+            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              Los impuestos deben ser pagados a tu llegada al hotel
+            </Typography>
+          </div>
+        </section>
+
+        <section>
+          <div className='py-4 pb-7'>
+            <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+              Reglas del hotel
+            </Typography>
+
+            <div className='my-4'>
+              {data.rules.map((rule, key) => (
+                <div
+                  key={`$rules-${key}`}
+                  className='flex justify-between py-2'
+                >
+                  <Typography>{rule.name}</Typography>
+                  <Typography weight={TextFontWeight.light}>
+                    {rule.description}
+                  </Typography>
+                </div>
+              ))}
+            </div>
+
+            <Typography weight={TextFontWeight.semibold} className='underline'>
+              Mostrar más
             </Typography>
           </div>
         </section>

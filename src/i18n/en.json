@@ -37,7 +37,9 @@
     "my-trip": "My Trip",
     "room-amemnities": "Room Amenities",
     "room-details": "Room Details",
-    "search": "Search"
+    "search": "Search",
+    "price": "Price",
+    "price-details": "Price Details "
   },
   "to": "to",
   "until": "until"

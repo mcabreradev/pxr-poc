@@ -266,7 +266,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           ))}
         </div>
 
-        <Typography weight={TextFontWeight.medium} className='underline'>
+        <Typography weight={TextFontWeight.semibold} className='underline'>
           Mostrar más
         </Typography>
       </Section>

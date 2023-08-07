@@ -20,7 +20,7 @@ const LabelContainer = tw.div`
 `;
 
 const Label = tw.span`
-  text-sm font-semibold leading-[160%] text-gray-900
+  text-sm leading-[160%] text-neutral-500
 `;
 
 const Subtitle = tw.span`

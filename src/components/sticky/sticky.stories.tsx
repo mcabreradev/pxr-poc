@@ -13,5 +13,9 @@ export default meta;
 type Story = StoryObj<typeof Sticky>;
 
 export const Default: Story = {
-  args: {},
+  render: () => (
+    <Sticky>
+      <div data-testid='test-children-element'>test</div>
+    </Sticky>
+  ),
 };

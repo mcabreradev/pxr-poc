@@ -25,9 +25,3 @@ export const Default: Story = {
     />
   ),
 };
-
-export const Skeleton: Story = {
-  render: () => (
-    <Image src='' alt='image' width={500} height={500} useSkeleton={true} />
-  ),
-};

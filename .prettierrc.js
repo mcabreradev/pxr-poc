@@ -8,5 +8,4 @@ module.exports = {
   tailwindAttributes: ['tw', 'cn'],
   tailwindConfig: './tailwind.config.ts',
   plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-tailwindcss'],
-  pluginSearchDirs: false,
 };

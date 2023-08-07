@@ -4,8 +4,6 @@ import Image from 'next/image';
 
 import Swiper from './';
 
-import placeholder from '~/svg/placeholder.svg';
-
 const jabber = new Jabber();
 
 /** Swipe The Swiper provides an intuitive and engaging user experience, making it easy for users to navigate and explore content on touch devices. */
@@ -29,7 +27,7 @@ export const Images: Story = {
           <Image
             key={`img-${index}`}
             alt='image'
-            src={placeholder}
+            src='/svg/placeholder.svg'
             width={471}
             height={435}
             className='w-full object-cover'

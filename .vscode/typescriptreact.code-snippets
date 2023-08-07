@@ -43,7 +43,7 @@
     "prefix": "rcp",
     "body": [
       "import * as React from 'react';\n",
-      "import cn from '@/lib/cn';\n",
+      "import { cn } from '@/lib/utils';\n",
       "type ${1:${TM_FILENAME_BASE}}Props= {\n",
       "} & React.ComponentPropsWithoutRef<'div'>\n",
       "export default function ${1:${TM_FILENAME_BASE}}({className, ...rest}: ${1:${TM_FILENAME_BASE}}Props) {",
@@ -319,9 +319,9 @@
   "Paxer Import Export": {
     "prefix": "paxer import export",
     "body": [
-      "import ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
+      "import ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
       "",
-      "export default ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/};",
+      "export default ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}",
       ""
     ],
     "description": "Paxer Import Export"

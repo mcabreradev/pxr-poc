@@ -6,7 +6,6 @@ import RoomTypeComponent from '@/features/room-type/room-type';
 
 interface Props {
   params: { room: string; hotel: string };
-  className?: string;
 }
 
 export default function Page({ params }: Props) {

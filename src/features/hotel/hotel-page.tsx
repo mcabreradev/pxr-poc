@@ -6,6 +6,7 @@ import Button from '@/components/button';
 import Carousel from '@/components/carousel';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
+import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography, {
   TextFontWeight,
@@ -271,6 +272,30 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         </Typography>
       </Section>
 
+      <Sticky>
+        <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>
+          <div className='flex flex-col'>
+            <Typography
+              variant={TextVariant.sm}
+              weight={TextFontWeight.semibold}
+            >
+              {' '}
+              Desde $100.00 x noche
+            </Typography>
+            <Typography
+              variant={TextVariant.sm}
+              weight={TextFontWeight.normal}
+              className='underline'
+            >
+              {' '}
+              Desde $100.00 x noche
+            </Typography>
+          </div>
+          <div>
+            <Button>Escoger habitación</Button>
+          </div>
+        </div>
+      </Sticky>
       <Footer />
     </div>
   );

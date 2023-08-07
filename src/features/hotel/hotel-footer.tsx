@@ -5,17 +5,18 @@ import Icon from '@/components/icon';
 
 const Footer = tw.footer`
   relative
+  z-10
   box-border
   flex
   h-[308px]
   w-full
   flex-col
   justify-around
-  overflow-hidden
-  border-t-[0.5px] border-solid border-gray-300
+  overflow-hidden border-t-[0.5px] border-solid
+  border-gray-300
   bg-white-100
-  p-4
-  text-left text-sm text-black
+  p-4 text-left text-sm
+  text-black
 `;
 
 const Row = tw.div`

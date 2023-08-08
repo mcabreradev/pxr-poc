@@ -28,10 +28,8 @@
   - [What is React Query?](#what-is-react-query)
   - [Why React Query?](#why-react-query)
   - [How to use React Query?](#how-to-use-react-query)
-- [Formik](#formik)
-  - [What is Formik?](#what-is-formik)
-  - [Why Formik?](#why-formik)
-  - [How to use Formik?](#how-to-use-formik)
+- [React Hook Form](#react-hook-form)
+  - [How to use React Hook Form?](#how-to-use-react-hook-form)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -49,20 +47,19 @@
 - 🤖 Conventional Commit Lint — Make sure you & your teammates follow conventional commit
 - 🔥 Snippets — A collection of useful snippets
 - 🗺 Site Map — Automatically generate sitemap.xml
-- 📦 Yarn
+- 📦 pnpm - A strict and efficient alternative to npm with up to 3x faster performance
 - 🈸 Internationalization (i18n)
 - 🛒 Redux Toolkit
-- 🔌 React Query
-- 📄 Formik
-- 💎 Storybook
-- 📦 Yarn
+- 🔌 React Query - Declarative, always-up-to-date auto-managed queries and mutations
+- 📄 React Hook Form - Performant, flexible and extensible forms with easy-to-use validation
+- 💎 Storybook - A frontend workshop for building UI components and pages in isolation
 - 🙂 SVG Icons by [Iconify](https://iconify.design/)
 - 🛃 Github Actions
 
 TODO:
 
-- ~~PNPM~~
-- ~~Docker~~
+- ~~🐳 Docker~~
+- ~~[Playwright](https://playwright.dev/) - e2e - Enables reliable end-to-end testing for modern web apps~~
 
 ---
 
@@ -70,13 +67,13 @@ TODO:
 
 Paxer Ecommerce requires that you have installed the following in order to run locally:
 
-- Use node v16
+- Use node v18
   - If you're using `nvm`, it's as easy as running `nvm install`. Our `.nvmrc` already specifies the correct version
   - To make sure nvm loads the correct version every new terminal, follow [this guide](https://github.com/nvm-sh/nvm#nvmrc)
   - If you're using node some other way, make sure you're using the correct version, follow [this guide](https://nodejs.org/en/download/)
-- Use `yarn`
+- Use [`pnpm`](https://pnpm.io/)
 
-  - There is no problems using NPM, but we encourage you to use `yarn` in this project, follow [this guide](https://classic.yarnpkg.com/en/docs/install)
+  - There is no problems using NPM, but we encourage you to use `pnpm` in this project, follow [this guide](https://pnpm.io/installation)
 
 - Copy the `.env.example` file, rename it to `.env` and set the corresponding values for each variable.
 
@@ -90,10 +87,10 @@ git clone git@github.com:Prinhotels/Paxer-ecomm.git
 
 ### 2. Install dependencies
 
-It is encouraged to use **yarn** so the husky hooks can work properly.
+It is encouraged to use **pnpm** so the husky hooks can work properly.
 
 ```bash
-yarn install
+pnpm install
 ```
 
 ### 3. Run the development server
@@ -101,7 +98,7 @@ yarn install
 You can start the server using this command:
 
 ```bash
-yarn dev
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -111,7 +108,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 First, build the app using this command:
 
 ```bash
-yarn build
+pnpm run build
 ```
 
 ### 5. Run the production server
@@ -119,7 +116,7 @@ yarn build
 You can start the server using this command:
 
 ```bash
-yarn start
+pnpm run start
 ```
 
 ### 6. Commit Message Convention
@@ -280,7 +277,7 @@ export const Default: Story = {
 To run the storybook use the following command:
 
 ```bash
-yarn stoybook
+pnpm run stoybook
 ```
 
 Open [http://localhost:6006](http://localhost:6006) with your browser to see the result.
@@ -305,7 +302,7 @@ test('renders learn react link', () => {
 To run the tests use the following command:
 
 ```bash
-yarn test
+pnpm run test
 ```
 
 # React Query
@@ -346,68 +343,40 @@ function App() {
 
 For more information follow [this guide](https://react-query.tanstack.com/overview)
 
-# Formik
+# React Hook Form
 
-## What is Formik?
-
-Formik is the world's most popular open source form library for React and React Native. It helps with the three most annoying parts:
-
-- Getting values in and out of form state
-- Validation and error messages
-- Handling form submission
-
-## Why Formik?
-
-- **Build forms in React, without the tears** - Formik takes care of the repetitive and annoying stuff--keeping track of values/errors/visited fields, orchestrating validation, and handling submission--so you don't have to.
-- **Simple React validation** - Yup is a dead simple JavaScript object schema validator and object parser. We leverage it to simplify your code and keep it DRY.
-- **Tiny size without dependencies** - Formik is a small library that helps you with the 3 most annoying parts: getting values in and out of form state, validation, and handling submission errors.
-- **Access to all React features** - Formik is designed to manage forms with complex validation with ease. It handles complicated stuff like nested objects and arrays for you.
-- **Compatible with React Native** - Formik supports synchronous and asynchronous form-level and field-level validation. Furthermore, it comes with baked-in support for schema-based form-level validation through Yup.
-
-## How to use Formik?
+## How to use React Hook Form?
 
 ```typescript
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
-function App() {
+enum GenderEnum {
+  female = 'female',
+  male = 'male',
+  other = 'other',
+}
+
+interface IFormInput {
+  firstName: String;
+  gender: GenderEnum;
+}
+
+export default function App() {
+  const { register, handleSubmit } = useForm<IFormInput>();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+
   return (
-    <div>
-      <h1>Anywhere in your app!</h1>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = 'Required';
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = 'Invalid email address';
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type='email' name='email' />
-            <ErrorMessage name='email' component='div' />
-            <Field type='password' name='password' />
-            <ErrorMessage name='password' component='div' />
-            <button type='submit' disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <label>First Name</label>
+      <input {...register('firstName')} />
+      <label>Gender Selection</label>
+      <select {...register('gender')}>
+        <option value='female'>female</option>
+        <option value='male'>male</option>
+        <option value='other'>other</option>
+      </select>
+      <input type='submit' />
+    </form>
   );
 }
 ```
-
-For more information follow [this guide](https://formik.org/docs/overview)

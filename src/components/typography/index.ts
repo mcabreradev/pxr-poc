@@ -1,5 +1,5 @@
-import Typography, { TextFontWeight, TextVariant } from './typography';
+import Typography, { FontWeight, TextVariant } from './typography';
 
-export { TextFontWeight, TextVariant };
+export type { FontWeight, TextVariant };
 
 export default Typography;

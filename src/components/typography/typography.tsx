@@ -1,46 +1,21 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
-export enum TextVariant {
-  xl5,
-  xl,
-  h1,
-  h2,
-  h3,
-  h4,
-  base,
-  sm,
-  sm2,
-  xs,
-  xs2,
-  xs3,
-}
-
-export enum TextFontWeight {
-  bold,
-  semibold,
-  medium,
-  normal,
-  light,
-  extralight,
-  thin,
-}
-
-const getFontWeight = (weight: TextFontWeight | undefined) => {
+const getFontWeight = (weight: FontWeight | undefined) => {
   switch (weight) {
-    case TextFontWeight.bold:
+    case 'bold':
       return `font-bold`;
-    case TextFontWeight.semibold:
+    case 'semibold':
       return `font-semibold`;
-    case TextFontWeight.medium:
+    case 'medium':
       return `font-medium`;
-    case TextFontWeight.normal:
+    case 'normal':
       return `font-normal`;
-    case TextFontWeight.light:
+    case 'light':
       return `font-light`;
-    case TextFontWeight.extralight:
+    case 'extralight':
       return `font-extralight`;
-    case TextFontWeight.thin:
+    case 'thin':
       return `font-thin`;
   }
 };
@@ -48,50 +23,73 @@ const getFontWeight = (weight: TextFontWeight | undefined) => {
 const getVariant = (variant: TextVariant | undefined) => {
   switch (variant) {
     /** 24 */
-    case TextVariant.h1:
+    case 'h1':
       return `text-5xl`;
-    case TextVariant.xl5:
+    case 'xl5':
       return `text-5xl`;
 
     /** 20 */
-    case TextVariant.h2:
+    case 'h2':
       return `text-xl`;
-    case TextVariant.xl:
+    case 'xl':
       return `text-xl`;
 
     /** 16 */
-    case TextVariant.h3:
+    case 'h3':
       return `text-base`;
-    case TextVariant.base:
+    case 'base':
       return `text-base`;
 
     /** 14 */
-    case TextVariant.h4:
+    case 'h4':
       return `text-sm`;
-    case TextVariant.sm:
+    case 'sm':
       return `text-sm`;
 
     /** 13px */
-    case TextVariant.sm2:
+    case 'sm2':
       return `text-2sm`;
 
     /** 12px */
-    case TextVariant.xs:
+    case 'xs':
       return `text-xs`;
 
     /** 11px */
-    case TextVariant.xs2:
+    case 'xs2':
       return `text-3xs`;
 
     /** 10px */
-    case TextVariant.xs3:
+    case 'xs3':
       return `text-3xs`;
   }
 };
 
+export type TextVariant =
+  | 'xl5'
+  | 'xl'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'base'
+  | 'sm'
+  | 'sm2'
+  | 'xs'
+  | 'xs2'
+  | 'xs3';
+
+export type FontWeight =
+  | 'bold'
+  | 'semibold'
+  | 'medium'
+  | 'normal'
+  | 'light'
+  | 'extralight'
+  | 'thin';
+
 export type TextProps = {
   variant?: TextVariant;
-  weight?: TextFontWeight | undefined;
+  weight?: FontWeight;
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;

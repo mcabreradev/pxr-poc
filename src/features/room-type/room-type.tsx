@@ -9,10 +9,7 @@ import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
-import Typography, {
-  TextFontWeight,
-  TextVariant,
-} from '@/components/typography';
+import Typography from '@/components/typography';
 
 import Footer from '@/features/hotel/hotel-footer';
 
@@ -53,8 +50,8 @@ export default function RoomTypeComponent({
 
           <div className='-ml-10 flex w-full items-center justify-center'>
             <Typography
-              variant={TextVariant.base}
-              weight={TextFontWeight.medium}
+              variant='base'
+              weight='medium'
               className='mx-auto text-neutral-300'
             >
               {t('title.room-details')}
@@ -72,8 +69,8 @@ export default function RoomTypeComponent({
             fill
           />
           <Typography
-            variant={TextVariant.xs}
-            weight={TextFontWeight.medium}
+            variant='xs'
+            weight='medium'
             className='z-20 flex h-[21px] w-[52px] items-center justify-center rounded bg-neutral-500 bg-opacity-60 text-center text-white'
           >
             1/26
@@ -83,16 +80,14 @@ export default function RoomTypeComponent({
 
       <Wrapper className='px-4'>
         <section className='pt-6'>
-          <Typography variant={TextVariant.h1}>{data.name}</Typography>
-          <Typography
-            variant={TextVariant.sm}
-          >{`${data.subtitle} • ${data.desc}`}</Typography>
+          <Typography variant='h1'>{data.name}</Typography>
+          <Typography variant='sm'>{`${data.subtitle} • ${data.desc}`}</Typography>
         </section>
 
         <hr />
 
         <section>
-          <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          <Typography variant='h2' weight='normal'>
             {t('title.room-amemnities')}
           </Typography>
           <div className='flex flex-wrap justify-between py-4'>
@@ -114,46 +109,40 @@ export default function RoomTypeComponent({
         <hr />
 
         <section>
-          <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          <Typography variant='h2' weight='normal'>
             {t('title.my-trip')}
           </Typography>
           <div className='flex flex-wrap justify-between py-2'>
             <div>
               <Typography
-                variant={TextVariant.sm}
-                weight={TextFontWeight.semibold}
+                variant='sm'
+                weight='semibold'
                 className='text-neutral-400'
               >
                 {t('date.prural')}
               </Typography>
-              <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              <Typography variant='sm' className='text-neutral-500'>
                 07 may 2023 - 11 may 2023
               </Typography>
             </div>
-            <Typography
-              variant={TextVariant.sm}
-              className='text-neutral-500 underline'
-            >
+            <Typography variant='sm' className='text-neutral-500 underline'>
               {t('title.edit')}
             </Typography>
           </div>
           <div className='flex flex-wrap justify-between py-2'>
             <div>
               <Typography
-                variant={TextVariant.sm}
-                weight={TextFontWeight.semibold}
+                variant='sm'
+                weight='semibold'
                 className='text-neutral-400'
               >
                 {t('guest.prural')}
               </Typography>
-              <Typography variant={TextVariant.sm} className='text-neutral-500'>
+              <Typography variant='sm' className='text-neutral-500'>
                 2 {t('guest.adult.prural')}
               </Typography>
             </div>
-            <Typography
-              variant={TextVariant.sm}
-              className='text-neutral-500 underline'
-            >
+            <Typography variant='sm' className='text-neutral-500 underline'>
               {t('title.edit')}
             </Typography>
           </div>
@@ -162,23 +151,23 @@ export default function RoomTypeComponent({
         <hr />
 
         <section>
-          <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          <Typography variant='h2' weight='normal'>
             {t('title.price-details')}
           </Typography>
           <div className='flex flex-wrap justify-between py-3'>
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               $ 100.00 x 4 noches
             </Typography>
 
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               $ 400.00
             </Typography>
           </div>
           <div className='flex flex-wrap justify-between pb-0 pt-2'>
             <div>
               <Typography
-                variant={TextVariant.sm}
-                weight={TextFontWeight.semibold}
+                variant='sm'
+                weight='semibold'
                 className='text-neutral-400'
               >
                 Políticas de cancelación
@@ -187,7 +176,7 @@ export default function RoomTypeComponent({
           </div>
           <div className='flex flex-wrap justify-between py-1'>
             <Radio label='No reembolsable' />
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               +$ 0.00
             </Typography>
           </div>
@@ -196,7 +185,7 @@ export default function RoomTypeComponent({
               label='Reembolsable'
               subtitle='Cancelación gratuita antes de las 15:00 del 5 agosto'
             />
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               +$ 0.00
             </Typography>
           </div>
@@ -204,8 +193,8 @@ export default function RoomTypeComponent({
           <div className='flex flex-wrap justify-between pb-0 pt-2'>
             <div>
               <Typography
-                variant={TextVariant.sm}
-                weight={TextFontWeight.semibold}
+                variant='sm'
+                weight='semibold'
                 className='text-neutral-400'
               >
                 Extras
@@ -215,7 +204,7 @@ export default function RoomTypeComponent({
 
           <div className='flex flex-wrap justify-between py-1'>
             <Toggle label='Desayuno' />
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               +$ 10.00
             </Typography>
           </div>
@@ -223,8 +212,8 @@ export default function RoomTypeComponent({
           <div className='flex flex-wrap justify-between pb-0 pt-4'>
             <div>
               <Typography
-                variant={TextVariant.sm}
-                weight={TextFontWeight.semibold}
+                variant='sm'
+                weight='semibold'
                 className='text-neutral-400'
               >
                 Impuestos
@@ -233,30 +222,21 @@ export default function RoomTypeComponent({
           </div>
 
           <div className='flex flex-wrap justify-between py-1'>
-            <Typography
-              variant={TextVariant.xs}
-              className='w-3/4 text-neutral-500'
-            >
+            <Typography variant='xs' className='w-3/4 text-neutral-500'>
               Los impuestos deben ser pagados a tu llegada al hotel
             </Typography>
 
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               +$ 50.00
             </Typography>
           </div>
 
           <div className='flex flex-wrap justify-between py-3'>
-            <Typography
-              variant={TextVariant.sm}
-              className='font-semibold text-neutral-500'
-            >
+            <Typography variant='sm' className='font-semibold text-neutral-500'>
               Total (USD)
             </Typography>
 
-            <Typography
-              variant={TextVariant.sm}
-              className='font-semibold text-neutral-500'
-            >
+            <Typography variant='sm' className='font-semibold text-neutral-500'>
               $ 450.00
             </Typography>
           </div>
@@ -272,11 +252,11 @@ export default function RoomTypeComponent({
 
         <section>
           <div className='py-2'>
-            <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+            <Typography variant='h2' weight='normal'>
               Políticas de cancelación
             </Typography>
             <div className='my-3' />
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               No reembolsable
             </Typography>
           </div>
@@ -284,11 +264,11 @@ export default function RoomTypeComponent({
 
         <section>
           <div className='py-5'>
-            <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+            <Typography variant='h2' weight='normal'>
               Detalles de los impuestos
             </Typography>
             <div className='my-3' />
-            <Typography variant={TextVariant.sm} className='text-neutral-500'>
+            <Typography variant='sm' className='text-neutral-500'>
               Los impuestos deben ser pagados a tu llegada al hotel
             </Typography>
           </div>
@@ -296,7 +276,7 @@ export default function RoomTypeComponent({
 
         <section>
           <div className='py-4 pb-7'>
-            <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+            <Typography variant='h2' weight='normal'>
               Reglas del hotel
             </Typography>
 
@@ -307,14 +287,12 @@ export default function RoomTypeComponent({
                   className='flex justify-between py-2'
                 >
                   <Typography>{rule.name}</Typography>
-                  <Typography weight={TextFontWeight.light}>
-                    {rule.description}
-                  </Typography>
+                  <Typography weight='light'>{rule.description}</Typography>
                 </div>
               ))}
             </div>
 
-            <Typography weight={TextFontWeight.semibold} className='underline'>
+            <Typography weight='semibold' className='underline'>
               Mostrar más
             </Typography>
           </div>

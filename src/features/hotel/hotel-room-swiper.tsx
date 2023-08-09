@@ -4,10 +4,7 @@ import tw from 'tailwind-styled-components';
 import Button from '@/components/button';
 import Image from '@/components/image';
 import Swiper from '@/components/swiper';
-import Typography, {
-  TextFontWeight,
-  TextVariant,
-} from '@/components/typography';
+import Typography from '@/components/typography';
 
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-50 bg-white shadow
@@ -27,22 +24,15 @@ export default function RoomSwiper({ rooms }) {
             className='w-full object-cover'
           />
           <div className='p-4'>
-            <Typography
-              variant={TextVariant.h3}
-              weight={TextFontWeight.medium}
-              className='pb-4'
-            >
+            <Typography variant='h3' weight='medium' className='pb-4'>
               {room.name}
             </Typography>
             <Typography className='pb-1'>{room.subtitle}</Typography>
             <Typography className='pb-4'>{room.desc}</Typography>
-            <Typography
-              weight={TextFontWeight.medium}
-              className='pb-6 underline'
-            >
+            <Typography weight='medium' className='pb-6 underline'>
               {room.date}
             </Typography>
-            <Typography className='pb-5' variant={TextVariant.base}>
+            <Typography className='pb-5' variant='base'>
               {t('from')} <b>${room.price}/</b>
               {t('night.singular')}
             </Typography>

@@ -2,10 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { mapObject } from '@/lib/utils';
 
-import Typography, {
-  TextFontWeight,
-  TextVariant,
-} from '@/components/typography';
+import Typography from '@/components/typography';
 
 import Icon from '.';
 import data from './icon.data.json';
@@ -30,8 +27,8 @@ export const Default: Story = {
         >
           <Icon variant={key} width='20px' />
           <Typography
-            variant={TextVariant.xs}
-            weight={TextFontWeight.light}
+            variant='xs'
+            weight='light'
             className='mt-2 text-gray-600'
           >
             {key}
@@ -52,8 +49,8 @@ export const Large: Story = {
         >
           <Icon variant={key} width='30' />
           <Typography
-            variant={TextVariant.xs}
-            weight={TextFontWeight.light}
+            variant='xs'
+            weight='light'
             className='mt-2 text-gray-600'
           >
             {key}
@@ -74,8 +71,8 @@ export const Medium: Story = {
         >
           <Icon variant={key} width='20' />
           <Typography
-            variant={TextVariant.xs}
-            weight={TextFontWeight.light}
+            variant='xs'
+            weight='light'
             className='mt-2 text-gray-600'
           >
             {key}
@@ -96,8 +93,8 @@ export const Small: Story = {
         >
           <Icon variant={key} width='15' />
           <Typography
-            variant={TextVariant.xs}
-            weight={TextFontWeight.light}
+            variant='xs'
+            weight='light'
             className='mt-2 text-gray-600'
           >
             {key}

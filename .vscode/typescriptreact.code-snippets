@@ -215,9 +215,7 @@
   },
   "Wrap with Typography with variant and weight": {
     "prefix": "typovw",
-    "body": [
-      "<Typography variant={TextVariant.base} weight={TextFontWeight.normal}>$0</Typography>"
-    ]
+    "body": ["<Typography variant='base' weight='normal'>$0</Typography>"]
   },
 
   "Wrap with i18n": {

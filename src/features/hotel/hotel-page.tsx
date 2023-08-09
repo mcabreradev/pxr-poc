@@ -8,10 +8,7 @@ import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
-import Typography, {
-  TextFontWeight,
-  TextVariant,
-} from '@/components/typography';
+import Typography from '@/components/typography';
 
 import Footer from './hotel-footer';
 import RoomSwiper from './hotel-room-swiper';
@@ -48,7 +45,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       </Carousel>
 
       <Section className='pt-3'>
-        <Typography variant={TextVariant.h1}>{data.name}</Typography>
+        <Typography variant='h1'>{data.name}</Typography>
         <div className='flex flex-row items-center text-[14px]'>
           <Icon variant='star' width='16px' />
           <p className='p-1'>{data.rate}</p>•
@@ -76,7 +73,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       </Section>
 
       <Section className='pt-4'>
-        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+        <Typography variant='h2' weight='normal'>
           {t('Nuestro hotel ofrece')}
         </Typography>
         <div className='flex flex-wrap justify-between py-4'>
@@ -98,7 +95,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr className='mb-9 mt-6' />
 
       <Section className='p-4 py-0'>
-        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+        <Typography variant='h2' weight='normal'>
           Reserva con Nosotros
         </Typography>
         <div className='flex flex-col items-start py-4 pl-2 text-base leading-[50px]'>
@@ -120,7 +117,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr />
 
       <Section className='p-4 pb-0 pr-0 pt-2'>
-        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+        <Typography variant='h2' weight='normal'>
           ¿Dónde quieres dormir?
         </Typography>
         <RoomSwiper rooms={data.rooms} />
@@ -130,15 +127,11 @@ export default function HotelPage({ hotel }: HotelPageProps) {
 
       <Section className='p-4 pb-0 pr-0 pt-2'>
         <div className='flex flex-row items-center'>
-          <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+          <Typography variant='h2' weight='normal'>
             Reseñas
           </Typography>
           <Icon variant='star' width='22px' className='ml-2' />
-          <Typography
-            className='p-1'
-            variant={TextVariant.h2}
-            weight={TextFontWeight.medium}
-          >
+          <Typography className='p-1' variant='h2' weight='medium'>
             {data.rate}
           </Typography>
         </div>
@@ -166,26 +159,16 @@ export default function HotelPage({ hotel }: HotelPageProps) {
                   </span>
                 )}
                 <div className='flex flex-col'>
-                  <Typography variant={TextVariant.sm2}>
-                    {review.name}
-                  </Typography>
-                  <Typography
-                    variant={TextVariant.sm2}
-                    weight={TextFontWeight.light}
-                  >
+                  <Typography variant='sm2'>{review.name}</Typography>
+                  <Typography variant='sm2' weight='light'>
                     {review.rate}
                   </Typography>
-                  <Typography
-                    variant={TextVariant.sm2}
-                    weight={TextFontWeight.light}
-                  >
+                  <Typography variant='sm2' weight='light'>
                     {review.date}
                   </Typography>
                 </div>
               </div>
-              <Typography variant={TextVariant.xs2}>
-                {review.comment}
-              </Typography>
+              <Typography variant='xs2'>{review.comment}</Typography>
             </div>
           ))}
         </Swiper>
@@ -194,12 +177,12 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr />
 
       <Section className='p-4 pb-0 pt-2'>
-        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+        <Typography variant='h2' weight='normal'>
           Nuestra ubicación exacta
         </Typography>
         <div className='flex justify-start space-x-2 pt-3'>
           <Icon variant='marker' className='mt-1' />
-          <Typography variant={TextVariant.sm} weight={TextFontWeight.light}>
+          <Typography variant='sm' weight='light'>
             {data.address}
           </Typography>
         </div>
@@ -224,12 +207,12 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr />
 
       <Section className='p-4 pb-0 pt-2'>
-        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+        <Typography variant='h2' weight='normal'>
           Sitios de interés cercanos
         </Typography>
         <div className='flex justify-start space-x-3 pb-5 pt-3'>
           <Icon variant='camera' width={24} />
-          <Typography variant={TextVariant.base} className='underline'>
+          <Typography variant='base' className='underline'>
             Actividades
           </Typography>
         </div>
@@ -239,9 +222,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
             className='flex justify-between py-2'
           >
             <Typography>{activity.name}</Typography>
-            <Typography weight={TextFontWeight.light}>
-              {activity.distance}
-            </Typography>
+            <Typography weight='light'>{activity.distance}</Typography>
           </div>
         ))}
         <Button className='my-4 w-full font-semibold' variant='secondary'>
@@ -252,7 +233,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr />
 
       <Section className='p-4 pb-6 pt-2'>
-        <Typography variant={TextVariant.h2} weight={TextFontWeight.normal}>
+        <Typography variant='h2' weight='normal'>
           Reglas del hotel
         </Typography>
 
@@ -260,14 +241,12 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           {data.rules.map((rule, key) => (
             <div key={`$rules-${key}`} className='flex justify-between py-2'>
               <Typography>{rule.name}</Typography>
-              <Typography weight={TextFontWeight.light}>
-                {rule.description}
-              </Typography>
+              <Typography weight='light'>{rule.description}</Typography>
             </div>
           ))}
         </div>
 
-        <Typography weight={TextFontWeight.semibold} className='underline'>
+        <Typography weight='semibold' className='underline'>
           Mostrar más
         </Typography>
       </Section>
@@ -275,18 +254,11 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <Sticky>
         <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>
           <div className='flex flex-col'>
-            <Typography
-              variant={TextVariant.sm}
-              weight={TextFontWeight.semibold}
-            >
+            <Typography variant='sm' weight='semibold'>
               {' '}
               Desde $100.00 x noche
             </Typography>
-            <Typography
-              variant={TextVariant.sm}
-              weight={TextFontWeight.normal}
-              className='underline'
-            >
+            <Typography variant='sm' weight='normal' className='underline'>
               {' '}
               Desde $100.00 x noche
             </Typography>

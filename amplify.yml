@@ -3,14 +3,14 @@ frontend:
   phases:
     preBuild:
       commands:
-        - pnpm install
-        - pnpm run lint:strict
-        - pnpm run typecheck
-        - pnpm run format:check
-        - pnpm run test
+        - npx pnpm install
+        - npx pnpm run lint:strict
+        - npx pnpm run typecheck
+        - npx pnpm run format:check
+        - npx pnpm run test
     build:
       commands:
-        - pnpm run build
+        - npx pnpm run build
   artifacts:
     baseDirectory: .next
     files:

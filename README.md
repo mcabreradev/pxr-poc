@@ -2,38 +2,7 @@
   <img src="https://acontraluz.paxer.com/media/paxer/img/logo_completo/with-bg/logo_paxer_bg_white-320.png" />
 </div>
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-## Table of Contents
-
-- [Stack](#stack)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [1. Clone the repository:](#1-clone-the-repository)
-  - [2. Install dependencies](#2-install-dependencies)
-  - [3. Run the development server](#3-run-the-development-server)
-  - [4. Run the build script](#4-run-the-build-script)
-  - [5. Run the production server](#5-run-the-production-server)
-  - [6. Commit Message Convention](#6-commit-message-convention)
-- [Styleguide](#styleguide)
-  - [React Functional Components](#react-functional-components)
-  - [Styled Components](#styled-components)
-  - [Tailwind CSS](#tailwind-css)
-  - [Tailwind CSS with Styled Components](#tailwind-css-with-styled-components)
-- [i18n](#i18n)
-- [Storybook](#storybook)
-- [Testing](#testing)
-- [React Query](#react-query)
-  - [What is React Query?](#what-is-react-query)
-  - [Why React Query?](#why-react-query)
-  - [How to use React Query?](#how-to-use-react-query)
-- [React Hook Form](#react-hook-form)
-  - [How to use React Hook Form?](#how-to-use-react-hook-form)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-## Stack
+## Tech Stack
 
 - ⚡️ Next.js 13
 - ⚛️ React 18
@@ -58,10 +27,40 @@
 
 TODO:
 
-- ~~🐳 Docker~~
-- ~~[Playwright](https://playwright.dev/) - e2e - Enables reliable end-to-end testing for modern web apps~~
+- 🐳 Docker
+- Playwright / e2e - Enables reliable end-to-end testing
 
 ---
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [1. Clone the repository:](#1-clone-the-repository)
+  - [2. Install dependencies](#2-install-dependencies)
+  - [3. Run the development server](#3-run-the-development-server)
+  - [4. Run the build script](#4-run-the-build-script)
+  - [5. Run the production server](#5-run-the-production-server)
+  - [6. Commit Message Convention](#6-commit-message-convention)
+- [Styleguide](#styleguide)
+  - [React Functional Components](#react-functional-components)
+  - [Styled Components](#styled-components)
+  - [Tailwind CSS](#tailwind-css)
+  - [Tailwind CSS with Styled Components](#tailwind-css-with-styled-components)
+- [i18n](#i18n)
+- [Storybook](#storybook)
+- [Testing](#testing)
+- [React Query](#react-query)
+  - [What is React Query?](#what-is-react-query)
+  - [Why React Query?](#why-react-query)
+  - [How to use React Query?](#how-to-use-react-query)
+- [React Hook Form](#react-hook-form)
+  - [How to use React Hook Form?](#how-to-use-react-hook-form)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Prerequisites
 

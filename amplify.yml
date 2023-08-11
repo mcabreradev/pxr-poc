@@ -4,13 +4,14 @@ frontend:
     preBuild:
       commands:
         - yarn install
-        - yarn lint:strict
-        - yarn typecheck
-        - yarn format:check
-        - yarn test
+        - yarn run lint:strict
+        - yarn run typecheck
+        - yarn run format:check
+        - yarn run test
     build:
       commands:
-        - yarn build
+        - rm -rf .next
+        - yarn run build
   artifacts:
     baseDirectory: .next
     files:

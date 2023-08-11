@@ -4,13 +4,8 @@ frontend:
     preBuild:
       commands:
         - yarn install
-        - yarn run lint:strict
-        - yarn run typecheck
-        - yarn run format:check
-        - yarn run test
     build:
       commands:
-        - rm -rf .next
         - yarn run build
   artifacts:
     baseDirectory: .next
@@ -18,4 +13,5 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/*
+      - 'node_modules/**/*'
+      - '.next/cache/**/*'

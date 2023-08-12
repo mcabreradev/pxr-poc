@@ -1,11 +1,11 @@
-import Image from 'next/image';
+/* eslint-disable simple-import-sort/imports */
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import Button from '@/components/button';
 import Carousel from '@/components/carousel';
 import Icon from '@/components/icon';
-// import Image from '@/components/image';
+import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';

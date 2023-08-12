@@ -13,7 +13,13 @@ const nextConfig = {
   optimizeFonts: true,
 
   images: {
-    domains: ['localhost', 'images.unsplash.com', 'paxer.com', 'i.pravatar.cc'],
+    domains: [
+      'localhost',
+      'images.unsplash.com',
+      'paxer.com',
+      'i.pravatar.cc',
+      'images.pexels.com',
+    ],
   },
 
   webpack(config) {

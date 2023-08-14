@@ -13,6 +13,7 @@ const nextConfig = {
   optimizeFonts: true,
 
   images: {
+    unoptimized: true,
     domains: [
       'localhost',
       'images.unsplash.com',

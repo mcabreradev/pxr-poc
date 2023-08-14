@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Poppins', sans-serif;
-
   --tw-color-neutral-50: 234 236 240;
   --tw-color-neutral-100: 189 189 189;
   --tw-color-neutral-200: 173 173 173;
@@ -32,7 +30,6 @@
   --color-brand-500: var(--tw-color-brand-500); /* #27a97e */
   --color-success-300: var(--tw-color-success-300); /* #39abfe */
   --color-success-500: var(--tw-color-success-500); /* #2970ff */
-  --color-warning-100: var(--tw-color-warning-100); /* #fff3d6 */
   --color-warning-300: var(--tw-color-warning-300); /* #ffd358 */
   --color-warning-500: var(--tw-color-warning-500); /* #ffbc00 */
   --color-error-300: var(--tw-color-error-300); /* #ff6c60 */

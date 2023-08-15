@@ -1,5 +1,8 @@
 <div align="center">
   <img src="https://acontraluz.paxer.com/media/paxer/img/logo_completo/with-bg/logo_paxer_bg_white-320.png" />
+
+[![Code Check](https://github.com/Prinhotels/paxer-ecomm/actions/workflows/lint.yml/badge.svg)](https://github.com/Prinhotels/paxer-ecomm/actions/workflows/lint.yml)
+
 </div>
 
 ## Tech Stack

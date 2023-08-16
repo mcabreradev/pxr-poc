@@ -8,9 +8,6 @@ overrides:
   semver: ^7.5.2
 
 dependencies:
-  axios:
-    specifier: ^1.4.0
-    version: 1.4.0
   clsx:
     specifier: ^2.0.0
     version: 2.0.0
@@ -151,6 +148,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.15
     version: 10.4.15(postcss@8.4.28)
+  axios:
+    specifier: ^1.4.0
+    version: 1.4.0
   babel-loader:
     specifier: ^9.1.3
     version: 9.1.3(@babel/core@7.22.10)(webpack@5.88.2)
@@ -7827,6 +7827,7 @@ packages:
       {
         integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==,
       }
+    dev: true
 
   /autoprefixer@10.4.15(postcss@8.4.28):
     resolution:
@@ -7874,7 +7875,7 @@ packages:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
-    dev: false
+    dev: true
 
   /axobject-query@3.2.1:
     resolution:
@@ -8876,6 +8877,7 @@ packages:
     engines: { node: '>= 0.8' }
     dependencies:
       delayed-stream: 1.0.0
+    dev: true
 
   /commander@11.0.0:
     resolution:
@@ -9691,6 +9693,7 @@ packages:
         integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==,
       }
     engines: { node: '>=0.4.0' }
+    dev: true
 
   /depd@2.0.0:
     resolution:
@@ -11352,7 +11355,7 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: false
+    dev: true
 
   /for-each@0.3.3:
     resolution:
@@ -11433,6 +11436,7 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
+    dev: true
 
   /format@0.2.2:
     resolution:
@@ -14669,6 +14673,7 @@ packages:
         integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==,
       }
     engines: { node: '>= 0.6' }
+    dev: true
 
   /mime-types@2.1.35:
     resolution:
@@ -14678,6 +14683,7 @@ packages:
     engines: { node: '>= 0.6' }
     dependencies:
       mime-db: 1.52.0
+    dev: true
 
   /mime@1.6.0:
     resolution:
@@ -16303,6 +16309,7 @@ packages:
       {
         integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==,
       }
+    dev: true
 
   /psl@1.9.0:
     resolution:

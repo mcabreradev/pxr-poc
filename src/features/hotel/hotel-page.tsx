@@ -1,4 +1,7 @@
+'use client';
+
 /* eslint-disable simple-import-sort/imports */
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -9,9 +12,11 @@ import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
+import logger from '@/lib/logger';
 
 import Footer from './hotel-footer';
 import RoomSwiper from './hotel-room-swiper';
+
 import data from './hotel.data.json';
 
 const Section = tw.div`
@@ -23,14 +28,37 @@ const Row = tw.div`
 `;
 
 type HotelPageProps = {
-  hotel?: string;
+  hotid?: string;
 };
 
-export default function HotelPage({ hotel }: HotelPageProps) {
-  const { t } = useTranslation();
+export default function HotelPage({ hotid = '' }: HotelPageProps) {
+  const { t, i18n } = useTranslation();
+
+  const {
+    isLoading,
+    isError,
+    data: property,
+  } = useQuery({
+    queryKey: ['todos'],
+    queryFn: () =>
+      fetch(
+        '/api/property?hotid=' + process.env.NEXT_PUBLIC_PAXER_HOTEL_ID ||
+          hotid,
+      ).then((res) => res.json()),
+  });
+
+  if (isLoading) {
+    return <span>Loading... {hotid}</span>;
+  }
+
+  if (isError) {
+    return <span>Error: error</span>;
+  }
+
+  logger(property);
 
   return (
-    <div data-id-test='test-componet' title={hotel}>
+    <main data-id-test='test-componet' title={property}>
       <Carousel>
         {data.images.map((image) => (
           <Image
@@ -45,16 +73,16 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       </Carousel>
 
       <Section className='pt-3'>
-        <Typography variant='h1'>{data.name}</Typography>
+        <Typography variant='h1'>{property.name}</Typography>
         <div className='flex flex-row items-center text-[14px]'>
           <Icon variant='star' width='16px' />
-          <p className='p-1'>{data.rate}</p>•
+          <p className='p-1'>{property.reviewRatingScore}</p>•
           <p className='pl-1 underline hover:cursor-pointer'>{`${
-            data.reviews.length
-          } ${data.reviews.length > 1 ? 'reseñas' : 'reseña'}`}</p>
+            property.reviewRatingCount
+          } ${property.reviewRatingCount > 1 ? 'reseñas' : 'reseña'}`}</p>
         </div>
 
-        <div className='py-1 underline'>{data.address}</div>
+        <div className='py-1 underline'>{`${property.street}, ${property.state}, ${property.countryName}`}</div>
 
         <div className='flex flex-row items-center py-2 underline'>
           <span className='pr-1'>Contacto</span>
@@ -69,7 +97,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr />
 
       <Section>
-        <p className='my-2 text-2sm'>{data.description}</p>
+        <p className='my-2 text-2sm'>{property.description[i18n.language]}</p>
       </Section>
 
       <Section className='pt-4'>
@@ -269,6 +297,6 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         </div>
       </Sticky>
       <Footer />
-    </div>
+    </main>
   );
 }

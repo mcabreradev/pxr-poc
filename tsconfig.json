@@ -33,7 +33,8 @@
     ".next/types/**/*.ts",
     "src/**/*",
     "src/**/**/*",
-    "src/**/**/**/*"
+    "src/**/**/**/*",
+    "src/**/**/**/**/*"
   ],
   "exclude": ["node_modules"],
   "moduleResolution": ["node_modules", ".next", "node"]

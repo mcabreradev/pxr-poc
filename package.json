@@ -24,6 +24,7 @@
     "test:watch": "npm run test --watch --silent",
     "test:update-snapshot": "npm run test --updateSnapshot --silent",
     "test:coverage": "npm run test -- --coverage",
+    "test:clear": "npx jest --clearCache",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
@@ -39,6 +40,7 @@
     "git:clean:stage": "sh ./scripts/git-clean.sh stage"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "clsx": "^2.0.0",
     "doctoc": "^2.2.1",
     "next": "13.4.18-canary.0",
@@ -56,7 +58,6 @@
     "@commitlint/config-conventional": "^17.7.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.2.0",
     "@iconify/react": "^4.1.1",
     "@material-tailwind/react": "^2.1.0",

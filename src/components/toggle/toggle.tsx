@@ -1,8 +1,8 @@
-import { Switch as Base } from '@headlessui/react';
+import { Switch } from '@headlessui/react';
 import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 
-interface ToggleProps {
+type ToggleProps = {
   className?: string;
   label?: string;
   name?: string;
@@ -10,7 +10,7 @@ interface ToggleProps {
   subtitle?: string;
   toggled?: boolean;
   readonly?: boolean;
-}
+};
 
 const Content = tw.div`
   flex items-center
@@ -27,7 +27,7 @@ const Subtitle = tw.span`
   text-xs leading-[160%] text-gray-500
 `;
 
-const Switch = tw(Base)<{ enabled?: boolean }>`
+const CustomSwitch = tw(Switch)<{ enabled?: boolean }>`
   ${(p) => (p.enabled ? 'bg-green' : 'bg-gray-50')};
   relative mr-4 inline-flex h-6 w-11 items-center rounded-full shrink-0
 `;
@@ -55,7 +55,7 @@ export default function Toogle({
 
   return (
     <Content>
-      <Switch
+      <CustomSwitch
         name={name}
         value={value}
         checked={enabled}
@@ -65,7 +65,7 @@ export default function Toogle({
         data-testid='test-element'
       >
         <SwitchDot enabled={enabled} />
-      </Switch>
+      </CustomSwitch>
       <LabelContainer>
         {!!label && <Label>{label}</Label>}
         {!!subtitle && <Subtitle>{subtitle}</Subtitle>}

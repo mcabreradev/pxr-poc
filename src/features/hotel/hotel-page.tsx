@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable simple-import-sort/imports */
-import { useQuery } from '@tanstack/react-query';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -12,6 +12,7 @@ import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
+import useQueryProperty from '@/hooks/use-queryproperty';
 import logger from '@/lib/logger';
 
 import Footer from './hotel-footer';
@@ -27,28 +28,15 @@ const Row = tw.div`
   flex flex-row items-center
 `;
 
-type HotelPageProps = {
-  hotid?: string;
-};
-
-export default function HotelPage({ hotid = '' }: HotelPageProps) {
+const HotelPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
 
-  const {
-    isLoading,
-    isError,
-    data: property,
-  } = useQuery({
-    queryKey: ['todos'],
-    queryFn: () =>
-      fetch(
-        '/api/property?hotid=' + process.env.NEXT_PUBLIC_PAXER_HOTEL_ID ||
-          hotid,
-      ).then((res) => res.json()),
-  });
+  const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID || '';
+
+  const { isLoading, isError, data: property } = useQueryProperty(propertyId);
 
   if (isLoading) {
-    return <span>Loading... {hotid}</span>;
+    return <span>Loading...</span>;
   }
 
   if (isError) {
@@ -299,4 +287,6 @@ export default function HotelPage({ hotid = '' }: HotelPageProps) {
       <Footer />
     </main>
   );
-}
+});
+
+export default HotelPage;

@@ -2,14 +2,10 @@ import React from 'react';
 
 import HotelPage from '@/features/hotel/hotel-page';
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | undefined };
-}) {
+export default function Page() {
   return (
     <React.Fragment>
-      <HotelPage hotid={searchParams.hotid} />
+      <HotelPage />
     </React.Fragment>
   );
 }

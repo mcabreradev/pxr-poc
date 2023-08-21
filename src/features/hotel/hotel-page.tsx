@@ -12,7 +12,7 @@ import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
-import useQueryProperty from '@/hooks/use-queryproperty';
+import usePropertyQuery from '@/hooks/use-propertyquery';
 import logger from '@/lib/logger';
 
 import Footer from './hotel-footer';
@@ -33,7 +33,7 @@ const HotelPage = memo(function HotelPage() {
 
   const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID || '';
 
-  const { isLoading, isError, data: property } = useQueryProperty(propertyId);
+  const { isLoading, isError, data: property } = usePropertyQuery(propertyId);
 
   if (isLoading) {
     return <span>Loading...</span>;

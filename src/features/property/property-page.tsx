@@ -15,10 +15,10 @@ import Typography from '@/components/typography';
 import usePropertyQuery from '@/hooks/use-propertyquery';
 import logger from '@/lib/logger';
 
-import Footer from './hotel-footer';
-import RoomSwiper from './hotel-room-swiper';
+import Footer from './property-footer';
+import RoomSwiper from './property-room-swiper';
 
-import data from './hotel.data.json';
+import data from './property.data.json';
 
 const Section = tw.div`
   px-4 text-black
@@ -28,7 +28,7 @@ const Row = tw.div`
   flex flex-row items-center
 `;
 
-const HotelPage = memo(function HotelPage() {
+const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
 
   const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID || '';
@@ -40,7 +40,7 @@ const HotelPage = memo(function HotelPage() {
   }
 
   if (isError) {
-    return <span>Error: error</span>;
+    return <span>Error</span>;
   }
 
   logger(property);
@@ -148,21 +148,21 @@ const HotelPage = memo(function HotelPage() {
           </Typography>
           <Icon variant='star' width='22px' className='ml-2' />
           <Typography className='p-1' variant='h2' weight='medium'>
-            {data.rate}
+            {property.reviewRatingScore}
           </Typography>
         </div>
 
         <Swiper>
-          {data.reviews.map((review, i) => (
+          {property.reviews.map((review) => (
             <div
-              key={`reviews-${i}-box`}
+              key={`reviews-${review.reviewId}-box`}
               className='box-border flex h-auto w-[271px] flex-col space-y-4 border-[1px] border-solid border-gray-50 bg-white p-3'
             >
               <div className='flex space-x-2'>
-                {review.avatar ? (
+                {review.authorPhotoURL ? (
                   <Image
-                    alt={review.name}
-                    src={review.avatar}
+                    alt={review.authorName}
+                    src={review.authorPhotoURL}
                     width={45}
                     height={45}
                     className='h-10 w-10 rounded-full'
@@ -170,21 +170,21 @@ const HotelPage = memo(function HotelPage() {
                 ) : (
                   <span className='inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-600'>
                     <span className='text-xs font-medium leading-none text-white'>
-                      AC
+                      {review.authorName}
                     </span>
                   </span>
                 )}
                 <div className='flex flex-col'>
-                  <Typography variant='sm2'>{review.name}</Typography>
+                  <Typography variant='sm2'>{review.authorName}</Typography>
                   <Typography variant='sm2' weight='light'>
-                    {review.rate}
+                    {review.rating}
                   </Typography>
                   <Typography variant='sm2' weight='light'>
-                    {review.date}
+                    {review.relativeTime}
                   </Typography>
                 </div>
               </div>
-              <Typography variant='xs2'>{review.comment}</Typography>
+              <Typography variant='xs2'>{review.text}</Typography>
             </div>
           ))}
         </Swiper>
@@ -199,7 +199,7 @@ const HotelPage = memo(function HotelPage() {
         <div className='flex justify-start space-x-2 pt-3'>
           <Icon variant='marker' className='mt-1' />
           <Typography variant='sm' weight='light'>
-            {data.address}
+            {`${property.street}, ${property.state}, ${property.countryName}`}
           </Typography>
         </div>
 
@@ -232,9 +232,9 @@ const HotelPage = memo(function HotelPage() {
             Actividades
           </Typography>
         </div>
-        {data.attractions.map((activity, key) => (
+        {property.topSights.map((activity) => (
           <div
-            key={`$attractions-${key}`}
+            key={`$attractions-${activity.googlePlaceId}`}
             className='flex justify-between py-2'
           >
             <Typography>{activity.name}</Typography>
@@ -289,4 +289,4 @@ const HotelPage = memo(function HotelPage() {
   );
 });
 
-export default HotelPage;
+export default PropertyPage;

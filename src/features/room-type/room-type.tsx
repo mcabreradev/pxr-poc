@@ -11,7 +11,7 @@ import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import Footer from '@/features/hotel/hotel-footer';
+import Footer from '@/features/property/property-footer';
 
 import data from './room-type.data.json';
 

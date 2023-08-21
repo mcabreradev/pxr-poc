@@ -20,6 +20,7 @@ const nextConfig = {
       'paxer.com',
       'i.pravatar.cc',
       'images.pexels.com',
+      'https://maps.gstatic.com',
     ],
   },
 

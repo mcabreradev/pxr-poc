@@ -1,11 +1,11 @@
 import React from 'react';
 
-import HotelPage from '@/features/hotel/hotel-page';
+import PropertyPage from '@/features/property/property-page';
 
 export default function Page() {
   return (
     <React.Fragment>
-      <HotelPage />
+      <PropertyPage />
     </React.Fragment>
   );
 }

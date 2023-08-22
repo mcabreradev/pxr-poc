@@ -13,6 +13,7 @@ const getAccessToken = async () => {
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     data: qs.stringify(data),
     url: process.env.PAXER_AUTH_URL,
+    maxRedirects: 0,
   };
 
   try {
@@ -35,6 +36,7 @@ export const get = async (url: string) => {
     method: 'GET',
     url: process.env.PAXER_API_URL + url,
     headers: await getHeaders(),
+    maxRedirects: 0,
   };
 
   try {

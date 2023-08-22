@@ -1,4 +1,7 @@
+'use client';
+
 /* eslint-disable simple-import-sort/imports */
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -9,10 +12,13 @@ import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
+import usePropertyQuery from '@/hooks/use-propertyquery';
+import logger from '@/lib/logger';
 
-import Footer from './hotel-footer';
-import RoomSwiper from './hotel-room-swiper';
-import data from './hotel.data.json';
+import Footer from './property-footer';
+import RoomSwiper from './property-room-swiper';
+
+import data from './property.data.json';
 
 const Section = tw.div`
   px-4 text-black
@@ -22,15 +28,25 @@ const Row = tw.div`
   flex flex-row items-center
 `;
 
-type HotelPageProps = {
-  hotel?: string;
-};
+const PropertyPage = memo(function HotelPage() {
+  const { t, i18n } = useTranslation();
 
-export default function HotelPage({ hotel }: HotelPageProps) {
-  const { t } = useTranslation();
+  const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID || '';
+
+  const { isLoading, isError, data: property } = usePropertyQuery(propertyId);
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error</span>;
+  }
+
+  logger(property);
 
   return (
-    <div data-id-test='test-componet' title={hotel}>
+    <main data-id-test='test-componet' title={property}>
       <Carousel>
         {data.images.map((image) => (
           <Image
@@ -45,16 +61,16 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       </Carousel>
 
       <Section className='pt-3'>
-        <Typography variant='h1'>{data.name}</Typography>
+        <Typography variant='h1'>{property.name}</Typography>
         <div className='flex flex-row items-center text-[14px]'>
           <Icon variant='star' width='16px' />
-          <p className='p-1'>{data.rate}</p>•
+          <p className='p-1'>{property.reviewRatingScore}</p>•
           <p className='pl-1 underline hover:cursor-pointer'>{`${
-            data.reviews.length
-          } ${data.reviews.length > 1 ? 'reseñas' : 'reseña'}`}</p>
+            property.reviewRatingCount
+          } ${property.reviewRatingCount > 1 ? 'reseñas' : 'reseña'}`}</p>
         </div>
 
-        <div className='py-1 underline'>{data.address}</div>
+        <div className='py-1 underline'>{`${property.street}, ${property.state}, ${property.countryName}`}</div>
 
         <div className='flex flex-row items-center py-2 underline'>
           <span className='pr-1'>Contacto</span>
@@ -69,7 +85,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
       <hr />
 
       <Section>
-        <p className='my-2 text-2sm'>{data.description}</p>
+        <p className='my-2 text-2sm'>{property.description[i18n.language]}</p>
       </Section>
 
       <Section className='pt-4'>
@@ -132,21 +148,21 @@ export default function HotelPage({ hotel }: HotelPageProps) {
           </Typography>
           <Icon variant='star' width='22px' className='ml-2' />
           <Typography className='p-1' variant='h2' weight='medium'>
-            {data.rate}
+            {property.reviewRatingScore}
           </Typography>
         </div>
 
         <Swiper>
-          {data.reviews.map((review, i) => (
+          {property.reviews.map((review) => (
             <div
-              key={`reviews-${i}-box`}
+              key={`reviews-${review.reviewId}-box`}
               className='box-border flex h-auto w-[271px] flex-col space-y-4 border-[1px] border-solid border-gray-50 bg-white p-3'
             >
               <div className='flex space-x-2'>
-                {review.avatar ? (
+                {review.authorPhotoURL ? (
                   <Image
-                    alt={review.name}
-                    src={review.avatar}
+                    alt={review.authorName}
+                    src={review.authorPhotoURL}
                     width={45}
                     height={45}
                     className='h-10 w-10 rounded-full'
@@ -154,21 +170,21 @@ export default function HotelPage({ hotel }: HotelPageProps) {
                 ) : (
                   <span className='inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-600'>
                     <span className='text-xs font-medium leading-none text-white'>
-                      AC
+                      {review.authorName}
                     </span>
                   </span>
                 )}
                 <div className='flex flex-col'>
-                  <Typography variant='sm2'>{review.name}</Typography>
+                  <Typography variant='sm2'>{review.authorName}</Typography>
                   <Typography variant='sm2' weight='light'>
-                    {review.rate}
+                    {review.rating}
                   </Typography>
                   <Typography variant='sm2' weight='light'>
-                    {review.date}
+                    {review.relativeTime}
                   </Typography>
                 </div>
               </div>
-              <Typography variant='xs2'>{review.comment}</Typography>
+              <Typography variant='xs2'>{review.text}</Typography>
             </div>
           ))}
         </Swiper>
@@ -183,7 +199,7 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         <div className='flex justify-start space-x-2 pt-3'>
           <Icon variant='marker' className='mt-1' />
           <Typography variant='sm' weight='light'>
-            {data.address}
+            {`${property.street}, ${property.state}, ${property.countryName}`}
           </Typography>
         </div>
 
@@ -216,9 +232,9 @@ export default function HotelPage({ hotel }: HotelPageProps) {
             Actividades
           </Typography>
         </div>
-        {data.attractions.map((activity, key) => (
+        {property.topSights.map((activity) => (
           <div
-            key={`$attractions-${key}`}
+            key={`$attractions-${activity.googlePlaceId}`}
             className='flex justify-between py-2'
           >
             <Typography>{activity.name}</Typography>
@@ -269,6 +285,8 @@ export default function HotelPage({ hotel }: HotelPageProps) {
         </div>
       </Sticky>
       <Footer />
-    </div>
+    </main>
   );
-}
+});
+
+export default PropertyPage;

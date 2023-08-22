@@ -10,7 +10,7 @@ export default function logger(...args): void {
   if (!showLogger) return;
 
   console.log(
-    '%c ============== INFO LOG =============== 👇🏼👇🏼👇🏼👇🏼 \n',
+    '%c ============== INFO LOG ===============n',
     'color: #22D3EE',
     `${typeof window !== 'undefined' && window?.location.pathname}\n`,
     ...args,

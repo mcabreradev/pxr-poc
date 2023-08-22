@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --font-sans: 'Poppins', sans-serif;
   --tw-color-neutral-50: 234 236 240;
   --tw-color-neutral-100: 189 189 189;
   --tw-color-neutral-200: 173 173 173;

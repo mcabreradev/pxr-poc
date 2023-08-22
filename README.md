@@ -1,9 +1,8 @@
 <div align="center">
   <img src="https://acontraluz.paxer.com/media/paxer/img/logo_completo/with-bg/logo_paxer_bg_white-320.png" />
-
-[![Code Check](https://github.com/Prinhotels/paxer-ecomm/actions/workflows/lint.yml/badge.svg)](https://github.com/Prinhotels/paxer-ecomm/actions/workflows/lint.yml)
-
 </div>
+
+[![Code Check](https://github.com/Prinhotels/paxer-ecomm/actions/workflows/lint.yml/badge.svg?branch=dev)](https://github.com/Prinhotels/paxer-ecomm/actions/workflows/lint.yml)
 
 ## Tech Stack
 
@@ -21,8 +20,8 @@
 - 🗺 Site Map — Automatically generate sitemap.xml
 - 📦 pnpm - A strict and efficient alternative to npm with up to 3x faster performance
 - 🈸 Internationalization (i18n)
-- 🛒 Redux Toolkit
-- 🔌 React Query - Declarative, always-up-to-date auto-managed queries and mutations
+- 🐻 Zustand - A state management library for React
+- 🔌 React Query - Server state management
 - 📄 React Hook Form - Performant, flexible and extensible forms with easy-to-use validation
 - 💎 Storybook - A frontend workshop for building UI components and pages in isolation
 - 🙂 SVG Icons by [Iconify](https://iconify.design/)
@@ -48,20 +47,20 @@ TODO:
   - [4. Run the build script](#4-run-the-build-script)
   - [5. Run the production server](#5-run-the-production-server)
   - [6. Commit Message Convention](#6-commit-message-convention)
-- [Styleguide](#styleguide)
-  - [React Functional Components](#react-functional-components)
-  - [Styled Components](#styled-components)
-  - [Tailwind CSS](#tailwind-css)
-  - [Tailwind CSS with Styled Components](#tailwind-css-with-styled-components)
+- [React Functional Components](#react-functional-components)
+- [Styled Components](#styled-components)
+- [Tailwind CSS](#tailwind-css)
+- [Tailwind CSS with Styled Components](#tailwind-css-with-styled-components)
 - [i18n](#i18n)
 - [Storybook](#storybook)
 - [Testing](#testing)
 - [React Query](#react-query)
-  - [What is React Query?](#what-is-react-query)
-  - [Why React Query?](#why-react-query)
   - [How to use React Query?](#how-to-use-react-query)
 - [React Hook Form](#react-hook-form)
   - [How to use React Hook Form?](#how-to-use-react-hook-form)
+- [Zustand](#zustand)
+  - [What is Zustand?](#what-is-zustand)
+  - [How to use Zustand?](#how-to-use-zustand)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -147,8 +146,6 @@ feat(customer): PXR-1017 add customer reservation
 more info follow [Angular Convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines).
 
 ---
-
-# Styleguide
 
 ## React Functional Components
 
@@ -309,35 +306,44 @@ pnpm run test
 
 # React Query
 
-## What is React Query?
-
-React Query is often described as the missing data-fetching library for React, but in more technical terms, it makes fetching, caching, synchronizing and updating server state in your React applications a breeze.
-
-## Why React Query?
-
-- **It's simple** - React Query is designed to make network requests easy and painless. By providing a concise query syntax and removing the need to manage your own cache, you can simplify your code and your application's mental model.
-- **It's powerful** - React Query is packed with features that will make your application hum with performance. From automatic refetching to pagination and infinite query support, you can build a feature rich app with minimal effort.
-- **It's familiar** - React Query's query syntax is modeled after the popular GraphQL query language and can be used to fetch data from any API, whether it's REST, GraphQL, or something else.
-- **It's extensible** - React Query's plugin system allows you to extend and customize React Query to fit your needs. From custom cache implementations to custom query resolvers, you can customize React Query to your heart's content.
-
 ## How to use React Query?
 
 ```typescript
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
-function App() {
-  const { isLoading, error, data } = useQuery('repoData', () =>
-    fetch('http://api.service').then((res) => res.json()),
-  );
+const fetchProperty = async (hotid: string) => {
+  const { data } = await axios.get('/api/property?hotid=' + hotid);
+  return data;
+};
 
-  if (isLoading) return 'Loading...';
+export default function useQueryProperty(hotid: string) {
+  return useQuery({
+    queryKey: ['queryProperty', hotid],
+    queryFn: () => fetchProperty(hotid),
+  });
+}
+```
 
-  if (error) return 'An error has occurred: ' + error.message;
+Usage example:
+
+```typescript
+import { useQueryProperty } from 'hooks';
+
+function Hotel() {
+  const { data, isLoading, error } = useQueryProperty('123456');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <div>
-      <h1>{data.name}</h1>
-      <p>{data.description}</p>
+    <div className='App'>
+      <h1> {data.name} </h1>
     </div>
   );
 }
@@ -382,3 +388,47 @@ export default function App() {
   );
 }
 ```
+
+# Zustand
+
+## What is Zustand?
+
+Zustand is a small, fast and scalable bearbones state-management solution. It has a familiar API (based on hooks) and comes with a great set of tools and features that will make your life easier and your code cleaner.
+
+## How to use Zustand?
+
+```typescript
+import create from 'zustand';
+
+type StateType = {
+  count: number;
+  inc: () => void;
+  dec: () => void;
+};
+
+export const useStore = create<StateType>((set) => ({
+  count: 0,
+  inc: () => set((state) => ({ count: state.count + 1 })),
+  dec: () => set((state) => ({ count: state.count - 1 })),
+}));
+```
+
+Usage example:
+
+```typescript
+import { useStore } from './store';
+
+function Counter() {
+  const { count, inc, dec } = useStore();
+
+  return (
+    <div>
+      <h1>{count}</h1>
+      <button onClick={inc}>+</button>
+      <button onClick={dec}>-</button>
+    </div>
+  );
+}
+```
+
+For more information follow [this guide](https://zustand.surge.sh/)

@@ -20,6 +20,7 @@ const nextConfig = {
       'paxer.com',
       'i.pravatar.cc',
       'images.pexels.com',
+      'https://maps.gstatic.com',
     ],
   },
 
@@ -54,6 +55,9 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
+  },
+  experimental: {
+    serverActions: true,
   },
 };
 

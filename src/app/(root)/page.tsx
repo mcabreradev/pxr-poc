@@ -1,23 +1,11 @@
-'use client';
-
 import React from 'react';
 
-import HotelPage from '@/features/hotel/hotel-page';
+import PropertyPage from '@/features/property/property-page';
 
-export default function Page({ params }: { params: { hotel: string } }) {
-  const [hydrated, setHydrated] = React.useState(false);
-  React.useEffect(() => {
-    setHydrated(true);
-  }, []);
-  if (!hydrated) {
-    return null;
-  }
-
-  const { hotel } = params;
-
+export default function Page() {
   return (
-    <>
-      <HotelPage hotel={hotel} />
-    </>
+    <React.Fragment>
+      <PropertyPage />
+    </React.Fragment>
   );
 }

@@ -2,6 +2,11 @@
 const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    PAXER_API_URL: process.env.PAXER_API_URL,
+    PAXER_AUTH_URL: process.env.PAXER_AUTH_URL,
+    PAXER_AUTH_CLIENT_ID: process.env.PAXER_AUTH_CLIENT_ID,
+    PAXER_AUTH_CLIENT_SECRET: process.env.PAXER_AUTH_CLIENT_SECRET,
+    PAXER_AUTH_USER_POOL: process.env.PAXER_AUTH_USER_POOL,
   },
 
   eslint: {

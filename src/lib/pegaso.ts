@@ -20,7 +20,9 @@ const getAccessToken = async () => {
     const res = await axios(options);
     return res.data.access_token;
   } catch (error) {
-    throw new Error("Can't get token " + error);
+    throw new Error(
+      "Can't get token from " + process.env.PAXER_AUTH_URL + ' ' + error,
+    );
   }
 };
 

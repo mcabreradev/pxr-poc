@@ -37,7 +37,8 @@
     "doctoc:check": "diff -q README.md v-README.md.orig",
     "postdoctoc:check": "mv v-README.md.orig README.md",
     "git:clean:dev": "sh ./scripts/git-clean.sh dev",
-    "git:clean:stage": "sh ./scripts/git-clean.sh stage"
+    "git:clean:stage": "sh ./scripts/git-clean.sh stage",
+    "commitizen": "exec < /dev/tty && git cz --hook || true"
   },
   "dependencies": {
     "clsx": "^2.0.0",
@@ -91,6 +92,8 @@
     "autoprefixer": "^10.4.15",
     "axios": "^1.4.0",
     "babel-loader": "^9.1.3",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "encoding": "^0.1.13",
     "eslint": "^8.47.0",
     "eslint-config-next": "^13.4.17",
@@ -149,5 +152,10 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

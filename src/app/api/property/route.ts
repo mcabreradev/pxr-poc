@@ -6,7 +6,5 @@ export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get('id');
   const res = await get('/property/' + id);
 
-  return new Response(JSON.stringify(res.property), {
-    status: 200,
-  });
+  return new Response(JSON.stringify(res.property));
 }

@@ -18,6 +18,7 @@ import logger from '@/lib/logger';
 import Footer from './property-footer';
 import RoomSwiper from './property-room-swiper';
 
+import usePropertyStore from '@/store/use-property.store';
 import data from './property.data.json';
 
 const Section = tw.div`
@@ -30,9 +31,7 @@ const Row = tw.div`
 
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
-
-  const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID || '';
-
+  const { propertyId } = usePropertyStore();
   const { isLoading, isError, data: property } = usePropertyQuery(propertyId);
 
   if (isLoading) {

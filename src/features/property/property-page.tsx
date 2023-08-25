@@ -12,7 +12,7 @@ import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
-import usePropertyQuery from '@/hooks/use-propertyquery';
+import usePropertyQuery from '@/hooks/use-property.query';
 import logger from '@/lib/logger';
 
 import Footer from './property-footer';
@@ -136,7 +136,7 @@ const PropertyPage = memo(function HotelPage() {
         <Typography variant='h2' weight='normal'>
           ¿Dónde quieres dormir?
         </Typography>
-        <RoomSwiper rooms={data.rooms} />
+        <RoomSwiper />
       </Section>
 
       <hr />

@@ -11,8 +11,6 @@ import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import Footer from '@/features/property/property-footer';
-
 import data from './room-type.data.json';
 
 interface Props {
@@ -119,7 +117,7 @@ export default function RoomTypeComponent({
                 weight='semibold'
                 className='text-neutral-400'
               >
-                {t('date.prural')}
+                {t('date.plural')}
               </Typography>
               <Typography variant='sm' className='text-neutral-500'>
                 07 may 2023 - 11 may 2023
@@ -136,10 +134,10 @@ export default function RoomTypeComponent({
                 weight='semibold'
                 className='text-neutral-400'
               >
-                {t('guest.prural')}
+                {t('guest.plural')}
               </Typography>
               <Typography variant='sm' className='text-neutral-500'>
-                2 {t('guest.adult.prural')}
+                2 {t('guest.adult.plural')}
               </Typography>
             </div>
             <Typography variant='sm' className='text-neutral-500 underline'>
@@ -298,7 +296,6 @@ export default function RoomTypeComponent({
           </div>
         </section>
       </Wrapper>
-      <Footer />
     </Container>
   );
 }

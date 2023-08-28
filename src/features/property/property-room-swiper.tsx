@@ -42,10 +42,12 @@ export default function RoomSwiper() {
             <Typography variant='h3' weight='medium' className='pb-4'>
               {room.name[i18n.language]}
             </Typography>
-            <Typography className='pb-1'>{room.subtitle}</Typography>
-            <Typography className='pb-4'>{room.desc}</Typography>
+            <Typography className='pb-1'>
+              {`Max ${room.maxCapacity} ${t('person.plural')}`}
+            </Typography>
+            <Typography className='pb-4'>{room.description}</Typography>
             <Typography weight='medium' className='pb-6 underline'>
-              {room.date}
+              {room.standardCapacity} {t('person.plural')}
             </Typography>
             <Typography className='pb-5' variant='base'>
               {t('from')} <b>${room.price}/</b>

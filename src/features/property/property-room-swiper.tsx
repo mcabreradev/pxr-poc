@@ -53,7 +53,7 @@ export default function RoomSwiper() {
               {t('from')} <b>${room.price}/</b>
               {t('night.singular')}
             </Typography>
-            <Button type='link' href='/room' className='mb-4 w-full'>
+            <Button type='link' href='/room-type' className='mb-4 w-full'>
               {t('button.reserve')}
             </Button>
           </div>

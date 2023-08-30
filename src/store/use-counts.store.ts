@@ -1,16 +1,19 @@
 import { create } from 'zustand';
 
-type Type = {
+type State = {
   count: number;
+};
+
+type Actions = {
   inc: () => void;
   dec: () => void;
   remove: () => void;
 };
 
-const useCount = create<Type>((set) => ({
+const useCount = create<State & Actions>((set, get) => ({
   count: 0,
-  inc: () => set((state) => ({ count: state.count + 1 })),
-  dec: () => set((state) => ({ count: state.count - 1 })),
+  inc: () => set(() => ({ count: get().count + 1 })),
+  dec: () => set(() => ({ count: get().count - 1 })),
   remove: () => set({ count: 0 }),
 }));
 

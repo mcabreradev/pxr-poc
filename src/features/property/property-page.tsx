@@ -1,6 +1,7 @@
 'use client';
 
 /* eslint-disable simple-import-sort/imports */
+// import { useQueryClient } from '@tanstack/react-query';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -48,6 +49,8 @@ const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
   const { propertyId } = usePropertyStore();
   const { isLoading, isError, data: property } = usePropertyQuery(propertyId);
+  // const queryClient = useQueryClient();
+  // const cache = queryClient.getQueryData(['property', propertyId]);
 
   const onClickHandler = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 const fetchRoomTypes = async (id: string) => {
-  const { data } = await axios.get(`/api/roomtypes?propertyId=${id}`);
+  const { data } = await axios.get(`/api/room-types?propertyId=${id}`);
   return data;
 };
 

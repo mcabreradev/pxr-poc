@@ -1,7 +1,6 @@
 'use client';
 
 /* eslint-disable simple-import-sort/imports */
-// import { useQueryClient } from '@tanstack/react-query';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -13,12 +12,11 @@ import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
-import usePropertyQuery from '@/hooks/use-property.query';
 
 import RoomSwiper from './property-room-swiper';
 import Skeleton from './property-skeleton';
 
-import usePropertyStore from '@/store/use-property.store';
+import useFetchProperty from '@/hooks/use-property.query';
 import data from './property.data.json';
 
 const Section = tw.div`
@@ -47,10 +45,7 @@ const Footer = tw.footer`
 
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
-  const { propertyId } = usePropertyStore();
-  const { isLoading, isError, data: property } = usePropertyQuery(propertyId);
-  // const queryClient = useQueryClient();
-  // const cache = queryClient.getQueryData(['property', propertyId]);
+  const { isLoading, isError, data: property } = useFetchProperty();
 
   const onClickHandler = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');

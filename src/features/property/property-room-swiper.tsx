@@ -8,16 +8,13 @@ import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import usePropertyStore from '@/store/use-property.store';
-
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-50 bg-white shadow
 `;
 
 export default function RoomSwiper() {
   const { t, i18n } = useTranslation();
-  const { propertyId } = usePropertyStore();
-  const { isLoading, isError, data: roomtypes } = useRoomTypesQuery(propertyId);
+  const { isLoading, isError, data: roomtypes } = useRoomTypesQuery();
 
   if (isLoading) {
     return 'loading';

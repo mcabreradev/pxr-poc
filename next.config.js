@@ -26,6 +26,8 @@ const nextConfig = {
       'i.pravatar.cc',
       'images.pexels.com',
       'https://maps.gstatic.com',
+      'lh3.googleusercontent.com',
+      'https://lh3.googleusercontent.com',
     ],
   },
 

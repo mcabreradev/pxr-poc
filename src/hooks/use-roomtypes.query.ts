@@ -1,14 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-const fetchRoomTypes = async (id: string) => {
-  const { data } = await axios.get(`/api/room-types?propertyId=${id}`);
+import { ROOMTYPES } from '@/constant';
+
+const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID;
+
+const queryKey = [ROOMTYPES, propertyId];
+
+const fetchRoomTypes = async () => {
+  const { data } = await axios.get(`/api/room-types?propertyId=${propertyId}`);
   return data;
 };
 
-export default function useRoomTypesQuery(id: string) {
+export default function useRoomTypesQuery() {
   return useQuery({
-    queryKey: ['room-types', id],
-    queryFn: () => fetchRoomTypes(id),
+    queryKey,
+    queryFn: () => fetchRoomTypes(),
   });
+}
+
+export function useCacheRoomTypes() {
+  const queryClient = useQueryClient();
+  return queryClient.getQueryData(queryKey);
 }

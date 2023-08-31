@@ -1,3 +1,3 @@
 export async function GET() {
-  return new Response('This is a new API route');
+  return new Response('Paxer Api Gateway');
 }

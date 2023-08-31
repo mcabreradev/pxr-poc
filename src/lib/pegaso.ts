@@ -2,20 +2,18 @@ import axios from 'axios';
 
 import { getAccessToken } from '@/lib/auth';
 
-const getHeaders = (token: unknown) => {
+const getHeaders = async () => {
   return {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${await getAccessToken()}`,
   };
 };
 
 export const get = async (url: string) => {
-  const token = await getAccessToken();
-
   const options = {
     method: 'GET',
     url: process.env.PAXER_API_URL + url,
-    headers: getHeaders(token),
+    headers: await getHeaders(),
   };
 
   try {

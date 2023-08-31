@@ -2,9 +2,11 @@ import axios from 'axios';
 import { cookies } from 'next/headers';
 import qs from 'qs';
 
+import { AUTH_COOKIE, CLIENT_CREDENTIALS } from '@/constant';
+
 const getAuthorization = async () => {
   const data = {
-    grant_type: 'client_credentials',
+    grant_type: CLIENT_CREDENTIALS,
     client_id: process.env.PAXER_AUTH_CLIENT_ID,
     client_secret: process.env.PAXER_AUTH_CLIENT_SECRET,
   };
@@ -25,12 +27,12 @@ const getAuthorization = async () => {
 };
 
 export const getAccessToken = async () => {
-  let access_token = cookies().get('access_token')?.value;
+  let access_token = cookies().get(AUTH_COOKIE)?.value;
 
   if (!access_token) {
     const auth = await getAuthorization();
     access_token = auth.access_token;
-    cookies().set('access_token', auth.access_token, {
+    cookies().set(AUTH_COOKIE, auth.access_token, {
       maxAge: auth.expires_in,
     });
   }

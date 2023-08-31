@@ -9,7 +9,20 @@ export default function ReactQueryProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [queryClient] = React.useState(() => new QueryClient());
+  /** @fyi ReactQueryProvider
+   *  react-query default options must be set here
+   */
+  const options = {
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus:
+          Boolean(process.env.NEXT_PUBLIC_REFECTH_ON_FOCUS) || false,
+        staleTime: 1000 * 60 * 1, // 1 minute
+        cacheTime: 1000 * 60 * 10, // 10 minutes
+      },
+    },
+  };
+  const [queryClient] = React.useState(() => new QueryClient(options));
 
   return (
     <QueryClientProvider client={queryClient}>

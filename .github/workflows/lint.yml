@@ -23,10 +23,10 @@ jobs:
           node-version: 18
 
       - name: 📥 Download deps
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v2.4.0
         with:
           version: 8
-          run_install: false
+          run_install: true
 
       - name: 🗂️ Get pnpm store directory
         shell: bash
@@ -42,16 +42,16 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: 📦 Install dependencies
-        run: pnpm install
+        run: npm run install
 
       - name: 🔬 Lint
-        run: pnpm run lint:strict
+        run: npm run lint:strict
 
       - name: 🔎 Type check
-        run: pnpm run typecheck
+        run: npm run typecheck
 
       - name: 💅 Prettier check
-        run: pnpm run format:check
+        run: npm run format:check
 
       - name: 🃏 Run jest
-        run: pnpm run test
+        run: npm run test

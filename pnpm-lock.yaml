@@ -3550,11 +3550,18 @@ packages:
       tar-fs: 2.1.1
     dev: true
 
+  /@next/env@13.4.18-canary.0:
+    resolution:
+      {
+        integrity: sha512-9qK4CYoS1qxE7On0hZOxSEfwQwuVVQMxhs8AUz6ekYuIeuWNNUEEumIq9ZTGfU7OU0E7nUlKgeNEBxV9x7A+2Q==,
+      }
+
   /@next/env@13.4.19:
     resolution:
       {
         integrity: sha512-FsAT5x0jF2kkhNkKkukhsyYOrRqtSxrEhfliniIq0bwWbuXLgyt3Gv0Ml+b91XwjwArmuP7NxCiGd++GGKdNMQ==,
       }
+    dev: true
 
   /@next/eslint-plugin-next@13.4.17:
     resolution:

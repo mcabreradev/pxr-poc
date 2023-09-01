@@ -24,7 +24,7 @@ jobs:
           node-version: 18
 
       - name: 📥 Download deps
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v2.4.0
         with:
           version: 8
           run_install: false
@@ -51,7 +51,7 @@ jobs:
     needs: setting-environment
     steps:
       - name: 🔬 Lint
-        run: pnpm run lint:strict
+        run: npm run lint:strict
 
   typecheck:
     name: 🔎 Type check
@@ -59,7 +59,7 @@ jobs:
     needs: setting-environment
     steps:
       - name: 🔎 Type check
-        run: pnpm run typecheck
+        run: npm run typecheck
 
   prettier-check:
     name: 💅 Prettier check
@@ -67,7 +67,7 @@ jobs:
     needs: setting-environment
     steps:
       - name: 💅 Prettier check
-        run: pnpm run format:check
+        run: npm run format:check
 
   unit-test:
     name: 🃏 Run jest
@@ -75,4 +75,4 @@ jobs:
     needs: setting-environment
     steps:
       - name: 🃏 Run jest
-        run: pnpm run test
+        run: npm run test

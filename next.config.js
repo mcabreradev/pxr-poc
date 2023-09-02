@@ -6,6 +6,7 @@ const nextConfig = {
     AUTH_CLIENT_ID: process.env.AUTH_CLIENT_ID,
     AUTH_CLIENT_SECRET: process.env.AUTH_CLIENT_SECRET,
     AUTH_USER_POOL: process.env.AUTH_USER_POOL,
+    NEXT_PUBLIC_PROPERTY_ID: process.env.NEXT_PUBLIC_PROPERTY_ID,
   },
 
   eslint: {

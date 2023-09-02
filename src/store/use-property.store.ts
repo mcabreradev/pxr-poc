@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 
+import { propertyId } from '@/constant/env';
+
 type Type = {
   propertyId: string;
 };
 
 const usePropertyStore = create<Type>(() => ({
-  propertyId: process.env.NEXT_PUBLIC_PROPERTY_ID || '',
+  propertyId: propertyId ?? '',
 }));
 
 export default usePropertyStore;

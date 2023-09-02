@@ -1,7 +1,9 @@
+/* eslint-disable simple-import-sort/imports */
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useRoomTypeQuery from '@/hooks/use-roomtype.query';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -11,12 +13,11 @@ import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import Footer from '@/features/property/property-footer';
-
+import Skeleton from './room-skeleton';
 import data from './room-type.data.json';
 
 interface Props {
-  params: { room: string };
+  roomTypeId: string;
   className?: string;
 }
 
@@ -28,11 +29,18 @@ const Wrapper = tw.div`
 
 `;
 
-export default function RoomTypeComponent({
-  className,
-  params: { room },
-}: Props) {
-  const { t } = useTranslation();
+export default function RoomTypeComponent({ className, roomTypeId }: Props) {
+  const { t, i18n } = useTranslation();
+
+  const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
+
+  if (isLoading) {
+    return <Skeleton />;
+  }
+
+  if (isError) {
+    return <span>Error</span>;
+  }
 
   return (
     <Container
@@ -80,8 +88,12 @@ export default function RoomTypeComponent({
 
       <Wrapper className='px-4'>
         <section className='pt-6'>
-          <Typography variant='h1'>{data.name}</Typography>
-          <Typography variant='sm'>{`${data.subtitle} • ${data.desc}`}</Typography>
+          <Typography variant='h1'>
+            {room.name[i18n.language] ?? room.name.es}
+          </Typography>
+          <Typography variant='sm'>{`Max ${room.maxCapacity} ${t(
+            'person.plural',
+          )} • ${room.description}`}</Typography>
         </section>
 
         <hr />
@@ -119,7 +131,7 @@ export default function RoomTypeComponent({
                 weight='semibold'
                 className='text-neutral-400'
               >
-                {t('date.prural')}
+                {t('date.plural')}
               </Typography>
               <Typography variant='sm' className='text-neutral-500'>
                 07 may 2023 - 11 may 2023
@@ -136,10 +148,10 @@ export default function RoomTypeComponent({
                 weight='semibold'
                 className='text-neutral-400'
               >
-                {t('guest.prural')}
+                {t('guest.plural')}
               </Typography>
               <Typography variant='sm' className='text-neutral-500'>
-                2 {t('guest.adult.prural')}
+                2 {t('guest.adult.plural')}
               </Typography>
             </div>
             <Typography variant='sm' className='text-neutral-500 underline'>
@@ -298,7 +310,6 @@ export default function RoomTypeComponent({
           </div>
         </section>
       </Wrapper>
-      <Footer />
     </Container>
   );
 }

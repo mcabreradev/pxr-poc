@@ -5,7 +5,7 @@ import React from 'react';
 import RoomTypeComponent from '@/features/room-type/room-type';
 
 interface Props {
-  params: { room: string; hotel: string };
+  params: { roomTypeId: string };
 }
 
 export default function Page({ params }: Props) {
@@ -17,9 +17,5 @@ export default function Page({ params }: Props) {
     return null;
   }
 
-  return (
-    <>
-      <RoomTypeComponent params={params} />
-    </>
-  );
+  return <RoomTypeComponent roomTypeId={params.roomTypeId} />;
 }

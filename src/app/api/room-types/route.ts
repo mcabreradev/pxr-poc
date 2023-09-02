@@ -4,7 +4,8 @@ import api from '@/lib/pegaso';
 
 export async function GET(request: NextRequest) {
   const propertyId = request.nextUrl.searchParams.get('propertyId');
-  const res = await api.get(`/property/${propertyId}`);
+  const res = await api.get(`/property/${propertyId}/roomtypes`);
+  const roomtypes = Object.values(res.roomTypes);
 
-  return NextResponse.json(res.property);
+  return NextResponse.json(roomtypes);
 }

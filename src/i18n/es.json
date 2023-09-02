@@ -7,28 +7,32 @@
   "date": {
     "check-in": "Fecha de entrada",
     "check-out": "Fecha de salida",
-    "prural": "Fechas",
+    "plural": "Fechas",
     "singular": "Fecha"
   },
   "from": "de",
   "guest": {
     "adult": {
-      "prural": "adultos",
+      "plural": "adultos",
       "singular": "adulto"
     },
     "childre": {
-      "prural": "niños",
+      "plural": "niños",
       "singular": "niño"
     },
-    "prural": "Huéspedes",
+    "plural": "Huéspedes",
     "singular": "Huésped"
+  },
+  "person": {
+    "plural": "personas",
+    "singular": "persona"
   },
   "link": {
     "language": "Español",
     "termsandconditions": "Términos y condiciones"
   },
   "night": {
-    "prural": "noches",
+    "plural": "noches",
     "singular": "noche"
   },
   "since": "desde",

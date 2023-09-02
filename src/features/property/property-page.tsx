@@ -12,12 +12,11 @@ import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
-import usePropertyQuery from '@/hooks/use-propertyquery';
-import logger from '@/lib/logger';
 
-import Footer from './property-footer';
 import RoomSwiper from './property-room-swiper';
+import Skeleton from './property-skeleton';
 
+import useFetchProperty from '@/hooks/use-property.query';
 import data from './property.data.json';
 
 const Section = tw.div`
@@ -28,22 +27,38 @@ const Row = tw.div`
   flex flex-row items-center
 `;
 
+const Footer = tw.footer`
+  relative
+  z-10
+  box-border
+  flex
+  h-[308px]
+  w-full
+  flex-col
+  justify-around
+  overflow-hidden border-t-[0.5px] border-solid
+  border-gray-300
+  bg-white-100
+  p-4 text-left text-sm
+  text-black
+`;
+
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
+  const { isLoading, isError, data: property } = useFetchProperty();
 
-  const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID || '';
-
-  const { isLoading, isError, data: property } = usePropertyQuery(propertyId);
+  const onClickHandler = () => {
+    i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
+    document.cookie = `i18next=${i18n.language}`;
+  };
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Skeleton />;
   }
 
   if (isError) {
     return <span>Error</span>;
   }
-
-  logger(property);
 
   return (
     <main data-id-test='test-componet' title={property}>
@@ -136,7 +151,7 @@ const PropertyPage = memo(function HotelPage() {
         <Typography variant='h2' weight='normal'>
           ¿Dónde quieres dormir?
         </Typography>
-        <RoomSwiper rooms={data.rooms} />
+        <RoomSwiper />
       </Section>
 
       <hr />
@@ -267,6 +282,45 @@ const PropertyPage = memo(function HotelPage() {
         </Typography>
       </Section>
 
+      <Footer data-testid='test-element'>
+        <Row className='font-semibold'>
+          <Row className='w-full'>
+            <Icon variant='globe' width='18px' />
+            <div
+              className='hover:cursor-pointer'
+              onClick={onClickHandler}
+              data-testid='test-link'
+            >
+              {t('link.language')}
+            </div>
+          </Row>
+          <span className='w-full'>$ USD</span>
+        </Row>
+        <Row>
+          <Icon variant='open-in-new' width='18px' />
+          <div className='pl-[5px]'>{property.websiteURL}</div>
+        </Row>
+        <Row>
+          <Icon variant='email' width='18px' />
+          <div className='pl-[5px]'>{property.email}</div>
+        </Row>
+        <Row>
+          <Icon variant='phone' width='18px' />
+          <div className='pl-[5px]'>{property.phone}</div>
+        </Row>
+        <Row>
+          <Icon variant='whatsapp' width='18px' />
+          <div className='pl-[5px]'>Whatsapp</div>
+        </Row>
+        <Row>
+          <Icon variant='facebook-round' width='18px' />
+          <div className='pl-[5px]'></div>
+          <Icon variant='instagram' width='18px' />
+        </Row>
+        <Row>{t('link.termsandconditions')}</Row>
+        <Row>© {new Date().getFullYear()} Paxer LLC</Row>
+      </Footer>
+
       <Sticky>
         <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>
           <div className='flex flex-col'>
@@ -284,7 +338,6 @@ const PropertyPage = memo(function HotelPage() {
           </div>
         </div>
       </Sticky>
-      <Footer />
     </main>
   );
 });

@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-    PAXER_API_URL: process.env.PAXER_API_URL,
-    PAXER_AUTH_URL: process.env.PAXER_AUTH_URL,
-    PAXER_AUTH_CLIENT_ID: process.env.PAXER_AUTH_CLIENT_ID,
-    PAXER_AUTH_CLIENT_SECRET: process.env.PAXER_AUTH_CLIENT_SECRET,
-    PAXER_AUTH_USER_POOL: process.env.PAXER_AUTH_USER_POOL,
+    SITE_API_URL: process.env.SITE_API_URL,
+    AUTH_URL: process.env.AUTH_URL,
+    AUTH_CLIENT_ID: process.env.AUTH_CLIENT_ID,
+    AUTH_CLIENT_SECRET: process.env.AUTH_CLIENT_SECRET,
+    AUTH_USER_POOL: process.env.AUTH_USER_POOL,
   },
 
   eslint: {

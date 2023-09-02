@@ -5,7 +5,7 @@ type Type = {
 };
 
 const usePropertyStore = create<Type>(() => ({
-  propertyId: process.env.NEXT_PUBLIC_PAXER_HOTEL_ID || '',
+  propertyId: process.env.NEXT_PUBLIC_PROPERTY_ID || '',
 }));
 
 export default usePropertyStore;

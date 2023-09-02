@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { ROOMTYPES } from '@/constant';
 
-const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID;
+const propertyId = process.env.NEXT_PUBLIC_PROPERTY_ID;
 
 const fetchRoomTypes = async () => {
   const { data } = await axios.get(`/api/room-types?propertyId=${propertyId}`);

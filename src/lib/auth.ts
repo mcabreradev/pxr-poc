@@ -7,22 +7,22 @@ import { AUTH_COOKIE, CLIENT_CREDENTIALS } from '@/constant';
 const getAuthorization = async () => {
   const data = {
     grant_type: CLIENT_CREDENTIALS,
-    client_id: process.env.PAXER_AUTH_CLIENT_ID,
-    client_secret: process.env.PAXER_AUTH_CLIENT_SECRET,
+    client_id: process.env.AUTH_CLIENT_ID,
+    client_secret: process.env.AUTH_CLIENT_SECRET,
   };
 
   const options = {
     method: 'POST',
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     data: qs.stringify(data),
-    url: process.env.PAXER_AUTH_URL,
+    url: process.env.AUTH_URL,
   };
 
   try {
     const res = await axios(options);
     return res.data;
   } catch (error) {
-    throw `Can't get token from ${process.env.PAXER_AUTH_URL} error`;
+    throw `Can't get token from ${process.env.AUTH_URL} error`;
   }
 };
 

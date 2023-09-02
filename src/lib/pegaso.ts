@@ -12,7 +12,7 @@ const getHeaders = async () => {
 const get = async (url: string) => {
   const options = {
     method: 'GET',
-    url: process.env.PAXER_API_URL + url,
+    url: process.env.SITE_API_URL + url,
     headers: await getHeaders(),
   };
 
@@ -21,7 +21,7 @@ const get = async (url: string) => {
     return res.data;
   } catch (error) {
     throw new Error(
-      `Can't fetch data from ${process.env.PAXER_API_URL + url}  ${error}`,
+      `Can't fetch data from ${process.env.SITE_API_URL + url}  ${error}`,
     );
   }
 };

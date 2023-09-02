@@ -5,8 +5,6 @@ import { ROOMTYPES } from '@/constant';
 
 const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID;
 
-const queryKey = [ROOMTYPES, propertyId];
-
 const fetchRoomTypes = async () => {
   const { data } = await axios.get(`/api/room-types?propertyId=${propertyId}`);
   return data;
@@ -14,12 +12,12 @@ const fetchRoomTypes = async () => {
 
 export default function useRoomTypesQuery() {
   return useQuery({
-    queryKey,
+    queryKey: [ROOMTYPES, propertyId],
     queryFn: () => fetchRoomTypes(),
   });
 }
 
 export function useCacheRoomTypes() {
   const queryClient = useQueryClient();
-  return queryClient.getQueryData(queryKey);
+  return queryClient.getQueryData([ROOMTYPES, propertyId]);
 }

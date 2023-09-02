@@ -5,8 +5,6 @@ import { PROPERTY } from '@/constant';
 
 const propertyId = process.env.NEXT_PUBLIC_PAXER_HOTEL_ID;
 
-const queryKey = [PROPERTY, propertyId];
-
 const fetchProperty = async () => {
   const { data } = await axios.get(`/api/property?propertyId=${propertyId}`);
   return data;
@@ -14,12 +12,12 @@ const fetchProperty = async () => {
 
 export default function useFetchProperty() {
   return useQuery({
-    queryKey,
+    queryKey: [PROPERTY, propertyId],
     queryFn: () => fetchProperty(),
   });
 }
 
 export function useCacheProperty() {
   const queryClient = useQueryClient();
-  return queryClient.getQueryData(queryKey);
+  return queryClient.getQueryData([PROPERTY, propertyId]);
 }

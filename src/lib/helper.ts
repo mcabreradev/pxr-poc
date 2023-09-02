@@ -39,3 +39,9 @@ export function getFromSessionStorage(key: string): string | null {
   }
   return null;
 }
+
+// Get the first property of an object
+export function getFirstOwnProperty(obj: { [key: string]: unknown }) {
+  const key = Object.keys(obj)[0];
+  return obj[key];
+}

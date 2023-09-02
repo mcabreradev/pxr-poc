@@ -6,7 +6,6 @@ frontend:
         - yarn install
     build:
       commands:
-        - rm -rf .next/cache/**/*
         - yarn run build
   artifacts:
     baseDirectory: .next

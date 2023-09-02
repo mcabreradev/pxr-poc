@@ -9,7 +9,7 @@ const getHeaders = async () => {
   };
 };
 
-export const get = async (url: string) => {
+const get = async (url: string) => {
   const options = {
     method: 'GET',
     url: process.env.PAXER_API_URL + url,
@@ -17,7 +17,7 @@ export const get = async (url: string) => {
   };
 
   try {
-    const res = await axios(options);
+    const res = await axios.request(options);
     return res.data;
   } catch (error) {
     throw new Error(
@@ -25,3 +25,9 @@ export const get = async (url: string) => {
     );
   }
 };
+
+const api = {
+  get,
+};
+
+export default api;

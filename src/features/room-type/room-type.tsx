@@ -30,6 +30,7 @@ const Wrapper = tw.div`
 `;
 
 export default function RoomTypeComponent({ className, roomTypeId }: Props) {
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const { t, i18n } = useTranslation();
 
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
@@ -89,7 +90,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
       <Wrapper className='px-4'>
         <section className='pt-6'>
           <Typography variant='h1'>
-            {room.name[i18n.language] ?? room.name.es}
+            Test !!{/* {room.name[i18n.language] ?? room.name.es} */}
           </Typography>
           <Typography variant='sm'>{`Max ${room.maxCapacity} ${t(
             'person.plural',

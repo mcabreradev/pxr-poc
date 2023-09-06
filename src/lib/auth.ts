@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { cookies } from 'next/headers';
+import { getCookie, setCookie } from 'cookies-next';
 import qs from 'qs';
 
 import { AUTH_COOKIE, CLIENT_CREDENTIALS } from '@/constant';
@@ -27,12 +27,12 @@ const getAuthorization = async () => {
 };
 
 export const getAccessToken = async () => {
-  let access_token = cookies().get(AUTH_COOKIE)?.value;
+  let access_token = getCookie(AUTH_COOKIE);
 
   if (!access_token) {
     const auth = await getAuthorization();
     access_token = auth.access_token;
-    cookies().set(AUTH_COOKIE, auth.access_token, {
+    setCookie(AUTH_COOKIE, auth.access_token, {
       maxAge: auth.expires_in,
     });
   }

@@ -1,6 +1,7 @@
 'use client';
 
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 import Icon from '@/components/icon';
 
@@ -19,7 +20,7 @@ export default function NotFound() {
             className='drop-shadow-glow animate-flicker text-red-500'
           />
           <h1 className='mt-8 text-4xl md:text-6xl'>Page Not Found</h1>
-          <a href='/'>Back to home</a>
+          <Link href='/'>Back to home</Link>
         </div>
       </section>
     </main>

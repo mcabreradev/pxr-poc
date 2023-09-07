@@ -10,10 +10,7 @@ export default function Page() {
   const roomTypeId = router.query.roomTypeId;
   return (
     <Layout>
-      <Seo
-        templateTitle='Room Type'
-        description='The best Ecomm of the world!'
-      />
+      <Seo />
       <RoomTypeComponent roomTypeId={roomTypeId as string} />
     </Layout>
   );

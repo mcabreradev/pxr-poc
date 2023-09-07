@@ -1,6 +1,7 @@
 'use client';
 
 /* eslint-disable simple-import-sort/imports */
+import { setCookie } from 'cookies-next';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -49,7 +50,7 @@ const PropertyPage = memo(function HotelPage() {
 
   const onClickHandler = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
-    document.cookie = `i18next=${i18n.language}`;
+    setCookie('i18next', i18n.language);
   };
 
   if (isLoading) {

@@ -13,13 +13,13 @@ import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import Skeleton from './room-skeleton';
-import data from './room-type.data.json';
+import Skeleton from './guest-skeleton';
+import data from './guest.data.json';
 
-type Props = {
+interface Props {
   roomTypeId: string;
   className?: string;
-};
+}
 
 const Container = tw.div`
 

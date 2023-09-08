@@ -1,0 +1,119 @@
+{
+  "images": [
+    "https://paxer.com/static/production/HOI/00/1079/30106/hash-gtlXXc6XKh-paxer.jpeg",
+    "https://paxer.com/static/production/HOI/00/1079/20558/hash-XlmCW9pLUX-paxer.jpg",
+    "https://paxer.com/static/production/HOI/00/1079/20561/hash-7c9AG8sEZE-paxer.jpg"
+  ],
+  "name": "Habitación Doble Superior",
+  "desc": "Cama dos plazas",
+  "subtitle": "Max 2 personas",
+  "contact": {
+    "web": "http://www.paginax.com",
+    "phone": "+1 123 456 7890",
+    "email": "fakeemail@algorithm.com",
+    "whatsapp": "+1 123 456 7890",
+    "facebook": "https://www.facebook.com"
+  },
+  "services": [
+    {
+      "name": "Wifi",
+      "icon": "wifi"
+    },
+    {
+      "name": "Spa",
+      "icon": "spa"
+    },
+    {
+      "name": "Televisor",
+      "icon": "tv"
+    },
+    {
+      "name": "Restaurante",
+      "icon": "restaurant"
+    },
+    {
+      "name": "Gym",
+      "icon": "gym"
+    },
+    {
+      "name": "Bar",
+      "icon": "bar"
+    },
+    {
+      "name": "Piscina",
+      "icon": "pool"
+    },
+    {
+      "name": "Taxi",
+      "icon": "taxi"
+    }
+  ],
+  "price": {
+    "currency": "ARS",
+    "amount": 1000,
+    "discount": 0,
+    "discount_amount": 0,
+    "discount_type": "percentage",
+    "tax": 0,
+    "tax_amount": 0,
+    "tax_type": "percentage",
+    "total": 1000
+  },
+  "reservation": {
+    "id": "123456789",
+    "status": "active",
+    "start_date": "2021-08-20",
+    "end_date": "2021-08-25",
+    "duration": 5,
+    "type": "business",
+    "guests": 2,
+    "price": {
+      "currency": "ARS",
+      "amount": 1000,
+      "discount": 0,
+      "discount_amount": 0,
+      "discount_type": "percentage",
+      "tax": 0,
+      "tax_amount": 0,
+      "tax_type": "percentage",
+      "total": 1000
+    }
+  },
+  "map": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.9393725382456!2d-58.36613412382726!3d-34.605694557603286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a335ef4809ceef%3A0x3945c8c351477a54!2sHilton%20Buenos%20Aires!5e0!3m2!1sen!2sar!4v1690390110880!5m2!1sen!2sar",
+    "lat": -23.744,
+    "lng": -65.495
+  },
+  "attractions": [
+    {
+      "name": "Cerro El Porito ",
+      "distance": "100 m"
+    },
+    {
+      "name": "Purmamarca Jujuy",
+      "distance": "270 m"
+    },
+    {
+      "name": "Algarrobo Histórico",
+      "distance": "300 m"
+    },
+    {
+      "name": "Santa Rosa de Lima Church",
+      "distance": "390 m"
+    }
+  ],
+  "rules": [
+    {
+      "name": "Check-in:",
+      "description": "03:00pm"
+    },
+    {
+      "name": "Check-out:",
+      "description": "12:00pm"
+    },
+    {
+      "name": "Mascotas",
+      "description": "Se admiten con previo aviso"
+    }
+  ]
+}

@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { openGraph } from '@/lib/helper';
 
+import useSeo from '@/store/use-seo.store';
+
 import { siteConfig } from '@/constant/config';
 
 const defaultMeta = {
@@ -34,13 +36,16 @@ type SeoProps = {
 
 export default function Seo(props: SeoProps) {
   const router = useRouter();
+  const { templateTitle, description } = useSeo();
   const meta = {
     ...defaultMeta,
     ...props,
   };
-  meta['title'] = props.templateTitle
-    ? `${props.templateTitle} | ${meta.siteName}`
-    : meta.title;
+
+  const title = templateTitle ?? props.templateTitle;
+  meta['title'] = title ? `${title} | ${meta.siteName}` : meta.title;
+
+  meta['description'] = description ?? meta.description;
 
   meta['image'] = openGraph({
     description: meta.description,

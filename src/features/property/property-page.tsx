@@ -1,10 +1,12 @@
+/* eslint-disable simple-import-sort/imports */
 'use client';
 
-/* eslint-disable simple-import-sort/imports */
 import { setCookie } from 'cookies-next';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
+
+import useFetchProperty from '@/hooks/use-property.query';
 
 import Button from '@/components/button';
 import Carousel from '@/components/carousel';
@@ -16,8 +18,6 @@ import Typography from '@/components/typography';
 
 import RoomSwiper from './property-room-swiper';
 import Skeleton from './property-skeleton';
-
-import useFetchProperty from '@/hooks/use-property.query';
 import data from './property.data.json';
 
 const Section = tw.div`

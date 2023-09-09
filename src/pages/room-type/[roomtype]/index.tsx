@@ -7,7 +7,7 @@ import RoomTypeComponent from '@/features/room-type/room-type';
 
 export default function Page() {
   const router = useRouter();
-  const roomTypeId = router.query.id;
+  const roomTypeId = router.query.roomtype;
   return (
     <Layout>
       <Seo />

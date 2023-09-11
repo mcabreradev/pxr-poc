@@ -16,10 +16,10 @@ import Typography from '@/components/typography';
 import Skeleton from './guest-skeleton';
 import data from './guest.data.json';
 
-interface Props {
+type Props = {
   roomTypeId: string;
   className?: string;
-}
+};
 
 const Container = tw.div`
 
@@ -29,7 +29,7 @@ const Wrapper = tw.div`
 
 `;
 
-export default function RoomTypeComponent({ className, roomTypeId }: Props) {
+export default function DetailsComponent({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
 
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);

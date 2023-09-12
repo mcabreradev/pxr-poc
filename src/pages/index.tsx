@@ -5,9 +5,9 @@ import Layout from '@/components/layout';
 import PropertyPage from '@/features/property/property-page';
 
 export default function HomePage() {
-  const { notHydrated } = useHydration();
+  const { isHydrated } = useHydration();
 
-  if (notHydrated) {
+  if (!isHydrated) {
     return null;
   }
 

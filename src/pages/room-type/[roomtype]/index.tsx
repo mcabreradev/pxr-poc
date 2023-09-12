@@ -9,9 +9,9 @@ import RoomTypeComponent from '@/features/room-type/room-type';
 export default function Page() {
   const router = useRouter();
   const roomTypeId = router.query.roomtype;
-  const { notHydrated } = useHydration();
+  const { isHydrated } = useHydration();
 
-  if (notHydrated || !roomTypeId) {
+  if (!isHydrated || !roomTypeId) {
     return null;
   }
 

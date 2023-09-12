@@ -1,3 +1,5 @@
+'client-only';
+
 import { useRouter } from 'next/router';
 
 import useHydration from '@/hooks/use-hydration';
@@ -10,9 +12,8 @@ export default function Page() {
   const router = useRouter();
   const roomTypeId = router.query.id;
 
-  const { notHydrated } = useHydration();
-
-  if (notHydrated || !roomTypeId) {
+  const { isHydrated } = useHydration();
+  if (!isHydrated) {
     return null;
   }
 

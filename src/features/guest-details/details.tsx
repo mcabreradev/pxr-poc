@@ -3,22 +3,12 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useRoomTypeQuery from '@/hooks/use-roomtype.query';
-import { cn } from '@/lib/utils';
-
-import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
-import Radio from '@/components/radio';
-import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
-
-import Skeleton from './guest-skeleton';
-import data from './guest.data.json';
 
 type Props = {
   roomTypeId: string;
-  className?: string;
 };
 
 const Container = tw.div`
@@ -29,26 +19,22 @@ const Wrapper = tw.div`
 
 `;
 
-export default function DetailsComponent({ className, roomTypeId }: Props) {
-  const { t, i18n } = useTranslation();
+export default function DetailsComponent({ roomTypeId }: Props) {
+  const { t } = useTranslation();
 
-  const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
+  // const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
 
-  if (isLoading) {
-    return <Skeleton />;
-  }
+  // if (isLoading) {
+  //   return <Skeleton />;
+  // }
 
-  if (isError) {
-    return <span>Error</span>;
-  }
+  // if (isError) {
+  //   return <span>Error</span>;
+  // }
 
   return (
-    <Container
-      className={cn(className)}
-      data-testid='test-element'
-      datatype={room}
-    >
-      <Link href='/'>
+    <Container data-testid='test-element'>
+      <Link href={`/room-type/${roomTypeId}`}>
         <div className='flex w-full max-w-3xl items-center rounded-md px-8 py-4 text-center'>
           <Icon
             variant='arrow-back'
@@ -62,7 +48,7 @@ export default function DetailsComponent({ className, roomTypeId }: Props) {
               weight='medium'
               className='mx-auto text-neutral-300'
             >
-              {t('title.room-details')}
+              {t('title.room-confirm-reserve')}
             </Typography>
           </div>
         </div>
@@ -87,7 +73,7 @@ export default function DetailsComponent({ className, roomTypeId }: Props) {
       </section>
 
       <Wrapper className='px-4'>
-        <section className='pt-6'>
+        {/* <section className='pt-6'>
           <Typography variant='h1'>
             {room.name[i18n.language] ?? room.name.es}
           </Typography>
@@ -308,7 +294,7 @@ export default function DetailsComponent({ className, roomTypeId }: Props) {
               Mostrar más
             </Typography>
           </div>
-        </section>
+        </section> */}
       </Wrapper>
     </Container>
   );

@@ -7,7 +7,7 @@ function useHydration() {
     setIsHydrated(true);
   }, []);
 
-  return { isHydrated, notHydrated: !isHydrated };
+  return { isHydrated };
 }
 
 export default useHydration;

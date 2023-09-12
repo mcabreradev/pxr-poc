@@ -23,35 +23,21 @@ jobs:
           node-version: 18
 
       - name: 📥 Download deps
-        uses: pnpm/action-setup@v2.4.0
+        uses: oven-sh/setup-bun@v1
         with:
-          version: 8
-          run_install: false
-
-      - name: 🗂️ Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: 🛠️ Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          bun-version: latest
 
       - name: 📦 Install dependencies
-        run: pnpm install
+        run: bun install
 
       - name: 🔬 Lint
-        run: pnpm run lint:strict
+        run: bun lint:strict
 
       - name: 🔎 Type check
-        run: pnpm run typecheck
+        run: bun typecheck
 
       - name: 💅 Prettier check
-        run: pnpm run format:check
+        run: bun format:check
 
       - name: 🃏 Run jest
-        run: pnpm run test
+        run: npm run test

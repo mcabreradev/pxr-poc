@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Typography from '@/components/typography';
@@ -296,6 +297,8 @@ export default function DetailsComponent({ roomTypeId }: Props) {
           </div>
         </section> */}
       </Wrapper>
+
+      <Footer />
     </Container>
   );
 }

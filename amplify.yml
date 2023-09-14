@@ -6,12 +6,11 @@ frontend:
         - curl -fsSL https://bun.sh/install | bash && ~/.bun/bin/bun install --frozen-lockfile
     build:
       commands:
-        - rm -rf .next/cache/**/*
         - ~/.bun/bin/bun run build
   artifacts:
     baseDirectory: .next
     files:
-      - '**/*'
+      - "**/*"
   cache:
     paths:
       - node_modules/**/*

@@ -2,7 +2,7 @@ import { AppProps } from 'next/app';
 
 import '@/styles/globals.css';
 
-import { Providers } from '@/providers';
+import Providers from '@/providers';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

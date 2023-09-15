@@ -4,7 +4,7 @@ import I18nProvider from '@/providers/i18n-provider';
 import ReactQueryProvider from '@/providers/react-query-provider';
 import ThemeProvider from '@/providers/theme';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
       <ReactQueryProvider>

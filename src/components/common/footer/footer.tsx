@@ -38,7 +38,7 @@ export default function Footer() {
   };
 
   if (isLoading) {
-    return null;
+    return <div data-testid='test-element'>loading</div>;
   }
 
   return (

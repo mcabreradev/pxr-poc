@@ -1,21 +1,19 @@
 import { render, screen } from '@testing-library/react';
 
-import I18nProvider from '@/providers/i18n-provider';
+import Wrapper from '@/__tests__/react-query-wrapper';
 
 import Footer from '.';
 
-describe('Footer component', () => {
+test('Footer component', async () => {
   const renderComponent = () =>
     render(
-      <I18nProvider>
+      <Wrapper>
         <Footer />
-      </I18nProvider>,
+      </Wrapper>,
     );
 
-  renderComponent();
+  await renderComponent();
 
-  it('should render without crashing', () => {
-    const element = screen.getByTestId('test-element');
-    expect(element).toBeInTheDocument();
-  });
+  const element = screen.getByTestId('test-element');
+  expect(element).toBeInTheDocument();
 });

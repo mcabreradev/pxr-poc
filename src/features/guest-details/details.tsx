@@ -1,12 +1,13 @@
 /* eslint-disable simple-import-sort/imports */
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
-import Image from '@/components/image';
 import Typography from '@/components/typography';
+import useFetchProperty from '@/hooks/use-property.query';
 
 type Props = {
   roomTypeId: string;
@@ -23,15 +24,15 @@ const Wrapper = tw.div`
 export default function DetailsComponent({ roomTypeId }: Props) {
   const { t } = useTranslation();
 
-  // const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
+  const { isError, isLoading, data: property } = useFetchProperty();
 
-  // if (isLoading) {
-  //   return <Skeleton />;
-  // }
+  if (isLoading) {
+    return 'loading...';
+  }
 
-  // if (isError) {
-  //   return <span>Error</span>;
-  // }
+  if (isError) {
+    return <span>Error</span>;
+  }
 
   return (
     <Container data-testid='test-element'>
@@ -56,20 +57,33 @@ export default function DetailsComponent({ roomTypeId }: Props) {
       </Link>
 
       <section>
-        <div className='relative min-h-[260px] w-full'>
+        <div className='flex h-auto w-full flex-row items-center border-t-[0.5px] border-solid border-gray-200 p-4'>
           <Image
             src='/images/hotel/room-1.webp'
-            className='z-0'
+            className='relative h-[75px] w-auto rounded'
+            width={1}
+            height={1}
             alt='room'
-            fill
           />
-          <Typography
-            variant='xs'
-            weight='medium'
-            className='z-20 flex h-[21px] w-[52px] items-center justify-center rounded bg-neutral-500 bg-opacity-60 text-center text-white'
-          >
-            1/26
-          </Typography>
+          <div className='pl-3'>
+            <Typography
+              variant='base'
+              weight='semibold'
+              className='text-gray-500'
+            >
+              {property.name}
+            </Typography>
+
+            <Typography variant='xs' weight='normal' className='text-gray-500'>
+              {`${property.street}`}
+            </Typography>
+
+            <div className='flex flex-row items-center text-[12px]'>
+              <Icon variant='star' width='16px' />
+              <p>{property.reviewRatingScore}</p>
+              <p className='pl-1 text-gray-500'>{`(${property.reviewRatingCount})`}</p>
+            </div>
+          </div>
         </div>
       </section>
 

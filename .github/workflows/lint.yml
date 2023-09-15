@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - dev
+      - stage
+      - main
+      - prod
   pull_request: {}
 
 concurrency:
@@ -39,5 +42,5 @@ jobs:
       - name: 💅 Prettier check
         run: bun format:check
 
-      - name: 🃏 Run jest
+      - name: 🃏 Run test
         run: npm run test

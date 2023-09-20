@@ -17,7 +17,7 @@ export default function FormRegisterComponent({ className }: Props) {
   const { roomtype } = router.query;
   return (
     <Container className={cn(className, 'pb-5')} data-testid='test-element'>
-      <div className='flex flex-col flex-wrap justify-between gap-4 py-3'>
+      <div className='flex flex-col flex-wrap justify-between gap-4 py-3 pt-8'>
         <Typography variant='sm' weight='semibold' className='' tag='label'>
           Email
         </Typography>

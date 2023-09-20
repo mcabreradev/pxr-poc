@@ -3,15 +3,19 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import Button from '@/components/button';
 import BackButton from '@/components/common/back-button';
 import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import useFetchProperty from '@/hooks/use-property.query';
+import FormAuthComponent from './form-auth';
+import FormLoginComponent from './form-login';
+import FormRegisterComponent from './form-register';
 
+import { QUERY } from '@/constant';
 type Props = {
   roomTypeId: string;
+  show?: string;
 };
 
 const Container = tw.div`
@@ -26,10 +30,12 @@ const HR = tw.div`
   hr border-t-[10px] border-neutral-60
 `;
 
-export default function DetailsComponent({ roomTypeId }: Props) {
+export default function DetailsComponent({ roomTypeId, show }: Props) {
   const { t } = useTranslation();
-
   const { isError, isLoading, data: property } = useFetchProperty();
+  const showAuth = show === QUERY.AUTH || !show;
+  const showLogin = show === QUERY.LOGIN;
+  const showRegister = show === QUERY.REGISTER;
 
   if (isLoading) {
     return 'loading...';
@@ -185,225 +191,10 @@ export default function DetailsComponent({ roomTypeId }: Props) {
             Tu información de contacto
           </Typography>
 
-          <div className='flex flex-col flex-wrap justify-between gap-4 py-3 pt-8'>
-            <Typography variant='sm' weight='semibold' className=''>
-              Email
-            </Typography>
-            <input
-              type='email'
-              placeholder='Escribe tu email'
-              className='form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200'
-            />
-          </div>
-
-          <div className='flex flex-col flex-wrap justify-between gap-4 py-3'>
-            <Typography variant='sm' weight='semibold' className=''>
-              Contraseña
-            </Typography>
-
-            <input
-              type='password'
-              placeholder='Contraseña'
-              className='form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200'
-            />
-          </div>
-
-          <div className='flex flex-wrap justify-between py-4'></div>
-          <Button className='w-full font-semibold' variant='primary'>
-            Continuar
-          </Button>
+          {showLogin && <FormLoginComponent />}
+          {showAuth && <FormAuthComponent />}
+          {showRegister && <FormRegisterComponent />}
         </section>
-
-        {/*
-        <section>
-          <Typography variant='h2' weight='normal'>
-            {t('title.my-trip')}
-          </Typography>
-          <div className='flex flex-wrap justify-between py-2'>
-            <div>
-              <Typography
-                variant='sm'
-                weight='semibold'
-                className='text-neutral-400'
-              >
-                {t('date.plural')}
-              </Typography>
-              <Typography variant='sm' className='text-neutral-500'>
-                07 may 2023 - 11 may 2023
-              </Typography>
-            </div>
-            <Typography variant='sm' className='text-neutral-500 underline'>
-              {t('title.edit')}
-            </Typography>
-          </div>
-          <div className='flex flex-wrap justify-between py-2'>
-            <div>
-              <Typography
-                variant='sm'
-                weight='semibold'
-                className='text-neutral-400'
-              >
-                {t('guest.plural')}
-              </Typography>
-              <Typography variant='sm' className='text-neutral-500'>
-                2 {t('guest.adult.plural')}
-              </Typography>
-            </div>
-            <Typography variant='sm' className='text-neutral-500 underline'>
-              {t('title.edit')}
-            </Typography>
-          </div>
-        </section>
-
-        <hr />
-
-        <section>
-          <Typography variant='h2' weight='normal'>
-            {t('title.price-details')}
-          </Typography>
-          <div className='flex flex-wrap justify-between py-3'>
-            <Typography variant='sm' className='text-neutral-500'>
-              $ 100.00 x 4 noches
-            </Typography>
-
-            <Typography variant='sm' className='text-neutral-500'>
-              $ 400.00
-            </Typography>
-          </div>
-          <div className='flex flex-wrap justify-between pb-0 pt-2'>
-            <div>
-              <Typography
-                variant='sm'
-                weight='semibold'
-                className='text-neutral-400'
-              >
-                Políticas de cancelación
-              </Typography>
-            </div>
-          </div>
-          <div className='flex flex-wrap justify-between py-1'>
-            <Radio label='No reembolsable' />
-            <Typography variant='sm' className='text-neutral-500'>
-              +$ 0.00
-            </Typography>
-          </div>
-          <div className='flex flex-wrap justify-between py-1'>
-            <Radio
-              label='Reembolsable'
-              subtitle='Cancelación gratuita antes de las 15:00 del 5 agosto'
-            />
-            <Typography variant='sm' className='text-neutral-500'>
-              +$ 0.00
-            </Typography>
-          </div>
-
-          <div className='flex flex-wrap justify-between pb-0 pt-2'>
-            <div>
-              <Typography
-                variant='sm'
-                weight='semibold'
-                className='text-neutral-400'
-              >
-                Extras
-              </Typography>
-            </div>
-          </div>
-
-          <div className='flex flex-wrap justify-between py-1'>
-            <Toggle label='Desayuno' />
-            <Typography variant='sm' className='text-neutral-500'>
-              +$ 10.00
-            </Typography>
-          </div>
-
-          <div className='flex flex-wrap justify-between pb-0 pt-4'>
-            <div>
-              <Typography
-                variant='sm'
-                weight='semibold'
-                className='text-neutral-400'
-              >
-                Impuestos
-              </Typography>
-            </div>
-          </div>
-
-          <div className='flex flex-wrap justify-between py-1'>
-            <Typography variant='xs' className='w-3/4 text-neutral-500'>
-              Los impuestos deben ser pagados a tu llegada al hotel
-            </Typography>
-
-            <Typography variant='sm' className='text-neutral-500'>
-              +$ 50.00
-            </Typography>
-          </div>
-
-          <div className='flex flex-wrap justify-between py-3'>
-            <Typography variant='sm' className='font-semibold text-neutral-500'>
-              Total (USD)
-            </Typography>
-
-            <Typography variant='sm' className='font-semibold text-neutral-500'>
-              $ 450.00
-            </Typography>
-          </div>
-
-          <div className='flex flex-wrap justify-between py-3'>
-            <Button className='w-full font-semibold' variant='primary'>
-              Proceder al pago
-            </Button>
-          </div>
-        </section>
-
-        <hr />
-
-        <section>
-          <div className='py-2'>
-            <Typography variant='h2' weight='normal'>
-              Políticas de cancelación
-            </Typography>
-            <div className='my-3' />
-            <Typography variant='sm' className='text-neutral-500'>
-              No reembolsable
-            </Typography>
-          </div>
-        </section>
-
-        <section>
-          <div className='py-5'>
-            <Typography variant='h2' weight='normal'>
-              Detalles de los impuestos
-            </Typography>
-            <div className='my-3' />
-            <Typography variant='sm' className='text-neutral-500'>
-              Los impuestos deben ser pagados a tu llegada al hotel
-            </Typography>
-          </div>
-        </section>
-
-        <section>
-          <div className='py-4 pb-7'>
-            <Typography variant='h2' weight='normal'>
-              Reglas del hotel
-            </Typography>
-
-            <div className='my-4'>
-              {data.rules.map((rule, key) => (
-                <div
-                  key={`$rules-${key}`}
-                  className='flex justify-between py-2'
-                >
-                  <Typography>{rule.name}</Typography>
-                  <Typography weight='light'>{rule.description}</Typography>
-                </div>
-              ))}
-            </div>
-
-            <Typography weight='semibold' className='underline'>
-              Mostrar más
-            </Typography>
-          </div>
-        </section> */}
       </Wrapper>
 
       <Footer />

@@ -58,7 +58,7 @@ export default function Button({
 
   if (type === 'link') {
     return (
-      <Link href={href || '/'}>
+      <Link href={href || '/'} className={cn({ 'w-full': fullWidth })}>
         <ButtonComponent
           className={cn(className, styling[variant])}
           ripple={false}

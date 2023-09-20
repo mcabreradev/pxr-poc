@@ -1,6 +1,8 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
+import { TAG } from '@/constant';
+
 const getFontWeight = (weight: FontWeight | undefined) => {
   switch (weight) {
     case 'bold':
@@ -87,15 +89,32 @@ export type FontWeight =
   | 'extralight'
   | 'thin';
 
+type TagType = 'span' | 'div' | 'label' | string;
+
 export type TextProps = {
   variant?: TextVariant;
   weight?: FontWeight;
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  tag?: TagType;
 };
 
-const StyledSpan = tw.div<TextProps>`
+const StyledSpan = tw.span<TextProps>`
+  font-normal
+  leading-[160%]
+  ${({ variant }) => getVariant(variant)}
+  ${({ weight }) => getFontWeight(weight)}
+`;
+
+const StyledDiv = tw.div<TextProps>`
+  font-normal
+  leading-[160%]
+  ${({ variant }) => getVariant(variant)}
+  ${({ weight }) => getFontWeight(weight)}
+`;
+
+const StyledLabel = tw.label<TextProps>`
   font-normal
   leading-[160%]
   ${({ variant }) => getVariant(variant)}
@@ -107,17 +126,44 @@ const Typography = ({
   variant = undefined,
   weight = undefined,
   children,
+  tag = TAG.DIV,
   ...rest
 }: TextProps) => {
+  if (tag === TAG.SPAN) {
+    return (
+      <StyledSpan
+        variant={variant}
+        weight={weight}
+        className={className}
+        {...rest}
+      >
+        {children}
+      </StyledSpan>
+    );
+  }
+
+  if (tag === TAG.LABEL) {
+    return (
+      <StyledLabel
+        variant={variant}
+        weight={weight}
+        className={className}
+        {...rest}
+      >
+        {children}
+      </StyledLabel>
+    );
+  }
+
   return (
-    <StyledSpan
+    <StyledDiv
       variant={variant}
       weight={weight}
       className={className}
       {...rest}
     >
       {children}
-    </StyledSpan>
+    </StyledDiv>
   );
 };
 export default Typography;

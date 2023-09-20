@@ -38,6 +38,7 @@ export default withMT({
         'success-300': 'rgb(var(--tw-color-success-300)/ <alpha-value>)',
         'success-500': 'rgb(var(--tw-color-success-500)/ <alpha-value>)',
         'neutral-50': 'rgb(var(--tw-color-neutral-50)/ <alpha-value>)',
+        'neutral-60': 'rgb(var(--tw-color-neutral-60)/ <alpha-value>)',
         'neutral-100': 'rgb(var(--tw-color-neutral-100)/ <alpha-value>)',
         'neutral-200': 'rgb(var(--tw-color-neutral-200)/ <alpha-value>)',
         'neutral-300': 'rgb(var(--tw-color-neutral-300)/ <alpha-value>)',

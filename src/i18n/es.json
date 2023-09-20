@@ -43,7 +43,8 @@
     "room-details": "Detalle de la habitación",
     "search": "Busca tu hotel",
     "price": "Precio",
-    "price-details": "Detalle de precio"
+    "price-details": "Detalle de precio",
+    "room-confirm-reserve": "Confirma y reserva"
   },
   "to": "a",
   "until": "hasta"

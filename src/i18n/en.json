@@ -43,7 +43,8 @@
     "room-details": "Room Details",
     "search": "Search",
     "price": "Price",
-    "price-details": "Price Details "
+    "price-details": "Price Details ",
+    "room-confirm-reserve": "Confirm and book"
   },
   "to": "to",
   "until": "until"

@@ -1,12 +1,15 @@
+/* eslint-disable simple-import-sort/imports */
 'use client';
 
-/* eslint-disable simple-import-sort/imports */
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useFetchProperty from '@/hooks/use-property.query';
+
 import Button from '@/components/button';
 import Carousel from '@/components/carousel';
+import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Sticky from '@/components/sticky';
@@ -15,8 +18,6 @@ import Typography from '@/components/typography';
 
 import RoomSwiper from './property-room-swiper';
 import Skeleton from './property-skeleton';
-
-import useFetchProperty from '@/hooks/use-property.query';
 import data from './property.data.json';
 
 const Section = tw.div`
@@ -27,30 +28,9 @@ const Row = tw.div`
   flex flex-row items-center
 `;
 
-const Footer = tw.footer`
-  relative
-  z-10
-  box-border
-  flex
-  h-[308px]
-  w-full
-  flex-col
-  justify-around
-  overflow-hidden border-t-[0.5px] border-solid
-  border-gray-300
-  bg-white-100
-  p-4 text-left text-sm
-  text-black
-`;
-
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
   const { isLoading, isError, data: property } = useFetchProperty();
-
-  const onClickHandler = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
-    document.cookie = `i18next=${i18n.language}`;
-  };
 
   if (isLoading) {
     return <Skeleton />;
@@ -282,44 +262,7 @@ const PropertyPage = memo(function HotelPage() {
         </Typography>
       </Section>
 
-      <Footer data-testid='test-element'>
-        <Row className='font-semibold'>
-          <Row className='w-full'>
-            <Icon variant='globe' width='18px' />
-            <div
-              className='hover:cursor-pointer'
-              onClick={onClickHandler}
-              data-testid='test-link'
-            >
-              {t('link.language')}
-            </div>
-          </Row>
-          <span className='w-full'>$ USD</span>
-        </Row>
-        <Row>
-          <Icon variant='open-in-new' width='18px' />
-          <div className='pl-[5px]'>{property.websiteURL}</div>
-        </Row>
-        <Row>
-          <Icon variant='email' width='18px' />
-          <div className='pl-[5px]'>{property.email}</div>
-        </Row>
-        <Row>
-          <Icon variant='phone' width='18px' />
-          <div className='pl-[5px]'>{property.phone}</div>
-        </Row>
-        <Row>
-          <Icon variant='whatsapp' width='18px' />
-          <div className='pl-[5px]'>Whatsapp</div>
-        </Row>
-        <Row>
-          <Icon variant='facebook-round' width='18px' />
-          <div className='pl-[5px]'></div>
-          <Icon variant='instagram' width='18px' />
-        </Row>
-        <Row>{t('link.termsandconditions')}</Row>
-        <Row>© {new Date().getFullYear()} Paxer LLC</Row>
-      </Footer>
+      <Footer />
 
       <Sticky>
         <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>

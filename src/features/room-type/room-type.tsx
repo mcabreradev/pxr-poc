@@ -1,5 +1,4 @@
 /* eslint-disable simple-import-sort/imports */
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -7,19 +6,21 @@ import useRoomTypeQuery from '@/hooks/use-roomtype.query';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
+import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
+import BackButton from '@/components/common/back-button';
 import Skeleton from './room-skeleton';
 import data from './room-type.data.json';
 
-interface Props {
+type Props = {
   roomTypeId: string;
   className?: string;
-}
+};
 
 const Container = tw.div`
 
@@ -30,7 +31,6 @@ const Wrapper = tw.div`
 `;
 
 export default function RoomTypeComponent({ className, roomTypeId }: Props) {
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const { t, i18n } = useTranslation();
 
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
@@ -49,25 +49,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
       data-testid='test-element'
       datatype={room}
     >
-      <Link href='/'>
-        <div className='flex w-full max-w-3xl items-center rounded-md px-8 py-4 text-center'>
-          <Icon
-            variant='arrow-back'
-            width='30'
-            color='var(--tw-color-neutral-400)'
-          />
-
-          <div className='-ml-10 flex w-full items-center justify-center'>
-            <Typography
-              variant='base'
-              weight='medium'
-              className='mx-auto text-neutral-300'
-            >
-              {t('title.room-details')}
-            </Typography>
-          </div>
-        </div>
-      </Link>
+      <BackButton href='/'>{t('title.room-details')}</BackButton>
 
       <section>
         <div className='relative min-h-[260px] w-full'>
@@ -90,7 +72,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
       <Wrapper className='px-4'>
         <section className='pt-6'>
           <Typography variant='h1'>
-            Test !!{/* {room.name[i18n.language] ?? room.name.es} */}
+            {room.name[i18n.language] ?? room.name.es}
           </Typography>
           <Typography variant='sm'>{`Max ${room.maxCapacity} ${t(
             'person.plural',
@@ -255,7 +237,13 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
           </div>
 
           <div className='flex flex-wrap justify-between py-3'>
-            <Button className='w-full font-semibold' variant='primary'>
+            <Button
+              className='w-full font-semibold'
+              variant='primary'
+              type='link'
+              href={`/room-type/${roomTypeId}/details`}
+              fullWidth
+            >
               Proceder al pago
             </Button>
           </div>
@@ -311,6 +299,8 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
           </div>
         </section>
       </Wrapper>
+
+      <Footer />
     </Container>
   );
 }

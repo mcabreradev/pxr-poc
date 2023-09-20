@@ -3,11 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - yarn install
+        - curl -fsSL https://bun.sh/install | bash && ~/.bun/bin/bun install --frozen-lockfile
     build:
       commands:
-        - rm -rf .next/cache/**/*
-        - yarn run build
+        - ~/.bun/bin/bun run build
   artifacts:
     baseDirectory: .next
     files:

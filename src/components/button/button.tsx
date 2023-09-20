@@ -22,12 +22,16 @@ interface ButtonProps {
     | 'danger'
     | 'text';
   href?: string;
+  icon?: React.ReactNode | string;
+  replace?: boolean;
+  scroll?: boolean;
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
-  cursor-pointer
+  cursor-pointer flex items-center justify-center flex-row
   shadow-none hover:shadow-none py-2 px-6 rounded
   text-[14px] font-normal font-poppins normal-case
+  w-auto h-auto
   ${({ fullWidth }) => fullWidth && 'w-full'}
   ${({ disabled }) =>
     disabled
@@ -44,12 +48,15 @@ export default function Button({
   disabled = false,
   onClick,
   href,
+  icon,
+  replace = true,
+  scroll = true,
   ...props
 }: ButtonProps) {
   const styling = {
     primary: 'bg-green-500',
     secondary:
-      'border-[1px] border-solid border-gray bg-white text-black hover:opacity-[0.70]',
+      'border-[1px] border-solid border-neutral-60 bg-white text-black hover:opacity-[0.70]',
     alternative: 'bg-blue',
     warning: 'bg-orange',
     danger: 'bg-red',
@@ -58,7 +65,12 @@ export default function Button({
 
   if (type === 'link') {
     return (
-      <Link href={href || '/'}>
+      <Link
+        href={href || '/'}
+        className={cn({ 'w-full': fullWidth })}
+        replace={replace}
+        scroll={scroll}
+      >
         <ButtonComponent
           className={cn(className, styling[variant])}
           ripple={false}
@@ -67,6 +79,7 @@ export default function Button({
           disabled={disabled}
           {...props}
         >
+          {icon && <span className=''>{icon}</span>}
           {children}
         </ButtonComponent>
       </Link>
@@ -84,7 +97,8 @@ export default function Button({
       onClick={onClick}
       {...props}
     >
-      {children}
+      {icon && icon}
+      <span className='flex-grow text-center'>{children}</span>
     </ButtonComponent>
   );
 }

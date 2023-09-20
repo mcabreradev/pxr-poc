@@ -6,7 +6,7 @@ import { fontPoppins } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import { siteConfig } from '@/constant/config';
-import { Providers } from '@/providers';
+import Providers from '@/providers';
 
 export const metadata = {
   title: {

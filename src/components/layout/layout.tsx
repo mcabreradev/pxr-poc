@@ -1,3 +1,10 @@
+import Seo from '@/components/seo';
+
 export default function Layout({ children }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Seo />
+      {children}
+    </>
+  );
 }

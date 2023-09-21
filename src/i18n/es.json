@@ -2,7 +2,8 @@
   "button": {
     "reserve": "Reservar",
     "view-all": "Ver todo",
-    "view-all-services": "Ver todos los servicios"
+    "view-all-services": "Ver todos los servicios",
+    "continue": "Continuar"
   },
   "date": {
     "check-in": "Fecha de entrada",
@@ -47,5 +48,19 @@
     "room-confirm-reserve": "Confirma y reserva"
   },
   "to": "a",
-  "until": "hasta"
+  "until": "hasta",
+  "show": "Mostrar",
+  "hide": "Ocultar",
+  "validation": {
+    "email": {
+      "required": "El correo electrónico es requerido",
+      "invalid": "El correo electrónico es inválido"
+    },
+    "password": {
+      "required": "La contraseña es requerida",
+      "invalid": "La contraseña es inválida",
+      "min": "La contraseña debe ser mayor a 6 caracteres",
+      "max": "La contraseña debe ser menor a 50 caracteres"
+    }
+  }
 }

@@ -2,7 +2,8 @@
   "button": {
     "reserve": "Book Now",
     "view-all": "View all",
-    "view-all-services": "View all services"
+    "view-all-services": "View all services",
+    "continue": "Continue"
   },
   "date": {
     "check-in": "Check-in date",
@@ -47,5 +48,19 @@
     "room-confirm-reserve": "Confirm and book"
   },
   "to": "to",
-  "until": "until"
+  "until": "until",
+  "show": "Show",
+  "hide": "Hide",
+  "validation": {
+    "email": {
+      "required": "Email is required",
+      "invalid": "Emails is invalid"
+    },
+    "password": {
+      "required": "Password is required",
+      "invalid": "Password is invalid",
+      "min": "Password must be at least 6 characters",
+      "max": "Password must be at most 50 characters"
+    }
+  }
 }

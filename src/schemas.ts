@@ -15,3 +15,14 @@ export const loginSchema = (t) => {
     })
     .required();
 };
+
+export const authSchema = (t) => {
+  return yup
+    .object({
+      email: yup
+        .string()
+        .email(t('validation.email.invalid'))
+        .required(t('validation.email.required')),
+    })
+    .required();
+};

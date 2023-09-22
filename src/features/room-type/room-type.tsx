@@ -241,7 +241,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
               className='w-full font-semibold'
               variant='primary'
               type='link'
-              href={`/room-type/${roomTypeId}/details`}
+              href={`/room-type/${roomTypeId}/details?show=auth`}
               fullWidth
             >
               Proceder al pago

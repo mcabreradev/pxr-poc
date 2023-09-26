@@ -1,6 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { uid } from 'uid';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,5 +16,5 @@ export function timeout(delay: number) {
 }
 
 export function uuid() {
-  return self.crypto.randomUUID();
+  return uid();
 }

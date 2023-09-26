@@ -1,16 +1,20 @@
 {
   "button": {
     "accept": "Aceptar y continuar",
+    "all-amemnities": "Ver todos los servicios",
+    "all-atractions": "Mostrar todos los sitios",
     "apple": "Continuar con Apple",
+    "cancel": "Cancelar",
+    "choose-room": "Escoger habitación",
     "continue": "Continuar",
     "facebook": "Continuar con Facebook",
     "google": "Continuar con Google",
     "login": "Ingresar",
+    "pay": "Proceder al pago",
     "reserve": "Reservar",
-    "view-all": "Ver todo",
-    "view-all-services": "Ver todos los servicios",
     "send": "Enviar",
-    "cancel": "Cancelar"
+    "view-all": "Ver todo",
+    "view-all-services": "Ver todos los servicios"
   },
   "date": {
     "check-in": "Fecha de entrada",
@@ -57,7 +61,7 @@
     "password_confirmation": {
       "label": "Confirme su Contraseña",
       "match": "Las contraseñas no coinciden",
-      "placeholder": "Ingresa tu contraseña",
+      "placeholder": "Ingresa tu contraseña de nuevo",
       "required": "La confirmacion de contraseña es requerida"
     }
   },
@@ -76,14 +80,27 @@
   },
   "hide": "Ocultar",
   "info": {
+    "better-rate": "Mejor tarifa garantizada",
+    "breakfast": "Desayuno incluido",
+    "cancellation-policy": "Política de cancelación",
+    "direct-booking": "Reserva directo sin intermediarios",
     "email": "Le enviaremos por email la confirmación del viaje y los recibos.",
+    "extras": "Extras",
+    "forgot_password": "Ingresa la dirección de correo electrónico asociada a tu cuenta y te enviaremos un enlace para restablecer tu contraseña.",
+    "free-cancellation-before": "Cancelación gratuita antes de las 15:00",
     "have_account": "¿Ya tienes una cuenta?",
     "no_account": "¿No tienes una cuenta?",
     "no_promo": "No quiero recibir mensajes promocionales de Paxer.",
+    "non-refundable": "No reembolsable",
     "offers": "Paxer te enviará ofertas exclusivas, correos electrónicos comerciales y notificaciones push. Puedes optar por dejar de recibirlos en cualquier momento a través del apartado de configuración de tu cuenta o directamente desde alguna de las notificaciones que te llegue.",
+    "offers-beneficts": "Ofertas y beneficios exclusivos",
     "other_options": "Otras opciones para ingresar",
-    "termsandconditions": "Al seleccionar Aceptar y continuar, acepto los Términos de servicio y la Política de privacidad.",
-    "forgot_password": "Ingresa la dirección de correo electrónico asociada a tu cuenta y te enviaremos un enlace para restablecer tu contraseña."
+    "refundable": "Reembolsable",
+    "show-more": "Mostrar más",
+    "taxes": "Impuestos",
+    "taxes-description": "Los impuestos deben ser pagados a tu llegada al hotel",
+    "taxes-details": "Detalles de los impuestos",
+    "termsandconditions": "Al seleccionar Aceptar y continuar, acepto los Términos de servicio y la Política de privacidad."
   },
   "link": {
     "language": "Español"
@@ -93,6 +110,7 @@
     "plural": "noches",
     "singular": "noche"
   },
+  "per": "x",
   "person": {
     "plural": "personas",
     "singular": "persona"
@@ -100,18 +118,30 @@
   "show": "Mostrar",
   "since": "desde",
   "title": {
+    "activities": "Actividades",
+    "attractions": "Sitios de interés cercanos",
+    "book-with-us": "Reserva con Nosotros",
+    "contact": "Contacto",
     "edit": "Editar",
+    "exact-location": "Nuestra ubicación exacta",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "hotel-amemnities": "Nuestro hotel ofrece",
+    "hotel-rules": "Reglas del hotel",
+    "location": "Ubicación",
     "login": "Iniciar Sesión",
     "my-trip": "Mi viaje",
     "price": "Precio",
     "price-details": "Detalle de precio",
     "register": "Tu información de contacto",
+    "reviews": "Reseñas",
+    "room": "Habitación",
     "room-amemnities": "Nuestra habitación ofrece",
     "room-confirm-reserve": "Confirma y reserva",
     "room-details": "Detalle de la habitación",
     "search": "Busca tu hotel",
+    "show-more": "Mostrar más",
     "termsandconditions": "Terms and Conditions",
-    "forgot_password": "¿Olvidaste tu contraseña?"
+    "wanna-sleep": "¿Dónde quieres dormir?"
   },
   "to": "a",
   "until": "hasta"

@@ -113,3 +113,7 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+/* Toogle force to brand color*/
+.react-toggle--checked .react-toggle-track {
+  background-color: rgb(var(--tw-color-brand-500)) !important;
+}

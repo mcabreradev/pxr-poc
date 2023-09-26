@@ -8,7 +8,6 @@ import tw from 'tailwind-styled-components';
 import useFetchProperty from '@/hooks/use-property.query';
 
 import Button from '@/components/button';
-import Carousel from '@/components/carousel';
 import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
@@ -42,18 +41,13 @@ const PropertyPage = memo(function HotelPage() {
 
   return (
     <main data-id-test='test-componet' title={property}>
-      <Carousel>
-        {data.images.map((image) => (
-          <Image
-            key={`img-${image}`}
-            alt='...'
-            src={image}
-            width={980}
-            height={551}
-            className='h-full w-full object-cover'
-          />
-        ))}
-      </Carousel>
+      <Image
+        alt='...'
+        src={data.image}
+        width={980}
+        height={551}
+        className='h-full w-full object-cover'
+      />
 
       <Section className='pt-3'>
         <Typography variant='h1'>{property.name}</Typography>
@@ -68,7 +62,7 @@ const PropertyPage = memo(function HotelPage() {
         <div className='py-1 underline'>{`${property.street}, ${property.state}, ${property.countryName}`}</div>
 
         <div className='flex flex-row items-center py-2 underline'>
-          <span className='pr-1'>Contacto</span>
+          <span className='pr-1'>{t('title.contact')}</span>
           {Object.entries(data?.contact).map(([key, value]) => (
             <a key={`contacto-${key}-${value}`} className='px-1' href={value}>
               <Icon variant={key} width='18px' color='gray' />
@@ -85,7 +79,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <Section className='pt-4'>
         <Typography variant='h2' weight='normal'>
-          {t('Nuestro hotel ofrece')}
+          {t('title.hotel-amemnities')}
         </Typography>
         <div className='flex flex-wrap justify-between py-4'>
           {data.services.map((service) => (
@@ -99,7 +93,7 @@ const PropertyPage = memo(function HotelPage() {
           ))}
         </div>
         <Button className='w-full font-semibold' variant='secondary'>
-          Ver todos los servicios
+          {t('button.all-amemnities')}
         </Button>
       </Section>
 
@@ -107,20 +101,20 @@ const PropertyPage = memo(function HotelPage() {
 
       <Section className='p-4 py-0'>
         <Typography variant='h2' weight='normal'>
-          Reserva con Nosotros
+          {t('title.book-with-us')}
         </Typography>
         <div className='flex flex-col items-start py-4 pl-2 text-base leading-[50px]'>
           <Row>
             <Icon variant='emoticon-cool' width={24} />
-            <div className='pl-[5px]'>Mejor tarifa garantizada</div>
+            <div className='pl-[5px]'>{t('info.better-rate')}</div>
           </Row>
           <Row>
             <Icon variant='check-decagram' width={24} />
-            <div className='pl-[5px]'>Reserva directo sin intermediarios</div>
+            <div className='pl-[5px]'>{t('info.direct-booking')}</div>
           </Row>
           <Row>
             <Icon variant='percent' width={24} />
-            <div className='pl-[5px]'>Ofertas y beneficios exclusivos</div>
+            <div className='pl-[5px]'>{t('info.offers-beneficts')}</div>
           </Row>
         </div>
       </Section>
@@ -129,7 +123,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <Section className='p-4 pb-0 pr-0 pt-2'>
         <Typography variant='h2' weight='normal'>
-          ¿Dónde quieres dormir?
+          {t('title.wanna-sleep')}
         </Typography>
         <RoomSwiper />
       </Section>
@@ -139,7 +133,7 @@ const PropertyPage = memo(function HotelPage() {
       <Section className='p-4 pb-0 pr-0 pt-2'>
         <div className='flex flex-row items-center'>
           <Typography variant='h2' weight='normal'>
-            Reseñas
+            {t('title.reviews')}
           </Typography>
           <Icon variant='star' width='22px' className='ml-2' />
           <Typography className='p-1' variant='h2' weight='medium'>
@@ -189,7 +183,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <Section className='p-4 pb-0 pt-2'>
         <Typography variant='h2' weight='normal'>
-          Nuestra ubicación exacta
+          {t('title.exact-location')}
         </Typography>
         <div className='flex justify-start space-x-2 pt-3'>
           <Icon variant='marker' className='mt-1' />
@@ -199,9 +193,8 @@ const PropertyPage = memo(function HotelPage() {
         </div>
 
         <div>
-          {/* <iframe src={data.map.url} className='mt-3 h-[300px] w-full' /> */}
           <iframe
-            title='Mapa de ubicaci\xF3n del alojamiento'
+            title={t('title.exact-location')}
             loading='lazy'
             className='mt-3 h-[300px] w-full'
             src={data.map.url}
@@ -219,12 +212,12 @@ const PropertyPage = memo(function HotelPage() {
 
       <Section className='p-4 pb-0 pt-2'>
         <Typography variant='h2' weight='normal'>
-          Sitios de interés cercanos
+          {t('title.attractions')}
         </Typography>
         <div className='flex justify-start space-x-3 pb-5 pt-3'>
           <Icon variant='camera' width={24} />
           <Typography variant='base' className='underline'>
-            Actividades
+            {t('title.activities')}
           </Typography>
         </div>
         {property.topSights.map((activity) => (
@@ -237,7 +230,7 @@ const PropertyPage = memo(function HotelPage() {
           </div>
         ))}
         <Button className='my-4 w-full font-semibold' variant='secondary'>
-          Mostrar todos los sitios
+          {t('button.all-atractions')}
         </Button>
       </Section>
 
@@ -245,11 +238,11 @@ const PropertyPage = memo(function HotelPage() {
 
       <Section className='p-4 pb-6 pt-2'>
         <Typography variant='h2' weight='normal'>
-          Reglas del hotel
+          {t('title.hotel-rules')}
         </Typography>
 
         <div className='my-4'>
-          {data.rules.map((rule, key) => (
+          {data.rules[i18n.language].map((rule, key) => (
             <div key={`$rules-${key}`} className='flex justify-between py-2'>
               <Typography>{rule.name}</Typography>
               <Typography weight='light'>{rule.description}</Typography>
@@ -258,7 +251,7 @@ const PropertyPage = memo(function HotelPage() {
         </div>
 
         <Typography weight='semibold' className='underline'>
-          Mostrar más
+          {t('title.show-more')}
         </Typography>
       </Section>
 
@@ -269,15 +262,21 @@ const PropertyPage = memo(function HotelPage() {
           <div className='flex flex-col'>
             <Typography variant='sm' weight='semibold'>
               {' '}
-              Desde $100.00 x noche
+              {t('since')} $100.00 x {t('night.singular')}
             </Typography>
             <Typography variant='sm' weight='normal' className='underline'>
               {' '}
-              Desde $100.00 x noche
+              {t('since')} $100.00 x {t('night.singular')}
             </Typography>
           </div>
           <div>
-            <Button>Escoger habitación</Button>
+            <Button
+              type='link'
+              href={`/room-type/${property.roomTypes[0]}`}
+              scroll={true}
+            >
+              {t('button.choose-room')}
+            </Button>
           </div>
         </div>
       </Sticky>

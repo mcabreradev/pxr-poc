@@ -13,3 +13,7 @@ export function mapObject(obj) {
 export function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
 }
+
+export function uuid() {
+  return self.crypto.randomUUID();
+}

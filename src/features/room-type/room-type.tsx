@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useRoomTypeQuery from '@/hooks/use-roomtype.query';
-import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Footer from '@/components/common/footer';
@@ -14,26 +13,27 @@ import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
 import BackButton from '@/components/common/back-button';
+import { useRouter } from 'next/router';
 import Skeleton from './room-skeleton';
 import data from './room-type.data.json';
 
-type Props = {
-  roomTypeId: string;
-  className?: string;
-};
-
 const Container = tw.div`
-
 `;
 
 const Wrapper = tw.div`
-
 `;
 
-export default function RoomTypeComponent({ className, roomTypeId }: Props) {
+export default function RoomTypeComponent() {
+  const router = useRouter();
+  const roomtype = router.query.roomtype;
+
   const { t, i18n } = useTranslation();
 
-  const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
+  const {
+    isError,
+    isLoading,
+    data: room,
+  } = useRoomTypeQuery(roomtype as string);
 
   if (isLoading) {
     return <Skeleton />;
@@ -44,11 +44,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
   }
 
   return (
-    <Container
-      className={cn(className)}
-      data-testid='test-element'
-      datatype={room}
-    >
+    <Container data-testid='test-element' datatype={room}>
       <BackButton href='/'>{t('title.room-details')}</BackButton>
 
       <section>
@@ -71,9 +67,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
 
       <Wrapper className='px-4'>
         <section className='pt-6'>
-          <Typography variant='h1'>
-            {room.name[i18n.language] ?? room.name.es}
-          </Typography>
+          <Typography variant='h1'>{room.name[i18n.language]}</Typography>
           <Typography variant='sm'>{`Max ${room.maxCapacity} ${t(
             'person.plural',
           )} • ${room.description}`}</Typography>
@@ -151,7 +145,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
           </Typography>
           <div className='flex flex-wrap justify-between py-3'>
             <Typography variant='sm' className='text-neutral-500'>
-              $ 100.00 x 4 noches
+              $ 100.00 {t('per')} 4 {t('night.plural')}
             </Typography>
 
             <Typography variant='sm' className='text-neutral-500'>
@@ -165,20 +159,24 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
                 weight='semibold'
                 className='text-neutral-400'
               >
-                Políticas de cancelación
+                {t('info.cancellation-policy')}
               </Typography>
             </div>
           </div>
           <div className='flex flex-wrap justify-between py-1'>
-            <Radio label='No reembolsable' />
+            <Radio
+              label={t('info.non-refundable')}
+              name='cancellation-policy'
+            />
             <Typography variant='sm' className='text-neutral-500'>
               +$ 0.00
             </Typography>
           </div>
           <div className='flex flex-wrap justify-between py-1'>
             <Radio
-              label='Reembolsable'
-              subtitle='Cancelación gratuita antes de las 15:00 del 5 agosto'
+              label={t('info.refundable')}
+              subtitle={t('info.free-cancellation-before')}
+              name='cancellation-policy'
             />
             <Typography variant='sm' className='text-neutral-500'>
               +$ 0.00
@@ -192,13 +190,13 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
                 weight='semibold'
                 className='text-neutral-400'
               >
-                Extras
+                {t('info.extras')}
               </Typography>
             </div>
           </div>
 
           <div className='flex flex-wrap justify-between py-1'>
-            <Toggle label='Desayuno' />
+            <Toggle label={t('info.breakfast')} />
             <Typography variant='sm' className='text-neutral-500'>
               +$ 10.00
             </Typography>
@@ -211,14 +209,14 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
                 weight='semibold'
                 className='text-neutral-400'
               >
-                Impuestos
+                {t('info.taxes')}
               </Typography>
             </div>
           </div>
 
           <div className='flex flex-wrap justify-between py-1'>
             <Typography variant='xs' className='w-3/4 text-neutral-500'>
-              Los impuestos deben ser pagados a tu llegada al hotel
+              {t('info.taxes-description')}
             </Typography>
 
             <Typography variant='sm' className='text-neutral-500'>
@@ -241,10 +239,10 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
               className='w-full font-semibold'
               variant='primary'
               type='link'
-              href={`/room-type/${roomTypeId}/details?show=auth`}
+              href={`/room-type/${roomtype}/details?show=auth`}
               fullWidth
             >
-              Proceder al pago
+              {t('button.pay')}
             </Button>
           </div>
         </section>
@@ -254,11 +252,11 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
         <section>
           <div className='py-2'>
             <Typography variant='h2' weight='normal'>
-              Políticas de cancelación
+              {t('info.cancellation-policy')}
             </Typography>
             <div className='my-3' />
             <Typography variant='sm' className='text-neutral-500'>
-              No reembolsable
+              {t('info.non-refundable')}
             </Typography>
           </div>
         </section>
@@ -266,11 +264,11 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
         <section>
           <div className='py-5'>
             <Typography variant='h2' weight='normal'>
-              Detalles de los impuestos
+              {t('info.taxes-details')}
             </Typography>
             <div className='my-3' />
             <Typography variant='sm' className='text-neutral-500'>
-              Los impuestos deben ser pagados a tu llegada al hotel
+              {t('info.taxes-description')}
             </Typography>
           </div>
         </section>
@@ -278,11 +276,11 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
         <section>
           <div className='py-4 pb-7'>
             <Typography variant='h2' weight='normal'>
-              Reglas del hotel
+              {t('title.hotel-rules')}
             </Typography>
 
             <div className='my-4'>
-              {data.rules.map((rule, key) => (
+              {data.rules[i18n.language].map((rule, key) => (
                 <div
                   key={`$rules-${key}`}
                   className='flex justify-between py-2'
@@ -294,7 +292,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
             </div>
 
             <Typography weight='semibold' className='underline'>
-              Mostrar más
+              {t('info.show-more')}
             </Typography>
           </div>
         </section>

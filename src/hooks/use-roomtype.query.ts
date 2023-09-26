@@ -18,7 +18,7 @@ export default function useRoomTypeQuery(roomTypeId: string) {
   });
 }
 
-export function useCacheRoomTypes(roomTypeId: string) {
+export function useRoomTypeCache(roomTypeId: string) {
   const queryClient = useQueryClient();
   return queryClient.getQueryData([ROOMTYPE, roomTypeId]);
 }

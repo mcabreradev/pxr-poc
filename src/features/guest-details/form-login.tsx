@@ -95,7 +95,7 @@ export default function FormLoginComponent({
           </span>
         </div>
 
-        <div className='relative mb-3 flex flex-col flex-wrap justify-between gap-4 py-3'>
+        <div className='mb-3 flex flex-col flex-wrap justify-between gap-4 py-3'>
           <Typography variant='sm' weight='semibold' tag='label'>
             {t('form.password.label')}
           </Typography>
@@ -113,14 +113,29 @@ export default function FormLoginComponent({
                 },
               )}
             />
-            <span
-              className='absolute bottom-0 right-0 mb-[11px] mr-4'
-              onClick={handleType}
-            >
-              <Typography variant='xs' weight='normal' className='underline'>
+            <div className='absolute bottom-0 right-0 mb-[11px] mr-4 flex flex-wrap items-center'>
+              <Typography
+                variant='xs'
+                weight='normal'
+                className='underline'
+                onClick={handleType}
+              >
                 {type === FORM.PASSWORD ? t('show') : t('hide')}
               </Typography>
-            </span>
+
+              <span
+                className={cn('ml-1 hidden', {
+                  flex: errors.password,
+                })}
+              >
+                <Icon
+                  variant='exclamation'
+                  width={12}
+                  height={12}
+                  color='#f79009'
+                />
+              </span>
+            </div>
           </div>
 
           <span className='text-warning-600'>

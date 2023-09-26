@@ -77,7 +77,7 @@ export default function Footer() {
         <div className='pl-[5px]'></div>
         <Icon variant='instagram' width='18px' />
       </Row>
-      <Row>{t('link.termsandconditions')}</Row>
+      <Row>{t('title.termsandconditions')}</Row>
       <Row>© {new Date().getFullYear()} Paxer LLC</Row>
     </Container>
   );

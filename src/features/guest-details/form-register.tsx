@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -12,6 +13,7 @@ import Checkbox from '@/components/checkbox';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { FORM } from '@/constant';
 import { registerSchema } from '@/schemas';
 
 interface IForm {
@@ -33,6 +35,18 @@ export default function FormRegisterComponent({
   const router = useRouter();
   const { roomtype } = router.query;
   const { t } = useTranslation();
+
+  const [type, setType] = useState(FORM.PASSWORD);
+  const handleType = useCallback(() => {
+    setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
+  }, [type]);
+
+  const [typeConfirmation, setTypeConfirmation] = useState(FORM.PASSWORD);
+  const handleTypeConfirmation = useCallback(() => {
+    setTypeConfirmation(
+      typeConfirmation === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD,
+    );
+  }, [typeConfirmation]);
 
   const {
     register,
@@ -226,7 +240,7 @@ export default function FormRegisterComponent({
           <div className='relative'>
             <input
               {...register('password')}
-              type='password'
+              type={type}
               placeholder={t('form.password.placeholder')}
               className={cn(
                 'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
@@ -237,18 +251,29 @@ export default function FormRegisterComponent({
               )}
             />
 
-            <span
-              className={cn('absolute bottom-0 right-0 mb-[13px] mr-4 hidden', {
-                block: errors.password,
-              })}
-            >
-              <Icon
-                variant='exclamation'
-                width={12}
-                height={12}
-                color='#f79009'
-              />
-            </span>
+            <div className='absolute bottom-0 right-0 mb-[11px] mr-4 flex flex-wrap items-center'>
+              <Typography
+                variant='xs'
+                weight='normal'
+                className='underline'
+                onClick={handleType}
+              >
+                {type === FORM.PASSWORD ? t('show') : t('hide')}
+              </Typography>
+
+              <span
+                className={cn('ml-1 hidden', {
+                  flex: errors.password,
+                })}
+              >
+                <Icon
+                  variant='exclamation'
+                  width={12}
+                  height={12}
+                  color='#f79009'
+                />
+              </span>
+            </div>
           </div>
 
           <span className='text-warning-600'>
@@ -264,7 +289,7 @@ export default function FormRegisterComponent({
           <div className='relative'>
             <input
               {...register('password_confirmation')}
-              type='password'
+              type={typeConfirmation}
               placeholder={t('form.password_confirmation.placeholder')}
               className={cn(
                 'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
@@ -275,18 +300,33 @@ export default function FormRegisterComponent({
               )}
             />
 
-            <span
-              className={cn('absolute bottom-0 right-0 mb-[13px] mr-4 hidden', {
-                block: errors.password_confirmation,
-              })}
+            <div
+              className={cn(
+                'absolute bottom-0 right-0 mb-[11px] mr-4 flex flex-wrap items-center',
+              )}
             >
-              <Icon
-                variant='exclamation'
-                width={12}
-                height={12}
-                color='#f79009'
-              />
-            </span>
+              <Typography
+                variant='xs'
+                weight='normal'
+                className='underline'
+                onClick={handleTypeConfirmation}
+              >
+                {typeConfirmation === FORM.PASSWORD ? t('show') : t('hide')}
+              </Typography>
+
+              <span
+                className={cn('ml-1 hidden', {
+                  flex: errors.password_confirmation,
+                })}
+              >
+                <Icon
+                  variant='exclamation'
+                  width={12}
+                  height={12}
+                  color='#f79009'
+                />
+              </span>
+            </div>
           </div>
 
           <span className='text-warning-600'>

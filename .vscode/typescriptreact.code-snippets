@@ -219,8 +219,8 @@
   },
 
   "Wrap with i18n": {
-    "prefix": ["t(", "i8n"],
-    "body": ["{t('${TM_SELECTED_TEXT}')}"]
+    "prefix": ["t(", "i18n"],
+    "body": ["{t('$0')}"]
   },
   //#endregion  //*======== Snippet Wrap ===========
 

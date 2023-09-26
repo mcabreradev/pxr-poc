@@ -1,39 +1,41 @@
 import { Radio as Component } from 'flowbite-react';
 import tw from 'tailwind-styled-components';
 
-import { cn } from '@/lib/utils';
+import { cn, uuid } from '@/lib/utils';
 interface Props {
   id?: string;
   className?: string;
   label?: string;
+  labelClassName?: string;
   name?: string;
   value?: string;
   subtitle?: string;
+  subtitleClassName?: string;
   checked?: boolean;
   disabled?: boolean;
 }
 
 const Content = tw.div`
-  flex w-3/4
+  flex w-3/4 items-start
 `;
 const LabelContainer = tw.div`
-  ml-3 flex flex-col
+  ml-2 flex flex-col items-start
 `;
 
-const Label = tw.span`
+const Label = tw.label`
   text-sm leading-[160%] text-neutral-500
 `;
 
-const Subtitle = tw.span`
+const Subtitle = tw.label`
   text-xs leading-[160%] text-gray-500
 `;
 
 const commonClasses = `
-w-4 focus:ring-0 focus:ring-green text-green rounded-980xl bg-white box-border h-4 overflow-hidden shrink-0 border-[1px] border-solid border-gray-500
+  w-4 focus:ring-0 focus:ring-brand-500 text-brand-500 rounded-980xl bg-white box-border h-4 overflow-hidden shrink-0 border-[1px] border-solid border-gray-500 mt-1
 `;
 
 export default function Radio({
-  id,
+  id = uuid(),
   className,
   label,
   name,
@@ -41,6 +43,8 @@ export default function Radio({
   subtitle,
   checked = false,
   disabled = false,
+  labelClassName,
+  subtitleClassName,
 }: Props) {
   return (
     <Content>
@@ -54,8 +58,16 @@ export default function Radio({
         data-testid='test-element'
       />
       <LabelContainer>
-        {!!label && <Label>{label}</Label>}
-        {!!subtitle && <Subtitle>{subtitle}</Subtitle>}
+        {!!label && (
+          <Label className={labelClassName} htmlFor={id}>
+            {label}
+          </Label>
+        )}
+        {!!subtitle && (
+          <Subtitle className={subtitleClassName} htmlFor={id}>
+            {subtitle}
+          </Subtitle>
+        )}
       </LabelContainer>
     </Content>
   );

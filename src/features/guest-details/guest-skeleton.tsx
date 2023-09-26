@@ -1,4 +1,4 @@
-export default function PropertySkeletonComponent() {
+export default function GuestSkeletonComponent() {
   return (
     <div className='flex h-full animate-pulse flex-col items-center justify-center'>
       <div className='h-64 w-full bg-gray-300' />

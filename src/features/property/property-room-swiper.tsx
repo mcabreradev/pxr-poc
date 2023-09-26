@@ -30,14 +30,14 @@ export default function RoomSwiper() {
         <Rooms key={`holtel-room-${index}`}>
           <Image
             alt='alt'
-            src='/svg/placeholder.svg'
+            src={`/images/hotel/room${index + 1}.webp`}
             width={271}
             height={235}
             className='w-full object-cover'
           />
           <div className='p-4'>
             <Typography variant='h3' weight='medium' className='pb-4'>
-              {room.name[i18n.language]}
+              {room.name[i18n.language] ?? t('title.room')}
             </Typography>
             <Typography className='pb-1'>
               {`Max ${room.maxCapacity} ${t('person.plural')}`}
@@ -54,6 +54,7 @@ export default function RoomSwiper() {
               type='link'
               href={`/room-type/${room.id}`}
               className='mb-4 w-full'
+              scroll={true}
             >
               {t('button.reserve')}
             </Button>

@@ -4,11 +4,7 @@ import React from 'react';
 
 import RoomTypeComponent from '@/features/room-type/room-type';
 
-interface Props {
-  params: { roomTypeId: string };
-}
-
-export default function Page({ params }: Props) {
+export default function Page() {
   const [hydrated, setHydrated] = React.useState(false);
   React.useEffect(() => {
     setHydrated(true);
@@ -17,5 +13,5 @@ export default function Page({ params }: Props) {
     return null;
   }
 
-  return <RoomTypeComponent roomTypeId={params.roomTypeId} />;
+  return <RoomTypeComponent />;
 }

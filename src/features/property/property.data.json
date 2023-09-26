@@ -1,8 +1,5 @@
 {
-  "images": [
-    "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg",
-    "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg"
-  ],
+  "image": "/images/hotel/room.webp",
   "name": "Terrazas de La Posta",
   "rate": 4.5,
   "address": "Pje Santa Rosa de Lima s/n, Purmamarca, Argentina",
@@ -143,18 +140,34 @@
       "distance": "390 m"
     }
   ],
-  "rules": [
-    {
-      "name": "Check-in:",
-      "description": "03:00pm"
-    },
-    {
-      "name": "Check-out:",
-      "description": "12:00pm"
-    },
-    {
-      "name": "Mascotas",
-      "description": "Se admiten con previo aviso"
-    }
-  ]
+  "rules": {
+    "es": [
+      {
+        "name": "Check-in:",
+        "description": "03:00pm"
+      },
+      {
+        "name": "Check-out:",
+        "description": "12:00pm"
+      },
+      {
+        "name": "Mascotas",
+        "description": "Se admiten con previo aviso"
+      }
+    ],
+    "en": [
+      {
+        "name": "Check-in:",
+        "description": "03:00pm"
+      },
+      {
+        "name": "Check-out:",
+        "description": "12:00pm"
+      },
+      {
+        "name": "Pets",
+        "description": "Accepted with prior notice"
+      }
+    ]
+  }
 }

@@ -80,7 +80,7 @@ export default function Button({
           {...props}
         >
           {icon && <span className=''>{icon}</span>}
-          {children}
+          <span className='flex-grow text-center'>{children}</span>
         </ButtonComponent>
       </Link>
     );

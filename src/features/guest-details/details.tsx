@@ -9,45 +9,52 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import useFetchProperty from '@/hooks/use-property.query';
 import FormAuthComponent from './form-auth';
+import FormForgotComponent from './form-forgot';
 import FormLoginComponent from './form-login';
 import FormRegisterComponent from './form-register';
+import GuestSkeletonComponent from './guest-skeleton';
 
 import { QUERY } from '@/constant';
-type Props = {
-  roomTypeId: string;
-  show?: string;
-};
+import useRoomTypeQuery from '@/hooks/use-roomtype.query';
+import { useRouter } from 'next/router';
 
 const Container = tw.div`
-
 `;
 
 const Wrapper = tw.div`
-
 `;
 
 const HR = tw.div`
   hr border-t-[10px] border-neutral-60
 `;
 
-export default function DetailsComponent({ roomTypeId, show }: Props) {
-  const { t } = useTranslation();
+export default function DetailsComponent() {
+  const router = useRouter();
+  const { show, roomtype } = router.query;
+  const { t, i18n } = useTranslation();
   const { isError, isLoading, data: property } = useFetchProperty();
+  const {
+    isError: roomError,
+    isLoading: roomLoading,
+    data: room,
+  } = useRoomTypeQuery(roomtype as string);
+
   const showAuth = show === QUERY.AUTH || !show;
   const showLogin = show === QUERY.LOGIN;
   const showRegister = show === QUERY.REGISTER;
+  const showForgot = show === QUERY.FORGOT;
 
-  if (isLoading) {
-    return 'loading...';
+  if (isLoading || roomLoading) {
+    return <GuestSkeletonComponent />;
   }
 
-  if (isError) {
+  if (isError || roomError) {
     return <span>Error</span>;
   }
 
   return (
     <Container data-testid='test-element'>
-      <BackButton href={`/room-type/${roomTypeId}`}>
+      <BackButton href={`/room-type/${roomtype}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>
 
@@ -136,13 +143,13 @@ export default function DetailsComponent({ roomTypeId, show }: Props) {
                 weight='semibold'
                 className='text-neutral-500'
               >
-                Habitación doble superior
+                {room.name[i18n.language]}
               </Typography>
               <Typography variant='sm' className='text-neutral-500'>
-                4 noches
+                4 {t('night.plural')}
               </Typography>
               <Typography variant='sm' className='text-neutral-500'>
-                No reembolsable
+                {t('info.non-refundable')}
               </Typography>
             </div>
 
@@ -158,14 +165,14 @@ export default function DetailsComponent({ roomTypeId, show }: Props) {
                 weight='semibold'
                 className='text-neutral-400'
               >
-                Impuestos
+                {t('info.taxes')}
               </Typography>
             </div>
           </div>
 
           <div className='flex flex-wrap justify-between py-1'>
             <Typography variant='xs' className='w-3/4 text-neutral-500'>
-              Los impuestos deben ser pagados a tu llegada al hotel
+              {t('info.taxes-description')}
             </Typography>
 
             <Typography variant='sm' className='text-neutral-500'>
@@ -187,13 +194,10 @@ export default function DetailsComponent({ roomTypeId, show }: Props) {
         <HR />
 
         <section className='p-4'>
-          <Typography variant='h2' weight='normal'>
-            Tu información de contacto
-          </Typography>
-
           {showLogin && <FormLoginComponent />}
           {showAuth && <FormAuthComponent />}
           {showRegister && <FormRegisterComponent />}
+          {showForgot && <FormForgotComponent />}
         </section>
       </Wrapper>
 

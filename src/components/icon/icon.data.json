@@ -10,6 +10,7 @@
   "check-decagram": "mdi:check-decagram-outline",
   "email": "ic:outline-email",
   "emoticon-cool": "mdi:emoticon-cool-outline",
+  "exclamation": "fa:exclamation-circle",
   "facebook": "devicon:facebook",
   "facebook-round": "simple-icons:facebook",
   "filter": "mi:filter",
@@ -37,9 +38,9 @@
   "taxi": "mdi:taxi",
   "tv": "ic:baseline-tv",
   "user": "mdi:user-outline",
+  "warning": "ri:alarm-warning-line",
   "web": "ph:globe",
   "whatsapp": "logos:whatsapp-icon",
   "whatsapp-plain": "ic:round-whatsapp",
-  "warning": "ri:alarm-warning-line",
   "wifi": "ic:baseline-wifi"
 }

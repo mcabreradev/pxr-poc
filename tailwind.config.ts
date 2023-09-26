@@ -46,6 +46,7 @@ export default withMT({
         'neutral-500': 'rgb(var(--tw-color-neutral-500)/ <alpha-value>)',
         'warning-300': 'rgb(var(--tw-color-warning-300)/ <alpha-value>)',
         'warning-500': 'rgb(var(--tw-color-warning-500)/ <alpha-value>)',
+        'warning-600': 'rgb(var(--tw-color-warning-600)/ <alpha-value>)',
         'error-300': 'rgb(var(--tw-color-error-300)/ <alpha-value>)',
         'error-500': 'rgb(var(--tw-color-error-500)/ <alpha-value>)',
         // 'black': 'rgb(var(--tw-color-black)/ <alpha-value>)',

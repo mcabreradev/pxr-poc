@@ -30,7 +30,7 @@ const Subtitle = tw.span`
 `;
 
 const CustomToggle = tw(Toggle)<{ enabled?: boolean }>`
-  ${(p) => (p.enabled ? 'bg-green' : 'bg-gray-50')};
+  ${(p) => (p.enabled ? 'bg-error-500' : 'bg-gray-50')}
   relative mr-4 inline-flex h-6 w-11 items-center rounded-full shrink-0
 `;
 
@@ -47,7 +47,7 @@ export default function ToogleComponent({
 
   const onChangeHandler = () => {
     if (readonly) return;
-    setEnabled(!enabled);
+    setEnabled((prev) => !prev);
   };
 
   return (

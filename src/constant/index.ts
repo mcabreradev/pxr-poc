@@ -35,10 +35,12 @@ export const TAG = {
 export const AUTH = 'auth';
 export const LOGIN = 'login';
 export const REGISTER = 'register';
+export const FORGOT = 'forgot';
 export const QUERY = {
   AUTH,
   LOGIN,
   REGISTER,
+  FORGOT,
 };
 
 // i18n

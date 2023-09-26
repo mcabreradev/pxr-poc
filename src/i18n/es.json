@@ -1,15 +1,65 @@
 {
   "button": {
+    "accept": "Aceptar y continuar",
+    "apple": "Continuar con Apple",
+    "continue": "Continuar",
+    "facebook": "Continuar con Facebook",
+    "google": "Continuar con Google",
+    "login": "Ingresar",
     "reserve": "Reservar",
     "view-all": "Ver todo",
     "view-all-services": "Ver todos los servicios",
-    "continue": "Continuar"
+    "send": "Enviar",
+    "cancel": "Cancelar"
   },
   "date": {
     "check-in": "Fecha de entrada",
     "check-out": "Fecha de salida",
     "plural": "Fechas",
     "singular": "Fecha"
+  },
+  "error": {
+    "message": "Algo salió mal, por favor intenta de nuevo más tarde.",
+    "title": "¡Ups!"
+  },
+  "form": {
+    "date_of_birth": {
+      "invalid": "La fecha de nacimiento es inválida",
+      "label": "Fecha de nacimiento",
+      "placeholder": "DD/MM/AAAA",
+      "required": "La fecha de nacimiento es requerida"
+    },
+    "email": {
+      "invalid": "El correo electrónico es inválido",
+      "label": "El correo electrónico",
+      "placeholder": "Ingresa tu email",
+      "required": "El correo electrónico es requerido"
+    },
+    "lastname": {
+      "label": "Apellido",
+      "placeholder": "Ingresa tu apellido",
+      "required": "El apellido es requerido"
+    },
+    "name": {
+      "label": "Nombre",
+      "placeholder": "Ingresa tu nombre",
+      "required": "El nombre es requerido"
+    },
+    "password": {
+      "invalid": "La contraseña es inválida",
+      "label": "Contraseña",
+      "match": "Las contraseñas no coinciden",
+      "max": "La contraseña debe ser menor a 50 caracteres",
+      "min": "La contraseña debe ser mayor a 6 caracteres",
+      "placeholder": "Ingresa tu contraseña",
+      "required": "La contraseña es requerida"
+    },
+    "password_confirmation": {
+      "label": "Confirme su Contraseña",
+      "match": "Las contraseñas no coinciden",
+      "placeholder": "Ingresa tu contraseña",
+      "required": "La confirmacion de contraseña es requerida"
+    }
   },
   "from": "de",
   "guest": {
@@ -24,43 +74,45 @@
     "plural": "Huéspedes",
     "singular": "Huésped"
   },
-  "person": {
-    "plural": "personas",
-    "singular": "persona"
+  "hide": "Ocultar",
+  "info": {
+    "email": "Le enviaremos por email la confirmación del viaje y los recibos.",
+    "have_account": "¿Ya tienes una cuenta?",
+    "no_account": "¿No tienes una cuenta?",
+    "no_promo": "No quiero recibir mensajes promocionales de Paxer.",
+    "offers": "Paxer te enviará ofertas exclusivas, correos electrónicos comerciales y notificaciones push. Puedes optar por dejar de recibirlos en cualquier momento a través del apartado de configuración de tu cuenta o directamente desde alguna de las notificaciones que te llegue.",
+    "other_options": "Otras opciones para ingresar",
+    "termsandconditions": "Al seleccionar Aceptar y continuar, acepto los Términos de servicio y la Política de privacidad.",
+    "forgot_password": "Ingresa la dirección de correo electrónico asociada a tu cuenta y te enviaremos un enlace para restablecer tu contraseña."
   },
   "link": {
-    "language": "Español",
-    "termsandconditions": "Términos y condiciones"
+    "language": "Español"
   },
+  "login": "Ingresar",
   "night": {
     "plural": "noches",
     "singular": "noche"
   },
+  "person": {
+    "plural": "personas",
+    "singular": "persona"
+  },
+  "show": "Mostrar",
   "since": "desde",
   "title": {
     "edit": "Editar",
+    "login": "Iniciar Sesión",
     "my-trip": "Mi viaje",
-    "room-amemnities": "Nuestra habitación ofrece",
-    "room-details": "Detalle de la habitación",
-    "search": "Busca tu hotel",
     "price": "Precio",
     "price-details": "Detalle de precio",
-    "room-confirm-reserve": "Confirma y reserva"
+    "register": "Tu información de contacto",
+    "room-amemnities": "Nuestra habitación ofrece",
+    "room-confirm-reserve": "Confirma y reserva",
+    "room-details": "Detalle de la habitación",
+    "search": "Busca tu hotel",
+    "termsandconditions": "Terms and Conditions",
+    "forgot_password": "¿Olvidaste tu contraseña?"
   },
   "to": "a",
-  "until": "hasta",
-  "show": "Mostrar",
-  "hide": "Ocultar",
-  "validation": {
-    "email": {
-      "required": "El correo electrónico es requerido",
-      "invalid": "El correo electrónico es inválido"
-    },
-    "password": {
-      "required": "La contraseña es requerida",
-      "invalid": "La contraseña es inválida",
-      "min": "La contraseña debe ser mayor a 6 caracteres",
-      "max": "La contraseña debe ser menor a 50 caracteres"
-    }
-  }
+  "until": "hasta"
 }

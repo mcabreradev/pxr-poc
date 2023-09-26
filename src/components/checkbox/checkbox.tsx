@@ -5,10 +5,12 @@ import { cn } from '@/lib/utils';
 interface Props {
   id?: string;
   className?: string;
-  label?: string;
+  label?: string | JSX.Element;
+  labelClassName?: string;
   name?: string;
   value?: string;
   subtitle?: string;
+  subtitleClassName?: string;
   checked?: boolean;
   disabled?: boolean;
 }
@@ -41,6 +43,8 @@ export default function Checkbox({
   subtitle,
   checked = false,
   disabled = false,
+  labelClassName,
+  subtitleClassName,
 }: Props) {
   return (
     <Content>
@@ -54,8 +58,10 @@ export default function Checkbox({
         data-testid='test-element'
       />
       <LabelContainer>
-        {!!label && <Label>{label}</Label>}
-        {!!subtitle && <Subtitle>{subtitle}</Subtitle>}
+        {!!label && <Label className={labelClassName}>{label}</Label>}
+        {!!subtitle && (
+          <Subtitle className={subtitleClassName}>{subtitle}</Subtitle>
+        )}
       </LabelContainer>
     </Content>
   );

@@ -1,15 +1,65 @@
 {
   "button": {
+    "accept": "Accept and continue",
+    "apple": "Continue with Apple",
+    "continue": "Continue",
+    "facebook": "Continue with Facebook",
+    "google": "Continue with Google",
+    "login": "Login",
     "reserve": "Book Now",
     "view-all": "View all",
     "view-all-services": "View all services",
-    "continue": "Continue"
+    "send": "Send",
+    "cancel": "Cancel"
   },
   "date": {
     "check-in": "Check-in date",
     "check-out": "Check-out date",
     "plural": "Dates",
     "singular": "Date"
+  },
+  "error": {
+    "message": "Something went wrong, please try again later.",
+    "title": "¡Ups!"
+  },
+  "form": {
+    "date_of_birth": {
+      "invalid": "Date of birth is invalid",
+      "label": "Date of birth",
+      "placeholder": "DD/MM/YYYY",
+      "required": "Date of birth is required"
+    },
+    "email": {
+      "invalid": "Emails is invalid",
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": "Email is required"
+    },
+    "lastname": {
+      "label": "Last name",
+      "placeholder": "Enter your last name",
+      "required": "Last name is required"
+    },
+    "name": {
+      "label": "Name",
+      "placeholder": "Enter your name",
+      "required": "Name is required"
+    },
+    "password": {
+      "invalid": "Password is invalid",
+      "label": "Password",
+      "match": "Passwords don't match",
+      "max": "Password must be at most 50 characters",
+      "min": "Password must be at least 6 characters",
+      "placeholder": "Enter your password",
+      "required": "Password is required"
+    },
+    "password_confirmation": {
+      "label": "Repeat your password",
+      "match": "Passwords don't match",
+      "placeholder": "Enter your password again",
+      "required": "Password is required"
+    }
   },
   "from": "from",
   "guest": {
@@ -24,43 +74,45 @@
     "plural": "Guests",
     "singular": "Guest"
   },
-  "person": {
-    "plural": "persons",
-    "singular": "person"
+  "hide": "Hide",
+  "info": {
+    "email": "We will send you the trip confirmation and receipts by email.",
+    "have_account": "¿Already have an account?",
+    "no_account": "¿Don't have an account?",
+    "no_promo": "I don't want to receive promotions from Paxer",
+    "offers": "Paxer will send you exclusive offers, commercial emails and push notifications. You can choose to stop receiving them at any time through the settings section of your account or directly from any of the notifications that you receive.",
+    "other_options": "Other options",
+    "termsandconditions": "By selecting Accept and continue, I agree to the Terms of Service and Privacy Policy.",
+    "forgot_password": "Enter the email address associated with your account and we'll send you a link to reset your password."
   },
   "link": {
-    "language": "English",
-    "termsandconditions": "Terms and Conditions"
+    "language": "English"
   },
+  "login": "Login",
   "night": {
     "plural": "nights",
     "singular": "night"
   },
+  "person": {
+    "plural": "persons",
+    "singular": "person"
+  },
+  "show": "Show",
   "since": "since",
   "title": {
     "edit": "Edit",
+    "login": "Login",
     "my-trip": "My Trip",
-    "room-amemnities": "Room Amenities",
-    "room-details": "Room Details",
-    "search": "Search",
     "price": "Price",
     "price-details": "Price Details ",
-    "room-confirm-reserve": "Confirm and book"
+    "register": "Contact information",
+    "room-amemnities": "Room Amenities",
+    "room-confirm-reserve": "Confirm and book",
+    "room-details": "Room Details",
+    "search": "Search",
+    "termsandconditions": "Terms and Conditions",
+    "forgot_password": "Forgot your password?"
   },
   "to": "to",
-  "until": "until",
-  "show": "Show",
-  "hide": "Hide",
-  "validation": {
-    "email": {
-      "required": "Email is required",
-      "invalid": "Emails is invalid"
-    },
-    "password": {
-      "required": "Password is required",
-      "invalid": "Password is invalid",
-      "min": "Password must be at least 6 characters",
-      "max": "Password must be at most 50 characters"
-    }
-  }
+  "until": "until"
 }

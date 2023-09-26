@@ -13,6 +13,7 @@ import FormLoginComponent from './form-login';
 import FormRegisterComponent from './form-register';
 
 import { QUERY } from '@/constant';
+import FormForgotComponent from '@/features/guest-details/form-forgot';
 type Props = {
   roomTypeId: string;
   show?: string;
@@ -36,6 +37,7 @@ export default function DetailsComponent({ roomTypeId, show }: Props) {
   const showAuth = show === QUERY.AUTH || !show;
   const showLogin = show === QUERY.LOGIN;
   const showRegister = show === QUERY.REGISTER;
+  const showForgot = show === QUERY.FORGOT;
 
   if (isLoading) {
     return 'loading...';
@@ -187,13 +189,10 @@ export default function DetailsComponent({ roomTypeId, show }: Props) {
         <HR />
 
         <section className='p-4'>
-          <Typography variant='h2' weight='normal'>
-            Tu información de contacto
-          </Typography>
-
           {showLogin && <FormLoginComponent />}
           {showAuth && <FormAuthComponent />}
           {showRegister && <FormRegisterComponent />}
+          {showForgot && <FormForgotComponent />}
         </section>
       </Wrapper>
 

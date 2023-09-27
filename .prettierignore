@@ -44,3 +44,4 @@ coverage
 # Ignore Storybook's static dir:
 .storybook/static
 /storybook-static
+/node_modules

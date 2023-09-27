@@ -3,7 +3,7 @@
  * @see https://github.com/iamvishnusankar/next-sitemap#readme
  */
 module.exports = {
-  siteUrl: process.env.PAXER_APP_URL || 'http://localhost:3000',
+  siteUrl: process.env.SITE_APP_URL || 'http://localhost:3000',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],

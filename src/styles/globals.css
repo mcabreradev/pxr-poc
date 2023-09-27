@@ -4,32 +4,43 @@
 
 :root {
   --font-sans: 'Poppins', sans-serif;
-  --tw-color-black: #212529;
-  --tw-color-blue-light: #39abfe;
-  --tw-color-blue: #2970ff;
-  --tw-color-gray-dark: #797979;
-  --tw-color-gray-light: #f8f8f8;
-  --tw-color-gray: #adadad --tw-color-green-light: #28d099;
-  --tw-color-green: #27a97e;
-  --tw-color-orange-light: #ffd358;
-  --tw-color-orange: #ffbc00;
-  --tw-color-red-light: #ff6c60;
-  --tw-color-red: #ea4335;
-  --tw-color-white: #ffffff;
+  --tw-color-neutral-50: 234 236 240;
+  --tw-color-neutral-60: 230 230 230;
+  --tw-color-neutral-100: 189 189 189;
+  --tw-color-neutral-200: 173 173 173;
+  --tw-color-neutral-300: 132 132 132;
+  --tw-color-neutral-400: 121 121 121;
+  --tw-color-neutral-500: 33 37 41;
+  --tw-color-brand-300: 40 208 153;
+  --tw-color-brand-500: 39 169 126;
+  --tw-color-success-300: 57 171 254;
+  --tw-color-success-500: 41 112 255;
+  --tw-color-warning-300: 255 211 88;
+  --tw-color-warning-500: 247 144 9;
+  --tw-color-warning-600: 220 104 3;
+  --tw-color-error-300: 255 108 96;
+  --tw-color-error-500: 234 67 53;
+  --tw-color-black: 33 37 41;
+  --tw-color-white: 255 255 255;
 
-  --color-black: var(--tw-color-black);
-  --color-blue-light: var(--tw-color-blue-light);
-  --color-blue: var(--tw-color-blue);
-  --color-gray-dark: var(--tw-color-gray-dark);
-  --color-gray-light: var(--tw-color-gray-light);
-  --color-gray: var(--tw-color-gray);
-  --color-green-light: var(--tw-color-green-light);
-  --color-green: var(--tw-color-green);
-  --color-orange-light: var(--tw-color-orange-light);
-  --color-orange: var(--tw-color-orange);
-  --color-red-light: var(--tw-color-red-light);
-  --color-red: var(--tw-color-red);
-  --color-white: var(--tw-color-white);
+  --color-neutral-50: var(--tw-color-neutral-50); /* #eaecf0 */
+  --color-neutral-60: var(--tw-color-neutral-60); /* #E6E6E6 */
+  --color-neutral-100: var(--tw-color-neutral-100); /* #bdbdbd */
+  --color-neutral-200: var(--tw-color-neutral-200); /* #adadad */
+  --color-neutral-300: var(--tw-color-neutral-300); /* #848484 */
+  --color-neutral-400: var(--tw-color-neutral-400); /* #797979 */
+  --color-neutral-500: var(--tw-color-neutral-500); /* #212529 */
+  --color-brand-300: var(--tw-color-brand-300); /* #28d099 */
+  --color-brand-500: var(--tw-color-brand-500); /* #27a97e */
+  --color-success-300: var(--tw-color-success-300); /* #39abfe */
+  --color-success-500: var(--tw-color-success-500); /* #2970ff */
+  --color-warning-300: var(--tw-color-warning-300); /* #ffd358 */
+  --color-warning-500: var(--tw-color-warning-500); /* #f79009 */
+  --color-warning-600: var(--tw-color-warning-600); /* ##DC6803 */
+  --color-error-300: var(--tw-color-error-300); /* #ff6c60 */
+  --color-error-500: var(--tw-color-error-500); /* #ea4335 */
+  --color-black: var(--tw-color-black); /* #212529 */
+  --color-white: var(--tw-color-white); /* #ffffff */
 }
 
 @layer base {
@@ -38,16 +49,14 @@
     font-style: normal;
     font-weight: 100 900;
     font-display: optional;
+    color: var(--color-black);
   }
 
   /* #region  /**=========== Typography =========== */
-  .h0 {
-    @apply font-primary text-3xl font-bold md:text-5xl;
-  }
 
   h1,
   .h1 {
-    @apply font-primary text-2xl font-bold md:text-4xl;
+    @apply text-[24px] font-semibold leading-[160%] text-gray-900;
   }
 
   h2,
@@ -69,6 +78,11 @@
   .p {
     @apply font-primary text-sm md:text-base;
   }
+
+  hr,
+  .hr {
+    @apply my-4 box-border h-px border-t-[1px] border-solid border-white-200;
+  }
   /* #endregion  /**======== Typography =========== */
 
   .layout {
@@ -85,4 +99,21 @@
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
   }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+/* Toogle force to brand color*/
+.react-toggle--checked .react-toggle-track {
+  background-color: rgb(var(--tw-color-brand-500)) !important;
 }

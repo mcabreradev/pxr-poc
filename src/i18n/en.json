@@ -1,6 +1,148 @@
 {
+  "button": {
+    "accept": "Accept and continue",
+    "all-amemnities": "All Amenities",
+    "all-atractions": "All Atractions",
+    "apple": "Continue with Apple",
+    "cancel": "Cancel",
+    "choose-room": "Choose room",
+    "continue": "Continue",
+    "facebook": "Continue with Facebook",
+    "google": "Continue with Google",
+    "login": "Login",
+    "pay": "Proceed to payment",
+    "reserve": "Book Now",
+    "send": "Send",
+    "view-all": "View all",
+    "view-all-services": "View all services"
+  },
+  "date": {
+    "check-in": "Check-in date",
+    "check-out": "Check-out date",
+    "plural": "Dates",
+    "singular": "Date"
+  },
+  "error": {
+    "message": "Something went wrong, please try again later.",
+    "title": "¡Ups!"
+  },
+  "form": {
+    "date_of_birth": {
+      "invalid": "Date of birth is invalid",
+      "label": "Date of birth",
+      "placeholder": "DD/MM/YYYY",
+      "required": "Date of birth is required"
+    },
+    "email": {
+      "invalid": "Emails is invalid",
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": "Email is required"
+    },
+    "lastname": {
+      "label": "Last name",
+      "placeholder": "Enter your last name",
+      "required": "Last name is required"
+    },
+    "name": {
+      "label": "Name",
+      "placeholder": "Enter your name",
+      "required": "Name is required"
+    },
+    "password": {
+      "invalid": "Password is invalid",
+      "label": "Password",
+      "match": "Passwords don't match",
+      "max": "Password must be at most 50 characters",
+      "min": "Password must be at least 6 characters",
+      "placeholder": "Enter your password",
+      "required": "Password is required"
+    },
+    "password_confirmation": {
+      "label": "Repeat your password",
+      "match": "Passwords don't match",
+      "placeholder": "Enter your password again",
+      "required": "Password is required"
+    }
+  },
+  "from": "from",
+  "guest": {
+    "adult": {
+      "plural": "adults",
+      "singular": "adult"
+    },
+    "childre": {
+      "plural": "childrens",
+      "singular": "child"
+    },
+    "plural": "Guests",
+    "singular": "Guest"
+  },
+  "hide": "Hide",
+  "info": {
+    "better-rate": "Best rate guaranteed",
+    "breakfast": "Breakfast included",
+    "cancellation-policy": "Cancellation policy",
+    "direct-booking": "Direct booking without intermediaries",
+    "email": "We will send you the trip confirmation and receipts by email.",
+    "extras": "Additional",
+    "forgot_password": "Enter the email address associated with your account and we'll send you a link to reset your password.",
+    "free-cancellation-before": "Free cancellation before 3:00 p.m.",
+    "have_account": "¿Already have an account?",
+    "no_account": "¿Don't have an account?",
+    "no_promo": "I don't want to receive promotions from Paxer",
+    "non-refundable": "Non refundable",
+    "offers": "Paxer will send you exclusive offers, commercial emails and push notifications. You can choose to stop receiving them at any time through the settings section of your account or directly from any of the notifications that you receive.",
+    "offers-beneficts": "Exclusive offers and benefits",
+    "other_options": "Other options",
+    "refundable": "Refundable",
+    "show-more": "Show more",
+    "taxes": "Taxes",
+    "taxes-description": "Taxes must be paid upon arrival at the hotel",
+    "taxes-details": "Taxes details",
+    "termsandconditions": "By selecting Accept and continue, I agree to the Terms of Service and Privacy Policy."
+  },
   "link": {
-    "language": "English",
-    "termsandconditions": "Terms and Conditions"
-  }
+    "language": "English"
+  },
+  "login": "Login",
+  "night": {
+    "plural": "nights",
+    "singular": "night"
+  },
+  "per": "per",
+  "person": {
+    "plural": "persons",
+    "singular": "person"
+  },
+  "show": "Show",
+  "since": "since",
+  "title": {
+    "activities": "Activities",
+    "attractions": "Nearby attractions",
+    "book-with-us": "Book with us",
+    "contact": "Contact",
+    "edit": "Edit",
+    "exact-location": "Exact location",
+    "forgot_password": "Forgot your password?",
+    "hotel-amemnities": "Hotel Amenities",
+    "hotel-rules": "Hotel rules",
+    "location": "Location",
+    "login": "Login",
+    "my-trip": "My Trip",
+    "price": "Price",
+    "price-details": "Price Details ",
+    "register": "Contact information",
+    "reviews": "Reviews",
+    "room": "Room",
+    "room-amemnities": "Room Amenities",
+    "room-confirm-reserve": "Confirm and book",
+    "room-details": "Room Details",
+    "search": "Search",
+    "show-more": "Show more",
+    "termsandconditions": "Terms and Conditions",
+    "wanna-sleep": "Where do you wanna sleep?"
+  },
+  "to": "to",
+  "until": "until"
 }

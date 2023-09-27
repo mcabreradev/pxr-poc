@@ -22,7 +22,35 @@ export default withMT({
         primary: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
+      fontSize: {
+        '3xs': '10px',
+        '2xs': '11px',
+        xs: '12px',
+        '2sm': '13px',
+        sm: '14px',
+        base: '16px',
+        xl: '20px',
+        '5xl': '24px',
+      },
       colors: {
+        'brand-300': 'rgb(var(--tw-color-brand-300)/ <alpha-value>)',
+        'brand-500': 'rgb(var(--tw-color-brand-500)/ <alpha-value>)',
+        'success-300': 'rgb(var(--tw-color-success-300)/ <alpha-value>)',
+        'success-500': 'rgb(var(--tw-color-success-500)/ <alpha-value>)',
+        'neutral-50': 'rgb(var(--tw-color-neutral-50)/ <alpha-value>)',
+        'neutral-60': 'rgb(var(--tw-color-neutral-60)/ <alpha-value>)',
+        'neutral-100': 'rgb(var(--tw-color-neutral-100)/ <alpha-value>)',
+        'neutral-200': 'rgb(var(--tw-color-neutral-200)/ <alpha-value>)',
+        'neutral-300': 'rgb(var(--tw-color-neutral-300)/ <alpha-value>)',
+        'neutral-400': 'rgb(var(--tw-color-neutral-400)/ <alpha-value>)',
+        'neutral-500': 'rgb(var(--tw-color-neutral-500)/ <alpha-value>)',
+        'warning-300': 'rgb(var(--tw-color-warning-300)/ <alpha-value>)',
+        'warning-500': 'rgb(var(--tw-color-warning-500)/ <alpha-value>)',
+        'warning-600': 'rgb(var(--tw-color-warning-600)/ <alpha-value>)',
+        'error-300': 'rgb(var(--tw-color-error-300)/ <alpha-value>)',
+        'error-500': 'rgb(var(--tw-color-error-500)/ <alpha-value>)',
+        // 'black': 'rgb(var(--tw-color-black)/ <alpha-value>)',
+        // 'white': 'rgb(var(--tw-color-white)/ <alpha-value>)',
         green: {
           DEFAULT: '#27A97E',
           50: '#9FE9D0',
@@ -110,7 +138,7 @@ export default withMT({
           DEFAULT: '#FFFFFF',
           50: '#FFFFFF',
           100: '#F1F1F1',
-          200: '#D5D5D5',
+          200: '#e6e6e6',
           300: '#B9B9B9',
           400: '#9D9D9D',
           500: '#818181',
@@ -121,18 +149,35 @@ export default withMT({
           950: '#030303',
         },
       },
-      fontSize: {
-        '3xs': '10px',
-        '2xs': '11px',
-        xs: '12px',
-        '2sm': '13px',
-        sm: '14px',
-        base: '16px',
-        xl: '20px',
-        '5xl': '24px',
-      },
       borderRadius: {
         '980xl': '999px',
+      },
+      keyframes: {
+        flicker: {
+          '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': {
+            opacity: '0.99',
+            filter:
+              'drop-shadow(0 0 1px rgba(252, 211, 77)) drop-shadow(0 0 15px rgba(245, 158, 11)) drop-shadow(0 0 1px rgba(252, 211, 77))',
+          },
+          '20%, 21.999%, 63%, 63.999%, 65%, 69.999%': {
+            opacity: '0.4',
+            filter: 'none',
+          },
+        },
+        shimmer: {
+          '0%': {
+            backgroundPosition: '-700px 0',
+          },
+          '100%': {
+            backgroundPosition: '700px 0',
+          },
+        },
+      },
+      animation: {
+        flicker: 'flicker 3s linear infinite',
+        shimmer: 'shimmer 1.3s linear infinite',
+        fadein:
+          'animation: fade 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both',
       },
     },
   },

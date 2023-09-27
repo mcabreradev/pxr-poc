@@ -1,0 +1,197 @@
+Property
+1,Sanitización de superficies de contacto frecuente
+2,Limpieza de ropa de cama a altas temperaturas
+3,Uso obligatorio de mascarillas para el personal
+4,Marcas en el suelo de las instalaciones para indicar el distanciamiento social
+5,Gel de manos desinfectante disponible en áreas comunes
+6,Comprobación regular de la temperatura corporal del personal
+7,Se proveen mascarillas a los huéspedes
+8,Purificadores de aire
+9,Wifi
+10,Estacionamiento
+11,Cargador para vehículos electricos
+12,Piscina
+13,Bar en piscina
+14,Sauna
+15,Gimnasio
+16,Propiedad sin escaleras
+17,Área de parrilla
+18,Sala de conferencias
+19,Aire acondicionado
+20,Sala de videojuegos
+21,Spa
+22,Jardines
+23,Lounge/Bar
+24,Servicio de guarda equipaje
+25,Servicio de lavandería
+26,Transporte gratis hacia el aeropuerto
+27,Cajero automático
+28,Servicio de habitación 24 horas
+29,Checkin 24 horas
+30,Servicio de guardería
+
+Room Type
+1,Cunas
+2,Tendedero
+3,Tendedero para ropa
+4,Cama plegable
+5,Sofa cama
+6,Botes de basura
+7,Piscina temperada
+8,Piscina infinita
+9,Piscina de inmersión
+10,Cubierta de piscina
+11,Toallas de piscina
+12,Piscina con vista
+13,Piscina en el techo
+14,Piscina de agua salada
+15,Parte menos profunda
+16,Secadora
+17,Armario o armario
+18,Alfombrado
+19,Vestidor
+20,Camas extra largas (2 metros)
+21,Ventilador
+22,Chimenea
+23,Calefacción
+24,Habitaciones interconectadas disponibles
+25,Hierro
+26,Servicio de planchado
+27,Bañera de hidromasaje
+28,Mosquitero
+29,Entrada privada
+30,Caja de Depósitos Seguros
+31,Sofá
+32,Insonorización
+33,Área para sentarse
+34,Suelo de baldosa / mármol
+35,Prensa de pantalones
+36,Lavadora
+37,Pisos de madera o parquet
+38,Escritorio
+39,Hipoalergénico
+40,Productos de limpieza
+41,Mantas electricas
+42,Pijama
+43,Yukata
+44,Toma cerca de la cama
+45,Adaptador
+46,Almohada de plumas
+47,Almohada sin plumas
+48,Almohada hipoalergénica
+49,Baño privado
+50,Baño compartido
+51,Papel higienico
+52,Bidé
+53,Baño o ducha
+54,Bata de baño
+55,Artículos de aseo gratuitos
+56,Aseo adicional
+57,Secador de pelo
+58,Aseo compartido
+59,Sauna
+60,Ducha
+61,Zapatillas
+62,Inodoro
+63,Baño adicional
+64,Cepillo de dientes
+65,Champú
+66,Acondicionador
+67,Jabon para el cuerpo
+68,Gorro de ducha
+69,Consola de juegos - PS4
+70,Consola de juegos - Wii U
+71,Consola de juegos - Xbox One
+72,Ordenador
+73,Consola de juego
+74,Consola de juegos - Nintendo Wii
+75,Consola de juegos - PS2
+76,Consola de juegos - PS3
+77,Consola de juegos - Xbox 360
+78,Computadora portátil
+79,iPad
+80,Canales por cable
+81,Reproductor de CD
+82,Reproductor de DVD
+83,Fax
+84,Base para iPod
+85,Caja fuerte para laptop
+86,Canales de pago por visión
+87,Radio
+88,Canales satelitales
+89,Teléfono
+90,televisor
+91,Video
+92,Videojuegos
+93,Reproductor Blu-ray
+94,Dispositivo de punto de acceso móvil
+95,Teléfono inteligente
+96,Servicio de transmisión (como Netflix)
+97,Comedor
+98,Comedor
+99,Copas de vino
+100,Botella de agua
+101,Chocolate o galletas
+102,Frutas
+103,Vino o champagne
+104,Parilla
+105,Horno
+106,Estufa
+107,Tostadora
+108,Lavaplatos
+109,Comedor al aire libre
+110,Mueble para exteriores
+111,Minibar
+112,Cocina
+113,Cocina pequeña
+114,Batería de cocina
+115,Microonda
+116,Refrigerador
+117,Tetera / cafetera
+118,Maquina de cafe
+119,Trona para niños
+120,Acceso con tarjeta clave
+121,Casilleros
+122,Acceso clave
+123,Acceso al salón ejecutivo
+124,Despertador
+125,Servicio de despertador
+126,Servicio despertador / Despertador
+127,Lino
+128,Toallas
+129,Toallas / sábanas (cargo extra)
+130,Patio
+131,Vista de la ciudad
+132,Vista al jardín
+133,Vista al lago
+134,Vista histórica
+135,Vista desde la montaña
+136,Vista a la piscina
+137,Vista del rio
+138,Vista marítima
+139,Vista al patio interior
+140,Vista a la calle tranquila
+141,Accesible por ascensor
+142,Toda la unidad ubicada en la planta baja
+143,Toda la unidad accesible en silla de ruedas
+144,Acceso a pisos superiores en ascensor
+145,Acceso a pisos superiores solo mediante escaleras
+146,Baño adaptado
+147,Cuerda de emergencia en el baño
+148,WC elevado
+149,Fregadero más bajo
+150,Rollo en la ducha
+151,Silla de ducha
+152,WC con barras de apoyo
+153,Caminar en la ducha
+154,Puertas de seguridad para bebés
+155,Juegos de mesa / rompecabezas
+156,"Libros, DVD o música para niños"
+157,Cubiertas de enchufes de seguridad para niños
+158,Detector de monóxido de carbono
+159,Fuentes de monóxido de carbono
+160,Alarma de humo
+161,Extintor de incendios
+162,Purificadores de aire instalados
+163,Aire acondicionado de habitación individual para alojamiento de huéspedes
+164,Desinfectante de manos

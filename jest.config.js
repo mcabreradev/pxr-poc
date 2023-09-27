@@ -23,6 +23,7 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^~/(.*)$': '<rootDir>/public/$1',
     '\\.(scss|sass|css)$': 'identity-obj-proxy',
+    '^.+\\.(svg)$': '<rootDir>/src/__tests__/__mocks__/svg.tsx',
   },
 
   testPathIgnorePatterns: [
@@ -33,14 +34,23 @@ const customJestConfig = {
 
   coverageDirectory: '<rootDir>/coverage',
   coverageReporters: ['text', 'lcov', 'cobertura'],
+  coverageThreshold: {
+    global: {
+      lines: 70,
+    },
+  },
 
   collectCoverageFrom: [
     'src/**/*.js',
     'src/**/*.jsx',
+    'src/**/*.tsx',
+    'src/**/*.ts',
     '!src/**/*.stories.js',
     '!src/**/*.stories.jsx',
+    '!src/**/*.stories.tsx',
     '!src/**/*.test.js',
     '!src/**/*.test.jsx',
+    '!src/**/*.test.tsx',
     '!src/**/__tests__/',
   ],
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],

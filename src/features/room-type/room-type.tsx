@@ -288,7 +288,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
             </Typography>
 
             <div className='my-4'>
-              {data.rules[i18n.language].map((rule, key) => (
+              {data.rules.map((rule, key) => (
                 <div
                   key={`$rules-${key}`}
                   className='flex justify-between py-2'

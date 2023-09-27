@@ -1,18 +1,18 @@
-import useHydration from '@/hooks/use-hydration';
+'use client';
+
+import { useRouter } from 'next/router';
 
 import Layout from '@/components/layout';
 
 import DetailsComponent from '@/features/guest-details/details';
 
 export default function Page() {
-  const { isHydrated } = useHydration();
+  const router = useRouter();
+  const { show, roomtype } = router.query;
 
-  if (!isHydrated) {
-    return null;
-  }
   return (
     <Layout>
-      <DetailsComponent />
+      <DetailsComponent roomTypeId={roomtype as string} show={show as string} />
     </Layout>
   );
 }

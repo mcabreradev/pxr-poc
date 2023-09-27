@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useRoomTypeQuery from '@/hooks/use-roomtype.query';
+import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Footer from '@/components/common/footer';
@@ -13,9 +14,13 @@ import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
 import BackButton from '@/components/common/back-button';
-import { useRouter } from 'next/router';
 import Skeleton from './room-skeleton';
 import data from './room-type.data.json';
+
+type Props = {
+  roomTypeId: string;
+  className?: string;
+};
 
 const Container = tw.div`
 `;
@@ -23,17 +28,14 @@ const Container = tw.div`
 const Wrapper = tw.div`
 `;
 
-export default function RoomTypeComponent() {
-  const router = useRouter();
-  const roomtype = router.query.roomtype;
-
+export default function RoomTypeComponent({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
 
   const {
     isError,
     isLoading,
     data: room,
-  } = useRoomTypeQuery(roomtype as string);
+  } = useRoomTypeQuery(roomTypeId as string);
 
   if (isLoading) {
     return <Skeleton />;
@@ -44,7 +46,11 @@ export default function RoomTypeComponent() {
   }
 
   return (
-    <Container data-testid='test-element' datatype={room}>
+    <Container
+      className={cn(className)}
+      data-testid='test-element'
+      datatype={room}
+    >
       <BackButton href='/'>{t('title.room-details')}</BackButton>
 
       <section>
@@ -70,7 +76,9 @@ export default function RoomTypeComponent() {
           <Typography variant='h1'>{room.name[i18n.language]}</Typography>
           <Typography variant='sm'>{`Max ${room.maxCapacity} ${t(
             'person.plural',
-          )} • ${room.description}`}</Typography>
+          )} • ${
+            room?.description || room?.bedTypes[0].description
+          }`}</Typography>
         </section>
 
         <hr />
@@ -239,7 +247,7 @@ export default function RoomTypeComponent() {
               className='w-full font-semibold'
               variant='primary'
               type='link'
-              href={`/room-type/${roomtype}/details?show=auth`}
+              href={`/room-type/${roomTypeId}/details?show=auth`}
               fullWidth
             >
               {t('button.pay')}

@@ -16,7 +16,11 @@ import GuestSkeletonComponent from './guest-skeleton';
 
 import { QUERY } from '@/constant';
 import useRoomTypeQuery from '@/hooks/use-roomtype.query';
-import { useRouter } from 'next/router';
+
+type Props = {
+  roomTypeId: string;
+  show?: string;
+};
 
 const Container = tw.div`
 `;
@@ -28,16 +32,14 @@ const HR = tw.div`
   hr border-t-[10px] border-neutral-60
 `;
 
-export default function DetailsComponent() {
-  const router = useRouter();
-  const { show, roomtype } = router.query;
+export default function DetailsComponent({ roomTypeId, show }: Props) {
   const { t, i18n } = useTranslation();
   const { isError, isLoading, data: property } = useFetchProperty();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
-  } = useRoomTypeQuery(roomtype as string);
+  } = useRoomTypeQuery(roomTypeId as string);
 
   const showAuth = show === QUERY.AUTH || !show;
   const showLogin = show === QUERY.LOGIN;
@@ -54,7 +56,7 @@ export default function DetailsComponent() {
 
   return (
     <Container data-testid='test-element'>
-      <BackButton href={`/room-type/${roomtype}`}>
+      <BackButton href={`/room-type/${roomTypeId}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>
 

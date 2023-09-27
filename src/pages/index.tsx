@@ -1,3 +1,5 @@
+'use client';
+
 import useHydration from '@/hooks/use-hydration';
 
 import Layout from '@/components/layout';

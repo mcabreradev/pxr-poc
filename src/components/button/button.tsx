@@ -8,6 +8,7 @@ import tw from 'tailwind-styled-components';
 import { cn } from '@/lib/utils';
 
 interface ButtonProps {
+  id?: string;
   type?: 'submit' | 'link' | 'button';
   onClick?: () => void;
   className?: string;
@@ -40,7 +41,8 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
 `;
 
 export default function Button({
-  type = 'button',
+  id,
+  type = 'submit',
   className,
   children,
   variant = 'primary',
@@ -72,6 +74,7 @@ export default function Button({
         scroll={scroll}
       >
         <ButtonComponent
+          id={id}
           className={cn(className, styling[variant])}
           ripple={false}
           fullWidth={fullWidth}
@@ -88,6 +91,7 @@ export default function Button({
 
   return (
     <ButtonComponent
+      id={id}
       type={type}
       className={cn(className, styling[variant])}
       ripple={false}

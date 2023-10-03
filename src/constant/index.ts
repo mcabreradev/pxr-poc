@@ -6,6 +6,7 @@ export const CLIENT_CREDENTIALS = 'client_credentials';
 export const PROPERTY = 'property';
 export const ROOMTYPES = 'room-types';
 export const ROOMTYPE = 'room-type';
+export const PAYMENT = 'payment';
 
 // FORM
 export const EMAIL = 'email';

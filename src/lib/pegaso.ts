@@ -26,8 +26,27 @@ const get = async (url: string) => {
   }
 };
 
+const post = async (url: string, data) => {
+  const options = {
+    method: 'POST',
+    url: process.env.SITE_API_URL + url,
+    headers: await getHeaders(),
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const res = await axios.request(options);
+    return res.data;
+  } catch (error) {
+    throw new Error(
+      `Can't fetch data from ${process.env.SITE_API_URL + url}  ${error}`,
+    );
+  }
+};
+
 const api = {
   get,
+  post,
 };
 
 export default api;

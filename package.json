@@ -43,14 +43,17 @@
     "commitizen": "exec < /dev/tty && git cz --hook || true"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.3.1",
+    "@stripe/stripe-js": "^2.1.7",
     "clsx": "^2.0.0",
     "doctoc": "^2.2.1",
-    "next": "^13.4.19",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
     "react-hook-form": "^7.46.1",
     "react-toggle": "^4.1.3",
     "server-only": "^0.0.1",
+    "stripe": "^13.8.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
@@ -99,7 +102,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "encoding": "^0.1.13",
     "eslint": "^8.49.0",
-    "eslint-config-next": "^13.5.1",
+    "eslint-config-next": "latest",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-prettier": "^5.0.0",

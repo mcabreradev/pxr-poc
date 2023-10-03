@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,8 +12,13 @@ import Checkbox from '@/components/checkbox';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { FORM } from '@/constant';
+import { FORM, URL } from '@/constant';
 import { registerSchema } from '@/schemas';
+
+type Props = {
+  className?: string;
+  roomtype: string;
+};
 
 interface IForm {
   name: string;
@@ -27,13 +31,7 @@ interface IForm {
 
 const Container = tw.div``;
 
-export default function FormRegisterComponent({
-  className,
-}: {
-  className?: string;
-}) {
-  const router = useRouter();
-  const { roomtype } = router.query;
+export default function FormRegisterComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
 
   const [type, setType] = useState(FORM.PASSWORD);
@@ -111,7 +109,7 @@ export default function FormRegisterComponent({
           <span className='text-[12px] text-neutral-500'>
             {t('info.have_account')}{' '}
             <Link
-              href={`/room-type/${roomtype}/details?show=login`}
+              href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
               replace={true}
             >
               <span className='underline'>{t('login')}</span>

@@ -13,12 +13,14 @@ import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
+import { URL } from '@/constant';
+
 import BackButton from '@/components/common/back-button';
 import Skeleton from './room-skeleton';
 import data from './room-type.data.json';
 
 type Props = {
-  roomTypeId: string;
+  roomtype: string;
   className?: string;
 };
 
@@ -28,14 +30,14 @@ const Container = tw.div`
 const Wrapper = tw.div`
 `;
 
-export default function RoomTypeComponent({ className, roomTypeId }: Props) {
+export default function RoomTypeComponent({ className, roomtype }: Props) {
   const { t, i18n } = useTranslation();
 
   const {
     isError,
     isLoading,
     data: room,
-  } = useRoomTypeQuery(roomTypeId as string);
+  } = useRoomTypeQuery(roomtype as string);
 
   if (isLoading) {
     return <Skeleton />;
@@ -76,9 +78,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
           <Typography variant='h1'>{room.name[i18n.language]}</Typography>
           <Typography variant='sm'>{`Max ${room.maxCapacity} ${t(
             'person.plural',
-          )} • ${
-            room?.description || room?.bedTypes[0].description
-          }`}</Typography>
+          )} • ${room.description}`}</Typography>
         </section>
 
         <hr />
@@ -247,7 +247,7 @@ export default function RoomTypeComponent({ className, roomTypeId }: Props) {
               className='w-full font-semibold'
               variant='primary'
               type='link'
-              href={`/room-type/${roomTypeId}/details?show=auth`}
+              href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}
               fullWidth
             >
               {t('button.pay')}

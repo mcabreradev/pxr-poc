@@ -4,21 +4,21 @@ import axios from 'axios';
 import { ROOMTYPE } from '@/constant';
 import { propertyId } from '@/constant/env';
 
-const fetchRoomType = async (roomTypeId: string) => {
+const fetchRoomType = async (roomtype: string) => {
   const { data } = await axios.get(
-    `/api/room-type?propertyId=${propertyId}&roomTypeId=${roomTypeId}`,
+    `/api/room-type?propertyId=${propertyId}&roomtype=${roomtype}`,
   );
   return data;
 };
 
-export default function useRoomTypeQuery(roomTypeId: string) {
+export default function useRoomTypeQuery(roomtype: string) {
   return useQuery({
-    queryKey: [ROOMTYPE, roomTypeId],
-    queryFn: () => fetchRoomType(roomTypeId),
+    queryKey: [ROOMTYPE, roomtype],
+    queryFn: () => fetchRoomType(roomtype),
   });
 }
 
-export function useRoomTypeCache(roomTypeId: string) {
+export function useRoomTypeCache(roomtype: string) {
   const queryClient = useQueryClient();
-  return queryClient.getQueryData([ROOMTYPE, roomTypeId]);
+  return queryClient.getQueryData([ROOMTYPE, roomtype]);
 }

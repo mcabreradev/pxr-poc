@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -12,8 +11,13 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { FORM } from '@/constant';
+import { FORM, URL } from '@/constant';
 import { loginSchema } from '@/schemas';
+
+type Props = {
+  className?: string;
+  roomtype: string;
+};
 
 interface IForm {
   email: string;
@@ -24,13 +28,7 @@ const Container = tw.div`
   pb-5
 `;
 
-export default function FormLoginComponent({
-  className,
-}: {
-  className?: string;
-}) {
-  const router = useRouter();
-  const { roomtype } = router.query;
+export default function FormLoginComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
 
   const [type, setType] = useState(FORM.PASSWORD);
@@ -152,13 +150,19 @@ export default function FormLoginComponent({
         </Button>
       </form>
 
-      <Link href={`/room-type/${roomtype}/details?show=forgot`} replace={true}>
+      <Link
+        href={`/room-type/${roomtype}/details?${URL.ACTION}=forgot`}
+        replace={true}
+      >
         <Typography className='mt-4 underline'>
           {t('title.forgot_password')}
         </Typography>
       </Link>
 
-      <Link href={`/room-type/${roomtype}/details?show=auth`} replace={true}>
+      <Link
+        href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}
+        replace={true}
+      >
         <Typography className='mt-4 underline'>
           {t('info.other_options')}
         </Typography>

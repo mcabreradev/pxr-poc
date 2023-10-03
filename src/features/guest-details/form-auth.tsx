@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -10,6 +9,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { URL } from '@/constant';
 import { authSchema } from '@/schemas';
 
 interface IForm {
@@ -18,14 +18,13 @@ interface IForm {
 
 type Props = {
   className?: string;
+  roomtype: string;
 };
 
 const Container = tw.div`
 `;
 
-export default function FormAuthComponent({ className }: Props) {
-  const router = useRouter();
-  const { roomtype } = router.query;
+export default function FormAuthComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
 
   const {
@@ -100,7 +99,7 @@ export default function FormAuthComponent({ className }: Props) {
           variant='secondary'
           icon={<Icon variant='google' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details?show=login`}
+          href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
           replace={true}
         >
           {t('button.google')}
@@ -111,7 +110,7 @@ export default function FormAuthComponent({ className }: Props) {
           variant='secondary'
           icon={<Icon variant='facebook' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details?show=auth`}
+          href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}
           replace={true}
         >
           {t('button.facebook')}
@@ -122,7 +121,7 @@ export default function FormAuthComponent({ className }: Props) {
           variant='secondary'
           icon={<Icon variant='apple' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details?show=register`}
+          href={`/room-type/${roomtype}/details?${URL.ACTION}=register`}
           replace={true}
         >
           {t('button.apple')}

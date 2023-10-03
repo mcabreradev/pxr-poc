@@ -50,3 +50,9 @@ export const LANG = {
   ES,
   EN,
 };
+
+// url params
+export const ACTION = 'action';
+export const URL = {
+  ACTION,
+};

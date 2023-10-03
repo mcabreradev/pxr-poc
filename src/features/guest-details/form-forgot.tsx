@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -10,7 +9,13 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { URL } from '@/constant';
 import { forgotSchema } from '@/schemas';
+
+type Props = {
+  className?: string;
+  roomtype: string;
+};
 
 interface IForm {
   email: string;
@@ -20,13 +25,7 @@ const Container = tw.div`
   pb-5
 `;
 
-export default function FormForgotComponent({
-  className,
-}: {
-  className?: string;
-}) {
-  const router = useRouter();
-  const { roomtype } = router.query;
+export default function FormForgotComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
 
   const {
@@ -98,7 +97,7 @@ export default function FormForgotComponent({
           variant='text'
           className='mt-4 w-full text-neutral-400 underline'
           type='link'
-          href={`/room-type/${roomtype}/details?show=login`}
+          href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
           replace={true}
         >
           {t('button.cancel')}

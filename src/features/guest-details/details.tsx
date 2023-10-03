@@ -1,25 +1,26 @@
-/* eslint-disable simple-import-sort/imports */
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
+
+import useFetchProperty from '@/hooks/use-property.query';
+import useRoomTypeQuery from '@/hooks/use-roomtype.query';
 
 import BackButton from '@/components/common/back-button';
 import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
-import useFetchProperty from '@/hooks/use-property.query';
+
+import { QUERY } from '@/constant';
+
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
 import FormLoginComponent from './form-login';
 import FormRegisterComponent from './form-register';
 import GuestSkeletonComponent from './guest-skeleton';
 
-import { QUERY } from '@/constant';
-import useRoomTypeQuery from '@/hooks/use-roomtype.query';
-
 type Props = {
-  roomTypeId: string;
-  show?: string;
+  roomtype: string;
+  action?: string;
 };
 
 const Container = tw.div`
@@ -32,19 +33,19 @@ const HR = tw.div`
   hr border-t-[10px] border-neutral-60
 `;
 
-export default function DetailsComponent({ roomTypeId, show }: Props) {
+export default function DetailsComponent({ roomtype, action }: Props) {
   const { t, i18n } = useTranslation();
   const { isError, isLoading, data: property } = useFetchProperty();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
-  } = useRoomTypeQuery(roomTypeId as string);
+  } = useRoomTypeQuery(roomtype);
 
-  const showAuth = show === QUERY.AUTH || !show;
-  const showLogin = show === QUERY.LOGIN;
-  const showRegister = show === QUERY.REGISTER;
-  const showForgot = show === QUERY.FORGOT;
+  const actionAuth = action === QUERY.AUTH || !action;
+  const actionLogin = action === QUERY.LOGIN;
+  const actionRegister = action === QUERY.REGISTER;
+  const actionForgot = action === QUERY.FORGOT;
 
   if (isLoading || roomLoading) {
     return <GuestSkeletonComponent />;
@@ -56,7 +57,7 @@ export default function DetailsComponent({ roomTypeId, show }: Props) {
 
   return (
     <Container data-testid='test-element'>
-      <BackButton href={`/room-type/${roomTypeId}`}>
+      <BackButton href={`/room-type/${roomtype}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>
 
@@ -196,10 +197,10 @@ export default function DetailsComponent({ roomTypeId, show }: Props) {
         <HR />
 
         <section className='p-4'>
-          {showLogin && <FormLoginComponent />}
-          {showAuth && <FormAuthComponent />}
-          {showRegister && <FormRegisterComponent />}
-          {showForgot && <FormForgotComponent />}
+          {actionLogin && <FormLoginComponent roomtype={roomtype} />}
+          {actionAuth && <FormAuthComponent roomtype={roomtype} />}
+          {actionRegister && <FormRegisterComponent roomtype={roomtype} />}
+          {actionForgot && <FormForgotComponent roomtype={roomtype} />}
         </section>
       </Wrapper>
 

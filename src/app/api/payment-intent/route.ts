@@ -5,7 +5,6 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-08-16',
-  typescript: true,
 });
 
 export async function POST(_request: NextRequest) {
@@ -15,6 +14,9 @@ export async function POST(_request: NextRequest) {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: 100,
     currency: 'usd',
+    automatic_payment_methods: {
+      enabled: true,
+    },
   });
 
   return NextResponse.json({

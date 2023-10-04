@@ -63,6 +63,11 @@
       "match": "Las contraseñas no coinciden",
       "placeholder": "Ingresa tu contraseña de nuevo",
       "required": "La confirmacion de contraseña es requerida"
+    },
+    "textarea": {
+      "label": "",
+      "placeholder": "Escribe tu peticion",
+      "required": ""
     }
   },
   "from": "de",

@@ -78,3 +78,25 @@ export type TopSight = {
   longitude: number;
   isActive: boolean;
 };
+
+export type Payment = {
+  propertyId: string;
+  reservationId: string;
+  amount: number;
+  clientId: number;
+  email: string;
+  currency: Currency;
+  description: string;
+  paymentGatewayId: string;
+  fees: number[];
+  propertyFees: string[] | number[];
+  idempotentKey: string;
+  successUrl: string;
+  cancelUrl: string;
+  offSession: boolean;
+};
+
+export type Currency = {
+  monId: number;
+  code: string;
+};

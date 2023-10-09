@@ -1,6 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { memo } from 'react';
 
 import useStripePaymentIntent from '@/hooks/use-stripe.query';
 import { uuid } from '@/lib/utils';
@@ -11,14 +12,13 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
 );
 
-export default function StripePayment() {
+const StripePayment = memo(() => {
   const {
     data: clientSecret,
-    isLoading,
-    isError,
+    isLoading: isLoadingPaymentIntent,
+    isError: isErrorPaymentIntent,
   } = useStripePaymentIntent({
-    propertyId: '210',
-    reservationId: '4103',
+    propertyId: '219',
     amount: 100000,
     clientId: 2334,
     email: 'hector@paxer.com',
@@ -31,26 +31,15 @@ export default function StripePayment() {
     paymentGatewayId: '1',
     fees: [1, 2],
     propertyFees: [],
+    successUrl: '',
+    cancelUrl: '',
     idempotentKey: uuid(),
-    successUrl:
-      'https://rcamargo.paxer.com/guest/reservation/processstripetransaction?hot_id=210&bookingID=4054&lang=es',
-    cancelUrl:
-      'https://rcamargo.paxer.com/guest/reservation/processstripetransaction?hot_id=210&bookingID=4054&lang=es',
     offSession: true,
+    reservationId: '',
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
-
-  // const appearance = {
-  //   theme: 'stripe',
-  //   layout: {
-  //     type: 'accordion',
-  //     defaultCollapsed: false,
-  //     radios: true,
-  //     spacedAccordionItems: false,
-  //   },
-  // };
+  if (isLoadingPaymentIntent) return <div>Loading...</div>;
+  if (isErrorPaymentIntent) return <div>Error</div>;
 
   return (
     <div data-testid='test-element'>
@@ -61,4 +50,6 @@ export default function StripePayment() {
       )}
     </div>
   );
-}
+});
+
+export default StripePayment;

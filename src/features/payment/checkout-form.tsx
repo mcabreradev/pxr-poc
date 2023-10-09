@@ -1,5 +1,4 @@
 import {
-  LinkAuthenticationElement,
   PaymentElement,
   useElements,
   useStripe,
@@ -107,8 +106,6 @@ export default function CheckoutForm() {
               al momento de su llegada al hotel.
             </p>
           </Typography>
-
-          <LinkAuthenticationElement id='link-authentication-element' />
 
           <PaymentElement
             id='payment-element'

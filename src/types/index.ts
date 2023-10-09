@@ -80,7 +80,7 @@ export type TopSight = {
 };
 
 export type Payment = {
-  propertyId: string;
+  propertyId: string | number;
   reservationId: string;
   amount: number;
   clientId: number;
@@ -90,7 +90,7 @@ export type Payment = {
   paymentGatewayId: string;
   fees: number[];
   propertyFees: string[] | number[];
-  idempotentKey: string;
+  idempotentKey?: string;
   successUrl: string;
   cancelUrl: string;
   offSession: boolean;

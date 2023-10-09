@@ -26,12 +26,13 @@ const get = async (url: string) => {
   }
 };
 
-const post = async (url: string, data) => {
+const post = async (url: string, body) => {
   const options = {
     method: 'POST',
+    maxBodyLength: Infinity,
     url: process.env.SITE_API_URL + url,
     headers: await getHeaders(),
-    body: JSON.stringify(data),
+    data: JSON.stringify(body),
   };
 
   try {
@@ -39,7 +40,7 @@ const post = async (url: string, data) => {
     return res.data;
   } catch (error) {
     throw new Error(
-      `Can't fetch data from ${process.env.SITE_API_URL + url}  ${error}`,
+      `Can't post data from ${process.env.SITE_API_URL + url} ${error}`,
     );
   }
 };

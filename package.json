@@ -47,7 +47,7 @@
     "@stripe/stripe-js": "^2.1.7",
     "clsx": "^2.0.0",
     "doctoc": "^2.2.1",
-    "next": "latest",
+    "next": "13.5.3",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.46.1",

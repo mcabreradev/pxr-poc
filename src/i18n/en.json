@@ -63,6 +63,11 @@
       "match": "Passwords don't match",
       "placeholder": "Enter your password again",
       "required": "Password is required"
+    },
+    "textarea": {
+      "label": "",
+      "placeholder": "Write down your request",
+      "required": ""
     }
   },
   "from": "from",

@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "name": "Check-in:",
+      "description": "03:00pm"
+    },
+    {
+      "name": "Check-out:",
+      "description": "12:00pm"
+    },
+    {
+      "name": "Mascotas",
+      "description": "Se admiten con previo aviso"
+    }
+  ]
+}

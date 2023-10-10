@@ -6,6 +6,9 @@ export const CLIENT_CREDENTIALS = 'client_credentials';
 export const PROPERTY = 'property';
 export const ROOMTYPES = 'room-types';
 export const ROOMTYPE = 'room-type';
+export const PAYMENT = 'payment';
+export const SUCCESS = 'success';
+export const ERROR = 'error';
 
 // FORM
 export const EMAIL = 'email';
@@ -55,4 +58,6 @@ export const LANG = {
 export const ACTION = 'action';
 export const URL = {
   ACTION,
+  SUCCESS,
+  ERROR,
 };

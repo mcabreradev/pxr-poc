@@ -14,5 +14,8 @@ export default function useStripePaymentIntent(body: Payment) {
   return useQuery({
     queryKey: [PROPERTY, PAYMENT],
     queryFn: () => createPaymentIntent(body),
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 }

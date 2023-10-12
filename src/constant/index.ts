@@ -61,3 +61,13 @@ export const URL = {
   SUCCESS,
   ERROR,
 };
+
+// Errors
+export const ERROR_404 = '404';
+export const ERROR_500 = '500';
+export const ERR_NETWORK = 'ERR_NETWORK';
+export const ERRORS = {
+  ERROR_404,
+  ERROR_500,
+  ERR_NETWORK,
+};

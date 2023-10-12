@@ -14,7 +14,9 @@
     "reserve": "Book Now",
     "send": "Send",
     "view-all": "View all",
-    "view-all-services": "View all services"
+    "view-all-services": "View all services",
+    "try-again": "Try again",
+    "try-reconnect": "Try to reconnect"
   },
   "date": {
     "check-in": "Check-in date",
@@ -24,7 +26,11 @@
   },
   "error": {
     "message": "Something went wrong, please try again later.",
-    "title": "¡Ups!"
+    "title": "¡Ups!",
+    "not-connected": {
+      "message": "You are not connected to the internet, please check your connection and try again",
+      "title": "¡Ups! No connection"
+    }
   },
   "form": {
     "date_of_birth": {

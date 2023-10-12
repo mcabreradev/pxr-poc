@@ -10,7 +10,8 @@ import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { URL } from '@/constant';
+import NotConnected from '@/app/not-connected';
+import { ERRORS, URL } from '@/constant';
 import StripePayment from '@/features/payment/strype-payment';
 
 import SkeletonComponent from './skeleton';
@@ -32,7 +33,7 @@ const HR = tw.div`
 
 export default function PaymentFeature({ roomtype, action }: Props) {
   const { t, i18n } = useTranslation();
-  const { isError, isLoading, data: property } = useFetchProperty();
+  const { error, isError, isLoading, data: property } = useFetchProperty();
   const {
     isError: roomError,
     isLoading: roomLoading,
@@ -48,6 +49,9 @@ export default function PaymentFeature({ roomtype, action }: Props) {
   }
 
   if (isError || roomError) {
+    if ((error as { code: string }).code === ERRORS.ERR_NETWORK) {
+      return <NotConnected />;
+    }
     return <span>Error</span>;
   }
 

@@ -185,7 +185,7 @@ export default function CheckoutForm() {
             id='submit'
             className='w-full'
           >
-            {!isLoading ? (
+            {isLoading ? (
               <Icon
                 variant='three-dots-loading'
                 width={24}

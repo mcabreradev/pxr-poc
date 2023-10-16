@@ -42,7 +42,7 @@ const StripePayment = memo(() => {
 
   if (isLoadingPaymentIntent)
     return <div className='animate-pulse p-4'>Loading...</div>;
-  if (isErrorPaymentIntent) return <div className=''>Error</div>;
+  if (isErrorPaymentIntent) return <div className='p-4'>Error</div>;
 
   return (
     <div data-testid='test-element'>

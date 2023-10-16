@@ -71,3 +71,11 @@ export const ERRORS = {
   ERROR_500,
   ERR_NETWORK,
 };
+
+export const PAYMENT_STATUS = {
+  SUCCEEDED: 'succeeded',
+  PENDING: 'pending',
+  PROCESSING: 'processing',
+  REQUIRE_PAYMENT_METHOD: 'requires_payment_method',
+  REQUIER_INTENT_CLIENT_SECRET: 'payment_intent_client_secret',
+};

@@ -13,10 +13,10 @@
     "pay": "Proceder al pago",
     "reserve": "Reservar",
     "send": "Enviar",
-    "view-all": "Ver todo",
-    "view-all-services": "Ver todos los servicios",
     "try-again": "Intenta de nuevo",
-    "try-reconnect": "Intenta reconectar"
+    "try-reconnect": "Intenta reconectar",
+    "view-all": "Ver todo",
+    "view-all-services": "Ver todos los servicios"
   },
   "date": {
     "check-in": "Fecha de entrada",
@@ -26,11 +26,11 @@
   },
   "error": {
     "message": "Algo salió mal, por favor intenta de nuevo más tarde.",
-    "title": "¡Ups!",
     "not-connected": {
       "message": "No estás conectado, por favor verifica tu conexión.",
       "title": "No hay conexión a internet"
-    }
+    },
+    "title": "¡Ups!"
   },
   "form": {
     "date_of_birth": {
@@ -128,6 +128,13 @@
   },
   "show": "Mostrar",
   "since": "desde",
+  "status": {
+    "payment-processing": "Su pago se está procesando.",
+    "payment-succeeded": "Pago realizado con exito!",
+    "requires_payment_method": "Su pago no se pudo realizar, por favor intente de nuevo.",
+    "unexpected-error": "Un error inesperado ha ocurrido.",
+    "wrong": "Algo salió mal."
+  },
   "title": {
     "activities": "Actividades",
     "attractions": "Sitios de interés cercanos",

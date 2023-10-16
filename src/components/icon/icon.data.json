@@ -36,6 +36,7 @@
   "store": "ic:outline-directions-subway",
   "subway": "ic:outline-directions-subway",
   "taxi": "mdi:taxi",
+  "three-dots-loading": "eos-icons:three-dots-loading",
   "tv": "ic:baseline-tv",
   "user": "mdi:user-outline",
   "warning": "ri:alarm-warning-line",

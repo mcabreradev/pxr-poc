@@ -13,10 +13,10 @@
     "pay": "Proceed to payment",
     "reserve": "Book Now",
     "send": "Send",
-    "view-all": "View all",
-    "view-all-services": "View all services",
     "try-again": "Try again",
-    "try-reconnect": "Try to reconnect"
+    "try-reconnect": "Try to reconnect",
+    "view-all": "View all",
+    "view-all-services": "View all services"
   },
   "date": {
     "check-in": "Check-in date",
@@ -26,11 +26,11 @@
   },
   "error": {
     "message": "Something went wrong, please try again later.",
-    "title": "¡Ups!",
     "not-connected": {
       "message": "You are not connected to the internet, please check your connection and try again",
       "title": "¡Ups! No connection"
-    }
+    },
+    "title": "¡Ups!"
   },
   "form": {
     "date_of_birth": {
@@ -128,6 +128,13 @@
   },
   "show": "Show",
   "since": "since",
+  "status": {
+    "payment-processing": "Your payment is processing.",
+    "payment-succeeded": "Payment succeeded!",
+    "requires_payment_method": "Your payment was not successful, please try again.",
+    "unexpected-error": "An unexpected error occurred.",
+    "wrong": "Something went wrong."
+  },
   "title": {
     "activities": "Activities",
     "attractions": "Nearby attractions",

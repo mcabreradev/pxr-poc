@@ -15,6 +15,7 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import PropertyAmenities from './property-amenities';
 import RoomSwiper from './property-room-swiper';
 import Skeleton from './property-skeleton';
 import data from './property.data.json';
@@ -82,7 +83,7 @@ const PropertyPage = memo(function HotelPage() {
           {t('title.hotel-amemnities')}
         </Typography>
         <div className='flex flex-wrap justify-between py-4'>
-          {data.services.map((service) => (
+          {data.services.slice(0, 8).map((service) => (
             <div
               key={`service-${service.icon}`}
               className='flex w-1/2 flex-row py-[5px]'
@@ -92,9 +93,11 @@ const PropertyPage = memo(function HotelPage() {
             </div>
           ))}
         </div>
-        <Button className='w-full font-semibold' variant='secondary'>
+        {/* <Button className='w-full font-semibold' variant='secondary'>
           {t('button.all-amemnities')}
-        </Button>
+        </Button> */}
+
+        <PropertyAmenities amenities={data?.services} />
       </Section>
 
       <hr className='mb-9 mt-6' />

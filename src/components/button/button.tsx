@@ -30,7 +30,7 @@ interface ButtonProps {
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   cursor-pointer flex items-center justify-center flex-row
-  shadow-none hover:shadow-none py-2 px-6 rounded
+  shadow-none hover:shadow-none py-[10px] px-6 rounded
   text-[14px] font-normal font-poppins normal-case
   w-auto h-auto
   ${({ fullWidth }) => fullWidth && 'w-full'}

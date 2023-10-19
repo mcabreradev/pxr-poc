@@ -9,6 +9,7 @@ export const ROOMTYPE = 'room-type';
 export const PAYMENT = 'payment';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
+export const AMENITIES = 'amenities';
 
 // FORM
 export const EMAIL = 'email';

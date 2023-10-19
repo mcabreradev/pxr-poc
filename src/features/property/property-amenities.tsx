@@ -1,5 +1,6 @@
 import { Drawer } from '@material-tailwind/react';
-import { useRef, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -8,6 +9,8 @@ import { cn } from '@/lib/utils';
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
+
+import { AMENITIES } from '@/constant';
 
 type Props = {
   className?: string;
@@ -22,14 +25,38 @@ export default function PropertyAmenities({ className, amenities }: Props) {
   const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const show = searchParams.get('show');
 
   const openDrawer = () => {
     setOpen(true);
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
+    router.push(pathname + '?' + createQueryString('sort', 'asc'));
   };
   const closeDrawer = () => setOpen(false);
+
+  useEffect(() => {
+    if (show === AMENITIES) {
+      openDrawer();
+    } else {
+      closeDrawer();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show]);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
 
   return (
     <div className={cn(className)} data-testid='test-element'>

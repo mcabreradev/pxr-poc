@@ -9,7 +9,10 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import Button from '@/components/button';
+import Icon from '@/components/icon';
 import Typography from '@/components/typography';
+
+import { PAYMENT_STATUS } from '@/constant';
 
 import data from './data.json';
 
@@ -32,7 +35,7 @@ export default function CheckoutForm() {
     }
 
     const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret',
+      PAYMENT_STATUS.REQUIER_INTENT_CLIENT_SECRET,
     );
 
     if (!clientSecret) {
@@ -44,21 +47,21 @@ export default function CheckoutForm() {
         return setMessage('');
       }
       switch ((paymentIntent as { status: string }).status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
+        case PAYMENT_STATUS.SUCCEEDED:
+          setMessage(t('status.payment-succeeded'));
           break;
-        case 'processing':
-          setMessage('Your payment is processing.');
+        case PAYMENT_STATUS.PROCESSING:
+          setMessage(t('status.payment-processing'));
           break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
+        case PAYMENT_STATUS.REQUIRE_PAYMENT_METHOD:
+          setMessage(t('status.requires_payment_method'));
           break;
         default:
-          setMessage('Something went wrong.');
+          setMessage(t('status.wrong'));
           break;
       }
     });
-  }, [stripe]);
+  }, [stripe, t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,9 +80,9 @@ export default function CheckoutForm() {
     });
 
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error?.message || 'An unexpected error occurred.');
+      setMessage(error?.message || t('status.unexpected-error'));
     } else {
-      setMessage('An unexpected error occurred.');
+      setMessage(t('status.unexpected-error'));
     }
     setIsLoading(false);
   };
@@ -182,15 +185,22 @@ export default function CheckoutForm() {
             id='submit'
             className='w-full'
           >
-            <span id='button-text'>
-              {isLoading ? (
-                <div className='spinner' id='spinner'></div>
-              ) : (
-                t('button.pay')
-              )}
-            </span>
+            {isLoading ? (
+              <Icon
+                variant='three-dots-loading'
+                width={24}
+                height={24}
+                color='#fff'
+              />
+            ) : (
+              t('button.pay')
+            )}
           </Button>
-          {message && <div id='payment-message'>{message}</div>}
+          {message && (
+            <div id='payment-message' className='pt-1 text-error-500'>
+              {message}
+            </div>
+          )}
         </section>
       </form>
     </>

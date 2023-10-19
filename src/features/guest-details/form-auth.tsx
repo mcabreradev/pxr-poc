@@ -99,7 +99,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           variant='secondary'
           icon={<Icon variant='google' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
+          href={`/room-type/${roomtype}/payment`}
           replace={true}
         >
           {t('button.google')}
@@ -110,7 +110,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           variant='secondary'
           icon={<Icon variant='facebook' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}
+          href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
           replace={true}
         >
           {t('button.facebook')}

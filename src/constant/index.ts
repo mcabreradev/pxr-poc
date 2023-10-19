@@ -9,6 +9,7 @@ export const ROOMTYPE = 'room-type';
 export const PAYMENT = 'payment';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
+export const AMENITIES = 'amenities';
 
 // FORM
 export const EMAIL = 'email';
@@ -60,4 +61,22 @@ export const URL = {
   ACTION,
   SUCCESS,
   ERROR,
+};
+
+// Errors
+export const ERROR_404 = '404';
+export const ERROR_500 = '500';
+export const ERR_NETWORK = 'ERR_NETWORK';
+export const ERRORS = {
+  ERROR_404,
+  ERROR_500,
+  ERR_NETWORK,
+};
+
+export const PAYMENT_STATUS = {
+  SUCCEEDED: 'succeeded',
+  PENDING: 'pending',
+  PROCESSING: 'processing',
+  REQUIRE_PAYMENT_METHOD: 'requires_payment_method',
+  REQUIER_INTENT_CLIENT_SECRET: 'payment_intent_client_secret',
 };

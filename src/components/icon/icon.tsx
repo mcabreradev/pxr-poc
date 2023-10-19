@@ -9,6 +9,7 @@ interface Props {
   width?: string | number;
   height?: string | number;
   color?: string;
+  onClick?: () => void;
 }
 
 export default function IconComponent({
@@ -18,6 +19,7 @@ export default function IconComponent({
   width,
   height,
   color = '#000000',
+  onClick,
 }: Props) {
   return (
     <Icon
@@ -28,6 +30,7 @@ export default function IconComponent({
       className={className}
       color={color}
       data-testid='test-element'
+      onClick={onClick}
     />
   );
 }

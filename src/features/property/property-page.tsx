@@ -15,8 +15,10 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import PropertyAmenities from './property-amenities';
 import RoomSwiper from './property-room-swiper';
 import Skeleton from './property-skeleton';
+import PropertyTopSights from './property-topsights';
 import data from './property.data.json';
 
 const Section = tw.div`
@@ -82,7 +84,7 @@ const PropertyPage = memo(function HotelPage() {
           {t('title.hotel-amemnities')}
         </Typography>
         <div className='flex flex-wrap justify-between py-4'>
-          {data.services.map((service) => (
+          {data.services.slice(0, 8).map((service) => (
             <div
               key={`service-${service.icon}`}
               className='flex w-1/2 flex-row py-[5px]'
@@ -92,9 +94,7 @@ const PropertyPage = memo(function HotelPage() {
             </div>
           ))}
         </div>
-        <Button className='w-full font-semibold' variant='secondary'>
-          {t('button.all-amemnities')}
-        </Button>
+        <PropertyAmenities amenities={data?.services} />
       </Section>
 
       <hr className='mb-9 mt-6' />
@@ -220,7 +220,7 @@ const PropertyPage = memo(function HotelPage() {
             {t('title.activities')}
           </Typography>
         </div>
-        {property.topSights.map((activity) => (
+        {property.topSights.slice(0, 4).map((activity) => (
           <div
             key={`$attractions-${activity.googlePlaceId}`}
             className='flex justify-between py-2'
@@ -229,9 +229,7 @@ const PropertyPage = memo(function HotelPage() {
             <Typography weight='light'>{activity.distance}</Typography>
           </div>
         ))}
-        <Button className='my-4 w-full font-semibold' variant='secondary'>
-          {t('button.all-atractions')}
-        </Button>
+        <PropertyTopSights topSights={property?.topSights} />
       </Section>
 
       <hr />

@@ -22,7 +22,7 @@ export default function BackButtonComponent({
         <div
           className={cn(
             className,
-            'flex w-full max-w-3xl items-center rounded-md px-8 py-4 text-center',
+            'flex w-full max-w-3xl items-center rounded-md border-b-[1px] border-solid border-neutral-50 px-8 py-4 text-center',
           )}
         >
           <Icon variant='arrow-back' width='30' color='#848484' />

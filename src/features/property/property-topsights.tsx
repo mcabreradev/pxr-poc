@@ -1,13 +1,17 @@
 import { Drawer } from '@material-tailwind/react';
-import { useRef, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import { createQueryString, removeQueryStringParam } from '@/lib/url';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
+
+import { TOPSIGHT } from '@/constant';
 
 type Props = {
   className?: string;
@@ -22,14 +26,33 @@ export default function PropertyTopSights({ className, topSights }: Props) {
   const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const showDrawer = searchParams.get(TOPSIGHT);
 
-  const openDrawer = () => {
+  const openDrawer = useCallback(() => {
     setOpen(true);
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
-  };
-  const closeDrawer = () => setOpen(false);
+    router.push(
+      `${pathname}?${createQueryString(searchParams, TOPSIGHT, '1')}`,
+    );
+  }, [pathname, router, searchParams]);
+
+  const closeDrawer = useCallback(() => {
+    setOpen(false);
+    router.push(
+      `${pathname}?${removeQueryStringParam(searchParams, TOPSIGHT)}`,
+    );
+  }, [pathname, router, searchParams]);
+
+  useEffect(() => {
+    if (showDrawer) {
+      openDrawer();
+    }
+  }, [openDrawer, showDrawer]);
 
   return (
     <div className={cn(className)} data-testid='test-element'>

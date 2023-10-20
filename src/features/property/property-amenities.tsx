@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import { createQueryString, removeQueryStringParam } from '@/lib/url';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -28,35 +29,30 @@ export default function PropertyAmenities({ className, amenities }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const show = searchParams.get('show');
+  const showDrawer = searchParams.get(AMENITIES);
 
-  const openDrawer = () => {
+  const openDrawer = useCallback(() => {
     setOpen(true);
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
-    router.push(pathname + '?' + createQueryString('sort', 'asc'));
-  };
-  const closeDrawer = () => setOpen(false);
+    router.push(
+      `${pathname}?${createQueryString(searchParams, AMENITIES, '1')}`,
+    );
+  }, [pathname, router, searchParams]);
+
+  const closeDrawer = useCallback(() => {
+    setOpen(false);
+    router.push(
+      `${pathname}?${removeQueryStringParam(searchParams, AMENITIES)}`,
+    );
+  }, [pathname, router, searchParams]);
 
   useEffect(() => {
-    if (show === AMENITIES) {
+    if (showDrawer) {
       openDrawer();
-    } else {
-      closeDrawer();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show]);
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams],
-  );
+  }, [openDrawer, showDrawer]);
 
   return (
     <div className={cn(className)} data-testid='test-element'>

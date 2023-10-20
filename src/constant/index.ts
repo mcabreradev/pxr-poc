@@ -10,6 +10,7 @@ export const PAYMENT = 'payment';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
 export const AMENITIES = 'amenities';
+export const TOPSIGHT = 'topsight';
 
 // FORM
 export const EMAIL = 'email';

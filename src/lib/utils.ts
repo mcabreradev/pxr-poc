@@ -18,3 +18,7 @@ export function timeout(delay: number) {
 export function uuid() {
   return uid();
 }
+
+export function isBrowser() {
+  return typeof window !== 'undefined';
+}

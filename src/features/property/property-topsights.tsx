@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { createQueryString, removeQueryStringParam } from '@/lib/url';
-import { cn } from '@/lib/utils';
+import { cn, uuid } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
@@ -36,15 +36,17 @@ export default function PropertyTopSights({ className, topSights }: Props) {
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
-    router.push(
+    router.replace(
       `${pathname}?${createQueryString(searchParams, TOPSIGHT, '1')}`,
+      { scroll: false },
     );
   }, [pathname, router, searchParams]);
 
   const closeDrawer = useCallback(() => {
     setOpen(false);
-    router.push(
+    router.replace(
       `${pathname}?${removeQueryStringParam(searchParams, TOPSIGHT)}`,
+      { scroll: false },
     );
   }, [pathname, router, searchParams]);
 
@@ -82,7 +84,7 @@ export default function PropertyTopSights({ className, topSights }: Props) {
             />
           </div>
 
-          <div className='overflow-auto px-6' ref={containerRef}>
+          <div className='overflow-auto px-6' ref={containerRef} id={uuid()}>
             <Typography variant='h1' weight='semibold'>
               {t('title.attractions')}
             </Typography>

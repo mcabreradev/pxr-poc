@@ -53,7 +53,7 @@ export default function RoomSwiper() {
             <Button
               type='link'
               href={`/room-type/${room.id}`}
-              className='mb-4 w-full'
+              className='mb-4 md:w-full'
               scroll={true}
             >
               {t('button.reserve')}

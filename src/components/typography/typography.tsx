@@ -92,6 +92,7 @@ export type FontWeight =
 type TagType = 'span' | 'div' | 'label' | string;
 
 export type TextProps = {
+  id?: string;
   variant?: TextVariant;
   weight?: FontWeight;
   children: React.ReactNode;
@@ -122,6 +123,7 @@ const StyledLabel = tw.label<TextProps>`
 `;
 
 const Typography = ({
+  id,
   className,
   variant = undefined,
   weight = undefined,
@@ -145,6 +147,7 @@ const Typography = ({
   if (tag === TAG.LABEL) {
     return (
       <StyledLabel
+        id={id}
         variant={variant}
         weight={weight}
         className={className}
@@ -157,6 +160,7 @@ const Typography = ({
 
   return (
     <StyledDiv
+      id={id}
       variant={variant}
       weight={weight}
       className={className}

@@ -13,8 +13,10 @@ const Container = tw.div`
 
 export default function StickyComponent({
   children,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   const [stickyClass, setStickyClass] = useState('');
 
@@ -42,7 +44,10 @@ export default function StickyComponent({
   }, []);
 
   return (
-    <Container data-testid='test-element' className={cn(stickyClass)}>
+    <Container
+      data-testid='test-element'
+      className={cn(stickyClass, className)}
+    >
       {children}
     </Container>
   );

@@ -183,7 +183,7 @@ export default function CheckoutForm() {
           <Button
             disabled={isLoading || !stripe || !elements}
             id='submit'
-            className='w-full'
+            className=''
           >
             {isLoading ? (
               <Icon

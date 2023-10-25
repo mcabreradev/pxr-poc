@@ -255,7 +255,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <Footer />
 
-      <Sticky>
+      <Sticky className='md:hidden'>
         <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>
           <div className='flex flex-col'>
             <Typography variant='sm' weight='semibold'>

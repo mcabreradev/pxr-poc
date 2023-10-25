@@ -338,7 +338,7 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
         </Typography>
 
         <Button
-          className='mt-3 w-full font-semibold'
+          className='mt-3 font-semibold'
           variant='primary'
           type='submit'
           disabled={isSubmitting}

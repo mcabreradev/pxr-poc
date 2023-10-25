@@ -99,7 +99,7 @@ export default function RoomTypeComponent({ className, roomtype }: Props) {
                 </div>
               ))}
             </div>
-            <Button className='w-full font-semibold' variant='secondary'>
+            <Button className='font-semibold' variant='secondary'>
               {t('button.view-all-services')}
             </Button>
           </section>
@@ -251,7 +251,7 @@ export default function RoomTypeComponent({ className, roomtype }: Props) {
 
             <div className='flex flex-wrap justify-between py-3'>
               <Button
-                className='w-full font-semibold'
+                className='font-semibold'
                 variant='primary'
                 type='link'
                 href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}

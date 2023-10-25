@@ -4,6 +4,7 @@
 
 :root {
   --font-sans: 'Poppins', sans-serif;
+  --tw-color-neutral-40: 248 249 250;
   --tw-color-neutral-50: 234 236 240;
   --tw-color-neutral-60: 230 230 230;
   --tw-color-neutral-100: 189 189 189;
@@ -23,6 +24,7 @@
   --tw-color-black: 33 37 41;
   --tw-color-white: 255 255 255;
 
+  --color-neutral-40: var(--tw-color-neutral-40); /* #f8f9fa */
   --color-neutral-50: var(--tw-color-neutral-50); /* #eaecf0 */
   --color-neutral-60: var(--tw-color-neutral-60); /* #E6E6E6 */
   --color-neutral-100: var(--tw-color-neutral-100); /* #bdbdbd */

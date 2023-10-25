@@ -59,7 +59,7 @@ export default function PropertyAmenities({ className, amenities }: Props) {
   return (
     <div className={cn(className)} data-testid='test-element'>
       <Button
-        className='w-full font-semibold'
+        className='font-semibold'
         variant='secondary'
         onClick={openDrawer}
       >

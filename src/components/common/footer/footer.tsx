@@ -28,6 +28,10 @@ const Container = tw.footer`
   text-black
 `;
 
+const Layout = tw.div`
+  container mx-auto
+`;
+
 export default function Footer() {
   const { t, i18n } = useTranslation();
   const { data: property, isLoading } = useFetchProperty();
@@ -38,47 +42,49 @@ export default function Footer() {
   };
 
   if (isLoading) {
-    return <div data-testid='test-element'>loading</div>;
+    return <div data-testid='test-element'>..</div>;
   }
 
   return (
     <Container data-testid='test-element'>
-      <Row className='font-semibold'>
-        <Row className='w-full'>
-          <Icon variant='globe' width='18px' />
-          <div
-            className='hover:cursor-pointer'
-            onClick={onClickHandler}
-            data-testid='test-link'
-          >
-            {t('link.language')}
-          </div>
+      <Layout>
+        <Row className='font-semibold'>
+          <Row className='w-full'>
+            <Icon variant='globe' width='18px' />
+            <div
+              className='hover:cursor-pointer'
+              onClick={onClickHandler}
+              data-testid='test-link'
+            >
+              {t('link.language')}
+            </div>
+          </Row>
+          <span className='w-full'>$ USD</span>
         </Row>
-        <span className='w-full'>$ USD</span>
-      </Row>
-      <Row>
-        <Icon variant='open-in-new' width='18px' />
-        <div className='pl-[5px]'>{property.websiteURL}</div>
-      </Row>
-      <Row>
-        <Icon variant='email' width='18px' />
-        <div className='pl-[5px]'>{property.email}</div>
-      </Row>
-      <Row>
-        <Icon variant='phone' width='18px' />
-        <div className='pl-[5px]'>{property.phone}</div>
-      </Row>
-      <Row>
-        <Icon variant='whatsapp' width='18px' />
-        <div className='pl-[5px]'>Whatsapp</div>
-      </Row>
-      <Row>
-        <Icon variant='facebook-round' width='18px' />
-        <div className='pl-[5px]'></div>
-        <Icon variant='instagram' width='18px' />
-      </Row>
-      <Row>{t('title.termsandconditions')}</Row>
-      <Row>© {new Date().getFullYear()} Paxer LLC</Row>
+        <Row>
+          <Icon variant='open-in-new' width='18px' />
+          <div className='pl-[5px]'>{property.websiteURL}</div>
+        </Row>
+        <Row>
+          <Icon variant='email' width='18px' />
+          <div className='pl-[5px]'>{property.email}</div>
+        </Row>
+        <Row>
+          <Icon variant='phone' width='18px' />
+          <div className='pl-[5px]'>{property.phone}</div>
+        </Row>
+        <Row>
+          <Icon variant='whatsapp' width='18px' />
+          <div className='pl-[5px]'>Whatsapp</div>
+        </Row>
+        <Row>
+          <Icon variant='facebook-round' width='18px' />
+          <div className='pl-[5px]'></div>
+          <Icon variant='instagram' width='18px' />
+        </Row>
+        <Row>{t('title.termsandconditions')}</Row>
+        <Row>© {new Date().getFullYear()} Paxer LLC</Row>
+      </Layout>
     </Container>
   );
 }

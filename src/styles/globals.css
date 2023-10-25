@@ -88,6 +88,10 @@
   /* #endregion  /**======== Typography =========== */
 
   .layout {
+    @apply container mx-auto;
+  }
+
+  .layout2 {
     /* 1100px */
     max-width: 68.75rem;
     @apply mx-auto w-11/12;

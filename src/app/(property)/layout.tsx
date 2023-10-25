@@ -1,3 +1,4 @@
+import Footer from '@/components/common/footer';
 import Navbar from '@/components/navbar';
 
 export default function DashboardLayout({
@@ -9,7 +10,7 @@ export default function DashboardLayout({
     <>
       <Navbar />
       {children}
-      <h4>footer</h4>
+      <Footer />
     </>
   );
 }

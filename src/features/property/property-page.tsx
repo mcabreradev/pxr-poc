@@ -8,7 +8,6 @@ import tw from 'tailwind-styled-components';
 import useFetchProperty from '@/hooks/use-property.query';
 
 import Button from '@/components/button';
-import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Sticky from '@/components/sticky';
@@ -23,6 +22,7 @@ import data from './property.data.json';
 
 const Section = tw.div`
   px-4 text-black
+  md:px-0
 `;
 
 const Row = tw.div`
@@ -42,7 +42,7 @@ const PropertyPage = memo(function HotelPage() {
   }
 
   return (
-    <main data-id-test='test-componet' title={property}>
+    <main data-id-test='test-componet' title={property} className='layout'>
       <Image
         alt='...'
         src={data.image}
@@ -51,82 +51,96 @@ const PropertyPage = memo(function HotelPage() {
         className='h-full w-full object-cover'
       />
 
-      <Section className='pt-3'>
-        <Typography variant='h1'>{property.name}</Typography>
-        <div className='flex flex-row items-center text-[14px]'>
-          <Icon variant='star' width='16px' />
-          <p className='p-1'>{property.reviewRatingScore}</p>•
-          <p className='pl-1 underline hover:cursor-pointer'>{`${
-            property.reviewRatingCount
-          } ${property.reviewRatingCount > 1 ? 'reseñas' : 'reseña'}`}</p>
-        </div>
-
-        <div className='py-1 underline'>{`${property.street}, ${property.state}, ${property.countryName}`}</div>
-
-        <div className='flex flex-row items-center py-2 underline'>
-          <span className='pr-1'>{t('title.contact')}</span>
-          {Object.entries(data?.contact).map(([key, value]) => (
-            <a key={`contacto-${key}-${value}`} className='px-1' href={value}>
-              <Icon variant={key} width='18px' color='gray' />
-            </a>
-          ))}
-        </div>
-      </Section>
-
-      <hr />
-
-      <Section>
-        <p className='my-2 text-2sm'>{property.description[i18n.language]}</p>
-      </Section>
-
-      <Section className='pt-4'>
-        <Typography variant='h2' weight='normal'>
-          {t('title.hotel-amemnities')}
-        </Typography>
-        <div className='flex flex-wrap justify-between py-4'>
-          {data.services.slice(0, 8).map((service) => (
-            <div
-              key={`service-${service.icon}`}
-              className='flex w-1/2 flex-row py-[5px]'
-            >
-              <Icon variant={service.icon} width='18px' color='#949494' />
-              <p className='pl-[5px] text-2sm'>{service.name}</p>
+      <div className='relative flex'>
+        <div className='w-full md:w-8/12'>
+          <Section className='pt-3'>
+            <Typography variant='h1'>{property.name}</Typography>
+            <div className='flex flex-row items-center text-[14px]'>
+              <Icon variant='star' width='16px' />
+              <p className='p-1'>{property.reviewRatingScore}</p>•
+              <p className='pl-1 underline hover:cursor-pointer'>{`${
+                property.reviewRatingCount
+              } ${property.reviewRatingCount > 1 ? 'reseñas' : 'reseña'}`}</p>
             </div>
-          ))}
+
+            <div className='py-1 underline'>{`${property.street}, ${property.state}, ${property.countryName}`}</div>
+
+            <div className='flex flex-row items-center py-2 underline'>
+              <span className='pr-1'>{t('title.contact')}</span>
+              {Object.entries(data?.contact).map(([key, value]) => (
+                <a
+                  key={`contacto-${key}-${value}`}
+                  className='px-1'
+                  href={value}
+                >
+                  <Icon variant={key} width='18px' color='gray' />
+                </a>
+              ))}
+            </div>
+          </Section>
+          <hr />
+          <Section>
+            <p className='my-2 text-2sm'>
+              {property.description[i18n.language]}
+            </p>
+          </Section>
+
+          <Section className='pt-4'>
+            <Typography variant='h2' weight='normal'>
+              {t('title.hotel-amemnities')}
+            </Typography>
+            <div className='grid grid-cols-2 gap-2 py-4 md:grid-cols-3'>
+              {data.services.slice(0, 8).map((service) => (
+                <div
+                  key={`service-${service.icon}`}
+                  className='flex flex-row py-[5px] md:w-1/3'
+                >
+                  <Icon variant={service.icon} width='18px' color='#949494' />
+                  <p className='pl-[5px] text-2sm'>{service.name}</p>
+                </div>
+              ))}
+            </div>
+            <PropertyAmenities amenities={data?.services} />
+          </Section>
+
+          <hr className='mb-9 mt-6' />
+
+          <Section className='p-4 py-0'>
+            <Typography variant='h2' weight='normal'>
+              {t('title.book-with-us')}
+            </Typography>
+            <div className='flex flex-col items-start py-4 pl-2 text-base leading-[50px]'>
+              <Row>
+                <Icon variant='emoticon-cool' width={24} />
+                <div className='pl-[5px]'>{t('info.better-rate')}</div>
+              </Row>
+              <Row>
+                <Icon variant='check-decagram' width={24} />
+                <div className='pl-[5px]'>{t('info.direct-booking')}</div>
+              </Row>
+              <Row>
+                <Icon variant='percent' width={24} />
+                <div className='pl-[5px]'>{t('info.offers-beneficts')}</div>
+              </Row>
+            </div>
+          </Section>
+
+          <hr />
+
+          <Section className='p-4 pb-0 pr-0 pt-2'>
+            <Typography variant='h2' weight='normal'>
+              {t('title.wanna-sleep')}
+            </Typography>
+            <RoomSwiper />
+          </Section>
         </div>
-        <PropertyAmenities amenities={data?.services} />
-      </Section>
 
-      <hr className='mb-9 mt-6' />
-
-      <Section className='p-4 py-0'>
-        <Typography variant='h2' weight='normal'>
-          {t('title.book-with-us')}
-        </Typography>
-        <div className='flex flex-col items-start py-4 pl-2 text-base leading-[50px]'>
-          <Row>
-            <Icon variant='emoticon-cool' width={24} />
-            <div className='pl-[5px]'>{t('info.better-rate')}</div>
-          </Row>
-          <Row>
-            <Icon variant='check-decagram' width={24} />
-            <div className='pl-[5px]'>{t('info.direct-booking')}</div>
-          </Row>
-          <Row>
-            <Icon variant='percent' width={24} />
-            <div className='pl-[5px]'>{t('info.offers-beneficts')}</div>
-          </Row>
+        <div className='hidden bg-lime-50 md:flex md:w-4/12'>
+          <div className='sticky bottom-0 top-0 m-4 h-[500px] w-full bg-green-400 p-4'>
+            c
+          </div>
         </div>
-      </Section>
-
-      <hr />
-
-      <Section className='p-4 pb-0 pr-0 pt-2'>
-        <Typography variant='h2' weight='normal'>
-          {t('title.wanna-sleep')}
-        </Typography>
-        <RoomSwiper />
-      </Section>
+      </div>
 
       <hr />
 
@@ -252,8 +266,6 @@ const PropertyPage = memo(function HotelPage() {
           {t('title.show-more')}
         </Typography>
       </Section>
-
-      <Footer />
 
       <Sticky className='md:hidden'>
         <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>

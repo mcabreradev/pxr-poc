@@ -1,6 +1,9 @@
 'use client';
 
+import { setCookie } from 'cookies-next';
 import { Dropdown } from 'flowbite-react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
@@ -13,10 +16,16 @@ interface Props {
 }
 
 const Nav = tw.nav`
-  container flex content-around items-center justify-between bg-white py-[35px] text-neutral-400
+  layout hidden content-around items-center justify-between bg-white py-[35px] text-neutral-400 md:flex
 `;
 
 export default function Navbar({ className }: Props) {
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    setCookie('i18next', i18n.language);
+  }, [i18n.language]);
+
   return (
     <Nav className={cn(className)} data-testid='test-element'>
       <div></div>
@@ -54,6 +63,7 @@ export default function Navbar({ className }: Props) {
               <Dropdown.Item
                 className='hover:bg-neutral-40 focus:bg-neutral-40'
                 size='lg'
+                onClick={() => i18n.changeLanguage('es')}
               >
                 <Typography variant='sm' className='w-32 text-left'>
                   Español
@@ -62,6 +72,7 @@ export default function Navbar({ className }: Props) {
               <Dropdown.Item
                 className='hover:bg-neutral-40 focus:bg-neutral-40'
                 size='lg'
+                onClick={() => i18n.changeLanguage('en')}
               >
                 <Typography variant='sm' className='w-32 text-left'>
                   Ingles

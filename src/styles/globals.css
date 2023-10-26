@@ -87,9 +87,9 @@
   }
   /* #endregion  /**======== Typography =========== */
 
-  .layout {
+  /* .layout {
     @apply container mx-auto;
-  }
+  } */
 
   .layout2 {
     /* 1100px */
@@ -111,10 +111,7 @@
   }
 
   .layout {
-    max-width: 68.75rem;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    @apply mx-auto w-full max-w-[68.75rem] md:w-[90%];
   }
 }
 

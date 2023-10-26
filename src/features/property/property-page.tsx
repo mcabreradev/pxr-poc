@@ -43,7 +43,7 @@ const PropertyPage = memo(function HotelPage() {
   }
 
   return (
-    <main data-id-test='test-componet' title={property} className='layout'>
+    <main data-id-test='test-componet' className='layout'>
       <div className='md:grid md:grid-cols-2 md:gap-3'>
         <div className=''>
           <Image

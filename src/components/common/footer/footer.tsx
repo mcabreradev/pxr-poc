@@ -29,7 +29,7 @@ const Container = tw.footer`
 `;
 
 const Layout = tw.div`
-  container mx-auto
+  layout
 `;
 
 export default function Footer() {

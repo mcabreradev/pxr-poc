@@ -14,6 +14,7 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import GuestForm from './guest-form';
 import PropertyAmenities from './property-amenities';
 import RoomSwiper from './property-room-swiper';
 import Skeleton from './property-skeleton';
@@ -43,13 +44,29 @@ const PropertyPage = memo(function HotelPage() {
 
   return (
     <main data-id-test='test-componet' title={property} className='layout'>
-      <Image
-        alt='...'
-        src={data.image}
-        width={980}
-        height={551}
-        className='h-full w-full object-cover'
-      />
+      <div className='md:grid md:grid-cols-2 md:gap-3'>
+        <div className=''>
+          <Image
+            alt='...'
+            src={data.image}
+            width={980}
+            height={551}
+            className='h-full w-full object-cover'
+          />
+        </div>
+        <div className='hidden md:grid md:grid-cols-2 md:gap-3'>
+          {data.images.map((image) => (
+            <Image
+              key={`header-image-${image}`}
+              alt='...'
+              src={image}
+              width={980}
+              height={551}
+              className='h-full w-full cursor-pointer object-cover'
+            />
+          ))}
+        </div>
+      </div>
 
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>
@@ -93,14 +110,14 @@ const PropertyPage = memo(function HotelPage() {
               {data.services.slice(0, 8).map((service) => (
                 <div
                   key={`service-${service.icon}`}
-                  className='flex flex-row py-[5px] md:w-1/3'
+                  className='flex flex-row items-center py-[5px]'
                 >
-                  <Icon variant={service.icon} width='18px' color='#949494' />
+                  <Icon variant={service.icon} width='14' color='#949494' />
                   <p className='pl-[5px] text-2sm'>{service.name}</p>
                 </div>
               ))}
             </div>
-            <PropertyAmenities amenities={data?.services} />
+            <PropertyAmenities amenities={data?.services} className='pt-6' />
           </Section>
 
           <hr className='mb-9 mt-6' />
@@ -127,18 +144,16 @@ const PropertyPage = memo(function HotelPage() {
 
           <hr />
 
-          <Section className='p-4 pb-0 pr-0 pt-2'>
-            <Typography variant='h2' weight='normal'>
+          <Section className='p-4 pb-0 pr-0 pt-2 md:flex md:flex-col md:items-center'>
+            <Typography variant='h2' weight='normal' className='md:self-start'>
               {t('title.wanna-sleep')}
             </Typography>
             <RoomSwiper />
           </Section>
         </div>
 
-        <div className='hidden bg-lime-50 md:flex md:w-4/12'>
-          <div className='sticky bottom-0 top-0 m-4 h-[500px] w-full bg-green-400 p-4'>
-            c
-          </div>
+        <div className='hidden md:flex md:w-4/12'>
+          <GuestForm />
         </div>
       </div>
 
@@ -243,7 +258,7 @@ const PropertyPage = memo(function HotelPage() {
             <Typography weight='light'>{activity.distance}</Typography>
           </div>
         ))}
-        <PropertyTopSights topSights={property?.topSights} />
+        <PropertyTopSights topSights={property?.topSights} className='pt-6' />
       </Section>
 
       <hr />

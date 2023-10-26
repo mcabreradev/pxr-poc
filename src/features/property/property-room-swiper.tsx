@@ -25,7 +25,7 @@ export default function RoomSwiper() {
   }
 
   return (
-    <Swiper>
+    <Swiper className='md:w-[570px]' withArrow={true}>
       {roomtypes.map((room, index) => (
         <Rooms key={`holtel-room-${index}`}>
           <Image
@@ -34,6 +34,7 @@ export default function RoomSwiper() {
             width={271}
             height={235}
             className='w-full object-cover'
+            title={t('title.room')}
           />
           <div className='p-4'>
             <Typography variant='h3' weight='medium' className='pb-4'>

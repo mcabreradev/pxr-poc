@@ -65,7 +65,12 @@ export default function Navbar({ className }: Props) {
                 size='lg'
                 onClick={() => i18n.changeLanguage('es')}
               >
-                <Typography variant='sm' className='w-32 text-left'>
+                <Typography
+                  variant='sm'
+                  className={cn('w-32 text-left text-neutral-400', {
+                    'text-neutral-500': i18n.language === 'es',
+                  })}
+                >
                   Español
                 </Typography>
               </Dropdown.Item>
@@ -74,7 +79,12 @@ export default function Navbar({ className }: Props) {
                 size='lg'
                 onClick={() => i18n.changeLanguage('en')}
               >
-                <Typography variant='sm' className='w-32 text-left'>
+                <Typography
+                  variant='sm'
+                  className={cn('w-32 text-left text-neutral-400', {
+                    'text-neutral-500': i18n.language === 'en',
+                  })}
+                >
                   Ingles
                 </Typography>
               </Dropdown.Item>

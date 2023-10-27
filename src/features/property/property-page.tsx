@@ -249,15 +249,72 @@ const PropertyPage = memo(function HotelPage() {
             {t('title.activities')}
           </Typography>
         </div>
-        {property.topSights.slice(0, 4).map((activity) => (
-          <div
-            key={`$attractions-${activity.googlePlaceId}`}
-            className='flex justify-between py-2'
-          >
-            <Typography>{activity.name}</Typography>
-            <Typography weight='light'>{activity.distance}</Typography>
+
+        <div className='md:grid md:grid-cols-3 md:gap-16'>
+          <div className='md:max-w-[300px]'>
+            <div className='mt-5 flex justify-start space-x-3 pb-5 pt-3'>
+              <Icon variant='camera' width={24} />
+              <Typography variant='base' className='underline'>
+                {t('title.activities')}
+              </Typography>
+            </div>
+
+            {property.topSights.slice(0, 4).map((activity, i) => (
+              <div
+                key={`$attractions-${activity.googlePlaceId}`}
+                className='flex justify-between py-2'
+              >
+                <Typography>{activity.name}</Typography>
+                <Typography weight='light'>
+                  {activity.distance || (i + 1) * 100 + ' m'}
+                </Typography>
+              </div>
+            ))}
           </div>
-        ))}
+
+          <div className='hidden md:block md:max-w-[300px]'>
+            <div className='mt-5 flex justify-start space-x-3 pb-5 pt-3'>
+              <Icon variant='restaurant' width={24} />
+              <Typography variant='base' className='underline'>
+                {t('Restaurantes')}
+              </Typography>
+            </div>
+
+            {property.topSights.slice(0, 4).map((activity, i) => (
+              <div
+                key={`$attractions-${activity.googlePlaceId}`}
+                className='flex justify-between py-2'
+              >
+                <Typography>{activity.name}</Typography>
+                <Typography weight='light'>
+                  {activity.distance || (i + 1) * 100 + ' m'}
+                </Typography>
+              </div>
+            ))}
+          </div>
+
+          <div className='hidden md:block md:max-w-[300px]'>
+            <div className='mt-5 flex justify-start space-x-3 pb-5 pt-3'>
+              <Icon variant='museum' width={24} />
+              <Typography variant='base' className='underline'>
+                {t('Museos')}
+              </Typography>
+            </div>
+
+            {property.topSights.slice(0, 4).map((activity, i) => (
+              <div
+                key={`$attractions-${activity.googlePlaceId}`}
+                className='flex justify-between py-2'
+              >
+                <Typography>{activity.name}</Typography>
+                <Typography weight='light'>
+                  {activity.distance || (i + 1) * 100 + ' m'}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <PropertyTopSights topSights={property?.topSights} className='pt-6' />
       </Section>
 
@@ -268,7 +325,7 @@ const PropertyPage = memo(function HotelPage() {
           {t('title.hotel-rules')}
         </Typography>
 
-        <div className='my-4'>
+        <div className='my-4 pr-16 md:w-1/3'>
           {data.rules.map((rule, key) => (
             <div key={`$rules-${key}`} className='flex justify-between py-2'>
               <Typography>{rule.name}</Typography>

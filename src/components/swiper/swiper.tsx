@@ -10,6 +10,7 @@ interface Props {
   innerClassName?: string;
   children: React.ReactNode;
   withArrow?: boolean;
+  scroll?: number;
 }
 
 const Container = tw.div`
@@ -25,20 +26,21 @@ export default function Swiper({
   innerClassName,
   children,
   withArrow = false,
+  scroll = 200,
 }: Props) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = useCallback(() => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft -= 200;
+      scrollContainerRef.current.scrollLeft -= scroll;
     }
-  }, []);
+  }, [scroll]);
 
   const scrollRight = useCallback(() => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft += 200;
+      scrollContainerRef.current.scrollLeft += scroll;
     }
-  }, []);
+  }, [scroll]);
 
   return (
     <div className='md:flex md:flex-row md:items-center'>

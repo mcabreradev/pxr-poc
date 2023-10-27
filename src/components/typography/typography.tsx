@@ -125,7 +125,7 @@ const StyledLabel = tw.label<TextProps>`
 const Typography = ({
   id,
   className,
-  variant = undefined,
+  variant = 'sm',
   weight = undefined,
   children,
   tag = TAG.DIV,

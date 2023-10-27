@@ -25,7 +25,7 @@ export default function RoomSwiper() {
   }
 
   return (
-    <Swiper className='md:w-[570px]' withArrow={true}>
+    <Swiper className='md:w-[570px]' withArrow={true} scroll={300}>
       {roomtypes.map((room, index) => (
         <Rooms key={`holtel-room-${index}`}>
           <Image

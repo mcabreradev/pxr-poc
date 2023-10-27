@@ -8,6 +8,9 @@ import useFetchProperty from '@/hooks/use-property.query';
 
 import Icon from '@/components/icon';
 
+import { LANG } from '@/constant';
+import { siteConfig } from '@/constant/config';
+
 const Row = tw.div`
   flex flex-row items-center
 `;
@@ -37,7 +40,7 @@ export default function Footer() {
   const { data: property, isLoading } = useFetchProperty();
 
   const onClickHandler = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
+    i18n.changeLanguage(i18n.language === LANG.EN ? LANG.ES : LANG.EN);
     setCookie('i18next', i18n.language);
   };
 
@@ -83,7 +86,7 @@ export default function Footer() {
           <Icon variant='instagram' width='18px' />
         </Row>
         <Row>{t('title.termsandconditions')}</Row>
-        <Row>© {new Date().getFullYear()} Paxer LLC</Row>
+        <Row>{`© ${new Date().getFullYear()} ${siteConfig.company}`}</Row>
       </Layout>
     </Container>
   );

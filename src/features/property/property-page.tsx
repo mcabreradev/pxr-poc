@@ -243,12 +243,6 @@ const PropertyPage = memo(function HotelPage() {
         <Typography variant='h2' weight='normal'>
           {t('title.attractions')}
         </Typography>
-        <div className='flex justify-start space-x-3 pb-5 pt-3'>
-          <Icon variant='camera' width={24} />
-          <Typography variant='base' className='underline'>
-            {t('title.activities')}
-          </Typography>
-        </div>
 
         <div className='md:grid md:grid-cols-3 md:gap-16'>
           <div className='md:max-w-[300px]'>

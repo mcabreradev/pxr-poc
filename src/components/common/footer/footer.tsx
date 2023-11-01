@@ -94,7 +94,7 @@ export default function Footer() {
         <Item>{`© ${new Date().getFullYear()} ${siteConfig.company}`}</Item>
       </Container>
 
-      <Container data-testid='test-element' className='hidden md:grid'>
+      <Container data-testid='test-element' className='hidden md:block'>
         <Layout>
           <div className='flex flex-col'>
             <Item className='pb-4'>

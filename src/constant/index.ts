@@ -81,3 +81,5 @@ export const PAYMENT_STATUS = {
   REQUIRE_PAYMENT_METHOD: 'requires_payment_method',
   REQUIER_INTENT_CLIENT_SECRET: 'payment_intent_client_secret',
 };
+
+export const breakpoints = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];

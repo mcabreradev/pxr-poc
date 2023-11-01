@@ -14,6 +14,7 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import Galery from './galery';
 import GuestForm from './guest-form';
 import PropertyAmenities from './property-amenities';
 import RoomSwiper from './property-room-swiper';
@@ -44,29 +45,7 @@ const PropertyPage = memo(function HotelPage() {
 
   return (
     <main data-id-test='test-componet' className='layout'>
-      <div className='md:grid md:grid-cols-2 md:gap-3'>
-        <div className=''>
-          <Image
-            alt='...'
-            src={data.image}
-            width={980}
-            height={551}
-            className='h-full w-full object-cover'
-          />
-        </div>
-        <div className='hidden md:grid md:grid-cols-2 md:gap-3'>
-          {data.images.map((image) => (
-            <Image
-              key={`header-image-${image}`}
-              alt='...'
-              src={image}
-              width={980}
-              height={551}
-              className='h-full w-full cursor-pointer object-cover'
-            />
-          ))}
-        </div>
-      </div>
+      <Galery photos={data.images} />
 
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>

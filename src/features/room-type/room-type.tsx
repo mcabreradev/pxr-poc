@@ -6,7 +6,6 @@ import useRoomTypeQuery from '@/hooks/use-roomtype.query';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
-import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Radio from '@/components/radio';
@@ -312,8 +311,6 @@ export default function RoomTypeComponent({ className, roomtype }: Props) {
             </div>
           </section>
         </Wrapper>
-
-        <Footer />
       </div>
     </Container>
   );

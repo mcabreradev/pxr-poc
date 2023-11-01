@@ -22,3 +22,36 @@ export function uuid() {
 export function isBrowser() {
   return typeof window !== 'undefined';
 }
+
+export function getBreackpointHeight({
+  height,
+  width,
+  breakpoint,
+}: {
+  height: number;
+  width: number;
+  breakpoint: number;
+}) {
+  return Math.round((height / width) * breakpoint);
+}
+
+export function getSrcSet({
+  src,
+  height,
+  width,
+  breakpoints,
+}: {
+  src: string;
+  height: number;
+  width: number;
+  breakpoints: number[];
+}) {
+  return breakpoints.map((breakpoint) => {
+    const breakpintHeight = getBreackpointHeight({ height, width, breakpoint });
+    return {
+      src: src,
+      width: breakpoint,
+      height: breakpintHeight,
+    };
+  });
+}

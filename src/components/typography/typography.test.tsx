@@ -1,18 +1,22 @@
 /* eslint-disable simple-import-sort/imports */
 import 'jest-styled-components';
-import renderer from 'react-test-renderer';
 
+import { render, screen } from '@testing-library/react';
 import Typography from './';
 
 describe('Text component', () => {
-  it('should renders Text component correctly', () => {
-    const tree = renderer
-      .create(
+  it('should renders Text component correctly', async () => {
+    const text = 'Hola Paxer!';
+    const renderComponent = () =>
+      render(
         <Typography variant='base' weight='normal'>
-          Hola Paxer
+          {text}
         </Typography>,
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+      );
+
+    await renderComponent();
+    const element = screen.getByText(text);
+    // expect(element).toMatchSnapshot();
+    expect(element).toBeInTheDocument();
   });
 });

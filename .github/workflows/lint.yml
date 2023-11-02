@@ -34,13 +34,13 @@ jobs:
         run: bun install
 
       - name: 🔬 Lint
-        run: bun lint:strict
+        run: bun run lint:strict
 
       - name: 🔎 Type check
-        run: bun typecheck
+        run: bun run typecheck
 
       - name: 💅 Prettier check
-        run: bun format:check
+        run: bun run format:check
 
       - name: 🃏 Run test
         run: npm run test

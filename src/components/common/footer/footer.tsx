@@ -35,7 +35,8 @@ const Item = tw.div`
 
 const Layout = tw.div`
   layout
-  grid-2 my-2
+  grid-2
+  my-2
   grid
   grid-flow-col
 `;
@@ -55,7 +56,7 @@ export default function Footer() {
 
   return (
     <>
-      <Container data-testid='test-element' className='md:hidden'>
+      <Container data-testid='test-element' className='pb-[100px] md:hidden'>
         <Item className='font-semibold'>
           <Item className='w-full'>
             <Icon variant='globe' width='18px' />

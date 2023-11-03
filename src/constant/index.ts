@@ -11,6 +11,7 @@ export const SUCCESS = 'success';
 export const ERROR = 'error';
 export const AMENITIES = 'amenities';
 export const TOPSIGHT = 'topsight';
+export const GALERY = 'galery';
 
 // FORM
 export const EMAIL = 'email';

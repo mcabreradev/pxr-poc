@@ -93,8 +93,8 @@
 
   .layout2 {
     /* 1100px */
-    max-width: 68.75rem;
-    @apply mx-auto w-11/12;
+    max-width: 60rem;
+    @apply mx-auto w-7/12;
   }
 
   .bg-dark a.custom-link {
@@ -112,6 +112,10 @@
 
   .layout {
     @apply mx-auto w-full max-w-[68.75rem] md:w-[90%];
+  }
+
+  .opacity-effect {
+    @apply opacity-100 duration-500 hover:opacity-90;
   }
 }
 
@@ -137,8 +141,8 @@
   background-color: rgb(var(--color-neutral-40)) !important;
  } */
 
-.yarl__thumbnails_vignette,
+/* .yarl__thumbnails_vignette,
 .yarl__thumbnails_thumbnail {
   background: transparent !important;
   border: none !important;
-}
+} */

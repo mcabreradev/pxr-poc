@@ -63,6 +63,42 @@
       "height": 551,
       "src": "/images/hotel/room6.webp",
       "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room1.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room2.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room3.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room4.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room5.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room6.webp",
+      "width": 980
     }
   ],
   "map": {

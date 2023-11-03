@@ -16,7 +16,7 @@ import Typography from '@/components/typography';
 
 import PropertyAmenities from './amenities';
 import data from './data.json';
-import Galery from './galery';
+import Gallery from './gallery';
 import GuestForm from './guest-form';
 import RoomSwiper from './room-swiper';
 import Skeleton from './skeleton';
@@ -45,7 +45,7 @@ const PropertyPage = memo(function HotelPage() {
 
   return (
     <main data-id-test='test-componet' className='layout'>
-      <Galery photos={data.images} />
+      <Gallery photos={data.images} />
 
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>
@@ -313,7 +313,7 @@ const PropertyPage = memo(function HotelPage() {
       </Section>
 
       <Sticky className='md:sticky md:hidden'>
-        <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>
+        <div className='flex h-full w-full flex-row items-center justify-around bg-white px-2 py-5'>
           <div className='flex flex-col'>
             <Typography variant='sm' weight='semibold'>
               {' '}

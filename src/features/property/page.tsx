@@ -14,13 +14,13 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import PropertyAmenities from './amenities';
+import data from './data.json';
 import Galery from './galery';
 import GuestForm from './guest-form';
-import PropertyAmenities from './property-amenities';
-import RoomSwiper from './property-room-swiper';
-import Skeleton from './property-skeleton';
-import PropertyTopSights from './property-topsights';
-import data from './property.data.json';
+import RoomSwiper from './room-swiper';
+import Skeleton from './skeleton';
+import PropertyTopSights from './topsights';
 
 const Section = tw.div`
   px-4 text-black
@@ -131,7 +131,7 @@ const PropertyPage = memo(function HotelPage() {
           </Section>
         </div>
 
-        <div className='hidden md:flex md:w-4/12'>
+        <div className='mb-5 hidden md:flex md:w-4/12'>
           <GuestForm />
         </div>
       </div>
@@ -312,7 +312,7 @@ const PropertyPage = memo(function HotelPage() {
         </Typography>
       </Section>
 
-      <Sticky className='sticky md:hidden'>
+      <Sticky className='md:sticky md:hidden'>
         <div className='flex h-full w-full flex-row items-center justify-around bg-white-100 px-2 py-5'>
           <div className='flex flex-col'>
             <Typography variant='sm' weight='semibold'>

@@ -131,3 +131,14 @@
 .react-toggle--checked .react-toggle-track {
   background-color: rgb(var(--tw-color-brand-500)) !important;
 }
+/*
+.yarl__container,
+.yarl__thumbnails_container {
+  background-color: rgb(var(--color-neutral-40)) !important;
+ } */
+
+.yarl__thumbnails_vignette,
+.yarl__thumbnails_thumbnail {
+  background: transparent !important;
+  border: none !important;
+}

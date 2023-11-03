@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import Lightbox from 'yet-another-react-lightbox';
-import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 
-import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'yet-another-react-lightbox/styles.css';
 
 import { cn } from '@/lib/utils';
@@ -41,8 +39,9 @@ export default function Galery({
             onClick={() => setIndex(0)}
           />
         </div>
+
         <Grid className='hidden'>
-          {photos.slice(1).map((image, i) => (
+          {photos.slice(1, 5).map((image, i) => (
             <Image
               key={`header-image-${i}`}
               alt='...'
@@ -61,7 +60,7 @@ export default function Galery({
         open={index >= 0}
         index={index}
         close={() => setIndex(-1)}
-        plugins={[Thumbnails]}
+        plugins={[]}
       />
     </>
   );

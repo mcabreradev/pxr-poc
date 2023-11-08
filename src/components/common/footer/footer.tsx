@@ -1,10 +1,13 @@
+/* eslint-disable simple-import-sort/imports */
 'use client';
 
 import { setCookie } from 'cookies-next';
+import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useFetchProperty from '@/hooks/use-property.query';
+import { cn } from '@/lib/utils';
 
 import Icon from '@/components/icon';
 
@@ -44,6 +47,7 @@ const Layout = tw.div`
 export default function Footer() {
   const { t, i18n } = useTranslation();
   const { data: property, isLoading } = useFetchProperty();
+  const pathname = usePathname();
 
   const onClickHandler = () => {
     i18n.changeLanguage(i18n.language === LANG.EN ? LANG.ES : LANG.EN);
@@ -56,7 +60,10 @@ export default function Footer() {
 
   return (
     <>
-      <Container data-testid='test-element' className='pb-[100px] md:hidden'>
+      <Container
+        data-testid='test-element'
+        className={cn('md:hidden', { 'pb-[100px]': pathname === '/' })}
+      >
         <Item className='font-semibold'>
           <Item className='w-full'>
             <Icon variant='globe' width='18px' />

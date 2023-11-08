@@ -29,7 +29,7 @@ const Container = tw.div`
 const Wrapper = tw.div`
 `;
 
-export default function RoomTypeComponent({ className, roomtype }: Props) {
+export default function RoomTypePage({ className, roomtype }: Props) {
   const { t, i18n } = useTranslation();
 
   const {

@@ -15,8 +15,8 @@ import Typography from '@/components/typography';
 import { URL } from '@/constant';
 
 import BackButton from '@/components/common/back-button';
-import Skeleton from './room-skeleton';
-import data from './room-type.data.json';
+import data from './data.json';
+import Skeleton from './skeleton';
 
 type Props = {
   roomtype: string;

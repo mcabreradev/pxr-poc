@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import qs from 'qs';
 
-import { AUTH_COOKIE, CLIENT_CREDENTIALS } from '@/constant';
+import { AUTH_COOKIE, CLIENT_CREDENTIALS } from '@/constants';
 
 const getAuthorization = async () => {
   const data = {

@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { PROPERTY } from '@/constant';
-import { propertyId } from '@/constant/env';
+import { PROPERTY } from '@/constants';
+import { propertyId } from '@/constants/env';
 
 const fetchProperty = async () => {
   const { data } = await axios.get(`/api/property?propertyId=${propertyId}`);

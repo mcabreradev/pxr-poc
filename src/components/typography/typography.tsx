@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
-import { TAG } from '@/constant';
+import { TAG } from '@/constants';
 
 const getFontWeight = (weight: FontWeight | undefined) => {
   switch (weight) {

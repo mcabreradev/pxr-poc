@@ -5,7 +5,7 @@ import '@/styles/globals.css';
 import { fontPoppins } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
-import { siteConfig } from '@/constant/config';
+import { siteConfig } from '@/constants/config';
 import Providers from '@/providers';
 
 export const metadata = {

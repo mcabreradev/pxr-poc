@@ -12,7 +12,7 @@ import Checkbox from '@/components/checkbox';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { FORM, URL } from '@/constant';
+import { FORM, URL } from '@/constants';
 import { registerSchema } from '@/schemas';
 
 type Props = {

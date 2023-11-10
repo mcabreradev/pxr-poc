@@ -9,7 +9,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { URL } from '@/constant';
+import { URL } from '@/constants';
 import { authSchema } from '@/schemas';
 
 interface IForm {

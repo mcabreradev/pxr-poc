@@ -11,7 +11,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { FORM, URL } from '@/constant';
+import { FORM, URL } from '@/constants';
 import { loginSchema } from '@/schemas';
 
 type Props = {

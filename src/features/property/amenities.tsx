@@ -11,7 +11,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { AMENITIES } from '@/constant';
+import { AMENITIES } from '@/constants';
 
 type Props = {
   className?: string;

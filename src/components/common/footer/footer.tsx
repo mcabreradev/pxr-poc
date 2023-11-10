@@ -11,8 +11,8 @@ import { cn } from '@/lib/utils';
 
 import Icon from '@/components/icon';
 
-import { LANG } from '@/constant';
-import { siteConfig } from '@/constant/config';
+import { LANG } from '@/constants';
+import { siteConfig } from '@/constants/config';
 
 const Container = tw.footer`
   relative

@@ -12,7 +12,7 @@ import { cn, uuid } from '@/lib/utils';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 
-import { GALERY } from '@/constant';
+import { GALERY } from '@/constants';
 
 type Photo = {
   src: string;

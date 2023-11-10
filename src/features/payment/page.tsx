@@ -11,7 +11,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import NotConnected from '@/app/not-connected';
-import { ERRORS, URL } from '@/constant';
+import { ERRORS, URL } from '@/constants';
 import StripePayment from '@/features/payment/strype-payment';
 
 import SkeletonComponent from './skeleton';

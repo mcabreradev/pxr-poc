@@ -12,7 +12,7 @@ import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { QUERY } from '@/constant';
+import { QUERY } from '@/constants';
 
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';

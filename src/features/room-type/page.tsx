@@ -12,7 +12,7 @@ import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import { URL } from '@/constant';
+import { URL } from '@/constants';
 
 import BackButton from '@/components/common/back-button';
 import data from './data.json';

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { propertyId } from '@/constant/env';
+import { propertyId } from '@/constants/env';
 
 type Type = {
   propertyId: string;

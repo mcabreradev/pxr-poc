@@ -1,4 +1,6 @@
+/* eslint-disable simple-import-sort/imports */
 import { ReactNode } from 'react';
+import 'react-next-dates/dist/style.css';
 
 import '@/styles/globals.css';
 

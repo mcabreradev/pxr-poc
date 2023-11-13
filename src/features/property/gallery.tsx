@@ -149,6 +149,7 @@ export default function Gallery({
             index={index}
             close={() => setIndex(-1)}
             plugins={[]}
+            noScroll={{ disabled: true }}
           />
         </Container>
       </Drawer>

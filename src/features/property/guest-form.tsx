@@ -1,15 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { enUS } from 'date-fns/locale';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { DateRangePicker } from 'react-next-dates';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
-
-interface Props {
-  className?: string;
-}
-
-import { useState } from 'react';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
@@ -17,6 +14,9 @@ import Typography from '@/components/typography';
 
 import { selectRoomSchema } from '@/schemas';
 
+interface Props {
+  className?: string;
+}
 interface IForm {
   date: string;
   guests: string;
@@ -27,11 +27,11 @@ sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded bo
 
 export default function GuestFormComponent({ className }: Props) {
   const [isOpen, setOpen] = useState(false);
-
-  const handleDropDown = () => {
-    setOpen(!isOpen);
-  };
   const { t } = useTranslation();
+
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(new Date());
+
   const {
     register,
     handleSubmit,
@@ -44,6 +44,10 @@ export default function GuestFormComponent({ className }: Props) {
     console.log(data);
   };
 
+  const handleDropDown = () => {
+    setOpen(!isOpen);
+  };
+
   return (
     <Container className={cn(className)}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -52,18 +56,42 @@ export default function GuestFormComponent({ className }: Props) {
         </Typography>
 
         <div className='relative'>
-          <input
-            {...register('date')}
-            type='date'
-            placeholder='mar 01 - mar 07'
-            className={cn(
-              'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm placeholder:text-neutral-300 focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
-              {
-                'border-warning-500 focus:border-warning-500 focus:ring-warning-300':
-                  errors.date,
-              },
+          <DateRangePicker
+            locale={enUS}
+            startDate={startDate}
+            endDate={endDate}
+            // maxLength={5}
+            onStartDateChange={setStartDate}
+            onEndDateChange={setEndDate}
+            portalContainer={document.body}
+          >
+            {({ startDateInputProps, endDateInputProps }) => (
+              <div className='flex flex-row gap-0'>
+                <input
+                  {...register('date')}
+                  {...startDateInputProps}
+                  className={cn(
+                    'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm placeholder:text-neutral-300 focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
+                    {
+                      'border-warning-500 focus:border-warning-500 focus:ring-warning-300':
+                        errors.date,
+                    },
+                  )}
+                />
+                <input
+                  {...register('date')}
+                  {...endDateInputProps}
+                  className={cn(
+                    'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm placeholder:text-neutral-300 focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
+                    {
+                      'border-warning-500 focus:border-warning-500 focus:ring-warning-300':
+                        errors.date,
+                    },
+                  )}
+                />
+              </div>
             )}
-          />
+          </DateRangePicker>
 
           <span
             className={cn('absolute bottom-0 right-0 mb-[13px] mr-4 hidden', {

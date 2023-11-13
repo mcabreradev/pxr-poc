@@ -107,7 +107,7 @@
   }
 
   .absolute-container {
-    /* @apply absolute bottom-0 left-0 right-0 top-0 flex flex-col; */
+    @apply absolute bottom-0 left-0 right-0 top-0 flex flex-col;
   }
 
   .layout {
@@ -134,4 +134,13 @@
 /* Toogle force to brand color*/
 .react-toggle--checked .react-toggle-track {
   background-color: rgb(var(--tw-color-brand-500)) !important;
+}
+
+.react-next-dates {
+  --color-primary: rgb(var(--tw-color-success-500));
+  --color-grey: rgb(var(--tw-color-neutral-300));
+  --color-light-grey: rgb(var(--tw-color-neutral-200));
+  --color-dark-grey: rgb(var(--tw-color-neutral-400));
+  --color-white: rgb(var(--tw-color-white));
+  --color-dark: rgb(var(--tw-color-black));
 }

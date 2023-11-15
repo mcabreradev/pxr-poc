@@ -5,7 +5,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useFetchProperty from '@/hooks/use-property.query';
+import useFetchProperty from '@/queries/use-property';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';

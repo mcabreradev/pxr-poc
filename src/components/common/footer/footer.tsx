@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useFetchProperty from '@/hooks/use-property.query';
 import { cn } from '@/lib/utils';
+import useFetchProperty from '@/queries/use-property';
 
 import Icon from '@/components/icon';
 

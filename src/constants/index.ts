@@ -12,6 +12,7 @@ export const ERROR = 'error';
 export const AMENITIES = 'amenities';
 export const TOPSIGHT = 'topsight';
 export const GALERY = 'galery';
+export const RESERVATION = 'reservation';
 
 // FORM
 export const EMAIL = 'email';
@@ -52,9 +53,11 @@ export const QUERY = {
 // i18n
 export const ES = 'es';
 export const EN = 'en';
+export const FR = 'fr';
 export const LANG = {
   ES,
   EN,
+  FR,
 };
 
 // url params

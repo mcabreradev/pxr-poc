@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useRoomTypesQuery from '@/hooks/use-roomtypes.query';
-
 import Button from '@/components/button';
 import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
+
+import useRoomTypesQuery from '@/queries/use-roomtypes';
 
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-50 bg-white shadow

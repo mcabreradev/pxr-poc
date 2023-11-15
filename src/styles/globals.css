@@ -137,10 +137,10 @@
 }
 
 .react-next-dates {
-  --color-primary: rgb(var(--tw-color-success-500));
-  --color-grey: rgb(var(--tw-color-neutral-300));
-  --color-light-grey: rgb(var(--tw-color-neutral-200));
-  --color-dark-grey: rgb(var(--tw-color-neutral-400));
+  --color-primary: rgb(var(--tw-color-brand-500));
+  --color-grey: rgb(var(--tw-color-neutral-200));
+  --color-light-grey: rgb(var(--tw-color-neutral-100));
+  --color-dark-grey: rgb(var(--tw-color-neutral-300));
   --color-white: rgb(var(--tw-color-white));
   --color-dark: rgb(var(--tw-color-black));
 }

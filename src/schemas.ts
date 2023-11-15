@@ -64,7 +64,8 @@ export const forgotSchema = (t) => {
 export const selectRoomSchema = () => {
   return yup
     .object({
-      date: yup.string().required(),
+      startDate: yup.string().required(),
+      endDate: yup.string().required(),
       guests: yup.string().required(),
     })
     .required();

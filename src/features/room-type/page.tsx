@@ -2,8 +2,8 @@
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useRoomTypeQuery from '@/hooks/use-roomtype.query';
 import { cn } from '@/lib/utils';
+import useRoomTypeQuery from '@/queries/use-roomtype';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';

@@ -2,9 +2,6 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useFetchProperty from '@/hooks/use-property.query';
-import useRoomTypeQuery from '@/hooks/use-roomtype.query';
-
 import BackButton from '@/components/common/back-button';
 import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
@@ -13,6 +10,8 @@ import Typography from '@/components/typography';
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
 import StripePayment from '@/features/payment/strype-payment';
+import useFetchProperty from '@/queries/use-property';
+import useRoomTypeQuery from '@/queries/use-roomtype';
 
 import SkeletonComponent from './skeleton';
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import api from '@/lib/pegaso';
+import api from '@/lib/api-cache';
 
 export async function GET(request: NextRequest) {
   const propertyId = request.nextUrl.searchParams.get('propertyId');

@@ -55,3 +55,7 @@ export function getSrcSet({
     };
   });
 }
+
+export function p(word: string, count: number, plural?: string) {
+  return count === 1 ? word : `${word + (plural || 's')}`;
+}

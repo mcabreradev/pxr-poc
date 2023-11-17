@@ -11,6 +11,8 @@ interface ButtonProps {
   id?: string;
   type?: 'submit' | 'link' | 'button';
   onClick?: () => void;
+  onBlur?: () => void;
+  onChange?: () => void;
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
@@ -49,6 +51,8 @@ export default function Button({
   fullWidth = false,
   disabled = false,
   onClick,
+  onBlur,
+  onChange,
   href,
   icon,
   replace = true,
@@ -99,6 +103,8 @@ export default function Button({
       data-testid='test-element'
       disabled={disabled}
       onClick={onClick}
+      onBlur={onBlur}
+      onChange={onChange}
       {...props}
     >
       {icon && icon}

@@ -16,7 +16,7 @@ flex items-center justify-center
 
 export default function DropdownComponent({ className }: Props) {
   return (
-    <Container className={cn(className)} data-testid='test-element'>
+    <Container className={cn(className)} data-testid='test-dropdown-element'>
       <div className=' dropdown relative inline-block w-full text-left'>
         <Button className='md:w-full' variant='secondary' type='button'>
           <div className='flex items-center justify-between'>

@@ -5,7 +5,7 @@ import Dropdown from './';
 describe('Dropdown component', () => {
   it('should renders Dropdown component correctly', () => {
     render(<Dropdown />);
-    const element = screen.getByTestId('test-element');
+    const element = screen.getByTestId('test-dropdown-element');
     expect(element).toBeInTheDocument();
   });
 });

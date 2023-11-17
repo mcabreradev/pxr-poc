@@ -136,11 +136,17 @@
   background-color: rgb(var(--tw-color-brand-500)) !important;
 }
 
-.react-next-dates {
+/* .react-next-dates {
   --color-primary: rgb(var(--tw-color-brand-500));
   --color-grey: rgb(var(--tw-color-neutral-200));
   --color-light-grey: rgb(var(--tw-color-neutral-100));
   --color-dark-grey: rgb(var(--tw-color-neutral-300));
   --color-white: rgb(var(--tw-color-white));
   --color-dark: rgb(var(--tw-color-black));
+} */
+
+.dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  transform: translate(0) scale(1);
+  visibility: visible;
 }

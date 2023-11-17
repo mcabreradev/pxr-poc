@@ -10,6 +10,7 @@ import useLocale from '@/hooks/use-locale';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
+import Dropdown from '@/components/dropdown';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
@@ -135,6 +136,8 @@ export default function GuestFormComponent({ className }: Props) {
         <Typography variant='sm' weight='semibold' className='my-4'>
           Huéspedes
         </Typography>
+
+        <Dropdown />
 
         <hr />
 

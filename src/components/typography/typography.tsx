@@ -95,7 +95,7 @@ export type TextProps = {
   id?: string;
   variant?: TextVariant;
   weight?: FontWeight;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClick?: () => void;
   className?: string;
   tag?: TagType;

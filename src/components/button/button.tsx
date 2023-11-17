@@ -58,7 +58,7 @@ export default function Button({
   const styling = {
     primary: 'bg-green-500',
     secondary:
-      'border-[1px] border-solid border-neutral-60 bg-white text-black hover:opacity-[0.70]',
+      'border-[1px] border-solid border-neutral-60 bg-white text-black hover:opacity-[0.90]',
     alternative: 'bg-blue',
     warning: 'bg-orange',
     danger: 'bg-red',

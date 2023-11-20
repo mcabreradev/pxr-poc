@@ -34,7 +34,7 @@ export default function GuestFormComponent({ className }: Props) {
   const { locale } = useLocale();
 
   const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>();
 
   const {
     // register,
@@ -57,7 +57,7 @@ export default function GuestFormComponent({ className }: Props) {
     <Container className={cn(className)}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography variant='sm' weight='semibold' className='mb-4'>
-          Llegada - Salida
+          {`${t('checkin')} - ${t('checkout')}`}
         </Typography>
 
         <DateRangePicker
@@ -134,7 +134,7 @@ export default function GuestFormComponent({ className }: Props) {
         </span>
 
         <Typography variant='sm' weight='semibold' className='my-4'>
-          Huéspedes
+          {t('info.guest')}
         </Typography>
 
         <Dropdown />

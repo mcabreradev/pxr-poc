@@ -3,6 +3,8 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { uid } from 'uid';
 
+import { PLURAL, SINGULAR } from '@/constants';
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -58,4 +60,12 @@ export function getSrcSet({
 
 export function p(word: string, count: number, plural?: string) {
   return count === 1 ? word : `${word + (plural || 's')}`;
+}
+
+export function plural(word: string, count: number, plural?: string) {
+  return `${word} ${p(word, count, plural)}`;
+}
+
+export function ps(count: number) {
+  return count > 1 ? PLURAL : SINGULAR;
 }

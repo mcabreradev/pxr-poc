@@ -13,6 +13,8 @@ export const AMENITIES = 'amenities';
 export const TOPSIGHT = 'topsight';
 export const GALERY = 'galery';
 export const RESERVATION = 'reservation';
+export const PLURAL = 'plural';
+export const SINGULAR = 'singular';
 
 // FORM
 export const EMAIL = 'email';

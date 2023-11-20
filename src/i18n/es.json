@@ -1,4 +1,12 @@
 {
+  "adult": {
+    "plural": "adultos",
+    "singular": "adulto"
+  },
+  "baby": {
+    "plural": "bebés",
+    "singular": "bebé"
+  },
   "button": {
     "accept": "Aceptar y continuar",
     "all-amemnities": "Ver todos los servicios",
@@ -17,6 +25,12 @@
     "try-reconnect": "Intenta reconectar",
     "view-all": "Ver todo",
     "view-all-services": "Ver todos los servicios"
+  },
+  "checkin": "Entrada",
+  "checkout": "Salida",
+  "children": {
+    "plural": "niños",
+    "singular": "niño"
   },
   "date": {
     "check-in": "Fecha de entrada",
@@ -77,6 +91,7 @@
     }
   },
   "from": "de",
+  "Guest": "Huésped",
   "guest": {
     "adult": {
       "plural": "adultos",
@@ -91,6 +106,9 @@
   },
   "hide": "Ocultar",
   "info": {
+    "13years-or-more": "13 años o más",
+    "2to12": "2 a 12 años",
+    "age": "Edad",
     "better-rate": "Mejor tarifa garantizada",
     "breakfast": "Desayuno incluido",
     "cancellation-policy": "Política de cancelación",
@@ -99,6 +117,7 @@
     "extras": "Extras",
     "forgot_password": "Ingresa la dirección de correo electrónico asociada a tu cuenta y te enviaremos un enlace para restablecer tu contraseña.",
     "free-cancellation-before": "Cancelación gratuita antes de las 15:00",
+    "guest": "Huéspedes",
     "have_account": "¿Ya tienes una cuenta?",
     "no_account": "¿No tienes una cuenta?",
     "no_promo": "No quiero recibir mensajes promocionales de Paxer.",
@@ -111,7 +130,8 @@
     "taxes": "Impuestos",
     "taxes-description": "Los impuestos deben ser pagados a tu llegada al hotel",
     "taxes-details": "Detalles de los impuestos",
-    "termsandconditions": "Al seleccionar Aceptar y continuar, acepto los Términos de servicio y la Política de privacidad."
+    "termsandconditions": "Al seleccionar Aceptar y continuar, acepto los Términos de servicio y la Política de privacidad.",
+    "under-2": "menos de 2 años"
   },
   "link": {
     "language": "Español"

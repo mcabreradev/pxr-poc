@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { cn, p } from '@/lib/utils';
+import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
@@ -17,9 +18,10 @@ flex items-center justify-center
 
 export default function DropdownComponent({ className }: Props) {
   const [open, setOpen] = useState(false);
-  const [adults, setAdults] = useState(0);
-  const [childrens, setChildrens] = useState(0);
-  const [babys, setBabys] = useState(0);
+  const [adult, setAdult] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [baby, setBaby] = useState(0);
+  const { t } = useTranslation();
 
   const handleDropDown = useCallback(() => {
     setOpen(!open);
@@ -33,15 +35,15 @@ export default function DropdownComponent({ className }: Props) {
           variant='secondary'
           type='button'
           onClick={handleDropDown}
-          onBlur={handleDropDown}
         >
           <div className='flex items-center justify-between'>
             <div className='flex flex-col items-start'>
-              <Typography variant='sm2'>Huespedes</Typography>
+              <Typography variant='sm2'>{t('info.guest')}</Typography>
               <Typography variant='sm2' className='text-neutral-300'>
-                {adults > 0 && `${adults} ${p('adulto', adults)}`}
-                {childrens > 0 && `, ${childrens} ${p('niño', childrens)}`}
-                {babys > 0 && `, ${babys} ${p('bebé', babys)}`}
+                {adult > 0 && `${adult} ${t('adult.' + ps(adult))}`}
+                {children > 0 &&
+                  `, ${children} ${t('children.' + ps(children))}`}
+                {baby > 0 && `, ${baby} ${t('baby.' + ps(baby))}`}
               </Typography>
             </div>
             <Icon
@@ -63,9 +65,9 @@ export default function DropdownComponent({ className }: Props) {
           <div className='absolute right-0 w-full origin-top-right rounded-b-md border-[1px] border-solid border-neutral-60 bg-white text-black shadow-lg outline-none'>
             <div className='flex items-center justify-between px-6 py-3'>
               <div className='flex flex-col items-start'>
-                <Typography variant='sm2'>adultos</Typography>
+                <Typography variant='sm2'>{t('adult.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>
-                  13 años o más
+                  {t('info.13years-or-more')}
                 </Typography>
               </div>
               <div className='flex flex-row items-center justify-between'>
@@ -75,12 +77,12 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (adults === 0) return;
-                    setAdults(adults - 1);
+                    if (adult === 1) return;
+                    setAdult(adult - 1);
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
-                  {adults}
+                  {adult}
                 </Typography>
                 <Icon
                   variant='plus'
@@ -88,17 +90,17 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (adults === 8) return;
-                    setAdults(adults + 1);
+                    if (adult === 8) return;
+                    setAdult(adult + 1);
                   }}
                 />
               </div>
             </div>
             <div className='flex items-center justify-between px-6 py-3'>
               <div className='flex flex-col items-start'>
-                <Typography variant='sm2'>niños</Typography>
+                <Typography variant='sm2'>{t('children.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>
-                  2 a 12 años
+                  {t('info.2to12')}
                 </Typography>
               </div>
               <div className='flex flex-row items-center justify-between'>
@@ -108,12 +110,12 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (childrens === 0) return;
-                    setChildrens(childrens - 1);
+                    if (children === 0) return;
+                    setChildren(children - 1);
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
-                  {childrens}
+                  {children}
                 </Typography>
                 <Icon
                   variant='plus'
@@ -121,17 +123,17 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (childrens === 8) return;
-                    setChildrens(childrens + 1);
+                    if (children === 8) return;
+                    setChildren(children + 1);
                   }}
                 />
               </div>
             </div>
             <div className='flex items-center justify-between px-6 py-3'>
               <div className='flex flex-col items-start'>
-                <Typography variant='sm2'>bebes</Typography>
+                <Typography variant='sm2'>{t('baby.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>
-                  menos de 2 años
+                  {t('info.under-2')}
                 </Typography>
               </div>
               <div className='flex flex-row items-center justify-between'>
@@ -141,12 +143,12 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (babys === 0) return;
-                    setBabys(babys - 1);
+                    if (baby === 0) return;
+                    setBaby(baby - 1);
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
-                  {babys}
+                  {baby}
                 </Typography>
                 <Icon
                   variant='plus'
@@ -154,8 +156,8 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (babys === 8) return;
-                    setBabys(babys + 1);
+                    if (baby === 8) return;
+                    setBaby(baby + 1);
                   }}
                 />
               </div>

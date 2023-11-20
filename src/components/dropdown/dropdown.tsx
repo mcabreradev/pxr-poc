@@ -31,7 +31,7 @@ export default function DropdownComponent({ className }: Props) {
     <Container className={cn(className)} data-testid='test-dropdown-element'>
       <div className=' dropdown relative inline-block w-full text-left'>
         <Button
-          className='md:w-full'
+          className='py-[8px] md:w-full'
           variant='secondary'
           type='button'
           onClick={handleDropDown}

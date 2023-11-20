@@ -79,7 +79,7 @@ export default function Button({
       >
         <ButtonComponent
           id={id}
-          className={cn(className, styling[variant])}
+          className={cn(styling[variant], className)}
           ripple={false}
           fullWidth={fullWidth}
           data-testid='test-element'
@@ -87,7 +87,9 @@ export default function Button({
           {...props}
         >
           {icon && <span className=''>{icon}</span>}
-          <span className='flex-grow text-center'>{children}</span>
+          <span className='flex-grow cursor-pointer text-center'>
+            {children}
+          </span>
         </ButtonComponent>
       </Link>
     );
@@ -97,7 +99,7 @@ export default function Button({
     <ButtonComponent
       id={id}
       type={type}
-      className={cn(className, styling[variant])}
+      className={cn(styling[variant], className)}
       ripple={false}
       fullWidth={fullWidth}
       data-testid='test-element'
@@ -108,7 +110,7 @@ export default function Button({
       {...props}
     >
       {icon && icon}
-      <span className='flex-grow text-center'>{children}</span>
+      <span className='flex-grow cursor-pointer text-center'>{children}</span>
     </ButtonComponent>
   );
 }

@@ -1,12 +1,16 @@
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import { createQueryString } from '@/lib/url';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
+
+import { TOTAL_ADULTS, TOTAL_CHILDREN, TOTAL_INFANTS } from '@/constants';
 
 interface Props {
   className?: string;
@@ -17,11 +21,30 @@ flex items-center justify-center
 `;
 
 export default function DropdownComponent({ className }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
-  const [adult, setAdult] = useState(2);
-  const [children, setChildren] = useState(0);
-  const [baby, setBaby] = useState(0);
+  const [adult, setAdult] = useState(
+    Number(searchParams.get(TOTAL_ADULTS)) || 2,
+  );
+  const [children, setChildren] = useState(
+    Number(searchParams.get(TOTAL_CHILDREN)) || 0,
+  );
+  const [baby, setBaby] = useState(
+    Number(searchParams.get(TOTAL_INFANTS)) || 0,
+  );
   const { t } = useTranslation();
+
+  const updateQueryString = useCallback(
+    (key: string, value: number) => {
+      router.replace(
+        `${pathname}?${createQueryString(searchParams, key, value.toString())}`,
+        { scroll: false },
+      );
+    },
+    [pathname, router, searchParams],
+  );
 
   const handleDropDown = useCallback(() => {
     setOpen(!open);
@@ -79,6 +102,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (adult === 1) return;
                     setAdult(adult - 1);
+                    updateQueryString(TOTAL_ADULTS, adult - 1);
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
@@ -92,6 +116,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (adult === 8) return;
                     setAdult(adult + 1);
+                    updateQueryString(TOTAL_ADULTS, adult + 1);
                   }}
                 />
               </div>
@@ -112,6 +137,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (children === 0) return;
                     setChildren(children - 1);
+                    updateQueryString(TOTAL_CHILDREN, children - 1);
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
@@ -125,6 +151,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (children === 8) return;
                     setChildren(children + 1);
+                    updateQueryString(TOTAL_CHILDREN, children + 1);
                   }}
                 />
               </div>
@@ -145,6 +172,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (baby === 0) return;
                     setBaby(baby - 1);
+                    updateQueryString(TOTAL_INFANTS, baby - 1);
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
@@ -158,6 +186,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (baby === 8) return;
                     setBaby(baby + 1);
+                    updateQueryString(TOTAL_INFANTS, baby + 1);
                   }}
                 />
               </div>

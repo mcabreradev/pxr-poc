@@ -6,6 +6,7 @@ export const CLIENT_CREDENTIALS = 'client_credentials';
 export const PROPERTY = 'property';
 export const ROOMTYPES = 'room-types';
 export const ROOMTYPE = 'room-type';
+export const ROOMTYPE2 = 'roomtype';
 export const PAYMENT = 'payment';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
@@ -15,6 +16,20 @@ export const GALERY = 'galery';
 export const RESERVATION = 'reservation';
 export const PLURAL = 'plural';
 export const SINGULAR = 'singular';
+
+// GUESTS
+export const CHECKIN = 'checkin';
+export const CHECKOUT = 'checkout';
+export const GUESTS = 'guests';
+export const TOTAL_GUESTS = 'totalGuests';
+export const TOTAL_ADULTS = 'totalAdults';
+export const TOTAL_CHILDREN = 'totalChildren';
+export const TOTAL_INFANTS = 'totalInfants';
+export const GUEST = 'guest';
+export const RATEPLAN = 'rateplan';
+export const HOTELID = 'hot_id';
+export const PRICE_TAX = 'refPriceTax';
+export const PRICE_TOTAL = 'refPriceTotal';
 
 // FORM
 export const EMAIL = 'email';

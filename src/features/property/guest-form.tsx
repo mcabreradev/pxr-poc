@@ -1,5 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -7,13 +8,14 @@ import { DateRangePicker } from 'react-next-dates';
 import tw from 'tailwind-styled-components';
 
 import useLocale from '@/hooks/use-locale';
-import { cn } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 
 import Button from '@/components/button';
-import Dropdown from '@/components/dropdown';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
+import Dropdown from './dropdown';
 
+import { CHECKIN, CHECKOUT } from '@/constants';
 import { selectRoomSchema } from '@/schemas';
 
 interface Props {
@@ -29,12 +31,22 @@ const Container = tw.div`
 sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded border-[1px] border-solid border-neutral-50 bg-white p-5 drop-shadow-lg`;
 
 export default function GuestFormComponent({ className }: Props) {
+  // const router = useRouter();
+  // const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isOpen, setOpen] = useState(false);
   const { t } = useTranslation();
   const { locale } = useLocale();
 
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>();
+  const checkin = formatDate(searchParams.get(CHECKIN));
+  const [startDate, setStartDate] = useState<Date | null>(
+    checkin ? new Date(checkin) : new Date(),
+  );
+
+  const checkout = formatDate(searchParams.get(CHECKOUT));
+  const [endDate, setEndDate] = useState<Date | null>(
+    checkout ? new Date(checkout) : null,
+  );
 
   const {
     // register,
@@ -74,6 +86,7 @@ export default function GuestFormComponent({ className }: Props) {
               <div className='relative'>
                 <input
                   {...startDateInputProps}
+                  placeholder='dd/mm/yyyy'
                   className={cn(
                     'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm placeholder:text-neutral-300 focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
                     {
@@ -101,6 +114,7 @@ export default function GuestFormComponent({ className }: Props) {
               <div className='relative'>
                 <input
                   {...endDateInputProps}
+                  placeholder='dd/mm/yyyy'
                   className={cn(
                     'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm placeholder:text-neutral-300 focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
                     {

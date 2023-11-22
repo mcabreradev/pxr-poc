@@ -48,7 +48,7 @@ const options = {
     'path',
     'subdomain',
   ],
-  lookupQuerystring: 'lng',
+  lookupQuerystring: 'userLang',
 };
 
 i18n

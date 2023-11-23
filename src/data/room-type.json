@@ -1,0 +1,163 @@
+{
+  "accessibilityFeatures": [],
+  "addCapacity": 2,
+  "amenities": [
+    {
+      "bcomId": "12",
+      "description": "Secador de pelo",
+      "id": 57,
+      "name": "Secador de pelo",
+      "otaId": null
+    },
+    {
+      "bcomId": "174",
+      "description": "Consola de juegos - PS4",
+      "id": 69,
+      "name": "Consola de juegos - PS4",
+      "otaId": null
+    }
+  ],
+  "availability": [],
+  "bedTypes": [
+    {
+      "bcomId": null,
+      "description": "Cama individual en una habitación económica.",
+      "id": 9,
+      "name": "Single",
+      "numberOfBeds": 1,
+      "otaId": "9"
+    }
+  ],
+  "childCapacity": 0,
+  "description": null,
+  "id": 476,
+  "maxCapacity": 2,
+  "minCapacity": 1,
+  "name": {
+    "en": "Individual Sencilla",
+    "es": "Individual Sencilla"
+  },
+  "photos": [
+    {
+      "caption": null,
+      "height": null,
+      "id": 909,
+      "order": 0,
+      "place": "room",
+      "type": "jpeg",
+      "url": "nNa9Imji01.jpeg",
+      "width": null
+    },
+    {
+      "caption": null,
+      "height": null,
+      "id": 910,
+      "order": 1,
+      "place": "room",
+      "type": "jpg",
+      "url": "hs7ZVkrVpK.jpg",
+      "width": null
+    },
+    {
+      "caption": null,
+      "height": null,
+      "id": 911,
+      "order": 2,
+      "place": "room",
+      "type": "jpg",
+      "url": "SCc7QNsSuz.jpg",
+      "width": null
+    }
+  ],
+  "propertyId": 210,
+  "rooms": [
+    {
+      "cleaningStatus": "FILTHY",
+      "createdAt": "2022-07-21T04:00:00.000+00:00",
+      "id": 1658,
+      "name": "+1",
+      "observation": null,
+      "order": 99,
+      "plus": false,
+      "recordStatus": "active",
+      "roomTypeId": 476,
+      "updatedAt": "2022-07-21T04:00:00.000+00:00"
+    },
+    {
+      "cleaningStatus": "FILTHY",
+      "createdAt": "2022-07-21T04:00:00.000+00:00",
+      "id": 1659,
+      "name": "1",
+      "observation": null,
+      "order": 0,
+      "plus": true,
+      "recordStatus": "active",
+      "roomTypeId": 476,
+      "updatedAt": "2023-08-03T04:00:00.000+00:00"
+    },
+    {
+      "cleaningStatus": "FILTHY",
+      "createdAt": "2022-07-21T04:00:00.000+00:00",
+      "id": 1660,
+      "name": "2",
+      "observation": null,
+      "order": 0,
+      "plus": true,
+      "recordStatus": "active",
+      "roomTypeId": 476,
+      "updatedAt": "2023-08-03T04:00:00.000+00:00"
+    },
+    {
+      "cleaningStatus": "FILTHY",
+      "createdAt": "2022-07-21T04:00:00.000+00:00",
+      "id": 1661,
+      "name": "3",
+      "observation": null,
+      "order": 0,
+      "plus": true,
+      "recordStatus": "active",
+      "roomTypeId": 476,
+      "updatedAt": "2023-08-03T04:00:00.000+00:00"
+    },
+    {
+      "cleaningStatus": "FILTHY",
+      "createdAt": "2022-07-21T04:00:00.000+00:00",
+      "id": 1662,
+      "name": "4",
+      "observation": null,
+      "order": 0,
+      "plus": true,
+      "recordStatus": "active",
+      "roomTypeId": 476,
+      "updatedAt": "2023-08-03T04:00:00.000+00:00"
+    },
+    {
+      "cleaningStatus": "FILTHY",
+      "createdAt": "2022-07-21T04:00:00.000+00:00",
+      "id": 1663,
+      "name": "5",
+      "observation": null,
+      "order": 0,
+      "plus": true,
+      "recordStatus": "active",
+      "roomTypeId": 476,
+      "updatedAt": "2023-08-03T04:00:00.000+00:00"
+    },
+    {
+      "cleaningStatus": "FILTHY",
+      "createdAt": "2022-07-21T04:00:00.000+00:00",
+      "id": 1669,
+      "name": "5",
+      "observation": null,
+      "order": 0,
+      "plus": true,
+      "recordStatus": "active",
+      "roomTypeId": 476,
+      "updatedAt": "2023-08-03T04:00:00.000+00:00"
+    }
+  ],
+  "smokePolicy": "non_smoking",
+  "standardCapacity": 2,
+  "totalRooms": null,
+  "viewTypes": []
+}

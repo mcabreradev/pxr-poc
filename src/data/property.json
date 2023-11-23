@@ -1,0 +1,331 @@
+{
+  "amenities": [
+    {
+      "bcomId": null,
+      "description": "Sanitización de superficies de contacto frecuente",
+      "id": 1,
+      "name": "Sanitización de superficies de contacto frecuente",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "Se proveen mascarillas a los huéspedes",
+      "id": 7,
+      "name": "Se proveen mascarillas a los huéspedes",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "Purificadores de aire",
+      "id": 8,
+      "name": "Purificadores de aire",
+      "otaId": "371"
+    },
+    {
+      "bcomId": null,
+      "description": "Wifi",
+      "id": 9,
+      "name": "Wifi",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "Estacionamiento",
+      "id": 10,
+      "name": "Estacionamiento",
+      "otaId": "68"
+    },
+    {
+      "bcomId": null,
+      "description": "Cargador para vehículos electricos",
+      "id": 11,
+      "name": "Cargador para vehículos electricos",
+      "otaId": "316"
+    },
+    {
+      "bcomId": null,
+      "description": "Sauna",
+      "id": 14,
+      "name": "Sauna",
+      "otaId": "79"
+    },
+    {
+      "bcomId": null,
+      "description": "Gimnasio",
+      "id": 15,
+      "name": "Gimnasio",
+      "otaId": "35"
+    },
+    {
+      "bcomId": null,
+      "description": "Lounge/Bar",
+      "id": 23,
+      "name": "Lounge/Bar",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "Servicio de habitación 24 horas",
+      "id": 28,
+      "name": "Servicio de habitación 24 horas",
+      "otaId": "2"
+    },
+    {
+      "bcomId": null,
+      "description": "Servicio de guardería",
+      "id": 30,
+      "name": "Servicio de guardería",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "",
+      "id": 80,
+      "name": "Limpieza y desinfeccin con implementos aprobados por las organizaciones mundiales de salud",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "Guests can enjoy a nearby beach",
+      "id": 87,
+      "name": "Beach access",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "Right next to a body of water",
+      "id": 93,
+      "name": "Waterfront",
+      "otaId": null
+    },
+    {
+      "bcomId": null,
+      "description": "Guests can expect to walk up and down stairs during their stay.",
+      "id": 114,
+      "name": "Must climb stairs",
+      "otaId": null
+    }
+  ],
+  "checkInTime": "14:00:00",
+  "checkOutTime": "12:00:00",
+  "city": "",
+  "countryISO": "CL",
+  "countryName": "Chile",
+  "currencies": ["CLP", "USD"],
+  "description": {
+    "en": "test, test, test, test, test"
+  },
+  "email": "ebriceno+tets2funnelp2@paxer.com",
+  "id": 210,
+  "ivaIncluded": true,
+  "latitude": -13.525344,
+  "longitude": -71.9729088,
+  "name": "Hotel Test2 Funnel P2.0",
+  "petPolicy": [],
+  "phone": "+584166711818",
+  "photos": [
+    {
+      "caption": null,
+      "height": null,
+      "id": 636,
+      "order": 0,
+      "place": "logo_hotel",
+      "type": "jpg",
+      "url": "og7xy8QXdQ.jpg",
+      "width": null
+    },
+    {
+      "caption": null,
+      "height": null,
+      "id": 638,
+      "order": 0,
+      "place": "logo_email",
+      "type": "jpg",
+      "url": "vfxwEMGIYT.jpg",
+      "width": null
+    },
+    {
+      "caption": null,
+      "height": null,
+      "id": 639,
+      "order": 0,
+      "place": "header",
+      "type": "jpg",
+      "url": "X4wX498Vpu.jpg",
+      "width": null
+    },
+    {
+      "caption": null,
+      "height": null,
+      "id": 640,
+      "order": 1,
+      "place": "header",
+      "type": "jpg",
+      "url": "9rzUXN183R.jpg",
+      "width": null
+    },
+    {
+      "caption": null,
+      "height": null,
+      "id": 641,
+      "order": 2,
+      "place": "header",
+      "type": "jpg",
+      "url": "xJoPfK18z7.jpg",
+      "width": null
+    },
+    {
+      "caption": null,
+      "height": null,
+      "id": 642,
+      "order": 3,
+      "place": "header",
+      "type": "jpg",
+      "url": "pSzpKAldWN.jpg",
+      "width": null
+    }
+  ],
+  "postalCode": null,
+  "products": [1255, 1256, 1257],
+  "ratePlans": [295, 297, 324],
+  "reviewRatingCount": 5,
+  "reviewRatingScore": 4,
+  "reviews": [
+    {
+      "authorName": "Senna",
+      "authorPhotoURL": "https://lh3.googleusercontent.com/a-/AD_cMMRhxG9ge3oRb2GKlaDz8uJW3oJq9rQwN0s8Q792B4BfRNc=s128-c0x00000000-cc-rp-mo-ba4",
+      "authorURL": "https://www.google.com/maps/contrib/110473029068932173874/reviews",
+      "id": "137",
+      "isActive": true,
+      "isVisible": true,
+      "language": "en",
+      "rating": 5,
+      "relativeTime": "2 months ago",
+      "reviewId": "210-1685490637",
+      "source": "GOOGLE_PLACES",
+      "submittedAt": "2023-05-30 23:50:37",
+      "text": "Stayed for one night, and the hotel was perfect for this. Room was clean, kind of cold but the blankets keep you nice and warm. The shower takes a while to get warm - it did not work at first but when we called for help they were quick with the service and the water was hot in no time! They have great luggage storage and breakfast is included. There is also a working elevator to get you to the upper floors, and all are accessible for wheelchairs.\n\nOnly downside is that the shower makes quite the mess as all the different streams point to different sides because of the lime scale on the showerhead.\n\nWould recommend though!"
+    },
+    {
+      "authorName": "Carlos Leon",
+      "authorPhotoURL": "https://lh3.googleusercontent.com/a/AAcHTtd-1-y1-_MtuJUaSNmFvvF2hvGK4tbEr8grXJnSu6rM=s128-c0x00000000-cc-rp-mo",
+      "authorURL": "https://www.google.com/maps/contrib/104056446840874110589/reviews",
+      "id": "138",
+      "isActive": true,
+      "isVisible": true,
+      "language": "en",
+      "rating": 5,
+      "relativeTime": "11 months ago",
+      "reviewId": "210-1662119955",
+      "source": "GOOGLE_PLACES",
+      "submittedAt": "2022-09-02 11:59:15",
+      "text": "The attention was excellent. One time I got to the cafeteria a little late and had the last pice of a special sweet bread at the counter. When I asked if there were more they said no. After some moments they came up with a couple of them: they had gone out to buy them for me! Rooms are very comfortable and there’s wifi all the time there are computers downstairs for anyone to use. It can compare to the average European hotels. I would like to thank Maria Gracia, and ther dad, the owner, also the gentleman in charge of the cafeteria, and Mary, the housekeeper."
+    },
+    {
+      "authorName": "Tim Capo",
+      "authorPhotoURL": "https://lh3.googleusercontent.com/a/AAcHTtcMSSqPl-WU29KtrwV71NRwVtwgPDuIWNA6U6RYgXZl=s128-c0x00000000-cc-rp-mo-ba2",
+      "authorURL": "https://www.google.com/maps/contrib/108276183549444545229/reviews",
+      "id": "140",
+      "isActive": true,
+      "isVisible": true,
+      "language": "en",
+      "rating": 3,
+      "relativeTime": "4 years ago",
+      "reviewId": "210-1540642189",
+      "source": "GOOGLE_PLACES",
+      "submittedAt": "2018-10-27 12:09:49",
+      "text": "Good breakfast, friendly service. Get a room farthest from the street if noise effects your sleep"
+    },
+    {
+      "authorName": "Jessica Strickler",
+      "authorPhotoURL": "https://lh3.googleusercontent.com/a-/AD_cMMSWLytSyCgq-87AWpQeZNINQtYKVZUD4CusQJKqLXkYxxQ=s128-c0x00000000-cc-rp-mo-ba5",
+      "authorURL": "https://www.google.com/maps/contrib/102474033609669194397/reviews",
+      "id": "141",
+      "isActive": true,
+      "isVisible": true,
+      "language": "en",
+      "rating": 4,
+      "relativeTime": "5 years ago",
+      "reviewId": "210-1529965124",
+      "source": "GOOGLE_PLACES",
+      "submittedAt": "2018-06-25 22:18:44",
+      "text": "They had cozy seating in the lobby and great breakfast options. Very clean"
+    }
+  ],
+  "roomTypes": [476, 477, 478],
+  "smokingPolicy": [],
+  "state": "Vina del Mar 2520242",
+  "street": "Dos Norte 65 Plaza México, Santiago, Vina del Mar 2520242",
+  "taxes": [
+    {
+      "amount": 19,
+      "applicableMaxLos": 0,
+      "applicableMinLos": 0,
+      "applicableNightsExcluded": 0,
+      "applicableNightsMax": 0,
+      "countryCode": "CL",
+      "currencyCode": "CLP",
+      "tax_id": 1,
+      "taxFormulaBasis": "ROOM",
+      "taxFormulaPeriod": "STAY",
+      "taxFormulaType": "PERCENT"
+    }
+  ],
+  "topSights": [
+    {
+      "googlePlaceId": "ChIJa8rUi27WbZERmN-8O55wCoE",
+      "iconURL": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "id": 254,
+      "isActive": true,
+      "latitude": -13.509221,
+      "longitude": -71.9827545,
+      "name": "Muyuq Marka",
+      "photoURL": "ChIJa8rUi27WbZERmN-8O55wCoE/20230401_111828.jpg",
+      "rating": 4.8,
+      "source": "GOOGLE_PLACES",
+      "userRatingsTotal": 52
+    },
+    {
+      "googlePlaceId": "ChIJh-tbHHTWbZERHg0Out-hIAo",
+      "iconURL": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+      "id": 255,
+      "isActive": true,
+      "latitude": -13.517873,
+      "longitude": -71.984103,
+      "name": "San Francisco Plaza Hotel",
+      "photoURL": "ChIJh-tbHHTWbZERHg0Out-hIAo/_MG_1354.jpg",
+      "rating": 4.2,
+      "source": "GOOGLE_PLACES",
+      "userRatingsTotal": 678
+    },
+    {
+      "googlePlaceId": "ChIJCeSp3QzWbZERVQ2v8RF46NY",
+      "iconURL": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/worship_general-71.png",
+      "id": 256,
+      "isActive": true,
+      "latitude": -13.515118,
+      "longitude": -71.9745044,
+      "name": "Templo del San Blas",
+      "photoURL": "ChIJCeSp3QzWbZERVQ2v8RF46NY/131226441_2831317460483042_584786337093966956_o.jpg",
+      "rating": 4.4,
+      "source": "GOOGLE_PLACES",
+      "userRatingsTotal": 790
+    },
+    {
+      "googlePlaceId": "ChIJZRs3GXPWbZERG_aHStoMLn4",
+      "iconURL": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/museum-71.png",
+      "id": 257,
+      "isActive": true,
+      "latitude": -13.5149814,
+      "longitude": -71.9774494,
+      "name": "Museo de Arte Precolombino",
+      "photoURL": "ChIJZRs3GXPWbZERG_aHStoMLn4/IMG_20220514_141429323_HDR.jpg",
+      "rating": 4.6,
+      "source": "GOOGLE_PLACES",
+      "userRatingsTotal": 604
+    }
+  ],
+  "tripadvisor": true,
+  "websiteURL": "https://",
+  "whatsapp": "584126010897"
+}

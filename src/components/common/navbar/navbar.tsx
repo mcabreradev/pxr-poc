@@ -9,6 +9,7 @@ import tw from 'tailwind-styled-components';
 import { cn } from '@/lib/utils';
 
 import Icon from '@/components/icon';
+import Modal from '@/components/modal';
 import Typography from '@/components/typography';
 
 interface Props {
@@ -92,6 +93,7 @@ export default function Navbar({ className }: Props) {
           </li>
           <li className='cursor-pointer hover:underline'>
             <Typography variant='sm'>Guest Login</Typography>
+            <Modal openModal={true}>Hola</Modal>
           </li>
         </ul>
       </div>

@@ -24,5 +24,25 @@
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript", // if you are using typescript
     "typescriptreact": "javascript" // if you are using typescript with react
-  }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#33d09c",
+    "activityBar.background": "#33d09c",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#a74ad5",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#33d09c",
+    "statusBar.background": "#27a97e",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#33d09c",
+    "statusBarItem.remoteBackground": "#27a97e",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#27a97e",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#27a97e99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#27A97E"
 }

@@ -1,6 +1,7 @@
 // Auth
 export const AUTH_COOKIE = 'access_token';
 export const CLIENT_CREDENTIALS = 'client_credentials';
+export const AUTH_IFRAME = 'authIframe';
 
 // App
 export const PROPERTY = 'property';

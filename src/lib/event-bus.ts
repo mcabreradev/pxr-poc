@@ -17,7 +17,7 @@ export const getEventData = (url: string) => {
   }
 };
 
-export const subscribeEvent = (callback: (eventData: EventData) => void) => {
+export const subscribe = (callback: (eventData: EventData) => void) => {
   console.log('Se ejecuta subscribe Ecommerce');
   window.addEventListener('message', (event) => {
     // Fix: Added missing arrow function
@@ -30,9 +30,9 @@ export const subscribeEvent = (callback: (eventData: EventData) => void) => {
   });
 };
 
-export const publishEvent = (message: EventData) => {
+export const publish = (message: EventData) => {
   const origin =
-    process.env.NEXT_PUBLIC_HOST_URL_AUTH || document.location.origin;
+    process.env.NEXT_PUBLIC_SITE_HOST_URL_AUTH || document.location.origin;
   console.log('publish -> ', message.eventType);
   const iframe = document.getElementById(AUTH_IFRAME) as HTMLIFrameElement;
 

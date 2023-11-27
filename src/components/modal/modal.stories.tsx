@@ -15,8 +15,8 @@ type Story = StoryObj<typeof Modal>;
 export const Default: Story = {
   args: {
     header: 'header',
-    body: 'body',
+    children: 'body',
     footer: 'footer',
-    openModal: true,
+    isOpen: true,
   },
 };

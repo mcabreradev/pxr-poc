@@ -2,6 +2,9 @@
 export const AUTH_COOKIE = 'access_token';
 export const CLIENT_CREDENTIALS = 'client_credentials';
 export const AUTH_IFRAME = 'authIframe';
+export const SIGNIN = 'signin';
+export const SIGNOUT = 'signout';
+export const GET_SESSION = 'getsession';
 
 // App
 export const PROPERTY = 'property';

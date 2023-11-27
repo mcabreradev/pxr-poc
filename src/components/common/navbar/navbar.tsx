@@ -9,8 +9,9 @@ import tw from 'tailwind-styled-components';
 import { cn } from '@/lib/utils';
 
 import Icon from '@/components/icon';
-import Modal from '@/components/modal';
 import Typography from '@/components/typography';
+
+import SingleSignOn from './sigle-sign-on';
 
 interface Props {
   className?: string;
@@ -92,8 +93,7 @@ export default function Navbar({ className }: Props) {
             </Dropdown>
           </li>
           <li className='cursor-pointer hover:underline'>
-            <Typography variant='sm'>Guest Login</Typography>
-            <Modal openModal={true}>Hola</Modal>
+            <SingleSignOn />
           </li>
         </ul>
       </div>

@@ -147,6 +147,8 @@
     "singular": "persona"
   },
   "show": "Mostrar",
+  "signin": "Guest Login",
+  "signout": "Cerrar Sesión",
   "since": "desde",
   "status": {
     "payment-processing": "Su pago se está procesando.",

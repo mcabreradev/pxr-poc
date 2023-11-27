@@ -5,7 +5,9 @@ import Modal from './';
 describe('Modal component', () => {
   it('should renders Modal component correctly', () => {
     render(
-      <Modal header='header' body='body' footer='footer' openModal={true} />,
+      <Modal header='header' footer='footer' isOpen={true} onClose={() => null}>
+        Body
+      </Modal>,
     );
     const element = screen.getByTestId('modal-test-element');
     expect(element).toBeInTheDocument();

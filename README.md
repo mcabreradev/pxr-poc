@@ -18,7 +18,7 @@
 - 🤖 Conventional Commit Lint — Make sure you & your teammates follow conventional commit
 - 🔥 Snippets — A collection of useful snippets
 - 🗺 Site Map — Automatically generate sitemap.xml
-- 📦 pnpm - A strict and efficient alternative to npm with up to 3x faster performance
+- 📦 Bun - An all-in-one toolkit for JavaScript and TypeScript apps
 - 🈸 Internationalization (i18n)
 - 🐻 Zustand - A state management library for React
 - 🔌 React Query - Server state management
@@ -26,10 +26,10 @@
 - 💎 Storybook - A frontend workshop for building UI components and pages in isolation
 - 🙂 SVG Icons by [Iconify](https://iconify.design/)
 - 🛃 Github Actions
+- 📅 Calendar [react-next-date](https://github.com/sylcastaing/react-next-dates)
 
 TODO:
 
-- 🐳 Docker
 - Playwright / e2e - Enables reliable end-to-end testing
 
 ---

@@ -1,4 +1,12 @@
 {
+  "adult": {
+    "plural": "adults",
+    "singular": "adult"
+  },
+  "baby": {
+    "plural": "babies",
+    "singular": "baby"
+  },
   "button": {
     "accept": "Accept and continue",
     "all-amemnities": "All Amenities",
@@ -17,6 +25,12 @@
     "try-reconnect": "Try to reconnect",
     "view-all": "View all",
     "view-all-services": "View all services"
+  },
+  "checkin": "Check-in",
+  "checkout": "Check-out",
+  "children": {
+    "plural": "childrens",
+    "singular": "child"
   },
   "date": {
     "check-in": "Check-in date",
@@ -91,6 +105,9 @@
   },
   "hide": "Hide",
   "info": {
+    "13years-or-more": "13 years old or more",
+    "2to12": "2 to 12 years old",
+    "age": "Age",
     "better-rate": "Best rate guaranteed",
     "breakfast": "Breakfast included",
     "cancellation-policy": "Cancellation policy",
@@ -99,6 +116,7 @@
     "extras": "Additional",
     "forgot_password": "Enter the email address associated with your account and we'll send you a link to reset your password.",
     "free-cancellation-before": "Free cancellation before 3:00 p.m.",
+    "guest": "Guests",
     "have_account": "¿Already have an account?",
     "no_account": "¿Don't have an account?",
     "no_promo": "I don't want to receive promotions from Paxer",
@@ -111,7 +129,8 @@
     "taxes": "Taxes",
     "taxes-description": "Taxes must be paid upon arrival at the hotel",
     "taxes-details": "Taxes details",
-    "termsandconditions": "By selecting Accept and continue, I agree to the Terms of Service and Privacy Policy."
+    "termsandconditions": "By selecting Accept and continue, I agree to the Terms of Service and Privacy Policy.",
+    "under-2": "less than 2 years"
   },
   "link": {
     "language": "English"
@@ -127,6 +146,8 @@
     "singular": "person"
   },
   "show": "Show",
+  "signin": "Guest Login",
+  "signout": "Log Out",
   "since": "since",
   "status": {
     "payment-processing": "Your payment is processing.",

@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
-import { TAG } from '@/constant';
+import { TAG } from '@/constants';
 
 const getFontWeight = (weight: FontWeight | undefined) => {
   switch (weight) {
@@ -92,9 +92,10 @@ export type FontWeight =
 type TagType = 'span' | 'div' | 'label' | string;
 
 export type TextProps = {
+  id?: string;
   variant?: TextVariant;
   weight?: FontWeight;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClick?: () => void;
   className?: string;
   tag?: TagType;
@@ -122,8 +123,9 @@ const StyledLabel = tw.label<TextProps>`
 `;
 
 const Typography = ({
+  id,
   className,
-  variant = undefined,
+  variant = 'sm',
   weight = undefined,
   children,
   tag = TAG.DIV,
@@ -145,6 +147,7 @@ const Typography = ({
   if (tag === TAG.LABEL) {
     return (
       <StyledLabel
+        id={id}
         variant={variant}
         weight={weight}
         className={className}
@@ -157,6 +160,7 @@ const Typography = ({
 
   return (
     <StyledDiv
+      id={id}
       variant={variant}
       weight={weight}
       className={className}

@@ -1,13 +1,13 @@
 {
   "css.validate": false,
-  "editor.formatOnSave": true,
-  "editor.tabSize": 2,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
-    "source.organizeImports": true,
     "source.fixAll.eslint": true,
-    "source.fixAll.prettier": true
+    "source.fixAll.prettier": true,
+    "source.organizeImports": true
   },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
   // Tailwind CSS Autocomplete, add more if used in projects
   "tailwindCSS.classAttributes": [
     "class",
@@ -15,7 +15,6 @@
     "classNames",
     "containerClassName"
   ],
-  "typescript.preferences.importModuleSpecifier": "non-relative",
   "tailwindCSS.experimental.classRegex": [
     "tw\\(.*?\\).*?`([^`]*)", // tw`...`
     "tw\\.[^`]+`([^`]*)`", // tw.xxx<xxx>`...`
@@ -24,5 +23,6 @@
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript", // if you are using typescript
     "typescriptreact": "javascript" // if you are using typescript with react
-  }
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }

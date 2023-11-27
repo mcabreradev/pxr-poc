@@ -2,22 +2,21 @@
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useRoomTypeQuery from '@/hooks/use-roomtype.query';
 import { cn } from '@/lib/utils';
+import useRoomTypeQuery from '@/queries/use-roomtype';
 
 import Button from '@/components/button';
-import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import { URL } from '@/constant';
+import { URL } from '@/constants';
 
 import BackButton from '@/components/common/back-button';
-import Skeleton from './room-skeleton';
-import data from './room-type.data.json';
+import data from './data.json';
+import Skeleton from './skeleton';
 
 type Props = {
   roomtype: string;
@@ -30,7 +29,7 @@ const Container = tw.div`
 const Wrapper = tw.div`
 `;
 
-export default function RoomTypeComponent({ className, roomtype }: Props) {
+export default function RoomTypePage({ className, roomtype }: Props) {
   const { t, i18n } = useTranslation();
 
   const {
@@ -99,7 +98,7 @@ export default function RoomTypeComponent({ className, roomtype }: Props) {
                 </div>
               ))}
             </div>
-            <Button className='w-full font-semibold' variant='secondary'>
+            <Button className='font-semibold' variant='secondary'>
               {t('button.view-all-services')}
             </Button>
           </section>
@@ -251,7 +250,7 @@ export default function RoomTypeComponent({ className, roomtype }: Props) {
 
             <div className='flex flex-wrap justify-between py-3'>
               <Button
-                className='w-full font-semibold'
+                className='font-semibold'
                 variant='primary'
                 type='link'
                 href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}
@@ -312,8 +311,6 @@ export default function RoomTypeComponent({ className, roomtype }: Props) {
             </div>
           </section>
         </Wrapper>
-
-        <Footer />
       </div>
     </Container>
   );

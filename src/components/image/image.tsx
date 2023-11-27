@@ -10,6 +10,7 @@ type Props = {
     blur?: string;
   };
   alt: string;
+  onClick?: () => void;
 } & (
   | { width: string | number; height: string | number }
   | { fill: boolean; width?: string | number; height?: string | number }
@@ -30,6 +31,7 @@ export default function Image({
   className,
   classNames,
   fill = false,
+  onClick,
   ...rest
 }: Props) {
   const [status, setStatus] = React.useState(
@@ -42,6 +44,7 @@ export default function Image({
       style={!widthIsSet ? { width: `${width}px` } : undefined}
       className={cn('w-full', className)}
       data-testid='test-element'
+      onClick={onClick}
     >
       <NextImage
         className={cn(

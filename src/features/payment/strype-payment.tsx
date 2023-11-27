@@ -3,8 +3,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { memo } from 'react';
 
-import useStripePaymentIntent from '@/hooks/use-stripe.query';
 import { uuid } from '@/lib/utils';
+import useStripePaymentIntent from '@/queries/use-stripe';
 
 import CheckoutForm from '@/features/payment/checkout-form';
 

@@ -4,6 +4,7 @@
 
 :root {
   --font-sans: 'Poppins', sans-serif;
+  --tw-color-neutral-40: 248 249 250;
   --tw-color-neutral-50: 234 236 240;
   --tw-color-neutral-60: 230 230 230;
   --tw-color-neutral-100: 189 189 189;
@@ -23,6 +24,7 @@
   --tw-color-black: 33 37 41;
   --tw-color-white: 255 255 255;
 
+  --color-neutral-40: var(--tw-color-neutral-40); /* #f8f9fa */
   --color-neutral-50: var(--tw-color-neutral-50); /* #eaecf0 */
   --color-neutral-60: var(--tw-color-neutral-60); /* #E6E6E6 */
   --color-neutral-100: var(--tw-color-neutral-100); /* #bdbdbd */
@@ -85,10 +87,14 @@
   }
   /* #endregion  /**======== Typography =========== */
 
-  .layout {
+  /* .layout {
+    @apply container mx-auto;
+  } */
+
+  .layout2 {
     /* 1100px */
-    max-width: 68.75rem;
-    @apply mx-auto w-11/12;
+    max-width: 60rem;
+    @apply mx-auto w-7/12;
   }
 
   .bg-dark a.custom-link {
@@ -102,6 +108,14 @@
 
   .absolute-container {
     @apply absolute bottom-0 left-0 right-0 top-0 flex flex-col;
+  }
+
+  .layout {
+    @apply mx-auto w-full max-w-[68.75rem] md:w-[90%];
+  }
+
+  .opacity-effect {
+    @apply opacity-100 duration-500 hover:opacity-90;
   }
 }
 
@@ -121,3 +135,18 @@
 .react-toggle--checked .react-toggle-track {
   background-color: rgb(var(--tw-color-brand-500)) !important;
 }
+
+/* .react-next-dates {
+  --color-primary: rgb(var(--tw-color-brand-500));
+  --color-grey: rgb(var(--tw-color-neutral-200));
+  --color-light-grey: rgb(var(--tw-color-neutral-100));
+  --color-dark-grey: rgb(var(--tw-color-neutral-300));
+  --color-white: rgb(var(--tw-color-white));
+  --color-dark: rgb(var(--tw-color-black));
+} */
+
+/* .dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  transform: translate(0) scale(1);
+  visibility: visible;
+} */

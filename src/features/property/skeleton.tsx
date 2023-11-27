@@ -1,6 +1,6 @@
 export default function PropertySkeletonComponent() {
   return (
-    <div className='flex h-full animate-pulse flex-col items-center justify-center'>
+    <div className='layout flex h-full animate-pulse flex-col items-center justify-center'>
       <div className='h-64 w-full bg-gray-300' />
       <div className='mx-auto w-full p-4'>
         <h1 className='mt-4 h-2 w-10/12 rounded-lg bg-gray-200' />
@@ -34,7 +34,7 @@ export default function PropertySkeletonComponent() {
         </div>
       </div>
 
-      <div className='my-10 h-10 w-8/12 rounded-lg bg-gray-200' />
+      <div className='my-10 h-10 w-8/12  rounded-lg bg-gray-200' />
     </div>
   );
 }

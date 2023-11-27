@@ -26,7 +26,81 @@
     "whatsapp": "+1 123 456 7890"
   },
   "description": "Ad consequat elit adipisicing labore et veniam voluptate ullamco nostrud eiusmod. In reprehenderit quis magna velit ex. Ut eu laboris magna nisi cillum voluptate velit deserunt officia nulla consequat do officia. Aute sunt deserunt reprehenderit eu nostrud nisi ullamco veniam aliqua enim. Incididunt irure aliqua elit tempor commodo pariatur minim voluptate ullamco et duis ut. Pariatur duis sit nostrud commodo. Aliquip enim do ea commodo irure deserunt cupidatat.",
-  "image": "/images/hotel/room.webp",
+  "image": "/images/hotel/room1.webp",
+  "images": [
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room1.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room2.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room3.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room4.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room5.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room6.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room1.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room2.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room3.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room4.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room5.webp",
+      "width": 980
+    },
+    {
+      "alt": "image",
+      "height": 551,
+      "src": "/images/hotel/room6.webp",
+      "width": 980
+    }
+  ],
   "map": {
     "lat": -23.744,
     "lng": -65.495,

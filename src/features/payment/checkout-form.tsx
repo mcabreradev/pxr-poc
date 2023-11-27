@@ -12,7 +12,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { PAYMENT_STATUS } from '@/constant';
+import { PAYMENT_STATUS } from '@/constants';
 
 import data from './data.json';
 
@@ -183,7 +183,7 @@ export default function CheckoutForm() {
           <Button
             disabled={isLoading || !stripe || !elements}
             id='submit'
-            className='w-full'
+            className=''
           >
             {isLoading ? (
               <Icon

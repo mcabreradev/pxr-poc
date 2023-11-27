@@ -11,7 +11,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { AMENITIES } from '@/constant';
+import { AMENITIES } from '@/constants';
 
 type Props = {
   className?: string;
@@ -59,7 +59,7 @@ export default function PropertyAmenities({ className, amenities }: Props) {
   return (
     <div className={cn(className)} data-testid='test-element'>
       <Button
-        className='w-full font-semibold'
+        className='font-semibold'
         variant='secondary'
         onClick={openDrawer}
       >

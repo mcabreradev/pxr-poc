@@ -11,6 +11,8 @@ interface ButtonProps {
   id?: string;
   type?: 'submit' | 'link' | 'button';
   onClick?: () => void;
+  onBlur?: () => void;
+  onChange?: () => void;
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
@@ -32,7 +34,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   cursor-pointer flex items-center justify-center flex-row
   shadow-none hover:shadow-none py-[10px] px-6 rounded
   text-[14px] font-normal font-poppins normal-case
-  w-auto h-auto
+  w-full md:w-auto h-auto
   ${({ fullWidth }) => fullWidth && 'w-full'}
   ${({ disabled }) =>
     disabled
@@ -49,6 +51,8 @@ export default function Button({
   fullWidth = false,
   disabled = false,
   onClick,
+  onBlur,
+  onChange,
   href,
   icon,
   replace = true,
@@ -58,7 +62,7 @@ export default function Button({
   const styling = {
     primary: 'bg-green-500',
     secondary:
-      'border-[1px] border-solid border-neutral-60 bg-white text-black hover:opacity-[0.70]',
+      'border-[1px] border-solid border-neutral-60 bg-white text-black hover:opacity-[0.90]',
     alternative: 'bg-blue',
     warning: 'bg-orange',
     danger: 'bg-red',
@@ -75,7 +79,7 @@ export default function Button({
       >
         <ButtonComponent
           id={id}
-          className={cn(className, styling[variant])}
+          className={cn(styling[variant], className)}
           ripple={false}
           fullWidth={fullWidth}
           data-testid='test-element'
@@ -83,7 +87,9 @@ export default function Button({
           {...props}
         >
           {icon && <span className=''>{icon}</span>}
-          <span className='flex-grow text-center'>{children}</span>
+          <span className='flex-grow cursor-pointer text-center'>
+            {children}
+          </span>
         </ButtonComponent>
       </Link>
     );
@@ -93,16 +99,18 @@ export default function Button({
     <ButtonComponent
       id={id}
       type={type}
-      className={cn(className, styling[variant])}
+      className={cn(styling[variant], className)}
       ripple={false}
       fullWidth={fullWidth}
       data-testid='test-element'
       disabled={disabled}
       onClick={onClick}
+      onBlur={onBlur}
+      onChange={onChange}
       {...props}
     >
       {icon && icon}
-      <span className='flex-grow text-center'>{children}</span>
+      <span className='flex-grow cursor-pointer text-center'>{children}</span>
     </ButtonComponent>
   );
 }

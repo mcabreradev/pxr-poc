@@ -1,16 +1,39 @@
 // Auth
 export const AUTH_COOKIE = 'access_token';
 export const CLIENT_CREDENTIALS = 'client_credentials';
+export const AUTH_IFRAME = 'authIframe';
+export const SIGNIN = 'signin';
+export const SIGNOUT = 'signout';
+export const GET_SESSION = 'getsession';
 
 // App
 export const PROPERTY = 'property';
 export const ROOMTYPES = 'room-types';
 export const ROOMTYPE = 'room-type';
+export const ROOMTYPE2 = 'roomtype';
 export const PAYMENT = 'payment';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
 export const AMENITIES = 'amenities';
 export const TOPSIGHT = 'topsight';
+export const GALERY = 'galery';
+export const RESERVATION = 'reservation';
+export const PLURAL = 'plural';
+export const SINGULAR = 'singular';
+
+// GUESTS
+export const CHECKIN = 'checkin';
+export const CHECKOUT = 'checkout';
+export const GUESTS = 'guests';
+export const TOTAL_GUESTS = 'totalGuests';
+export const TOTAL_ADULTS = 'totalAdults';
+export const TOTAL_CHILDREN = 'totalChildren';
+export const TOTAL_INFANTS = 'totalInfants';
+export const GUEST = 'guest';
+export const RATEPLAN = 'rateplan';
+export const HOTELID = 'hot_id';
+export const PRICE_TAX = 'refPriceTax';
+export const PRICE_TOTAL = 'refPriceTotal';
 
 // FORM
 export const EMAIL = 'email';
@@ -51,9 +74,11 @@ export const QUERY = {
 // i18n
 export const ES = 'es';
 export const EN = 'en';
+export const FR = 'fr';
 export const LANG = {
   ES,
   EN,
+  FR,
 };
 
 // url params
@@ -81,3 +106,5 @@ export const PAYMENT_STATUS = {
   REQUIRE_PAYMENT_METHOD: 'requires_payment_method',
   REQUIER_INTENT_CLIENT_SECRET: 'payment_intent_client_secret',
 };
+
+export const breakpoints = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];

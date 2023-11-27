@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useRoomTypesQuery from '@/hooks/use-roomtypes.query';
-
 import Button from '@/components/button';
 import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
+
+import useRoomTypesQuery from '@/queries/use-roomtypes';
 
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-50 bg-white shadow
@@ -25,7 +25,7 @@ export default function RoomSwiper() {
   }
 
   return (
-    <Swiper>
+    <Swiper className='md:w-[570px]' withArrow={true} scroll={300}>
       {roomtypes.map((room, index) => (
         <Rooms key={`holtel-room-${index}`}>
           <Image
@@ -34,6 +34,7 @@ export default function RoomSwiper() {
             width={271}
             height={235}
             className='w-full object-cover'
+            title={t('title.room')}
           />
           <div className='p-4'>
             <Typography variant='h3' weight='medium' className='pb-4'>
@@ -53,7 +54,7 @@ export default function RoomSwiper() {
             <Button
               type='link'
               href={`/room-type/${room.id}`}
-              className='mb-4 w-full'
+              className='mb-4 md:w-full'
               scroll={true}
             >
               {t('button.reserve')}

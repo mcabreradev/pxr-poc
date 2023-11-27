@@ -60,3 +60,13 @@ export const forgotSchema = (t) => {
     })
     .required();
 };
+
+export const selectRoomSchema = () => {
+  return yup
+    .object({
+      startDate: yup.string().required(),
+      endDate: yup.string().required(),
+      guests: yup.string().required(),
+    })
+    .required();
+};

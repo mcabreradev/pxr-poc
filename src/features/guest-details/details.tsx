@@ -3,16 +3,16 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useFetchProperty from '@/hooks/use-property.query';
-import useRoomTypeQuery from '@/hooks/use-roomtype.query';
 import { cn } from '@/lib/utils';
+import useFetchProperty from '@/queries/use-property';
+import useRoomTypeQuery from '@/queries/use-roomtype';
 
 import BackButton from '@/components/common/back-button';
 import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { QUERY } from '@/constant';
+import { QUERY } from '@/constants';
 
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { PAYMENT, PROPERTY } from '@/constant';
+import { PAYMENT, PROPERTY } from '@/constants';
 
 import { Payment } from '@/types';
 

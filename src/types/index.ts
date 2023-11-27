@@ -100,3 +100,16 @@ export type Currency = {
   monId: number;
   code: string;
 };
+
+export type User = {
+  sub: string;
+  email: string;
+  family_name: string;
+  given_name: string;
+  email_verified: boolean;
+};
+
+export type EventData = {
+  eventType: 'signin' | 'signout' | 'getsession';
+  data: User | null;
+};

@@ -12,7 +12,7 @@ import Checkbox from '@/components/checkbox';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { FORM, URL } from '@/constant';
+import { FORM, URL } from '@/constants';
 import { registerSchema } from '@/schemas';
 
 type Props = {
@@ -338,7 +338,7 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
         </Typography>
 
         <Button
-          className='mt-3 w-full font-semibold'
+          className='mt-3 font-semibold'
           variant='primary'
           type='submit'
           disabled={isSubmitting}

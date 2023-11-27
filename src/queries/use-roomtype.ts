@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { ROOMTYPE } from '@/constant';
-import { propertyId } from '@/constant/env';
+import { ROOMTYPE } from '@/constants';
+import { propertyId } from '@/constants/env';
 
 const fetchRoomType = async (roomtype: string) => {
   const { data } = await axios.get(

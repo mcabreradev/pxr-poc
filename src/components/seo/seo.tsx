@@ -5,7 +5,7 @@ import { openGraph } from '@/lib/helper';
 
 import useSeo from '@/store/use-seo.store';
 
-import { siteConfig } from '@/constant/config';
+import { siteConfig } from '@/constants/config';
 
 const defaultMeta = {
   title: siteConfig.title,

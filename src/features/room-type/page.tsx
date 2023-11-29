@@ -48,7 +48,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
 
   return (
     <Container
-      className={cn('absolute-container', className)}
+      className={cn('sm:absolute-container md:relative', className)}
       data-testid='test-element'
       datatype={room}
     >

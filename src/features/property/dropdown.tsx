@@ -78,12 +78,10 @@ export default function DropdownComponent({ className }: Props) {
         </Button>
 
         <div
-          className={cn(
-            'dropdown-menu origin-top-right transition-all duration-300',
-            {
-              'scale-95 opacity-0': !open,
-            },
-          )}
+          className={cn('origin-top-right transition-all duration-300', {
+            'block scale-95 opacity-0': !open,
+            hidden: !open,
+          })}
         >
           <div className='absolute right-0 w-full origin-top-right rounded-b-md border-[1px] border-solid border-neutral-60 bg-white text-black shadow-lg outline-none'>
             <div className='flex items-center justify-between px-6 py-3'>

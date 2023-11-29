@@ -1,10 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable simple-import-sort/imports */
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import useEventBus from '@/hooks/use-event-bus';
 import useHostUrl from '@/hooks/use-hosturl';
-import { getEventData, publish, subscribe } from '@/lib/event-bus';
 
 import Modal from '@/components/modal';
 import Typography from '@/components/typography';
@@ -13,9 +11,10 @@ import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 
 export default function SingleSignOn() {
   const { t } = useTranslation();
-  const { urlStatus, urlSignin } = useHostUrl();
   const [user, setUser] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { urlStatus, urlSignin } = useHostUrl();
+  const { getEventData, subscribe, publish } = useEventBus();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -44,15 +43,13 @@ export default function SingleSignOn() {
   useEffect(() => {
     subscribe(handlerEvent);
     getEventData(urlStatus);
-  }, [handlerEvent, urlStatus]);
+  }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
   if (user) {
     return (
-      <>
-        <Typography variant='sm' onClick={signOut}>
-          {t('signout')}
-        </Typography>
-      </>
+      <Typography variant='sm' onClick={signOut}>
+        {t('signout')}
+      </Typography>
     );
   }
 

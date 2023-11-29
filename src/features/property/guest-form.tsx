@@ -35,7 +35,6 @@ export default function GuestFormComponent({ className }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isOpen, setOpen] = useState(false);
   const { t } = useTranslation();
   const { locale } = useLocale();
 
@@ -61,10 +60,6 @@ export default function GuestFormComponent({ className }: Props) {
     // eslint-disable-next-line no-console
     console.log(data);
   }, []);
-
-  const handleDropDown = useCallback(() => {
-    setOpen(!isOpen);
-  }, [isOpen]);
 
   const updateQueryString = useCallback(
     (key: string, value: string) => {
@@ -181,10 +176,10 @@ export default function GuestFormComponent({ className }: Props) {
         </Typography>
 
         <Button
-          type='submit'
+          type='button'
           scroll={true}
           className='mb-4 md:w-full'
-          onClick={handleDropDown}
+          onClick={() => null}
         >
           {t('button.choose-room')}
         </Button>

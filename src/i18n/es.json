@@ -76,7 +76,8 @@
       "max": "La contraseña debe ser menor a 50 caracteres",
       "min": "La contraseña debe ser mayor a 6 caracteres",
       "placeholder": "Ingresa tu contraseña",
-      "required": "La contraseña es requerida"
+      "required": "La contraseña es requerida",
+      "error": "La contraseña es incorrecta"
     },
     "password_confirmation": {
       "label": "Confirme su Contraseña",

@@ -58,7 +58,10 @@ export default function DetailsComponent({ roomtype, action }: Props) {
   }
 
   return (
-    <Container data-testid='test-element' className={cn('absolute-container')}>
+    <Container
+      data-testid='test-element'
+      className={cn('sm:absolute-container md:relative')}
+    >
       <BackButton href={`/room-type/${roomtype}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>

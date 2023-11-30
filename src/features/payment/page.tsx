@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import { cn } from '@/lib/utils';
+
 import BackButton from '@/components/common/back-button';
 import Footer from '@/components/common/footer';
 import Icon from '@/components/icon';
@@ -55,7 +57,10 @@ export default function PaymentFeature({ roomtype, action }: Props) {
   }
 
   return (
-    <Container data-testid='test-element' className='absolute-container'>
+    <Container
+      data-testid='test-element'
+      className={cn('sm:absolute-container md:relative')}
+    >
       <BackButton href={`/room-type/${roomtype}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>

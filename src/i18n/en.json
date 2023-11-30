@@ -70,6 +70,7 @@
       "required": "Name is required"
     },
     "password": {
+      "error": "Password is invalid",
       "invalid": "Password is invalid",
       "label": "Password",
       "match": "Passwords don't match",

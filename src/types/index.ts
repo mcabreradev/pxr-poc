@@ -102,14 +102,16 @@ export type Currency = {
 };
 
 export type User = {
-  sub: string;
-  email: string;
-  family_name: string;
-  given_name: string;
-  email_verified: boolean;
+  sub?: string;
+  email?: string;
+  family_name?: string;
+  given_name?: string;
+  email_verified?: boolean;
+  password?: string;
+  err?: unknown;
 };
 
 export type EventData = {
-  eventType: 'signin' | 'signout' | 'getsession';
+  eventType: 'signin' | 'signinModal' | 'signout' | 'getsession';
   data: User | null;
 };

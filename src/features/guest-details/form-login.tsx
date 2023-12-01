@@ -14,6 +14,8 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import useUserStore from '@/store/use-user.store';
+
 import { FORM, SIGNIN, URL } from '@/constants';
 import { loginSchema } from '@/schemas';
 
@@ -36,6 +38,7 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
   const [type, setType] = useState(FORM.PASSWORD);
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
+  const { user } = useUserStore();
 
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
@@ -79,6 +82,10 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
     subscribe(handlerEvent);
     getEventData(urlStatus);
   }, [getEventData, handlerEvent, subscribe, urlStatus]);
+
+  useEffect(() => {
+    if (user) true;
+  }, [user]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>

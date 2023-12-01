@@ -7,6 +7,8 @@ import useHostUrl from '@/hooks/use-hosturl';
 import Modal from '@/components/modal';
 import Typography from '@/components/typography';
 
+import useUserStore from '@/store/use-user.store';
+
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 
 export default function SingleSignOn() {
@@ -15,23 +17,29 @@ export default function SingleSignOn() {
   const [modalOpen, setModalOpen] = useState(false);
   const { urlStatus, urlSignin } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
+  const { addUser } = useUserStore();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const handlerEvent = useCallback((eventData) => {
-    const { eventType, data } = eventData;
+  const handlerEvent = useCallback(
+    (eventData) => {
+      const { eventType, data } = eventData;
 
-    if (!eventType) return;
+      if (!eventType) return;
 
-    if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
-      closeModal();
-      setUser(data);
-    }
-    if (eventType === SIGNOUT) {
-      setUser(null);
-    }
-  }, []);
+      if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
+        closeModal();
+        setUser(data);
+        addUser(data);
+      }
+      if (eventType === SIGNOUT) {
+        setUser(null);
+        addUser(null);
+      }
+    },
+    [addUser],
+  );
 
   const signOut = () => {
     publish({

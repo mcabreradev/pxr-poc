@@ -112,6 +112,6 @@ export type User = {
 };
 
 export type EventData = {
-  eventType: 'signin' | 'signinModal' | 'signout' | 'getsession';
-  data: User | null;
+  eventType: 'signin' | 'signinModal' | 'signout' | 'getsession' | 'checkuser';
+  data: unknown | null;
 };

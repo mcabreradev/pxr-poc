@@ -6,6 +6,7 @@ export const SIGNIN = 'signin';
 export const SIGNINMODAL = 'signinModal';
 export const SIGNOUT = 'signout';
 export const GET_SESSION = 'getsession';
+export const CHECKUSER = 'checkuser';
 
 // App
 export const PROPERTY = 'property';

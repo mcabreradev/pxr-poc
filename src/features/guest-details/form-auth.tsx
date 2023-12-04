@@ -1,16 +1,20 @@
+/* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useEventBus from '@/hooks/use-event-bus';
+import useHostUrl from '@/hooks/use-hosturl';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { URL } from '@/constants';
+import { CHECKUSER, URL } from '@/constants';
 import { authSchema } from '@/schemas';
+import { useCallback, useEffect } from 'react';
 
 interface IForm {
   email: string;
@@ -27,17 +31,45 @@ const Container = tw.div`
 export default function FormAuthComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
 
+  const { urlStatus } = useHostUrl();
+  const { getEventData, subscribe, publish } = useEventBus();
+
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<IForm>({
     resolver: yupResolver(authSchema(t)),
   });
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+    publish({
+      eventType: CHECKUSER,
+      data,
+    });
   };
+
+  const handlerEvent = useCallback(
+    (eventData) => {
+      const { eventType, data } = eventData;
+
+      if (!eventType || eventType !== CHECKUSER) return;
+
+      if (data.err) {
+        setError('email', {
+          type: 'manual',
+          message: data.err,
+        });
+      }
+    },
+    [setError],
+  );
+
+  useEffect(() => {
+    subscribe(handlerEvent);
+    getEventData(urlStatus);
+  }, [getEventData, handlerEvent, subscribe, urlStatus]);
+
   return (
     <Container className={cn(className)} data-testid='test-element'>
       <Typography variant='h2' weight='normal'>

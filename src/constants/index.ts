@@ -23,6 +23,8 @@ export const RESERVATION = 'reservation';
 export const PLURAL = 'plural';
 export const SINGULAR = 'singular';
 export const INVENTORY = 'inventory';
+export const AVAILABILITY = 'availability';
+export const RATES = 'rates';
 
 // GUESTS
 export const CHECKIN = 'checkin';

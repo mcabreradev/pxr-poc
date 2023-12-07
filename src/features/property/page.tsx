@@ -6,6 +6,7 @@ import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useFetchAvailability from '@/queries/use-availabity';
 import useFetchProperty from '@/queries/use-property';
 
 import Button from '@/components/button';
@@ -15,7 +16,6 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import useFetchInventory from '@/queries/use-inventory';
 import PropertyAmenities from './amenities';
 import data from './data.json';
 import Gallery from './gallery';
@@ -41,12 +41,7 @@ const PropertyPage = memo(function HotelPage() {
   const checkin = searchParams.get('checkin');
   const checkout = searchParams.get('checkout');
 
-  const {
-    isLoading: isLoadingInventory,
-    isError: isErrorInventory,
-    refetch,
-    data: inventory,
-  } = useFetchInventory({
+  const { refetch, data: inventory } = useFetchAvailability({
     checkin,
     checkout,
   });
@@ -56,11 +51,11 @@ const PropertyPage = memo(function HotelPage() {
     refetch();
   }, [checkin, checkout, refetch, inventory]);
 
-  if (isLoading || isLoadingInventory) {
+  if (isLoading) {
     return <Skeleton />;
   }
 
-  if (isError || isErrorInventory) {
+  if (isError) {
     return <span>Error</span>;
   }
 

@@ -77,9 +77,19 @@ export default function GuestFormComponent({ className }: Props) {
   }, [checkin, startDate, updateQueryString]);
 
   useEffect(() => {
+    if (!startDate) return;
+    updateQueryString(CHECKIN, reFormatDate(startDate?.toString()) || '');
+  }, [startDate, updateQueryString]);
+
+  useEffect(() => {
     if (!checkout) return;
     updateQueryString(CHECKOUT, reFormatDate(endDate?.toString()) || '');
   }, [checkout, endDate, updateQueryString]);
+
+  useEffect(() => {
+    if (!endDate) return;
+    updateQueryString(CHECKOUT, reFormatDate(endDate?.toString()) || '');
+  }, [endDate, updateQueryString]);
 
   return (
     <Container className={cn(className)}>

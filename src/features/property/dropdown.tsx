@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -45,6 +45,11 @@ export default function DropdownComponent({ className }: Props) {
     },
     [pathname, router, searchParams],
   );
+
+  useEffect(() => {
+    if (!adult) return;
+    updateQueryString(TOTAL_ADULTS, adult);
+  }, [adult, updateQueryString]);
 
   const handleDropDown = useCallback(() => {
     setOpen(!open);

@@ -1,7 +1,8 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
-import { memo } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -14,6 +15,7 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import useFetchInventory from '@/queries/use-inventory';
 import PropertyAmenities from './amenities';
 import data from './data.json';
 import Gallery from './gallery';
@@ -33,13 +35,32 @@ const Row = tw.div`
 
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
+  const searchParams = useSearchParams();
   const { isLoading, isError, data: property } = useFetchProperty();
 
-  if (isLoading) {
+  const checkin = searchParams.get('checkin');
+  const checkout = searchParams.get('checkout');
+
+  const {
+    isLoading: isLoadingInventory,
+    isError: isErrorInventory,
+    refetch,
+    data: inventory,
+  } = useFetchInventory({
+    checkin,
+    checkout,
+  });
+
+  useEffect(() => {
+    if (!checkin || !checkout) return;
+    refetch();
+  }, [checkin, checkout, refetch, inventory]);
+
+  if (isLoading || isLoadingInventory) {
     return <Skeleton />;
   }
 
-  if (isError) {
+  if (isError || isErrorInventory) {
     return <span>Error</span>;
   }
 

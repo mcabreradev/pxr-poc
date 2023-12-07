@@ -22,6 +22,7 @@ export const GALERY = 'galery';
 export const RESERVATION = 'reservation';
 export const PLURAL = 'plural';
 export const SINGULAR = 'singular';
+export const INVENTORY = 'inventory';
 
 // GUESTS
 export const CHECKIN = 'checkin';

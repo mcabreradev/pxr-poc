@@ -188,7 +188,7 @@ export default function GuestFormComponent({ className }: Props) {
         <Button
           type='button'
           scroll={true}
-          className='mb-4 md:w-full'
+          className='mb-4 md:mb-0 md:w-full'
           onClick={() => null}
         >
           {t('button.choose-room')}

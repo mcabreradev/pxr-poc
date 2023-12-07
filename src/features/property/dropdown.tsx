@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -35,6 +35,8 @@ export default function DropdownComponent({ className }: Props) {
     Number(searchParams.get(TOTAL_INFANTS)) || 0,
   );
   const { t } = useTranslation();
+  const buttonRef = useRef(null);
+  const optionsRef = useRef(null);
 
   const updateQueryString = useCallback(
     (key: string, value: number) => {
@@ -51,23 +53,28 @@ export default function DropdownComponent({ className }: Props) {
     updateQueryString(TOTAL_ADULTS, adult);
   }, [adult, updateQueryString]);
 
-  const handleDropDown = useCallback(() => {
-    setOpen(!open);
+  const onClick = useCallback(() => {
+    setOpen((prevOpen) => !prevOpen);
+  }, []);
+
+  const onMouseLeave = useCallback(() => {
+    if (open) setOpen(!open);
   }, [open]);
 
   return (
     <Container className={cn(className)} data-testid='test-dropdown-element'>
       <div className=' dropdown relative inline-block w-full text-left'>
         <Button
+          ref={buttonRef}
           className='py-[8px] md:w-full'
           variant='secondary'
           type='button'
-          onClick={handleDropDown}
+          onClick={onClick}
         >
           <div className='flex items-center justify-between'>
             <div className='flex flex-col items-start'>
               <Typography variant='sm2'>{t('info.guest')}</Typography>
-              <Typography variant='sm2' className='text-neutral-300'>
+              <Typography variant='sm2' className='text-left text-neutral-300'>
                 {adult > 0 && `${adult} ${t('adult.' + ps(adult))}`}
                 {children > 0 &&
                   `, ${children} ${t('children.' + ps(children))}`}
@@ -75,18 +82,24 @@ export default function DropdownComponent({ className }: Props) {
               </Typography>
             </div>
             <Icon
-              variant={open ? 'arrow-down' : 'arrow-up'}
+              variant='arrow-up'
               width={24}
               color='#797979'
+              className={cn('transform transition-transform duration-100', {
+                'rotate-180': open,
+                'rotate-0': !open,
+              })}
             />
           </div>
         </Button>
 
         <div
+          ref={optionsRef}
           className={cn('origin-top-right transition-all duration-300', {
             'block scale-95 opacity-0': !open,
             hidden: !open,
           })}
+          onMouseLeave={onMouseLeave}
         >
           <div className='absolute right-0 w-full origin-top-right rounded-b-md border-[1px] border-solid border-neutral-60 bg-white text-black shadow-lg outline-none'>
             <div className='flex items-center justify-between px-6 py-3'>
@@ -100,8 +113,10 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='minus'
                   width={20}
-                  color='#797979'
-                  className='cursor-pointer'
+                  color={adult === 1 ? '#d5d3d3' : '#797979'}
+                  className={cn(
+                    adult === 1 ? 'cursor-not-allowed' : 'cursor-pointer',
+                  )}
                   onClick={() => {
                     if (adult === 1) return;
                     setAdult(adult - 1);
@@ -135,8 +150,10 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='minus'
                   width={20}
-                  color='#797979'
-                  className='cursor-pointer'
+                  color={children === 0 ? '#d5d3d3' : '#797979'}
+                  className={cn(
+                    children === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
+                  )}
                   onClick={() => {
                     if (children === 0) return;
                     setChildren(children - 1);
@@ -170,8 +187,10 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='minus'
                   width={20}
-                  color='#797979'
-                  className='cursor-pointer'
+                  color={baby === 0 ? '#d5d3d3' : '#797979'}
+                  className={cn(
+                    baby === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
+                  )}
                   onClick={() => {
                     if (baby === 0) return;
                     setBaby(baby - 1);

@@ -10,9 +10,13 @@ import { cn } from '@/lib/utils';
 interface ButtonProps {
   id?: string;
   type?: 'submit' | 'link' | 'button';
-  onClick?: () => void;
-  onBlur?: () => void;
-  onChange?: () => void;
+  ref?: React.MutableRefObject<null>;
+  onClick?: (e: unknown) => void;
+  onBlur?: (e: unknown) => void;
+  onChange?: (e: unknown) => void;
+  onMouseEnter?: (e: unknown) => void;
+  onMouseLeave?: (e: unknown) => void;
+  onFocus?: (e: unknown) => void;
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
@@ -53,6 +57,9 @@ export default function Button({
   onClick,
   onBlur,
   onChange,
+  onMouseEnter,
+  onMouseLeave,
+  ref,
   href,
   icon,
   replace = true,
@@ -79,11 +86,17 @@ export default function Button({
       >
         <ButtonComponent
           id={id}
+          ref={ref}
           className={cn(styling[variant], className)}
           ripple={false}
           fullWidth={fullWidth}
           data-testid='test-element'
           disabled={disabled}
+          onClick={onClick}
+          onBlur={onBlur}
+          onChange={onChange}
+          onMouseLeave={onMouseLeave}
+          onMouseEnter={onMouseEnter}
           {...props}
         >
           {icon && <span className=''>{icon}</span>}
@@ -98,6 +111,7 @@ export default function Button({
   return (
     <ButtonComponent
       id={id}
+      ref={ref}
       type={type}
       className={cn(styling[variant], className)}
       ripple={false}
@@ -107,6 +121,8 @@ export default function Button({
       onClick={onClick}
       onBlur={onBlur}
       onChange={onChange}
+      onMouseLeave={onMouseLeave}
+      onMouseEnter={onMouseEnter}
       {...props}
     >
       {icon && icon}

@@ -29,7 +29,7 @@ export default function Navbar({ className }: Props) {
   }, [i18n.language]);
 
   return (
-    <div className='border-b-[1px] border-solid border-white-200'>
+    <div className='md:border-b-[1px] md:border-solid md:border-white-200'>
       <Nav className={cn(className)} data-testid='test-element'>
         <div></div>
         <div>

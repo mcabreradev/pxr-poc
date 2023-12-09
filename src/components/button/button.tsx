@@ -2,6 +2,7 @@
 
 import { Button as Base } from '@material-tailwind/react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
@@ -21,6 +22,8 @@ interface ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
+  withParams?: boolean;
+  params?: string;
   variant?:
     | 'primary'
     | 'secondary'
@@ -64,6 +67,8 @@ export default function Button({
   icon,
   replace = true,
   scroll = true,
+  withParams = false,
+  params,
   ...props
 }: ButtonProps) {
   const styling = {
@@ -75,11 +80,16 @@ export default function Button({
     danger: 'bg-red',
     text: 'border-[1px] border-solid border-white bg-white text-black underline hover:opacity-[0.60]',
   };
+  const searchParams = useSearchParams();
 
   if (type === 'link') {
     return (
       <Link
-        href={href || '/'}
+        href={
+          withParams
+            ? `${href}?${params && `${params}&`}${searchParams.toString()}`
+            : href || '/'
+        }
         className={cn({ 'w-full': fullWidth })}
         replace={replace}
         scroll={scroll}

@@ -1,3 +1,4 @@
+// import { useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -15,6 +16,8 @@ const Rooms = tw.div`
 export default function RoomSwiper() {
   const { t, i18n } = useTranslation();
   const { isLoading, isError, data: roomtypes } = useRoomTypesQuery();
+  // const searchParams = useSearchParams();
+  // const paramList = searchParams.toString();
 
   if (isLoading) {
     return 'loading';
@@ -56,6 +59,7 @@ export default function RoomSwiper() {
               href={`/room-type/${room.id}`}
               className='mb-4 md:w-full'
               scroll={true}
+              withParams={true}
             >
               {t('button.reserve')}
             </Button>

@@ -6,6 +6,7 @@ import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useQueryString from '@/hooks/use-querystring';
 import useFetchAvailability from '@/queries/use-availabity';
 import useFetchProperty from '@/queries/use-property';
 
@@ -37,6 +38,7 @@ const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
   const searchParams = useSearchParams();
   const { isLoading, isError, data: property } = useFetchProperty();
+  const { removeBlacklistParam } = useQueryString();
 
   const checkin = searchParams.get('checkin');
   const checkout = searchParams.get('checkout');
@@ -50,6 +52,10 @@ const PropertyPage = memo(function HotelPage() {
     if (!checkin || !checkout) return;
     refetch();
   }, [checkin, checkout, refetch, inventory]);
+
+  useEffect(() => {
+    // removeBlacklistParam(['action']);
+  }, [removeBlacklistParam]);
 
   if (isLoading) {
     return <Skeleton />;

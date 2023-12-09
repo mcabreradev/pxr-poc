@@ -1,9 +1,10 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+/* eslint-disable simple-import-sort/imports */
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { createQueryString } from '@/lib/url';
+import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -21,13 +22,15 @@ flex items-center justify-center
 `;
 
 export default function DropdownComponent({ className }: Props) {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { updateQueryString } = useQueryString();
   const [open, setOpen] = useState(false);
-  const [adult, setAdult] = useState(
-    Number(searchParams.get(TOTAL_ADULTS)) || 2,
-  );
+
+  const [adult, setAdult] = useState(() => {
+    const totalAdults = Number(searchParams.get(TOTAL_ADULTS)) || 2;
+    updateQueryString(TOTAL_ADULTS, totalAdults);
+    return totalAdults;
+  });
   const [children, setChildren] = useState(
     Number(searchParams.get(TOTAL_CHILDREN)) || 0,
   );
@@ -35,23 +38,6 @@ export default function DropdownComponent({ className }: Props) {
     Number(searchParams.get(TOTAL_INFANTS)) || 0,
   );
   const { t } = useTranslation();
-  const buttonRef = useRef(null);
-  const optionsRef = useRef(null);
-
-  const updateQueryString = useCallback(
-    (key: string, value: number) => {
-      router.replace(
-        `${pathname}?${createQueryString(searchParams, key, value.toString())}`,
-        { scroll: false },
-      );
-    },
-    [pathname, router, searchParams],
-  );
-
-  useEffect(() => {
-    if (!adult) return;
-    updateQueryString(TOTAL_ADULTS, adult);
-  }, [adult, updateQueryString]);
 
   const onClick = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
@@ -65,7 +51,6 @@ export default function DropdownComponent({ className }: Props) {
     <Container className={cn(className)} data-testid='test-dropdown-element'>
       <div className=' dropdown relative inline-block w-full text-left'>
         <Button
-          ref={buttonRef}
           className='py-[8px] md:w-full'
           variant='secondary'
           type='button'
@@ -85,7 +70,7 @@ export default function DropdownComponent({ className }: Props) {
               variant='arrow-up'
               width={24}
               color='#797979'
-              className={cn('transform transition-transform duration-100', {
+              className={cn('transform transition-transform duration-200', {
                 'rotate-180': open,
                 'rotate-0': !open,
               })}
@@ -94,12 +79,11 @@ export default function DropdownComponent({ className }: Props) {
         </Button>
 
         <div
-          ref={optionsRef}
           className={cn('origin-top-right transition-all duration-300', {
             'block scale-95 opacity-0': !open,
             hidden: !open,
           })}
-          onMouseLeave={onMouseLeave}
+          onBlur={onMouseLeave}
         >
           <div className='absolute right-0 w-full origin-top-right rounded-b-md border-[1px] border-solid border-neutral-60 bg-white text-black shadow-lg outline-none'>
             <div className='flex items-center justify-between px-6 py-3'>

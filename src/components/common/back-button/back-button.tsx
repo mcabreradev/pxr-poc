@@ -8,6 +8,7 @@ import Typography from '@/components/typography';
 interface Props {
   className?: string;
   href?: string;
+  withParams?: boolean;
   children: React.ReactNode;
 }
 
@@ -15,10 +16,14 @@ export default function BackButtonComponent({
   href = '',
   children,
   className,
+  withParams = true,
 }: Props) {
   return (
     <>
-      <Link href={href} data-testid='test-element'>
+      <Link
+        href={withParams ? `${href}${window.location.search}` : href}
+        data-testid='test-element'
+      >
         <div
           className={cn(
             className,

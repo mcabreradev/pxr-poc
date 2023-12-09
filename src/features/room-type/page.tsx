@@ -1,11 +1,13 @@
 /* eslint-disable simple-import-sort/imports */
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useQueryString from '@/hooks/use-querystring';
 import { cn } from '@/lib/utils';
-import useRoomTypeQuery from '@/queries/use-roomtype';
 
 import Button from '@/components/button';
+import BackButton from '@/components/common/back-button';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Radio from '@/components/radio';
@@ -13,8 +15,8 @@ import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
 import { URL } from '@/constants';
+import useRoomTypeQuery from '@/queries/use-roomtype';
 
-import BackButton from '@/components/common/back-button';
 import data from './data.json';
 import Skeleton from './skeleton';
 
@@ -37,6 +39,11 @@ export default function RoomTypePage({ className, roomtype }: Props) {
     isLoading,
     data: room,
   } = useRoomTypeQuery(roomtype as string);
+  const { removeBlacklistParam } = useQueryString();
+
+  useEffect(() => {
+    removeBlacklistParam(['action']);
+  }, [removeBlacklistParam]);
 
   if (isLoading) {
     return <Skeleton />;
@@ -253,7 +260,9 @@ export default function RoomTypePage({ className, roomtype }: Props) {
                 className='font-semibold'
                 variant='primary'
                 type='link'
-                href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}
+                href={`/room-type/${roomtype}/details`}
+                withParams={true}
+                params={`${URL.ACTION}=auth`}
                 fullWidth
               >
                 {t('button.pay')}

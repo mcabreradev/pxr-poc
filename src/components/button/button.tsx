@@ -67,8 +67,8 @@ export default function Button({
   icon,
   replace = true,
   scroll = true,
-  withParams = false,
   params,
+  withParams = false,
   ...props
 }: ButtonProps) {
   const styling = {
@@ -87,7 +87,9 @@ export default function Button({
       <Link
         href={
           withParams
-            ? `${href}?${params && `${params}&`}${searchParams.toString()}`
+            ? `${href}?${
+                searchParams.toString() + (params ? `&${params}` : '')
+              }`
             : href || '/'
         }
         className={cn({ 'w-full': fullWidth })}

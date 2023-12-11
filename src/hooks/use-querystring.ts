@@ -10,21 +10,39 @@ const useQueryString = () => {
 
   const updateQueryString = useCallback(
     (key: string, value: number | string | Date) => {
-      router.replace(
+      router.push(
         `${pathname}?${createQueryString(searchParams, key, value.toString())}`,
         { scroll: false },
       );
-      router.refresh();
     },
     [pathname, router, searchParams],
   );
 
+  const updateQueryStringAsync = async (
+    key: string,
+    value: number | string | Date,
+  ) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(
+          router.push(
+            `${pathname}?${createQueryString(
+              searchParams,
+              key,
+              value.toString(),
+            )}`,
+            { scroll: false },
+          ),
+        );
+      }, 500);
+    });
+  };
+
   const removeQueryString = useCallback(
     (key: string) => {
-      router.replace(
-        `${pathname}?${removeQueryStringParam(searchParams, key)}`,
-        { scroll: false },
-      );
+      router.push(`${pathname}?${removeQueryStringParam(searchParams, key)}`, {
+        scroll: false,
+      });
       router.refresh();
     },
     [pathname, router, searchParams],
@@ -41,7 +59,12 @@ const useQueryString = () => {
     [removeQueryString],
   );
 
-  return { updateQueryString, removeQueryString, removeBlacklistParam };
+  return {
+    updateQueryString,
+    removeQueryString,
+    removeBlacklistParam,
+    updateQueryStringAsync,
+  };
 };
 
 export default useQueryString;

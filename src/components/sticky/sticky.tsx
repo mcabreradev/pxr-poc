@@ -14,9 +14,11 @@ const Container = tw.div`
 export default function StickyComponent({
   children,
   className,
+  scrollTop = 0,
 }: {
   children: React.ReactNode;
   className?: string;
+  scrollTop?: number;
 }) {
   const [stickyClass, setStickyClass] = useState('');
 
@@ -25,7 +27,7 @@ export default function StickyComponent({
       const scrollPosition =
         window.pageYOffset || document.documentElement.scrollTop;
 
-      if (scrollPosition > 200) {
+      if (scrollPosition > scrollTop) {
         setStickyClass(`
         fixed bottom-0 animate-fade-up animate-normal
         `);
@@ -41,7 +43,7 @@ export default function StickyComponent({
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [scrollTop]);
 
   return (
     <Container

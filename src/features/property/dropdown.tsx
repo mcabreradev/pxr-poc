@@ -1,17 +1,26 @@
 /* eslint-disable simple-import-sort/imports */
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
+import useReservationStore from '@/store/use-reservation.store';
+
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { TOTAL_ADULTS, TOTAL_CHILDREN, TOTAL_INFANTS } from '@/constants';
+import {
+  TOTAL_ADULTS,
+  TOTAL_ADULTS_DEFAULT,
+  TOTAL_CHILDREN,
+  TOTAL_CHILDREN_DEFAULT,
+  TOTAL_INFANTS,
+  TOTAL_INFANTS_DEFAULT,
+} from '@/constants';
 
 interface Props {
   className?: string;
@@ -22,22 +31,21 @@ flex items-center justify-center
 `;
 
 export default function DropdownComponent({ className }: Props) {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
-  const { updateQueryString } = useQueryString();
+  const { updateQueryString, updateQueryStringAsync } = useQueryString();
+  const { setReservation } = useReservationStore();
   const [open, setOpen] = useState(false);
 
-  const [adult, setAdult] = useState(() => {
-    const totalAdults = Number(searchParams.get(TOTAL_ADULTS)) || 2;
-    updateQueryString(TOTAL_ADULTS, totalAdults);
-    return totalAdults;
-  });
-  const [children, setChildren] = useState(
-    Number(searchParams.get(TOTAL_CHILDREN)) || 0,
+  const [adults, setAdults] = useState(
+    Number(searchParams.get(TOTAL_ADULTS)) || TOTAL_ADULTS_DEFAULT,
   );
-  const [baby, setBaby] = useState(
-    Number(searchParams.get(TOTAL_INFANTS)) || 0,
+  const [childrens, setChildrens] = useState(
+    Number(searchParams.get(TOTAL_CHILDREN)) || TOTAL_CHILDREN_DEFAULT,
   );
-  const { t } = useTranslation();
+  const [infants, setInfants] = useState(
+    Number(searchParams.get(TOTAL_INFANTS)) || TOTAL_INFANTS_DEFAULT,
+  );
 
   const onClick = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
@@ -46,6 +54,22 @@ export default function DropdownComponent({ className }: Props) {
   const onMouseLeave = useCallback(() => {
     if (open) setOpen(!open);
   }, [open]);
+
+  // hacktrick to update querystring if it's not present
+  useEffect(() => {
+    if (!searchParams.get(TOTAL_ADULTS)) {
+      // setTimeout(() => {
+      //   updateQueryString(TOTAL_ADULTS, adults || TOTAL_ADULTS_DEFAULT);
+      // }, 1000);
+
+      (async () => {
+        await updateQueryStringAsync(
+          TOTAL_ADULTS,
+          adults || TOTAL_ADULTS_DEFAULT,
+        );
+      })();
+    }
+  }, [adults, searchParams, updateQueryString, updateQueryStringAsync]);
 
   return (
     <Container className={cn(className)} data-testid='test-dropdown-element'>
@@ -60,10 +84,10 @@ export default function DropdownComponent({ className }: Props) {
             <div className='flex flex-col items-start'>
               <Typography variant='sm2'>{t('info.guest')}</Typography>
               <Typography variant='sm2' className='text-left text-neutral-300'>
-                {adult > 0 && `${adult} ${t('adult.' + ps(adult))}`}
-                {children > 0 &&
-                  `, ${children} ${t('children.' + ps(children))}`}
-                {baby > 0 && `, ${baby} ${t('baby.' + ps(baby))}`}
+                {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
+                {childrens > 0 &&
+                  `, ${childrens} ${t('children.' + ps(childrens))}`}
+                {infants > 0 && `, ${infants} ${t('infants.' + ps(infants))}`}
               </Typography>
             </div>
             <Icon
@@ -97,18 +121,19 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='minus'
                   width={20}
-                  color={adult === 1 ? '#d5d3d3' : '#797979'}
+                  color={adults === 1 ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    adult === 1 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    adults === 1 ? 'cursor-not-allowed' : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (adult === 1) return;
-                    setAdult(adult - 1);
-                    updateQueryString(TOTAL_ADULTS, adult - 1);
+                    if (adults === 1) return;
+                    setAdults(adults - 1);
+                    updateQueryString(TOTAL_ADULTS, adults - 1);
+                    setReservation({ adults: adults - 1 });
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
-                  {adult}
+                  {adults}
                 </Typography>
                 <Icon
                   variant='plus'
@@ -116,9 +141,10 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (adult === 8) return;
-                    setAdult(adult + 1);
-                    updateQueryString(TOTAL_ADULTS, adult + 1);
+                    if (adults === 8) return;
+                    setAdults(adults + 1);
+                    updateQueryString(TOTAL_ADULTS, adults + 1);
+                    setReservation({ adults: adults + 1 });
                   }}
                 />
               </div>
@@ -134,18 +160,19 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='minus'
                   width={20}
-                  color={children === 0 ? '#d5d3d3' : '#797979'}
+                  color={childrens === 0 ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    children === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    childrens === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (children === 0) return;
-                    setChildren(children - 1);
-                    updateQueryString(TOTAL_CHILDREN, children - 1);
+                    if (childrens === 0) return;
+                    setChildrens(childrens - 1);
+                    updateQueryString(TOTAL_CHILDREN, childrens - 1);
+                    setReservation({ childrens: childrens - 1 });
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
-                  {children}
+                  {childrens}
                 </Typography>
                 <Icon
                   variant='plus'
@@ -153,16 +180,17 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (children === 8) return;
-                    setChildren(children + 1);
-                    updateQueryString(TOTAL_CHILDREN, children + 1);
+                    if (childrens === 8) return;
+                    setChildrens(childrens + 1);
+                    updateQueryString(TOTAL_CHILDREN, childrens + 1);
+                    setReservation({ childrens: childrens + 1 });
                   }}
                 />
               </div>
             </div>
             <div className='flex items-center justify-between px-6 py-3'>
               <div className='flex flex-col items-start'>
-                <Typography variant='sm2'>{t('baby.plural')}</Typography>
+                <Typography variant='sm2'>{t('infant.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>
                   {t('info.under-2')}
                 </Typography>
@@ -171,18 +199,19 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='minus'
                   width={20}
-                  color={baby === 0 ? '#d5d3d3' : '#797979'}
+                  color={infants === 0 ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    baby === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    infants === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (baby === 0) return;
-                    setBaby(baby - 1);
-                    updateQueryString(TOTAL_INFANTS, baby - 1);
+                    if (infants === 0) return;
+                    setInfants(infants - 1);
+                    updateQueryString(TOTAL_INFANTS, infants - 1);
+                    setReservation({ infants: infants - 1 });
                   }}
                 />
                 <Typography variant='sm2' className='w-6 text-center'>
-                  {baby}
+                  {infants}
                 </Typography>
                 <Icon
                   variant='plus'
@@ -190,9 +219,10 @@ export default function DropdownComponent({ className }: Props) {
                   color='#797979'
                   className='cursor-pointer'
                   onClick={() => {
-                    if (baby === 8) return;
-                    setBaby(baby + 1);
-                    updateQueryString(TOTAL_INFANTS, baby + 1);
+                    if (infants === 8) return;
+                    setInfants(infants + 1);
+                    updateQueryString(TOTAL_INFANTS, infants + 1);
+                    setReservation({ infants: infants + 1 });
                   }}
                 />
               </div>

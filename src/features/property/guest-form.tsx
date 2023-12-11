@@ -16,6 +16,8 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import Dropdown from './dropdown';
 
+import useReservationStore from '@/store/use-reservation.store';
+
 import { CHECKIN, CHECKOUT } from '@/constants';
 import { selectRoomSchema } from '@/schemas';
 
@@ -37,6 +39,7 @@ export default function GuestFormComponent({ className }: Props) {
   const searchParams = useSearchParams();
   const { t } = useTranslation();
   const { locale } = useLocale();
+  const { setReservation } = useReservationStore();
 
   const checkin = formatDate(searchParams.get(CHECKIN));
   const [startDate, setStartDate] = useState<Date | null>(
@@ -71,25 +74,29 @@ export default function GuestFormComponent({ className }: Props) {
     [pathname, router, searchParams],
   );
 
-  useEffect(() => {
-    if (!checkin) return;
-    updateQueryString(CHECKIN, reFormatDate(startDate?.toString()) || '');
-  }, [checkin, startDate, updateQueryString]);
+  // useEffect(() => {
+  //   if (!checkin) return;
+  //   updateQueryString(CHECKIN, checkin);
+  //   setReservation({ checkin: checkin });
+  // }, [checkin, setReservation, startDate, updateQueryString]);
 
   useEffect(() => {
     if (!startDate) return;
     updateQueryString(CHECKIN, reFormatDate(startDate?.toString()) || '');
-  }, [startDate, updateQueryString]);
+    setReservation({ checkin: reFormatDate(startDate?.toString()) || '' });
+  }, [setReservation, startDate, updateQueryString]);
 
-  useEffect(() => {
-    if (!checkout) return;
-    updateQueryString(CHECKOUT, reFormatDate(endDate?.toString()) || '');
-  }, [checkout, endDate, updateQueryString]);
+  // useEffect(() => {
+  //   if (!checkout) return;
+  //   updateQueryString(CHECKOUT, checkout);
+  //   setReservation({ checkout: checkout });
+  // }, [checkout, endDate, setReservation, updateQueryString]);
 
   useEffect(() => {
     if (!endDate) return;
     updateQueryString(CHECKOUT, reFormatDate(endDate?.toString()) || '');
-  }, [endDate, updateQueryString]);
+    setReservation({ checkout: reFormatDate(endDate?.toString()) || '' });
+  }, [endDate, setReservation, updateQueryString]);
 
   return (
     <Container className={cn(className)}>

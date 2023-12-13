@@ -1,4 +1,5 @@
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
+import { createJSONStorage, persist, PersistOptions } from 'zustand/middleware';
 
 type Reservation = {
   checkin?: string | Date | null;
@@ -30,31 +31,30 @@ type Actions = {
   setInfants: (i: number) => void;
 };
 
-const useReservationStore = create<State & Actions>((set, get) => ({
-  reservation: { ...initialReservationState },
+// const useReservationStore = create<State & Actions>((set, get) => ({
+//   reservation: { ...initialReservationState },
 
-  setReservation: (r: Reservation) =>
-    set(() => ({ reservation: { ...get().reservation, ...r } })),
+//   setReservation: (r: Reservation) =>
+//     set(() => ({ reservation: { ...get().reservation, ...r } })),
 
-  setCheckin: (c: string | Date | null) =>
-    set(() => ({ reservation: { ...get().reservation, checkin: c } })),
+//   setCheckin: (c: string | Date | null) =>
+//     set(() => ({ reservation: { ...get().reservation, checkin: c } })),
 
-  setCheckout: (c: string | Date | null) =>
-    set(() => ({ reservation: { ...get().reservation, checkout: c } })),
+//   setCheckout: (c: string | Date | null) =>
+//     set(() => ({ reservation: { ...get().reservation, checkout: c } })),
 
-  setAdults: (a: number | null) =>
-    set(() => ({ reservation: { ...get().reservation, adults: a } })),
+//   setAdults: (a: number | null) =>
+//     set(() => ({ reservation: { ...get().reservation, adults: a } })),
 
-  setChildrens: (c: number | null) =>
-    set(() => ({ reservation: { ...get().reservation, childrens: c } })),
+//   setChildrens: (c: number | null) =>
+//     set(() => ({ reservation: { ...get().reservation, childrens: c } })),
 
-  setInfants: (i: number | null) =>
-    set(() => ({ reservation: { ...get().reservation, infants: i } })),
+//   setInfants: (i: number | null) =>
+//     set(() => ({ reservation: { ...get().reservation, infants: i } })),
 
-  resetReservation: () => set(() => ({ reservation: initialReservationState })),
-}));
+//   resetReservation: () => set(() => ({ reservation: initialReservationState })),
+// }));
 
-/*
 type Persist = (
   config: StateCreator<State & Actions>,
   options: PersistOptions<State & Actions>,
@@ -92,5 +92,5 @@ const useReservationStore = create<State & Actions, []>(
     },
   ),
 );
-*/
+
 export default useReservationStore;

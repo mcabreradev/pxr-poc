@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -33,7 +33,7 @@ flex items-center justify-center
 export default function DropdownComponent({ className }: Props) {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
-  const { updateQueryString, updateQueryStringAsync } = useQueryString();
+  const { updateQueryString } = useQueryString();
   const { setReservation } = useReservationStore();
   const [open, setOpen] = useState(false);
 
@@ -55,22 +55,6 @@ export default function DropdownComponent({ className }: Props) {
     if (open) setOpen(!open);
   }, [open]);
 
-  // hacktrick to update querystring if it's not present
-  useEffect(() => {
-    if (!adults || !childrens || !infants) {
-      (async () => {
-        await updateQueryStringAsync(
-          {
-            [TOTAL_ADULTS]: adults || TOTAL_ADULTS_DEFAULT,
-            [TOTAL_CHILDREN]: childrens || TOTAL_CHILDREN_DEFAULT,
-            [TOTAL_INFANTS]: infants || TOTAL_INFANTS_DEFAULT,
-          },
-          900,
-        );
-      })();
-    }
-  }, [adults, childrens, infants, updateQueryStringAsync]);
-
   return (
     <Container className={cn(className)} data-testid='test-dropdown-element'>
       <div className=' dropdown relative inline-block w-full text-left'>
@@ -87,7 +71,7 @@ export default function DropdownComponent({ className }: Props) {
                 {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
                 {childrens > 0 &&
                   `, ${childrens} ${t('children.' + ps(childrens))}`}
-                {infants > 0 && `, ${infants} ${t('infants.' + ps(infants))}`}
+                {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
               </Typography>
             </div>
             <Icon

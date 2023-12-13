@@ -3,10 +3,6 @@
     "plural": "adults",
     "singular": "adult"
   },
-  "baby": {
-    "plural": "babies",
-    "singular": "baby"
-  },
   "button": {
     "accept": "Accept and continue",
     "all-amemnities": "All Amenities",
@@ -105,6 +101,10 @@
     "singular": "Guest"
   },
   "hide": "Hide",
+  "infants": {
+    "plural": "babies",
+    "singular": "baby"
+  },
   "info": {
     "13years-or-more": "13 years old or more",
     "2to12": "2 to 12 years old",

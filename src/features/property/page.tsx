@@ -11,6 +11,7 @@ import useFetchAvailability from '@/queries/use-availabity';
 import useFetchProperty from '@/queries/use-property';
 
 import Button from '@/components/button';
+import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Sticky from '@/components/sticky';
@@ -19,7 +20,6 @@ import Typography from '@/components/typography';
 
 import PropertyAmenities from './amenities';
 import data from './data.json';
-import Gallery from './gallery';
 import GuestForm from './guest-form';
 import RoomSwiper from './room-swiper';
 import Skeleton from './skeleton';

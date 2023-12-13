@@ -3,10 +3,6 @@
     "plural": "adultos",
     "singular": "adulto"
   },
-  "baby": {
-    "plural": "bebés",
-    "singular": "bebé"
-  },
   "button": {
     "accept": "Aceptar y continuar",
     "all-amemnities": "Ver todos los servicios",
@@ -70,14 +66,14 @@
       "required": "El nombre es requerido"
     },
     "password": {
+      "error": "La contraseña es incorrecta",
       "invalid": "La contraseña es inválida",
       "label": "Contraseña",
       "match": "Las contraseñas no coinciden",
       "max": "La contraseña debe ser menor a 50 caracteres",
       "min": "La contraseña debe ser mayor a 6 caracteres",
       "placeholder": "Ingresa tu contraseña",
-      "required": "La contraseña es requerida",
-      "error": "La contraseña es incorrecta"
+      "required": "La contraseña es requerida"
     },
     "password_confirmation": {
       "label": "Confirme su Contraseña",
@@ -106,6 +102,10 @@
     "singular": "Huésped"
   },
   "hide": "Ocultar",
+  "infant": {
+    "plural": "bebés",
+    "singular": "bebé"
+  },
   "info": {
     "13years-or-more": "13 años o más",
     "2to12": "2 a 12 años",

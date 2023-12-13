@@ -49,7 +49,7 @@ export default function Gallery({
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
     router.replace(
-      `${pathname}?${createQueryString(searchParams, { GALERY: index })}`,
+      `${pathname}?${createQueryString(searchParams, { [GALERY]: index })}`,
       { scroll: false },
     );
   }, [pathname, router, searchParams, index]);
@@ -64,6 +64,7 @@ export default function Gallery({
 
   useEffect(() => {
     if (showDrawer) {
+      Number(showDrawer) >= 0 && setIndex(Number(showDrawer));
       openDrawer();
     }
   }, [openDrawer, showDrawer]);

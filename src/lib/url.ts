@@ -1,11 +1,22 @@
 export const createQueryString = (
   searchParams,
-  name: string,
-  value: string,
+  query: { [key: string]: string | number | Date },
+) => {
+  return createQueryStringBulk(searchParams, query);
+};
+
+export const createQueryStringBulk = (
+  searchParams,
+  query: { [key: string]: string | number | Date },
 ) => {
   const params = new URLSearchParams(searchParams);
-  params.set(name, value);
 
+  for (const key in query) {
+    if (Object.prototype.hasOwnProperty.call(query, key)) {
+      const value = query[key];
+      params.set(key, String(value));
+    }
+  }
   return params.toString();
 };
 

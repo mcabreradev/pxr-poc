@@ -32,7 +32,8 @@ export const CHECKOUT = 'checkout';
 export const GUESTS = 'guests';
 export const TOTAL_GUESTS = 'totalGuests';
 export const TOTAL_ADULTS = 'totalAdults';
-export const TOTAL_ADULTS_DEFAULT = 2;
+export const TOTAL_ADULTS_DEFAULT =
+  Number(process.env.HOTEL_ADULTS_DEFAULT) || Number(2);
 export const TOTAL_CHILDREN = 'totalChildren';
 export const TOTAL_CHILDREN_DEFAULT = 0;
 export const TOTAL_INFANTS = 'totalInfants';

@@ -57,19 +57,19 @@ export default function DropdownComponent({ className }: Props) {
 
   // hacktrick to update querystring if it's not present
   useEffect(() => {
-    if (!searchParams.get(TOTAL_ADULTS)) {
-      // setTimeout(() => {
-      //   updateQueryString(TOTAL_ADULTS, adults || TOTAL_ADULTS_DEFAULT);
-      // }, 1000);
-
+    if (!adults || !childrens || !infants) {
       (async () => {
         await updateQueryStringAsync(
-          TOTAL_ADULTS,
-          adults || TOTAL_ADULTS_DEFAULT,
+          {
+            [TOTAL_ADULTS]: adults || TOTAL_ADULTS_DEFAULT,
+            [TOTAL_CHILDREN]: childrens || TOTAL_CHILDREN_DEFAULT,
+            [TOTAL_INFANTS]: infants || TOTAL_INFANTS_DEFAULT,
+          },
+          900,
         );
       })();
     }
-  }, [adults, searchParams, updateQueryString, updateQueryStringAsync]);
+  }, [adults, childrens, infants, updateQueryStringAsync]);
 
   return (
     <Container className={cn(className)} data-testid='test-dropdown-element'>
@@ -128,7 +128,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (adults === 1) return;
                     setAdults(adults - 1);
-                    updateQueryString(TOTAL_ADULTS, adults - 1);
+                    updateQueryString({ [TOTAL_ADULTS]: adults - 1 });
                     setReservation({ adults: adults - 1 });
                   }}
                 />
@@ -143,7 +143,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (adults === 8) return;
                     setAdults(adults + 1);
-                    updateQueryString(TOTAL_ADULTS, adults + 1);
+                    updateQueryString({ [TOTAL_ADULTS]: adults + 1 });
                     setReservation({ adults: adults + 1 });
                   }}
                 />
@@ -167,7 +167,9 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (childrens === 0) return;
                     setChildrens(childrens - 1);
-                    updateQueryString(TOTAL_CHILDREN, childrens - 1);
+                    updateQueryString({
+                      [TOTAL_CHILDREN]: childrens - 1,
+                    });
                     setReservation({ childrens: childrens - 1 });
                   }}
                 />
@@ -182,7 +184,9 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (childrens === 8) return;
                     setChildrens(childrens + 1);
-                    updateQueryString(TOTAL_CHILDREN, childrens + 1);
+                    updateQueryString({
+                      [TOTAL_CHILDREN]: childrens + 1,
+                    });
                     setReservation({ childrens: childrens + 1 });
                   }}
                 />
@@ -206,7 +210,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (infants === 0) return;
                     setInfants(infants - 1);
-                    updateQueryString(TOTAL_INFANTS, infants - 1);
+                    updateQueryString({ [TOTAL_INFANTS]: infants - 1 });
                     setReservation({ infants: infants - 1 });
                   }}
                 />
@@ -221,7 +225,7 @@ export default function DropdownComponent({ className }: Props) {
                   onClick={() => {
                     if (infants === 8) return;
                     setInfants(infants + 1);
-                    updateQueryString(TOTAL_INFANTS, infants + 1);
+                    updateQueryString({ [TOTAL_INFANTS]: infants + 1 });
                     setReservation({ infants: infants + 1 });
                   }}
                 />

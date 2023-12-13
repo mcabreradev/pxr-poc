@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,6 @@ import { DateRangePicker } from 'react-next-dates';
 import tw from 'tailwind-styled-components';
 
 import useLocale from '@/hooks/use-locale';
-import { createQueryString } from '@/lib/url';
 import { cn, formatDate, reFormatDate } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -16,6 +15,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import Dropdown from './dropdown';
 
+import useQueryString from '@/hooks/use-querystring';
 import useReservationStore from '@/store/use-reservation.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
@@ -34,12 +34,11 @@ const Container = tw.div`
 sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded border-[1px] border-solid border-neutral-50 bg-white p-5 drop-shadow-lg`;
 
 export default function GuestFormComponent({ className }: Props) {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { t } = useTranslation();
   const { locale } = useLocale();
   const { setReservation } = useReservationStore();
+  const { updateQueryString } = useQueryString();
 
   const checkin = formatDate(searchParams.get(CHECKIN));
   const [startDate, setStartDate] = useState<Date | null>(
@@ -64,37 +63,19 @@ export default function GuestFormComponent({ className }: Props) {
     console.log(data);
   }, []);
 
-  const updateQueryString = useCallback(
-    (key: string, value: string) => {
-      router.replace(
-        `${pathname}?${createQueryString(searchParams, key, value.toString())}`,
-        { scroll: false },
-      );
-    },
-    [pathname, router, searchParams],
-  );
-
-  // useEffect(() => {
-  //   if (!checkin) return;
-  //   updateQueryString(CHECKIN, checkin);
-  //   setReservation({ checkin: checkin });
-  // }, [checkin, setReservation, startDate, updateQueryString]);
-
   useEffect(() => {
     if (!startDate) return;
-    updateQueryString(CHECKIN, reFormatDate(startDate?.toString()) || '');
+    updateQueryString({
+      [CHECKIN]: reFormatDate(startDate?.toString()) || '',
+    });
     setReservation({ checkin: reFormatDate(startDate?.toString()) || '' });
   }, [setReservation, startDate, updateQueryString]);
 
-  // useEffect(() => {
-  //   if (!checkout) return;
-  //   updateQueryString(CHECKOUT, checkout);
-  //   setReservation({ checkout: checkout });
-  // }, [checkout, endDate, setReservation, updateQueryString]);
-
   useEffect(() => {
     if (!endDate) return;
-    updateQueryString(CHECKOUT, reFormatDate(endDate?.toString()) || '');
+    updateQueryString({
+      [CHECKOUT]: reFormatDate(endDate?.toString()) || '',
+    });
     setReservation({ checkout: reFormatDate(endDate?.toString()) || '' });
   }, [endDate, setReservation, updateQueryString]);
 

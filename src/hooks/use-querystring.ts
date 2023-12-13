@@ -1,51 +1,67 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
-import { createQueryString, removeQueryStringParam } from '@/lib/url';
-
 const useQueryString = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const updateQueryString = useCallback(
-    (key: string, value: number | string | Date) => {
-      router.push(
-        `${pathname}?${createQueryString(searchParams, key, value.toString())}`,
-        { scroll: false },
-      );
+  const createQueryString = useCallback(
+    (query: { [key: string]: string | number | Date }) => {
+      const params = new URLSearchParams(searchParams);
+      for (const key in query) {
+        if (Object.prototype.hasOwnProperty.call(query, key)) {
+          const value = query[key];
+          params.set(key, String(value));
+        }
+      }
+      return params.toString();
     },
-    [pathname, router, searchParams],
+    [searchParams],
+  );
+
+  const removeQueryStringParam = useCallback(
+    (name: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.delete(name);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
+  const updateQueryString = useCallback(
+    (query: { [key: string]: string | number | Date }) => {
+      router.push(`${pathname}?${createQueryString(query)}`, {
+        scroll: false,
+      });
+    },
+    [createQueryString, pathname, router],
   );
 
   const updateQueryStringAsync = async (
-    key: string,
-    value: number | string | Date,
+    query: { [key: string]: string | number | Date },
+    time?: number,
   ) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(
-          router.push(
-            `${pathname}?${createQueryString(
-              searchParams,
-              key,
-              value.toString(),
-            )}`,
-            { scroll: false },
-          ),
+          router.push(`${pathname}?${createQueryString(query)}`, {
+            scroll: false,
+          }),
         );
-      }, 500);
+      }, time || 500);
     });
   };
 
   const removeQueryString = useCallback(
     (key: string) => {
-      router.push(`${pathname}?${removeQueryStringParam(searchParams, key)}`, {
+      router.push(`${pathname}?${removeQueryStringParam(key)}`, {
         scroll: false,
       });
       router.refresh();
     },
-    [pathname, router, searchParams],
+    [pathname, removeQueryStringParam, router],
   );
 
   const removeBlacklistParam = useCallback(
@@ -64,6 +80,8 @@ const useQueryString = () => {
     removeQueryString,
     removeBlacklistParam,
     updateQueryStringAsync,
+    createQueryString,
+    removeQueryStringParam,
   };
 };
 

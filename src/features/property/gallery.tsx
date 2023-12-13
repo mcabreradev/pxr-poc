@@ -49,11 +49,7 @@ export default function Gallery({
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
     router.replace(
-      `${pathname}?${createQueryString(
-        searchParams,
-        GALERY,
-        index.toString(),
-      )}`,
+      `${pathname}?${createQueryString(searchParams, { GALERY: index })}`,
       { scroll: false },
     );
   }, [pathname, router, searchParams, index]);

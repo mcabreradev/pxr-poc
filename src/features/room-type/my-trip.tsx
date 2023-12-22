@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import { formatCurrency } from '@/lib/number';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -49,6 +50,9 @@ export default function MyTrip({ className, roomtype }: Props) {
   const infants =
     Number(searchParams.get(TOTAL_INFANTS)) || reservation?.infants;
 
+  const planCost = 100;
+  const planDays = checkout.diff(checkin, 'days');
+
   return (
     <Container className={cn(className)} data-testid='test-element'>
       <Section>
@@ -70,7 +74,11 @@ export default function MyTrip({ className, roomtype }: Props) {
               )}`}
             </Typography>
           </div>
-          <Typography variant='sm' className='text-neutral-500 underline'>
+          <Typography
+            variant='sm'
+            className='cursor-pointer text-neutral-500 underline'
+            onClick={() => null}
+          >
             {t('title.edit')}
           </Typography>
         </div>
@@ -103,7 +111,11 @@ export default function MyTrip({ className, roomtype }: Props) {
               </Typography>
             )}
           </div>
-          <Typography variant='sm' className='text-neutral-500 underline'>
+          <Typography
+            variant='sm'
+            className='cursor-pointer text-neutral-500 underline'
+            onClick={() => null}
+          >
             {t('title.edit')}
           </Typography>
         </div>
@@ -117,12 +129,12 @@ export default function MyTrip({ className, roomtype }: Props) {
         </Typography>
         <div className='flex flex-wrap justify-between py-3'>
           <Typography variant='sm' className='text-neutral-500'>
-            $ 100.00 {t('per')} {checkout.diff(checkin, 'days')}{' '}
-            {t('night.plural')}
+            {formatCurrency(planCost, 'argentina')} {t('per')}{' '}
+            {checkout.diff(checkin, 'days')} {t('night.plural')}
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            $ 400.00
+            {formatCurrency(planCost * planDays, 'argentina')}
           </Typography>
         </div>
         <div className='flex flex-wrap justify-between pb-0 pt-2'>
@@ -166,7 +178,7 @@ export default function MyTrip({ className, roomtype }: Props) {
         </div>
 
         <div className='flex flex-wrap justify-between py-1'>
-          <Toggle label={t('info.breakfast')} />
+          <Toggle label={t('breakfast')} />
           <Typography variant='sm' className='text-neutral-500'>
             +$ 10.00
           </Typography>
@@ -204,9 +216,9 @@ export default function MyTrip({ className, roomtype }: Props) {
           </Typography>
         </div>
 
-        <div className='flex flex-wrap justify-between py-3'>
+        <div className='flex flex-wrap justify-between pt-3'>
           <Button
-            className='font-semibold'
+            className='font-semibold md:w-full'
             variant='primary'
             type='link'
             href={`/room-type/${roomtype}/details`}

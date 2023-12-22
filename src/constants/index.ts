@@ -117,3 +117,31 @@ export const PAYMENT_STATUS = {
 };
 
 export const breakpoints = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];
+
+export const LOCALES = {
+  us: { locale: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
+  euro: { locale: 'es-ES', currency: 'EURO', currencyDisplay: 'symbol' },
+  argentina: { locale: 'es-AR', currency: 'ARS $', currencyDisplay: 'symbol' },
+  bolivia: { locale: 'es-BO', currency: 'BOB', currencyDisplay: 'symbol' },
+  chile: { locale: 'es-CL', currency: 'CLP', currencyDisplay: 'symbol' },
+  colombia: { locale: 'es-CO', currency: 'COP', currencyDisplay: 'symbol' },
+  costa_rica: { locale: 'es-CR', currency: 'CRC', currencyDisplay: 'symbol' },
+  cuba: { locale: 'es-CU', currency: 'CUP', currencyDisplay: 'symbol' },
+  ecuador: { locale: 'es-EC', currency: 'USD', currencyDisplay: 'symbol' },
+  el_salvador: { locale: 'es-SV', currency: 'USD', currencyDisplay: 'symbol' },
+  guatemala: { locale: 'es-GT', currency: 'GTQ', currencyDisplay: 'symbol' },
+  honduras: { locale: 'es-HN', currency: 'HNL', currencyDisplay: 'symbol' },
+  mexico: { locale: 'es-MX', currency: 'MXN', currencyDisplay: 'symbol' },
+  nicaragua: { locale: 'es-NI', currency: 'NIO', currencyDisplay: 'symbol' },
+  panama: { locale: 'es-PA', currency: 'PAB', currencyDisplay: 'symbol' },
+  paraguay: { locale: 'es-PY', currency: 'PYG', currencyDisplay: 'symbol' },
+  peru: { locale: 'es-PE', currency: 'PEN', currencyDisplay: 'symbol' },
+  puerto_rico: { locale: 'es-PR', currency: 'USD', currencyDisplay: 'symbol' },
+  republica_dominicana: {
+    locale: 'es-DO',
+    currency: 'DOP',
+    currencyDisplay: 'symbol',
+  },
+  uruguay: { locale: 'es-UY', currency: 'UYU', currencyDisplay: 'symbol' },
+  venezuela: { locale: 'es-VE', currency: 'VES', currencyDisplay: 'symbol' },
+};

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -7,7 +8,6 @@ import { formatCurrency } from '@/lib/number';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
-import Radio from '@/components/radio';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
@@ -16,16 +16,22 @@ import useReservation from '@/store/use-reservation.store';
 import {
   CHECKIN,
   CHECKOUT,
+  PLAN,
+  PLAN_BREAKFAST,
+  PLAN_NONBREAKFAST,
+  PLAN_NONREFUNDABLE,
   TOTAL_ADULTS,
   TOTAL_CHILDREN,
   TOTAL_INFANTS,
   URL,
 } from '@/constants';
 
-interface Props {
+import CancelationPolice from './cancelation-police';
+
+type Props = {
   className?: string;
   roomtype?: string;
-}
+};
 
 const Container = tw.div`
 md:sticky md:bottom-0 md:top-5 md:ml-5 md:mt-5 md:box-border md:flex md:h-min md:w-full md:flex-col md:rounded md:border-[1px] md:border-solid md:border-neutral-50 md:bg-white md:p-5 md:drop-shadow-lg
@@ -50,8 +56,25 @@ export default function MyTrip({ className, roomtype }: Props) {
   const infants =
     Number(searchParams.get(TOTAL_INFANTS)) || reservation?.infants;
 
+  const [selectedPlan, setSelectedPlan] = useState<string>(() => {
+    return searchParams.get(PLAN) || PLAN_NONREFUNDABLE;
+  });
+  const [breakfast, setBreakfast] = useState<string>(PLAN_NONBREAKFAST);
+
+  const handlePlanChange = useCallback((event) => {
+    const { value } = event.target;
+    setSelectedPlan(value);
+  }, []);
+
+  const handleBreakfast = useCallback((event) => {
+    const { checked } = event.target;
+    setBreakfast(checked ? PLAN_BREAKFAST : PLAN_NONBREAKFAST);
+  }, []);
+  const hasBreakfast = breakfast === PLAN_BREAKFAST;
+
   const planCost = 100;
   const planDays = checkout.diff(checkin, 'days');
+  const totalCost = planCost * planDays;
 
   return (
     <Container className={cn(className)} data-testid='test-element'>
@@ -129,41 +152,16 @@ export default function MyTrip({ className, roomtype }: Props) {
         </Typography>
         <div className='flex flex-wrap justify-between py-3'>
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(planCost, 'argentina')} {t('per')}{' '}
+            {formatCurrency(planCost)} {t('per')}{' '}
             {checkout.diff(checkin, 'days')} {t('night.plural')}
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(planCost * planDays, 'argentina')}
+            {formatCurrency(totalCost)}
           </Typography>
         </div>
-        <div className='flex flex-wrap justify-between pb-0 pt-2'>
-          <div>
-            <Typography
-              variant='sm'
-              weight='semibold'
-              className='text-neutral-400'
-            >
-              {t('info.cancellation-policy')}
-            </Typography>
-          </div>
-        </div>
-        <div className='flex flex-wrap justify-between py-1'>
-          <Radio label={t('info.non-refundable')} name='cancellation-policy' />
-          <Typography variant='sm' className='text-neutral-500'>
-            +$ 0.00
-          </Typography>
-        </div>
-        <div className='flex flex-wrap justify-between py-1'>
-          <Radio
-            label={t('info.refundable')}
-            subtitle={t('info.free-cancellation-before')}
-            name='cancellation-policy'
-          />
-          <Typography variant='sm' className='text-neutral-500'>
-            +$ 0.00
-          </Typography>
-        </div>
+
+        <CancelationPolice plan={selectedPlan} onChange={handlePlanChange} />
 
         <div className='flex flex-wrap justify-between pb-0 pt-2'>
           <div>
@@ -178,9 +176,19 @@ export default function MyTrip({ className, roomtype }: Props) {
         </div>
 
         <div className='flex flex-wrap justify-between py-1'>
-          <Toggle label={t('breakfast')} />
-          <Typography variant='sm' className='text-neutral-500'>
-            +$ 10.00
+          <Toggle
+            label={t('breakfast')}
+            value={breakfast}
+            onChange={handleBreakfast}
+          />
+
+          <Typography
+            variant='sm'
+            className={cn('text-neutral-500', {
+              'text-gray-500': !hasBreakfast,
+            })}
+          >
+            + {formatCurrency(10.0)}
           </Typography>
         </div>
 
@@ -202,7 +210,7 @@ export default function MyTrip({ className, roomtype }: Props) {
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            +$ 50.00
+            + {formatCurrency(50.0)}
           </Typography>
         </div>
 
@@ -212,7 +220,7 @@ export default function MyTrip({ className, roomtype }: Props) {
           </Typography>
 
           <Typography variant='sm' className='font-semibold text-neutral-500'>
-            $ 450.00
+            {formatCurrency(450.0)}
           </Typography>
         </div>
 

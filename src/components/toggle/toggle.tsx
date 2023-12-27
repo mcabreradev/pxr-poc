@@ -4,14 +4,19 @@ import tw from 'tailwind-styled-components';
 
 import 'react-toggle/style.css';
 
+import { cn, uuid } from '@/lib/utils';
+
 type ToggleProps = {
+  id?: string;
   className?: string;
   label?: string;
   name?: string;
   value?: string;
   subtitle?: string;
-  toggled?: boolean;
+  disabled?: boolean;
   readonly?: boolean;
+  toggled?: boolean;
+  onChange?: (event: unknown) => void;
 };
 
 const Content = tw.div`
@@ -34,37 +39,48 @@ const CustomToggle = tw(Toggle)<{ enabled?: boolean }>`
   relative mr-4 inline-flex h-6 w-11 items-center rounded-full shrink-0
 `;
 
-export default function ToogleComponent({
+export default function ToggleComponent({
+  id = uuid(),
   className,
   label,
   name,
   value,
   subtitle,
-  toggled = false,
+  disabled = false,
   readonly = false,
+  onChange,
+  toggled = false,
 }: ToggleProps) {
-  const [enabled, setEnabled] = useState(toggled);
+  const [enabled, setEnabled] = useState(false);
 
-  const onChangeHandler = () => {
+  const onChangeHandler = (e) => {
     if (readonly) return;
     setEnabled((prev) => !prev);
+    onChange && onChange(e);
   };
 
   return (
     <Content>
       <CustomToggle
+        id={id}
         name={name}
         value={value}
-        checked={enabled}
+        checked={enabled || toggled}
         onChange={onChangeHandler}
         className={className}
-        enabled={enabled}
+        disabled={disabled}
         icons={false}
         data-testid='test-element'
-      ></CustomToggle>
+      />
       <LabelContainer>
-        {!!label && <Label>{label}</Label>}
-        {!!subtitle && <Subtitle>{subtitle}</Subtitle>}
+        {!!label && (
+          <Label className={cn({ 'text-gray-500': !enabled })}>{label}</Label>
+        )}
+        {!!subtitle && (
+          <Subtitle className={cn({ 'text-gray-500': !enabled })}>
+            {subtitle}
+          </Subtitle>
+        )}
       </LabelContainer>
     </Content>
   );

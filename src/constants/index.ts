@@ -26,6 +26,13 @@ export const INVENTORY = 'inventory';
 export const AVAILABILITY = 'availability';
 export const RATES = 'rates';
 
+// RATE PLANS
+export const PLAN_REFUNDABLE = 'refundable';
+export const PLAN_NONREFUNDABLE = 'non-refundable';
+export const PLAN_BREAKFAST = 'breakfast';
+export const PLAN_NONBREAKFAST = 'non-breakfast';
+export const PLAN = 'plan';
+
 // GUESTS
 export const CHECKIN = 'checkin';
 export const CHECKOUT = 'checkout';
@@ -121,7 +128,7 @@ export const breakpoints = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];
 export const LOCALES = {
   us: { locale: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
   euro: { locale: 'es-ES', currency: 'EURO', currencyDisplay: 'symbol' },
-  argentina: { locale: 'es-AR', currency: 'ARS $', currencyDisplay: 'symbol' },
+  argentina: { locale: 'es-AR', currency: 'ARS', currencyDisplay: 'symbol' },
   bolivia: { locale: 'es-BO', currency: 'BOB', currencyDisplay: 'symbol' },
   chile: { locale: 'es-CL', currency: 'CLP', currencyDisplay: 'symbol' },
   colombia: { locale: 'es-CO', currency: 'COP', currencyDisplay: 'symbol' },

@@ -11,7 +11,7 @@ import BackButton from '@/components/common/back-button';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
-import MyTrip from './my-trip';
+import MyTrip from './my-trip/my-trip';
 
 import useRoomTypeQuery from '@/queries/use-roomtype';
 

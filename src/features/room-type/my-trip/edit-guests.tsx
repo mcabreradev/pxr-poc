@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -9,7 +9,6 @@ import { cn, ps } from '@/lib/utils';
 
 import useReservationStore from '@/store/use-reservation.store';
 
-import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
@@ -30,12 +29,11 @@ const Container = tw.div`
 flex items-center justify-center
 `;
 
-export default function DropdownComponent({ className }: Props) {
+export default function EditGuestsComponent({ className }: Props) {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { setReservation } = useReservationStore();
-  const [open, setOpen] = useState(false);
 
   const [adults, setAdults] = useState(
     Number(searchParams.get(TOTAL_ADULTS)) || TOTAL_ADULTS_DEFAULT,
@@ -47,59 +45,24 @@ export default function DropdownComponent({ className }: Props) {
     Number(searchParams.get(TOTAL_INFANTS)) || TOTAL_INFANTS_DEFAULT,
   );
 
-  const onClick = useCallback(() => {
-    setOpen((prevOpen) => !prevOpen);
-  }, []);
-
-  const onMouseLeave = useCallback(() => {
-    if (open) setOpen(!open);
-  }, [open]);
-
   return (
     <Container className={cn(className)} data-testid='test-dropdown-element'>
-      <div className={cn('dropdown relative inline-block w-full text-left')}>
-        <Button
-          className={cn('border-white py-[8px] md:w-full')}
-          variant='secondary'
-          type='button'
-          onClick={onClick}
-        >
-          <div className='flex items-center justify-between'>
-            <div className='flex flex-col items-start'>
-              <Typography variant='sm2'>{t('info.guest')}</Typography>
-              <Typography variant='sm2' className='text-left text-neutral-300'>
-                {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
-                {childrens > 0 &&
-                  `, ${childrens} ${t('children.' + ps(childrens))}`}
-                {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
-              </Typography>
-            </div>
+      <div className={cn('inline-block w-full text-left')}>
+        <div className='flex flex-col items-start pb-4'>
+          <Typography variant='sm' weight='semibold' className='mb-4'>
+            {t('info.guest')}
+          </Typography>
+          <Typography variant='sm2' className='text-left text-neutral-300'>
+            {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
+            {childrens > 0 &&
+              `, ${childrens} ${t('children.' + ps(childrens))}`}
+            {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
+          </Typography>
+        </div>
 
-            <Icon
-              variant='arrow-up'
-              width={24}
-              color='#797979'
-              className={cn('transform transition-transform duration-200', {
-                'rotate-180': open,
-                'rotate-0': !open,
-              })}
-            />
-          </div>
-        </Button>
-
-        <div
-          className={cn('origin-top-right transition-all duration-300', {
-            'block scale-95 opacity-0': !open,
-            hidden: !open,
-          })}
-          onBlur={onMouseLeave}
-        >
-          <div
-            className={cn(
-              'absolute right-0 w-full origin-top-right rounded-b-md  border-[1px] border-solid border-neutral-60 bg-white text-black shadow-lg outline-none',
-            )}
-          >
-            <div className='flex items-center justify-between px-6 py-3'>
+        <div>
+          <div className='right-0 w-full origin-top-right bg-white text-black  outline-none'>
+            <div className='flex items-center justify-between'>
               <div className='flex flex-col items-start'>
                 <Typography variant='sm2'>{t('adult.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>
@@ -140,7 +103,7 @@ export default function DropdownComponent({ className }: Props) {
                 />
               </div>
             </div>
-            <div className='flex items-center justify-between px-6 py-3'>
+            <div className='flex items-center justify-between py-3'>
               <div className='flex flex-col items-start'>
                 <Typography variant='sm2'>{t('children.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>
@@ -185,7 +148,7 @@ export default function DropdownComponent({ className }: Props) {
                 />
               </div>
             </div>
-            <div className='flex items-center justify-between px-6 py-3'>
+            <div className='flex items-center justify-between py-3'>
               <div className='flex flex-col items-start'>
                 <Typography variant='sm2'>{t('infant.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>

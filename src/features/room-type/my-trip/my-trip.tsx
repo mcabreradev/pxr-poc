@@ -25,6 +25,7 @@ import {
   TOTAL_INFANTS,
   URL,
 } from '@/constants';
+import EditTripComponent from '@/features/room-type/my-trip/edit-my-trip';
 
 import CancelationPolice from './cancelation-police';
 
@@ -76,6 +77,11 @@ export default function MyTrip({ className, roomtype }: Props) {
   const planDays = checkout.diff(checkin, 'days');
   const totalCost = planCost * planDays;
 
+  const [openEditModal, setEditModal] = useState(false);
+  const handleEditModal = useCallback((value = true) => {
+    setEditModal(value);
+  }, []);
+
   return (
     <Container className={cn(className)} data-testid='test-element'>
       <Section>
@@ -100,7 +106,7 @@ export default function MyTrip({ className, roomtype }: Props) {
           <Typography
             variant='sm'
             className='cursor-pointer text-neutral-500 underline'
-            onClick={() => null}
+            onClick={handleEditModal}
           >
             {t('title.edit')}
           </Typography>
@@ -121,14 +127,14 @@ export default function MyTrip({ className, roomtype }: Props) {
               </Typography>
             )}
 
-            {childrens && (
+            {!!childrens && (
               <Typography variant='sm' className='mb-1 text-neutral-500'>
                 {childrens > 0 &&
                   `${childrens} ${t('children.' + ps(childrens))}`}
               </Typography>
             )}
 
-            {infants && (
+            {!!infants && (
               <Typography variant='sm' className='mb-1 text-neutral-500'>
                 {infants > 0 && `${infants} ${t('infant.' + ps(infants))}`}
               </Typography>
@@ -137,11 +143,16 @@ export default function MyTrip({ className, roomtype }: Props) {
           <Typography
             variant='sm'
             className='cursor-pointer text-neutral-500 underline'
-            onClick={() => null}
+            onClick={handleEditModal}
           >
             {t('title.edit')}
           </Typography>
         </div>
+
+        <EditTripComponent
+          isOpen={openEditModal}
+          onClose={() => handleEditModal(false)}
+        />
       </Section>
 
       <hr />

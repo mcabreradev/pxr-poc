@@ -180,7 +180,11 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
           </span>
         </div>
 
-        <Button className='mt-3 font-semibold' variant='primary' type='submit'>
+        <Button
+          className='mt-3 font-semibold md:w-full'
+          variant='primary'
+          type='submit'
+        >
           {t('button.login')}
         </Button>
       </form>

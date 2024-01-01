@@ -85,13 +85,17 @@ export default function FormForgotComponent({ className, roomtype }: Props) {
           </span>
         </div>
 
-        <Button className='mt-3 font-semibold' variant='primary' type='submit'>
+        <Button
+          className='mt-3 font-semibold md:w-full'
+          variant='primary'
+          type='submit'
+        >
           {t('button.send')}
         </Button>
 
         <Button
           variant='text'
-          className='mt-4 text-neutral-400 underline'
+          className='mt-4 text-neutral-400 underline md:w-full'
           type='link'
           href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
           replace={true}

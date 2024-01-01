@@ -2,7 +2,7 @@
 
 import useHydration from '@/hooks/use-hydration';
 
-import DetailsComponent from '@/features/guest-details/details';
+import DetailsComponent from '@/features/guest-details/page';
 
 type Props = {
   params: { roomtype: string };

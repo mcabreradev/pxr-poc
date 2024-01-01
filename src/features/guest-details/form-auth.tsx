@@ -114,7 +114,11 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
             {errors.email && errors.email.message}
           </span>
         </div>
-        <Button className='mt-3 font-semibold' variant='primary' type='submit'>
+        <Button
+          className='mt-3 font-semibold md:w-full'
+          variant='primary'
+          type='submit'
+        >
           {t('button.continue')}
         </Button>
       </form>
@@ -123,7 +127,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
 
       <div className='flex flex-col gap-5 py-3 pb-10'>
         <Button
-          className=''
+          className='md:w-full'
           variant='secondary'
           icon={<Icon variant='google' height='24' />}
           type='link'
@@ -134,7 +138,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
         </Button>
 
         <Button
-          className=''
+          className='md:w-full'
           variant='secondary'
           icon={<Icon variant='facebook' height='24' />}
           type='link'
@@ -145,7 +149,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
         </Button>
 
         <Button
-          className=''
+          className='md:w-full'
           variant='secondary'
           icon={<Icon variant='apple' height='24' />}
           type='link'

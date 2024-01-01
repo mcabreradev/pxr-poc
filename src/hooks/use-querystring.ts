@@ -7,7 +7,7 @@ const useQueryString = () => {
   const searchParams = useSearchParams();
 
   const createQueryString = useCallback(
-    (query: { [key: string]: string | number | Date }) => {
+    (query: { [key: string]: unknown }) => {
       const params = new URLSearchParams(searchParams);
       for (const key in query) {
         if (Object.prototype.hasOwnProperty.call(query, key)) {
@@ -30,8 +30,20 @@ const useQueryString = () => {
     [searchParams],
   );
 
+  const removeQueryStringParams = useCallback(
+    (keys) => {
+      const params = new URLSearchParams(searchParams);
+      keys.forEach((key) => {
+        params.delete(key);
+      });
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
   const updateQueryString = useCallback(
-    (query: { [key: string]: string | number | Date }) => {
+    (query: { [key: string]: unknown }) => {
       router.push(`${pathname}?${createQueryString(query)}`, {
         scroll: false,
       });
@@ -39,8 +51,18 @@ const useQueryString = () => {
     [createQueryString, pathname, router],
   );
 
+  const pushQueryString = useCallback(
+    (string: string) => {
+      router.push(`${pathname}?${string}`, {
+        scroll: false,
+      });
+      router.refresh();
+    },
+    [pathname, router],
+  );
+
   const updateQueryStringAsync = async (
-    query: { [key: string]: string | number | Date },
+    query: { [key: string]: unknown },
     time?: number,
   ) => {
     return new Promise((resolve) => {
@@ -67,12 +89,11 @@ const useQueryString = () => {
   const removeBlacklistParam = useCallback(
     (keys) => {
       if (keys && Array.isArray(keys)) {
-        keys.forEach((key) => {
-          removeQueryString(key);
-        });
+        const qs = removeQueryStringParams(keys);
+        pushQueryString(qs);
       }
     },
-    [removeQueryString],
+    [pushQueryString, removeQueryStringParams],
   );
 
   return {

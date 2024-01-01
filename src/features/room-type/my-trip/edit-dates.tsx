@@ -17,6 +17,7 @@ import useQueryString from '@/hooks/use-querystring';
 import useReservationStore from '@/store/use-reservation.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
+import useHydration from '@/hooks/use-hydration';
 import { selectRoomSchema } from '@/schemas';
 
 interface Props {
@@ -76,6 +77,11 @@ export default function EditGuestsComponent({ className }: Props) {
     });
     setReservation({ checkout: reFormatDate(endDate?.toString()) || '' });
   }, [endDate, setReservation, updateQueryString]);
+
+  const { isHydrated } = useHydration();
+  if (!isHydrated) {
+    return null;
+  }
 
   return (
     <Container className={cn(className)}>

@@ -54,7 +54,7 @@ const PropertyPage = memo(function HotelPage() {
   }, [checkin, checkout, refetch, inventory]);
 
   useEffect(() => {
-    removeBlacklistParam(['action']);
+    removeBlacklistParam(['action', 'extra', 'plan']);
   }, [removeBlacklistParam]);
 
   if (isLoading) {

@@ -1,16 +1,18 @@
-import { Fragment, useCallback, useState } from 'react';
+/* eslint-disable simple-import-sort/imports */
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import useQueryString from '@/hooks/use-querystring';
 import { formatCurrency } from '@/lib/number';
 import { cn } from '@/lib/utils';
 
 import Radio from '@/components/radio';
 import Typography from '@/components/typography';
 
-import { PLAN_NONREFUNDABLE, PLAN_REFUNDABLE } from '@/constants';
+import { PLAN, PLAN_NONREFUNDABLE, PLAN_REFUNDABLE } from '@/constants';
 
 type Props = {
-  plan: string;
+  plan: string | null | undefined;
   onChange: (event: unknown) => void;
 };
 
@@ -18,6 +20,7 @@ export default function CancelationPoliceComponent({ plan, onChange }: Props) {
   const { t } = useTranslation();
 
   const [selectedPlan, setSelectedPlan] = useState(plan);
+  const { updateQueryString } = useQueryString();
 
   const isRefundable = selectedPlan === PLAN_REFUNDABLE;
   const isNonRefundable = selectedPlan === PLAN_NONREFUNDABLE;
@@ -29,6 +32,11 @@ export default function CancelationPoliceComponent({ plan, onChange }: Props) {
     },
     [onChange],
   );
+
+  useEffect(() => {
+    if (!selectedPlan) return;
+    updateQueryString({ [PLAN]: selectedPlan });
+  }, [selectedPlan, updateQueryString]);
 
   return (
     <Fragment>

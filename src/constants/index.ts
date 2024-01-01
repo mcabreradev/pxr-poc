@@ -32,6 +32,7 @@ export const PLAN_NONREFUNDABLE = 'non-refundable';
 export const PLAN_BREAKFAST = 'breakfast';
 export const PLAN_NONBREAKFAST = 'non-breakfast';
 export const PLAN = 'plan';
+export const EXTRA = 'extra';
 
 // GUESTS
 export const CHECKIN = 'checkin';

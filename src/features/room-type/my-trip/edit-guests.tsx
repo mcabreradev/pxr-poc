@@ -148,7 +148,7 @@ export default function EditGuestsComponent({ className }: Props) {
                 />
               </div>
             </div>
-            <div className='flex items-center justify-between py-3'>
+            <div className='flex items-center justify-between pb-3'>
               <div className='flex flex-col items-start'>
                 <Typography variant='sm2'>{t('infant.plural')}</Typography>
                 <Typography variant='sm2' className='text-neutral-300'>

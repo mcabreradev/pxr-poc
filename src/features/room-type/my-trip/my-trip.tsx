@@ -1,9 +1,11 @@
+/* eslint-disable simple-import-sort/imports */
 import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useQueryString from '@/hooks/use-querystring';
 import { formatCurrency } from '@/lib/number';
 import { cn, ps } from '@/lib/utils';
 
@@ -16,18 +18,18 @@ import useReservation from '@/store/use-reservation.store';
 import {
   CHECKIN,
   CHECKOUT,
+  EXTRA,
   PLAN,
   PLAN_BREAKFAST,
   PLAN_NONBREAKFAST,
-  PLAN_NONREFUNDABLE,
   TOTAL_ADULTS,
   TOTAL_CHILDREN,
   TOTAL_INFANTS,
   URL,
 } from '@/constants';
-import EditTripComponent from '@/features/room-type/my-trip/edit-my-trip';
 
 import CancelationPolice from './cancelation-police';
+import EditTripComponent from './edit-my-trip';
 
 type Props = {
   className?: string;
@@ -46,21 +48,32 @@ export default function MyTrip({ className, roomtype }: Props) {
   dayjs.locale(i18n.language);
   const { reservation } = useReservation();
   const searchParams = useSearchParams();
+  const { updateQueryString } = useQueryString();
 
-  const checkin =
-    dayjs(searchParams.get(CHECKIN)) || dayjs(reservation?.checkin);
-  const checkout =
-    dayjs(searchParams.get(CHECKOUT)) || dayjs(reservation?.checkout);
+  const checkin = searchParams.get(CHECKIN)
+    ? dayjs(searchParams.get(CHECKIN))
+    : reservation?.checkin
+    ? dayjs(reservation?.checkin)
+    : dayjs(new Date());
+
+  const checkout = searchParams.get(CHECKOUT)
+    ? dayjs(searchParams.get(CHECKOUT))
+    : reservation?.checkin
+    ? dayjs(reservation?.checkout)
+    : dayjs(new Date());
+
   const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
   const childrens =
     Number(searchParams.get(TOTAL_CHILDREN)) || reservation?.childrens;
   const infants =
     Number(searchParams.get(TOTAL_INFANTS)) || reservation?.infants;
 
-  const [selectedPlan, setSelectedPlan] = useState<string>(() => {
-    return searchParams.get(PLAN) || PLAN_NONREFUNDABLE;
-  });
-  const [breakfast, setBreakfast] = useState<string>(PLAN_NONBREAKFAST);
+  const [selectedPlan, setSelectedPlan] = useState(
+    searchParams.get(PLAN) || reservation?.plan,
+  );
+  const [breakfast, setBreakfast] = useState(
+    searchParams.get(EXTRA) || reservation?.extra,
+  );
 
   const handlePlanChange = useCallback((event) => {
     const { value } = event.target;
@@ -81,6 +94,11 @@ export default function MyTrip({ className, roomtype }: Props) {
   const handleEditModal = useCallback((value = true) => {
     setEditModal(value);
   }, []);
+
+  useEffect(() => {
+    if (!breakfast) return;
+    updateQueryString({ [EXTRA]: breakfast });
+  }, [breakfast, updateQueryString]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>

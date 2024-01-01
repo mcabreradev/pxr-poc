@@ -11,7 +11,7 @@ type ToggleProps = {
   className?: string;
   label?: string;
   name?: string;
-  value?: string;
+  value?: string | null | undefined;
   subtitle?: string;
   disabled?: boolean;
   readonly?: boolean;

@@ -1,5 +1,6 @@
-import { create, StateCreator } from 'zustand';
-import { createJSONStorage, persist, PersistOptions } from 'zustand/middleware';
+import { create } from 'zustand';
+
+import { PLAN_NONBREAKFAST, PLAN_NONREFUNDABLE } from '@/constants';
 
 type Reservation = {
   checkin?: string | Date | null;
@@ -7,6 +8,8 @@ type Reservation = {
   adults?: number | null;
   childrens?: number | null;
   infants?: number | null;
+  plan?: string | null;
+  extra?: string | null;
 };
 
 type State = {
@@ -19,6 +22,8 @@ const initialReservationState: Reservation = {
   adults: null,
   childrens: null,
   infants: null,
+  plan: PLAN_NONREFUNDABLE,
+  extra: PLAN_NONBREAKFAST,
 };
 
 type Actions = {
@@ -31,66 +36,28 @@ type Actions = {
   setInfants: (i: number) => void;
 };
 
-// const useReservationStore = create<State & Actions>((set, get) => ({
-//   reservation: { ...initialReservationState },
+const useReservationStore = create<State & Actions>((set, get) => ({
+  reservation: { ...initialReservationState },
 
-//   setReservation: (r: Reservation) =>
-//     set(() => ({ reservation: { ...get().reservation, ...r } })),
+  setReservation: (reservation: Reservation) =>
+    set(() => ({ reservation: { ...get().reservation, ...reservation } })),
 
-//   setCheckin: (c: string | Date | null) =>
-//     set(() => ({ reservation: { ...get().reservation, checkin: c } })),
+  setCheckin: (checkin: string | Date | null) =>
+    set(() => ({ reservation: { ...get().reservation, checkin } })),
 
-//   setCheckout: (c: string | Date | null) =>
-//     set(() => ({ reservation: { ...get().reservation, checkout: c } })),
+  setCheckout: (checkout: string | Date | null) =>
+    set(() => ({ reservation: { ...get().reservation, checkout } })),
 
-//   setAdults: (a: number | null) =>
-//     set(() => ({ reservation: { ...get().reservation, adults: a } })),
+  setAdults: (adults: number | null) =>
+    set(() => ({ reservation: { ...get().reservation, adults } })),
 
-//   setChildrens: (c: number | null) =>
-//     set(() => ({ reservation: { ...get().reservation, childrens: c } })),
+  setChildrens: (childrens: number | null) =>
+    set(() => ({ reservation: { ...get().reservation, childrens } })),
 
-//   setInfants: (i: number | null) =>
-//     set(() => ({ reservation: { ...get().reservation, infants: i } })),
+  setInfants: (infants: number | null) =>
+    set(() => ({ reservation: { ...get().reservation, infants } })),
 
-//   resetReservation: () => set(() => ({ reservation: initialReservationState })),
-// }));
-
-type Persist = (
-  config: StateCreator<State & Actions>,
-  options: PersistOptions<State & Actions>,
-) => StateCreator<State & Actions>;
-
-const useReservationStore = create<State & Actions, []>(
-  (persist as Persist)(
-    (set, get): State & Actions => ({
-      reservation: { ...initialReservationState },
-
-      setReservation: (r: Reservation) =>
-        set(() => ({ reservation: { ...get().reservation, ...r } })),
-
-      setCheckin: (c: string | Date | null) =>
-        set(() => ({ reservation: { ...get().reservation, checkin: c } })),
-
-      setCheckout: (c: string | Date | null) =>
-        set(() => ({ reservation: { ...get().reservation, checkout: c } })),
-
-      setAdults: (a: number | null) =>
-        set(() => ({ reservation: { ...get().reservation, adults: a } })),
-
-      setChildrens: (c: number | null) =>
-        set(() => ({ reservation: { ...get().reservation, childrens: c } })),
-
-      setInfants: (i: number | null) =>
-        set(() => ({ reservation: { ...get().reservation, infants: i } })),
-
-      resetReservation: () =>
-        set(() => ({ reservation: initialReservationState })),
-    }),
-    {
-      name: 'reservation',
-      storage: createJSONStorage(() => sessionStorage),
-    },
-  ),
-);
+  resetReservation: () => set(() => ({ reservation: initialReservationState })),
+}));
 
 export default useReservationStore;

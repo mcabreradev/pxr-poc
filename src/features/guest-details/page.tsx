@@ -62,11 +62,11 @@ export default function DetailsComponent({ roomtype, action }: Props) {
         {t('title.room-confirm-reserve')}
       </BackButton>
 
-      <div className=' mb-16'>
+      <div className='mb-16'>
         <div className='layout relative flex flex-col md:flex-row-reverse'>
-          <div className='w-full md:box-border md:w-4/12 md:rounded md:border-[1px] md:border-solid md:border-neutral-50'>
+          <div className='w-full border-[1px] border-solid border-neutral-60 md:box-border md:w-4/12 md:rounded'>
             <section>
-              <div className='flex h-auto w-full flex-row items-center p-4'>
+              <div className='flex h-auto w-full flex-row items-center p-4 '>
                 <Image
                   src='/images/hotel/room-1.webp'
                   className='relative h-[75px] w-auto rounded'
@@ -204,8 +204,8 @@ export default function DetailsComponent({ roomtype, action }: Props) {
             </section>
           </div>
 
-          <div className='w-full md:w-8/12 md:px-12'>
-            <section className='p-4'>
+          <div className='w-full md:w-8/12'>
+            <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
               {actionLogin && <FormLoginComponent roomtype={roomtype} />}
               {actionAuth && <FormAuthComponent roomtype={roomtype} />}
               {actionRegister && <FormRegisterComponent roomtype={roomtype} />}

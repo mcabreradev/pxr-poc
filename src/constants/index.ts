@@ -33,17 +33,21 @@ export const PLAN_BREAKFAST = 'breakfast';
 export const PLAN_NONBREAKFAST = 'non-breakfast';
 export const PLAN = 'plan';
 export const EXTRA = 'extra';
+export const DAYS = 'days';
 
 // GUESTS
 export const CHECKIN = 'checkin';
 export const CHECKOUT = 'checkout';
 export const GUESTS = 'guests';
 export const TOTAL_GUESTS = 'totalGuests';
+export const ADULTS = 'adults';
 export const TOTAL_ADULTS = 'totalAdults';
 export const TOTAL_ADULTS_DEFAULT =
   Number(process.env.HOTEL_ADULTS_DEFAULT) || Number(2);
-export const TOTAL_CHILDREN = 'totalChildren';
-export const TOTAL_CHILDREN_DEFAULT = 0;
+export const CHILDRENS = 'childrens';
+export const TOTAL_CHILDRENS = 'totalChildren';
+export const TOTAL_CHILDRENS_DEFAULT = 0;
+export const INFANTS = 'infants';
 export const TOTAL_INFANTS = 'totalInfants';
 export const TOTAL_INFANTS_DEFAULT = 0;
 export const GUEST = 'guest';
@@ -153,3 +157,9 @@ export const LOCALES = {
   uruguay: { locale: 'es-UY', currency: 'UYU', currencyDisplay: 'symbol' },
   venezuela: { locale: 'es-VE', currency: 'VES', currencyDisplay: 'symbol' },
 };
+
+// hardcoded values
+export const PLAN_COST = 100;
+export const PLAN_BREAKFAST_COST = 10;
+export const PLAN_REFUNDABLE_PERCENT = 0.03;
+export const PLAN_TAXES = 0.15;

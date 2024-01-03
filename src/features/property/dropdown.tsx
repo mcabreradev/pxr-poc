@@ -7,7 +7,7 @@ import tw from 'tailwind-styled-components';
 import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
-import useReservationStore from '@/store/use-reservation.store';
+import useReservationStore from '@/store/use-reservation-persist.store';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
@@ -16,8 +16,8 @@ import Typography from '@/components/typography';
 import {
   TOTAL_ADULTS,
   TOTAL_ADULTS_DEFAULT,
-  TOTAL_CHILDREN,
-  TOTAL_CHILDREN_DEFAULT,
+  TOTAL_CHILDRENS,
+  TOTAL_CHILDRENS_DEFAULT,
   TOTAL_INFANTS,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
@@ -41,7 +41,7 @@ export default function DropdownComponent({ className }: Props) {
     Number(searchParams.get(TOTAL_ADULTS)) || TOTAL_ADULTS_DEFAULT,
   );
   const [childrens, setChildrens] = useState(
-    Number(searchParams.get(TOTAL_CHILDREN)) || TOTAL_CHILDREN_DEFAULT,
+    Number(searchParams.get(TOTAL_CHILDRENS)) || TOTAL_CHILDRENS_DEFAULT,
   );
   const [infants, setInfants] = useState(
     Number(searchParams.get(TOTAL_INFANTS)) || TOTAL_INFANTS_DEFAULT,
@@ -159,7 +159,7 @@ export default function DropdownComponent({ className }: Props) {
                     if (childrens === 0) return;
                     setChildrens(childrens - 1);
                     updateQueryString({
-                      [TOTAL_CHILDREN]: childrens - 1,
+                      [TOTAL_CHILDRENS]: childrens - 1,
                     });
                     setReservation({ childrens: childrens - 1 });
                   }}
@@ -178,7 +178,7 @@ export default function DropdownComponent({ className }: Props) {
                     if (childrens === 8) return;
                     setChildrens(childrens + 1);
                     updateQueryString({
-                      [TOTAL_CHILDREN]: childrens + 1,
+                      [TOTAL_CHILDRENS]: childrens + 1,
                     });
                     setReservation({ childrens: childrens + 1 });
                   }}

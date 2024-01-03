@@ -13,7 +13,7 @@ import Button from '@/components/button';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import useReservation from '@/store/use-reservation.store';
+import useReservation from '@/store/use-reservation-persist.store';
 
 import {
   CHECKIN,
@@ -21,13 +21,18 @@ import {
   EXTRA,
   PLAN,
   PLAN_BREAKFAST,
+  PLAN_BREAKFAST_COST,
+  PLAN_COST,
   PLAN_NONBREAKFAST,
+  PLAN_REFUNDABLE,
+  PLAN_REFUNDABLE_PERCENT,
+  PLAN_TAXES,
   TOTAL_ADULTS,
-  TOTAL_CHILDREN,
+  TOTAL_CHILDRENS,
   TOTAL_INFANTS,
-  URL,
 } from '@/constants';
 
+import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import CancelationPolice from './cancelation-police';
 import EditTripComponent from './edit-my-trip';
 
@@ -46,9 +51,10 @@ px-4 text-black md:px-0
 export default function MyTrip({ className, roomtype }: Props) {
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
-  const { reservation } = useReservation();
+  const { reservation, setReservation } = useReservation();
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
+  const { extra } = useSearchParamOrStore();
 
   const checkin = searchParams.get(CHECKIN)
     ? dayjs(searchParams.get(CHECKIN))
@@ -64,7 +70,7 @@ export default function MyTrip({ className, roomtype }: Props) {
 
   const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
   const childrens =
-    Number(searchParams.get(TOTAL_CHILDREN)) || reservation?.childrens;
+    Number(searchParams.get(TOTAL_CHILDRENS)) || reservation?.childrens;
   const infants =
     Number(searchParams.get(TOTAL_INFANTS)) || reservation?.infants;
 
@@ -84,11 +90,6 @@ export default function MyTrip({ className, roomtype }: Props) {
     const { checked } = event.target;
     setBreakfast(checked ? PLAN_BREAKFAST : PLAN_NONBREAKFAST);
   }, []);
-  const hasBreakfast = breakfast === PLAN_BREAKFAST;
-
-  const planCost = 100;
-  const planDays = checkout.diff(checkin, 'days');
-  const totalCost = planCost * planDays;
 
   const [openEditModal, setEditModal] = useState(false);
   const handleEditModal = useCallback((value = true) => {
@@ -99,6 +100,38 @@ export default function MyTrip({ className, roomtype }: Props) {
     if (!breakfast) return;
     updateQueryString({ [EXTRA]: breakfast });
   }, [breakfast, updateQueryString]);
+
+  const hasBreakfast = breakfast === PLAN_BREAKFAST;
+  const planCost = PLAN_COST;
+  const planDays = checkout.diff(checkin, 'days');
+  const totalCost = planCost * planDays;
+  const extraCost = PLAN_BREAKFAST_COST;
+  const extraCostTotal = extra === PLAN_BREAKFAST ? PLAN_BREAKFAST_COST : 0;
+  const cancelCost = totalCost * PLAN_REFUNDABLE_PERCENT;
+  const cancelationCost = selectedPlan === PLAN_REFUNDABLE ? cancelCost : 0;
+  const taxes = totalCost * PLAN_TAXES;
+  const total = totalCost + extraCostTotal + cancelationCost + taxes;
+
+  useEffect(() => {
+    setReservation({
+      planCost,
+      totalCost,
+      taxes,
+      extraCost: extraCostTotal,
+      cancelationCost,
+      total,
+      hasBreakfast,
+    });
+  }, [
+    cancelationCost,
+    extraCostTotal,
+    planCost,
+    setReservation,
+    taxes,
+    total,
+    totalCost,
+    hasBreakfast,
+  ]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>
@@ -190,7 +223,11 @@ export default function MyTrip({ className, roomtype }: Props) {
           </Typography>
         </div>
 
-        <CancelationPolice plan={selectedPlan} onChange={handlePlanChange} />
+        <CancelationPolice
+          plan={selectedPlan}
+          onChange={handlePlanChange}
+          cancelCost={cancelCost}
+        />
 
         <div className='flex flex-wrap justify-between pb-0 pt-2'>
           <div>
@@ -217,7 +254,7 @@ export default function MyTrip({ className, roomtype }: Props) {
               'text-gray-500': !hasBreakfast,
             })}
           >
-            + {formatCurrency(10.0)}
+            + {formatCurrency(extraCost)}
           </Typography>
         </div>
 
@@ -239,7 +276,7 @@ export default function MyTrip({ className, roomtype }: Props) {
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            + {formatCurrency(50.0)}
+            + {formatCurrency(taxes)}
           </Typography>
         </div>
 
@@ -249,7 +286,7 @@ export default function MyTrip({ className, roomtype }: Props) {
           </Typography>
 
           <Typography variant='sm' className='font-semibold text-neutral-500'>
-            {formatCurrency(450.0)}
+            {formatCurrency(total)}
           </Typography>
         </div>
 
@@ -260,7 +297,6 @@ export default function MyTrip({ className, roomtype }: Props) {
             type='link'
             href={`/room-type/${roomtype}/details`}
             withParams={true}
-            params={`${URL.ACTION}=auth`}
             fullWidth
           >
             {t('button.pay')}

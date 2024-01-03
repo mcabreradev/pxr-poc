@@ -41,7 +41,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
   const { removeBlacklistParam } = useQueryString();
 
   useEffect(() => {
-    removeBlacklistParam(['action']);
+    removeBlacklistParam(['']);
   }, [removeBlacklistParam]);
 
   if (isLoading) {

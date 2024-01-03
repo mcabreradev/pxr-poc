@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { PLAN_NONBREAKFAST, PLAN_NONREFUNDABLE } from '@/constants';
 
-type Reservation = {
+export type Reservation = {
   checkin?: string | Date | null;
   checkout?: string | Date | null;
   adults?: number | null;
@@ -10,10 +10,17 @@ type Reservation = {
   infants?: number | null;
   plan?: string | null;
   extra?: string | null;
+  planCost?: number | null;
+  totalCost?: number | null;
+  taxes?: number | null;
+  extraCost?: number | null;
+  cancelationCost?: number | null;
+  total?: number | null;
+  hasBreakfast?: boolean | null;
 };
 
 type State = {
-  reservation: Reservation | null;
+  reservation: Reservation;
 };
 
 const initialReservationState: Reservation = {
@@ -24,10 +31,18 @@ const initialReservationState: Reservation = {
   infants: null,
   plan: PLAN_NONREFUNDABLE,
   extra: PLAN_NONBREAKFAST,
+  planCost: null,
+  totalCost: null,
+  taxes: null,
+  extraCost: null,
+  cancelationCost: null,
+  total: null,
+  hasBreakfast: null,
 };
 
 type Actions = {
   setReservation: (u: Reservation) => void;
+  getReservationBy: (s: keyof Reservation) => void;
   resetReservation: () => void;
   setCheckin: (c: string) => void;
   setCheckout: (c: string) => void;
@@ -41,6 +56,11 @@ const useReservationStore = create<State & Actions>((set, get) => ({
 
   setReservation: (reservation: Reservation) =>
     set(() => ({ reservation: { ...get().reservation, ...reservation } })),
+
+  getReservationBy: (s: keyof Reservation) => {
+    const reservation = get().reservation as Reservation;
+    reservation[s as keyof Reservation];
+  },
 
   setCheckin: (checkin: string | Date | null) =>
     set(() => ({ reservation: { ...get().reservation, checkin } })),

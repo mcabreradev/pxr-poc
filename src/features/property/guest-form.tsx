@@ -16,7 +16,7 @@ import Typography from '@/components/typography';
 import Dropdown from './dropdown';
 
 import useQueryString from '@/hooks/use-querystring';
-import useReservationStore from '@/store/use-reservation.store';
+import useReservationStore from '@/store/use-reservation-persist.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
 import { selectRoomSchema } from '@/schemas';

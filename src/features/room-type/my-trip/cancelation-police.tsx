@@ -14,9 +14,14 @@ import { PLAN, PLAN_NONREFUNDABLE, PLAN_REFUNDABLE } from '@/constants';
 type Props = {
   plan: string | null | undefined;
   onChange: (event: unknown) => void;
+  cancelCost: number;
 };
 
-export default function CancelationPoliceComponent({ plan, onChange }: Props) {
+export default function CancelationPoliceComponent({
+  plan,
+  onChange,
+  cancelCost,
+}: Props) {
   const { t } = useTranslation();
 
   const [selectedPlan, setSelectedPlan] = useState(plan);
@@ -86,7 +91,7 @@ export default function CancelationPoliceComponent({ plan, onChange }: Props) {
             'text-gray-500': !isRefundable,
           })}
         >
-          + {formatCurrency(0.0)}
+          + {formatCurrency(cancelCost)}
         </Typography>
       </div>
     </Fragment>

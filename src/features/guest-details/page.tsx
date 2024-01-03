@@ -1,5 +1,4 @@
 /* eslint-disable simple-import-sort/imports */
-import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -8,11 +7,11 @@ import useFetchProperty from '@/queries/use-property';
 import useRoomTypeQuery from '@/queries/use-roomtype';
 
 import BackButton from '@/components/common/back-button';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
 
-import { QUERY } from '@/constants';
+import { ACTION, QUERY } from '@/constants';
 
+import MyTripDetails from '@/features/guest-details/my-trip-details';
+import { useSearchParams } from 'next/navigation';
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
 import FormLoginComponent from './form-login';
@@ -21,24 +20,22 @@ import GuestSkeletonComponent from './guest-skeleton';
 
 type Props = {
   roomtype: string;
-  action?: string;
 };
 
 const Container = tw.div`
 `;
 
-const HR = tw.div`
-  hr border-t-[10px] border-neutral-60
-`;
-
-export default function DetailsComponent({ roomtype, action }: Props) {
-  const { t, i18n } = useTranslation();
+export default function DetailsComponent({ roomtype }: Props) {
+  const { t } = useTranslation();
   const { isError, isLoading, data: property } = useFetchProperty();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomtype);
+
+  const searchParams = useSearchParams();
+  const action = searchParams.get(ACTION);
 
   const actionAuth = action === QUERY.AUTH || !action;
   const actionLogin = action === QUERY.LOGIN;
@@ -64,145 +61,7 @@ export default function DetailsComponent({ roomtype, action }: Props) {
 
       <div className='mb-16'>
         <div className='layout relative flex flex-col md:flex-row-reverse'>
-          <div className='w-full border-[1px] border-solid border-neutral-60 md:box-border md:w-4/12 md:rounded'>
-            <section>
-              <div className='flex h-auto w-full flex-row items-center p-4 '>
-                <Image
-                  src='/images/hotel/room-1.webp'
-                  className='relative h-[75px] w-auto rounded'
-                  width={1}
-                  height={1}
-                  alt='room'
-                />
-                <div className='pl-3'>
-                  <Typography
-                    variant='base'
-                    weight='semibold'
-                    className='text-neutral-400'
-                  >
-                    {property.name}
-                  </Typography>
-
-                  <Typography
-                    variant='xs'
-                    weight='normal'
-                    className='text-neutral-400'
-                  >
-                    {`${property.street}`}
-                  </Typography>
-
-                  <div className='flex flex-row items-center text-[12px] text-neutral-500'>
-                    <Icon variant='star' width='16px' />
-                    <p>{property.reviewRatingScore}</p>
-                    <p className='pl-1 text-neutral-400'>{`(${property.reviewRatingCount})`}</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <HR />
-
-            <section className='px-4'>
-              <Typography variant='h2' weight='normal'>
-                {t('title.my-trip')}
-              </Typography>
-              <div className='flex flex-wrap justify-between py-2'>
-                <div>
-                  <Typography
-                    variant='sm'
-                    weight='semibold'
-                    className='text-neutral-400'
-                  >
-                    {t('date.plural')}
-                  </Typography>
-                  <Typography variant='sm' className='text-neutral-500'>
-                    07 may 2023 - 11 may 2023
-                  </Typography>
-                </div>
-              </div>
-              <div className='flex flex-wrap justify-between py-2'>
-                <div>
-                  <Typography
-                    variant='sm'
-                    weight='semibold'
-                    className='text-neutral-400'
-                  >
-                    {t('guest.plural')}
-                  </Typography>
-                  <Typography variant='sm' className='text-neutral-500'>
-                    2 {t('guest.adult.plural')}
-                  </Typography>
-                </div>
-              </div>
-            </section>
-
-            <HR />
-
-            <section className='px-4'>
-              <Typography variant='h2' weight='normal'>
-                {t('title.price-details')}
-              </Typography>
-              <div className='flex flex-wrap justify-between py-3'>
-                <div>
-                  <Typography
-                    variant='sm'
-                    weight='semibold'
-                    className='text-neutral-500'
-                  >
-                    {room.name[i18n.language]}
-                  </Typography>
-                  <Typography variant='sm' className='text-neutral-500'>
-                    4 {t('night.plural')}
-                  </Typography>
-                  <Typography variant='sm' className='text-neutral-500'>
-                    {t('info.non-refundable')}
-                  </Typography>
-                </div>
-
-                <Typography variant='sm' className='text-neutral-500'>
-                  $ 400.00
-                </Typography>
-              </div>
-
-              <div className='flex flex-wrap justify-between pb-0 pt-4'>
-                <div>
-                  <Typography
-                    variant='sm'
-                    weight='semibold'
-                    className='text-neutral-400'
-                  >
-                    {t('info.taxes')}
-                  </Typography>
-                </div>
-              </div>
-
-              <div className='flex flex-wrap justify-between py-1'>
-                <Typography variant='xs' className='w-3/4 text-neutral-500'>
-                  {t('info.taxes-description')}
-                </Typography>
-
-                <Typography variant='sm' className='text-neutral-500'>
-                  +$ 50.00
-                </Typography>
-              </div>
-
-              <div className='flex flex-wrap justify-between py-3'>
-                <Typography
-                  variant='sm'
-                  className='font-semibold text-neutral-500'
-                >
-                  Total (USD)
-                </Typography>
-
-                <Typography
-                  variant='sm'
-                  className='font-semibold text-neutral-500'
-                >
-                  $ 450.00
-                </Typography>
-              </div>
-            </section>
-          </div>
+          <MyTripDetails property={property} room={room} />
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>

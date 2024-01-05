@@ -81,8 +81,7 @@ export default function MyTrip({ className, roomtype }: Props) {
     searchParams.get(EXTRA) || reservation?.extra,
   );
 
-  const handlePlanChange = useCallback((event) => {
-    const { value } = event.target;
+  const handleCancelationPlan = useCallback((value) => {
     setSelectedPlan(value);
   }, []);
 
@@ -99,7 +98,7 @@ export default function MyTrip({ className, roomtype }: Props) {
   useEffect(() => {
     if (!breakfast) return;
     updateQueryString({ [EXTRA]: breakfast });
-  }, [breakfast, updateQueryString]);
+  }, [breakfast, updateQueryString, setBreakfast]);
 
   const hasBreakfast = breakfast === PLAN_BREAKFAST;
   const planCost = PLAN_COST;
@@ -121,8 +120,11 @@ export default function MyTrip({ className, roomtype }: Props) {
       cancelationCost,
       total,
       hasBreakfast,
+      extra: breakfast,
+      plan: selectedPlan,
     });
   }, [
+    breakfast,
     cancelationCost,
     extraCostTotal,
     planCost,
@@ -131,6 +133,7 @@ export default function MyTrip({ className, roomtype }: Props) {
     total,
     totalCost,
     hasBreakfast,
+    selectedPlan,
   ]);
 
   return (
@@ -225,7 +228,7 @@ export default function MyTrip({ className, roomtype }: Props) {
 
         <CancelationPolice
           plan={selectedPlan}
-          onChange={handlePlanChange}
+          onChange={handleCancelationPlan}
           cancelCost={cancelCost}
         />
 
@@ -246,6 +249,7 @@ export default function MyTrip({ className, roomtype }: Props) {
             label={t('breakfast')}
             value={breakfast}
             onChange={handleBreakfast}
+            toggled={hasBreakfast}
           />
 
           <Typography
@@ -296,7 +300,7 @@ export default function MyTrip({ className, roomtype }: Props) {
             variant='primary'
             type='link'
             href={`/room-type/${roomtype}/details`}
-            withParams={true}
+            withSearchParams={true}
             fullWidth
           >
             {t('button.pay')}

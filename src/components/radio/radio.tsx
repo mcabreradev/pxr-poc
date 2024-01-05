@@ -48,7 +48,6 @@ export default function Radio({
   labelClassName,
   subtitleClassName,
   onChange,
-  defaultChecked = false,
 }: Props) {
   return (
     <Content>
@@ -58,9 +57,9 @@ export default function Radio({
         id={id}
         name={name}
         value={value}
+        checked={checked}
         disabled={disabled}
         onChange={onChange}
-        defaultChecked={defaultChecked}
       />
       <LabelContainer>
         {!!label && (

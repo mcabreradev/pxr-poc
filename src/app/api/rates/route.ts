@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const from = request.nextUrl.searchParams.get('from');
   const to = request.nextUrl.searchParams.get('to');
   const res = await api.get(
-    `/inventory/${propertyId}/rates?from=${from}&to=${to}`,
+    `/v1/dev/inventory/${propertyId}/rates?from=${from}&to=${to}`,
   );
 
   return NextResponse.json(res.products);

@@ -11,6 +11,7 @@ import useReservation from '@/store/use-reservation-persist.store';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { PLAN_BREAKFAST } from '@/constants';
 import { formatCurrency } from '@/lib/number';
 import type { PropertyType } from '@/types';
 
@@ -45,14 +46,13 @@ export default function MyTripDetails({ property, room }: Props) {
   const childrens = Number(getChildrens());
   const infants = Number(getInfants());
 
+  const hasBreakfast = reservation.extra === PLAN_BREAKFAST;
   const planDays = checkout.diff(checkin, 'days');
   const totalCost = reservation.totalCost ?? 0;
   const extraCostTotal = extra ? 10 : 0;
   const taxes = reservation.taxes ?? 0;
   // const cancelationCost = reservation.cancelationCost ?? 0;
   const total = reservation.total ?? 0;
-
-  // console.log(reservation);
 
   return (
     <div
@@ -166,7 +166,7 @@ export default function MyTripDetails({ property, room }: Props) {
           </Typography>
         </div>
 
-        {extraCostTotal && (
+        {hasBreakfast && (
           <>
             <div className='flex flex-wrap justify-between pb-0 pt-4'>
               <div>
@@ -182,7 +182,7 @@ export default function MyTripDetails({ property, room }: Props) {
 
             <div className='flex flex-wrap justify-between py-1'>
               <Typography variant='xs' className='w-3/4 text-neutral-500'>
-                {t('info.taxes-description')}
+                {t(`info.${reservation.extra}`)}
               </Typography>
 
               <Typography variant='sm' className='text-neutral-500'>

@@ -127,9 +127,9 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
             </span>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.email && errors.email.message}
-          </span>
+          </Typography>
         </div>
 
         <div className='mb-3 flex flex-col flex-wrap justify-between gap-4 py-3'>
@@ -175,9 +175,9 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
             </div>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.password && errors.password.message}
-          </span>
+          </Typography>
         </div>
 
         <Button

@@ -125,7 +125,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
             </Section>
 
             <Section>
-              <div className='py-4 pb-7'>
+              <div className='py-4 pb-7 md:w-96'>
                 <Typography variant='h2' weight='normal'>
                   {t('title.hotel-rules')}
                 </Typography>

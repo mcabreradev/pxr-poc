@@ -4,7 +4,7 @@ import api from '@/lib/api-cache';
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const res = await api.post(`/payment/create`, body);
+  const res = await api.post(`/v2/dev/payment/create`, body);
 
   return NextResponse.json({ clientSecret: res.clientSecret });
 }

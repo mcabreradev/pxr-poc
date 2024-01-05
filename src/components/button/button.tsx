@@ -8,6 +8,8 @@ import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
+import { ACTION } from '@/constants';
+
 interface ButtonProps {
   id?: string;
   type?: 'submit' | 'link' | 'button';
@@ -22,8 +24,8 @@ interface ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
-  withParams?: boolean;
-  params?: string;
+  withSearchParams?: boolean;
+  query?: { [key: string]: string };
   variant?:
     | 'primary'
     | 'secondary'
@@ -63,12 +65,12 @@ export default function Button({
   onMouseEnter,
   onMouseLeave,
   ref,
-  href,
+  href = '',
   icon,
   replace = true,
   scroll = true,
-  params,
-  withParams = false,
+  query,
+  withSearchParams = false,
   ...props
 }: ButtonProps) {
   const styling = {
@@ -83,15 +85,17 @@ export default function Button({
   const searchParams = useSearchParams();
 
   if (type === 'link') {
+    const params = new URLSearchParams(query);
+    const search = new URLSearchParams(searchParams.toString());
+    search.delete(ACTION);
+
+    const url = withSearchParams
+      ? `${href}?${params}&${search}`
+      : `${href}?${params}`;
+
     return (
       <Link
-        href={
-          withParams
-            ? `${href}?${
-                searchParams.toString() + (params ? `&${params}` : '')
-              }`
-            : href || '/'
-        }
+        href={url}
         className={cn({ 'w-full': fullWidth })}
         replace={replace}
         scroll={scroll}

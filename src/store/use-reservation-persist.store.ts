@@ -1,8 +1,6 @@
 import { create, StateCreator } from 'zustand';
 import { createJSONStorage, persist, PersistOptions } from 'zustand/middleware';
 
-import { PLAN_NONBREAKFAST, PLAN_NONREFUNDABLE } from '@/constants';
-
 export type Reservation = {
   checkin?: string | Date | null;
   checkout?: string | Date | null;
@@ -30,8 +28,8 @@ const initialReservationState: Reservation = {
   adults: null,
   childrens: null,
   infants: null,
-  plan: PLAN_NONREFUNDABLE,
-  extra: PLAN_NONBREAKFAST,
+  plan: null,
+  extra: null,
   planCost: null,
   totalCost: null,
   taxes: null,

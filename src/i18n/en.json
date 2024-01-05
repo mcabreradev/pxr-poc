@@ -90,12 +90,13 @@
     }
   },
   "from": "from",
+  "Guest": "Guest",
   "guest": {
     "adult": {
       "plural": "adults",
       "singular": "adult"
     },
-    "childre": {
+    "children": {
       "plural": "childrens",
       "singular": "child"
     },

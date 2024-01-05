@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Toggle from 'react-toggle';
 import tw from 'tailwind-styled-components';
 
@@ -53,11 +53,17 @@ export default function ToggleComponent({
 }: ToggleProps) {
   const [enabled, setEnabled] = useState(false);
 
+  const checkboxRef = useRef<HTMLInputElement>(null);
+
   const onChangeHandler = (e) => {
     if (readonly) return;
     setEnabled((prev) => !prev);
     onChange && onChange(e);
   };
+
+  useEffect(() => {
+    toggled && setEnabled(true);
+  }, [toggled]);
 
   return (
     <Content>
@@ -65,6 +71,7 @@ export default function ToggleComponent({
         id={id}
         name={name}
         value={value}
+        ref={checkboxRef}
         checked={enabled || toggled}
         onChange={onChangeHandler}
         className={className}

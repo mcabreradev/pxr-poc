@@ -133,6 +133,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           type='link'
           href={`/room-type/${roomtype}/payment`}
           replace={true}
+          withSearchParams={true}
         >
           {t('button.google')}
         </Button>
@@ -142,8 +143,10 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           variant='secondary'
           icon={<Icon variant='facebook' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
+          href={`/room-type/${roomtype}/details`}
           replace={true}
+          withSearchParams={true}
+          query={{ [URL.ACTION]: 'login' }}
         >
           {t('button.facebook')}
         </Button>
@@ -153,8 +156,10 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           variant='secondary'
           icon={<Icon variant='apple' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details?${URL.ACTION}=register`}
+          href={`/room-type/${roomtype}/details`}
           replace={true}
+          withSearchParams={true}
+          query={{ [URL.ACTION]: 'register' }}
         >
           {t('button.apple')}
         </Button>

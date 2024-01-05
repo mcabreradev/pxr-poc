@@ -6,7 +6,9 @@ import { getFirstOwnProperty } from '@/lib/helper';
 export async function GET(request: NextRequest) {
   const propertyId = request.nextUrl.searchParams.get('propertyId');
   const roomtype = request.nextUrl.searchParams.get('roomtype');
-  const res = await api.get(`/property/${propertyId}/roomtype/${roomtype}`);
+  const res = await api.get(
+    `/v1/dev/property/${propertyId}/roomtype/${roomtype}`,
+  );
   const room = getFirstOwnProperty(res.roomTypes);
 
   return NextResponse.json(room);

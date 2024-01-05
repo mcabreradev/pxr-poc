@@ -8,7 +8,7 @@ import Typography from '@/components/typography';
 interface Props {
   className?: string;
   href?: string;
-  withParams?: boolean;
+  withSearchParams?: boolean;
   children: React.ReactNode;
 }
 
@@ -16,12 +16,12 @@ export default function BackButtonComponent({
   href = '',
   children,
   className = 'layout',
-  withParams = true,
+  withSearchParams = true,
 }: Props) {
   return (
     <>
       <Link
-        href={withParams ? `${href}${window.location.search}` : href}
+        href={withSearchParams ? `${href}${window.location.search}` : href}
         data-testid='test-element'
       >
         <div

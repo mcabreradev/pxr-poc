@@ -27,12 +27,12 @@ export default function CancelationPoliceComponent({
   const [selectedPlan, setSelectedPlan] = useState(plan);
   const { updateQueryString } = useQueryString();
 
-  const isRefundable = selectedPlan === PLAN_REFUNDABLE;
-  const isNonRefundable = selectedPlan === PLAN_NONREFUNDABLE;
+  const isRefundable = (selectedPlan || plan) === PLAN_REFUNDABLE;
+  const isNonRefundable = (selectedPlan || plan) === PLAN_NONREFUNDABLE;
 
   const handlePlanChange = useCallback(
     (event) => {
-      onChange(event);
+      onChange(event.target.value);
       setSelectedPlan(event.target.value);
     },
     [onChange],
@@ -41,7 +41,9 @@ export default function CancelationPoliceComponent({
   useEffect(() => {
     if (!selectedPlan) return;
     updateQueryString({ [PLAN]: selectedPlan });
-  }, [selectedPlan, updateQueryString]);
+    onChange(plan ?? selectedPlan);
+    setSelectedPlan(plan ?? selectedPlan);
+  }, [onChange, plan, selectedPlan, updateQueryString]);
 
   return (
     <Fragment>
@@ -64,7 +66,6 @@ export default function CancelationPoliceComponent({
           value={PLAN_NONREFUNDABLE}
           checked={isNonRefundable}
           onChange={handlePlanChange}
-          defaultChecked
         />
         <Typography
           variant='sm'

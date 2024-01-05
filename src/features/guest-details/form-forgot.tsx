@@ -80,9 +80,9 @@ export default function FormForgotComponent({ className, roomtype }: Props) {
             </span>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.email && errors.email.message}
-          </span>
+          </Typography>
         </div>
 
         <Button

@@ -1,5 +1,4 @@
 /* eslint-disable simple-import-sort/imports */
-import { useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -7,6 +6,7 @@ import tw from 'tailwind-styled-components';
 import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
+import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import useReservationStore from '@/store/use-reservation-persist.store';
 
 import Button from '@/components/button';
@@ -32,20 +32,16 @@ flex items-center justify-center
 
 export default function DropdownComponent({ className }: Props) {
   const { t } = useTranslation();
-  const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { setReservation } = useReservationStore();
   const [open, setOpen] = useState(false);
+  const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
 
-  const [adults, setAdults] = useState(
-    Number(searchParams.get(TOTAL_ADULTS)) || TOTAL_ADULTS_DEFAULT,
-  );
+  const [adults, setAdults] = useState(getAdults() || TOTAL_ADULTS_DEFAULT);
   const [childrens, setChildrens] = useState(
-    Number(searchParams.get(TOTAL_CHILDRENS)) || TOTAL_CHILDRENS_DEFAULT,
+    getChildrens() || TOTAL_CHILDRENS_DEFAULT,
   );
-  const [infants, setInfants] = useState(
-    Number(searchParams.get(TOTAL_INFANTS)) || TOTAL_INFANTS_DEFAULT,
-  );
+  const [infants, setInfants] = useState(getInfants() || TOTAL_INFANTS_DEFAULT);
 
   const onClick = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);

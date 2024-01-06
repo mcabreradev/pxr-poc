@@ -1,3 +1,4 @@
+import zukeeper from 'zukeeper';
 import { create } from 'zustand';
 
 type State = {
@@ -10,11 +11,13 @@ type Actions = {
   remove: () => void;
 };
 
-const useCount = create<State & Actions>((set, get) => ({
-  count: 0,
-  inc: () => set(() => ({ count: get().count + 1 })),
-  dec: () => set(() => ({ count: get().count - 1 })),
-  remove: () => set({ count: 0 }),
-}));
+const useCount = create<State & Actions>()(
+  zukeeper((set, get) => ({
+    count: 0,
+    inc: () => set(() => ({ count: get().count + 1 })),
+    dec: () => set(() => ({ count: get().count - 1 })),
+    remove: () => set({ count: 0 }),
+  })),
+);
 
 export default useCount;

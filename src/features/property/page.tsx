@@ -18,6 +18,7 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import useReservationStore from '@/store/use-reservation-persist.store';
 import PropertyAmenities from './amenities';
 import data from './data.json';
 import GuestForm from './guest-form';
@@ -39,6 +40,7 @@ const PropertyPage = memo(function HotelPage() {
   const searchParams = useSearchParams();
   const { isLoading, isError, data: property } = useFetchProperty();
   const { removeBlacklistParam } = useQueryString();
+  const { resetReservation } = useReservationStore();
 
   const checkin = searchParams.get('checkin');
   const checkout = searchParams.get('checkout');
@@ -55,7 +57,8 @@ const PropertyPage = memo(function HotelPage() {
 
   useEffect(() => {
     removeBlacklistParam(['action', 'extra', 'plan']);
-  }, [removeBlacklistParam]);
+    resetReservation();
+  }, [removeBlacklistParam, resetReservation]);
 
   if (isLoading) {
     return <Skeleton />;

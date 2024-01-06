@@ -64,7 +64,9 @@ export default function Radio({
       <LabelContainer>
         {!!label && (
           <Label
-            className={cn(labelClassName, { 'text-gray-500': !checked })}
+            className={cn(labelClassName, 'transition-colors duration-500', {
+              'text-gray-500': !checked,
+            })}
             htmlFor={id}
           >
             {label}
@@ -72,7 +74,9 @@ export default function Radio({
         )}
         {!!subtitle && (
           <Subtitle
-            className={cn(subtitleClassName, { 'text-gray-500': !checked })}
+            className={cn(subtitleClassName, 'transition-colors duration-500', {
+              'text-gray-500': !checked,
+            })}
             htmlFor={id}
           >
             {subtitle}

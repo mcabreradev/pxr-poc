@@ -163,3 +163,4 @@ export const PLAN_COST = 100;
 export const PLAN_BREAKFAST_COST = 10;
 export const PLAN_REFUNDABLE_PERCENT = 0.03;
 export const PLAN_TAXES = 0.15;
+export const PLAN_COSTS = [100, 150, 200, 250, 300, 350, 400, 450, 500];

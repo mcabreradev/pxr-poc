@@ -1,6 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -16,9 +15,11 @@ import Typography from '@/components/typography';
 import Dropdown from './dropdown';
 
 import useQueryString from '@/hooks/use-querystring';
+import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import useReservationStore from '@/store/use-reservation-persist.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
+import { formatCurrency } from '@/lib/number';
 import { selectRoomSchema } from '@/schemas';
 
 interface Props {
@@ -34,18 +35,18 @@ const Container = tw.div`
 sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded border-[1px] border-solid border-neutral-50 bg-white p-5 drop-shadow-lg`;
 
 export default function GuestFormComponent({ className }: Props) {
-  const searchParams = useSearchParams();
   const { t } = useTranslation();
   const { locale } = useLocale();
-  const { setReservation } = useReservationStore();
+  const { setReservation, reservation } = useReservationStore();
   const { updateQueryString } = useQueryString();
+  const { getCheckin, getCheckout } = useSearchParamOrStore();
 
-  const checkin = formatDate(searchParams.get(CHECKIN));
+  const checkin = formatDate(getCheckin());
   const [startDate, setStartDate] = useState<Date | null>(
     checkin ? new Date(checkin) : new Date(),
   );
 
-  const checkout = formatDate(searchParams.get(CHECKOUT));
+  const checkout = formatDate(getCheckout());
   const [endDate, setEndDate] = useState<Date | null>(
     checkout ? new Date(checkout) : null,
   );
@@ -169,15 +170,22 @@ export default function GuestFormComponent({ className }: Props) {
 
         <hr />
 
-        <Typography variant='sm' weight='semibold' className='mb-4'>
-          Desde $100.00 x noche
-        </Typography>
+        {reservation.selectedRoom && (
+          <Typography variant='sm' weight='semibold' className='mb-4'>
+            Desde{' '}
+            {`${formatCurrency(
+              Number(reservation.selectedRoom.roomPrice) ?? 0,
+            )}`}{' '}
+            x noche
+          </Typography>
+        )}
 
         <Button
           type='button'
           scroll={true}
           className='mb-4 md:mb-0 md:w-full'
           onClick={() => null}
+          disabled={!reservation.selectedRoom}
         >
           {t('button.choose-room')}
         </Button>

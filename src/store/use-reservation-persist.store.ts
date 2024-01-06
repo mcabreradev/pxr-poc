@@ -16,6 +16,7 @@ export type Reservation = {
   cancelationCost?: number | null;
   total?: number | null;
   hasBreakfast?: boolean | null;
+  selectedRoom?: { [key: string]: string | number | null | undefined };
 };
 
 type State = {
@@ -37,6 +38,7 @@ const initialReservationState: Reservation = {
   cancelationCost: null,
   total: null,
   hasBreakfast: null,
+  selectedRoom: {},
 };
 
 type Actions = {

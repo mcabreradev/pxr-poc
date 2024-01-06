@@ -51,7 +51,6 @@ export default function MyTripDetails({ property, room }: Props) {
   const totalCost = reservation.totalCost ?? 0;
   const extraCostTotal = extra ? 10 : 0;
   const taxes = reservation.taxes ?? 0;
-  // const cancelationCost = reservation.cancelationCost ?? 0;
   const total = reservation.total ?? 0;
 
   return (

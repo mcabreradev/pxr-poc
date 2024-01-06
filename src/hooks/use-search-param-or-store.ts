@@ -37,27 +37,37 @@ const useSearchParamOrStore = () => {
     () => getByQueryParamOrStoreItem(CHECKIN, CHECKIN) || undefined,
     [getByQueryParamOrStoreItem],
   );
+
   const getCheckout = useCallback(
     () => getByQueryParamOrStoreItem(CHECKOUT, CHECKOUT) || undefined,
     [getByQueryParamOrStoreItem],
   );
+
   const getAdults = useCallback(
     () =>
-      getByQueryParamOrStoreItem(TOTAL_ADULTS, ADULTS) || TOTAL_ADULTS_DEFAULT,
+      Number(
+        getByQueryParamOrStoreItem(TOTAL_ADULTS, ADULTS) ||
+          TOTAL_ADULTS_DEFAULT,
+      ),
     [getByQueryParamOrStoreItem],
   );
+
   const getChildrens = useCallback(
-    () => getByQueryParamOrStoreItem(TOTAL_CHILDRENS, CHILDRENS) || null,
+    () =>
+      Number(getByQueryParamOrStoreItem(TOTAL_CHILDRENS, CHILDRENS) || null),
     [getByQueryParamOrStoreItem],
   );
+
   const getInfants = useCallback(
-    () => getByQueryParamOrStoreItem(TOTAL_INFANTS, INFANTS) || null,
+    () => Number(getByQueryParamOrStoreItem(TOTAL_INFANTS, INFANTS) || null),
     [getByQueryParamOrStoreItem],
   );
+
   const getPlan = useCallback(
     () => getByQueryParamOrStoreItem(PLAN, PLAN),
     [getByQueryParamOrStoreItem],
   );
+
   const getExtra = useCallback(
     () => getByQueryParamOrStoreItem(EXTRA, EXTRA),
     [getByQueryParamOrStoreItem],

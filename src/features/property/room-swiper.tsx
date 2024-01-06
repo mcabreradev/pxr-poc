@@ -1,12 +1,18 @@
-// import { useSearchParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
+
+import { formatCurrency } from '@/lib/number';
+import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import useReservationStore from '@/store/use-reservation-persist.store';
+
+import { PLAN_COSTS } from '@/constants';
 import useRoomTypesQuery from '@/queries/use-roomtypes';
 
 const Rooms = tw.div`
@@ -16,8 +22,20 @@ const Rooms = tw.div`
 export default function RoomSwiper() {
   const { t, i18n } = useTranslation();
   const { isLoading, isError, data: roomtypes } = useRoomTypesQuery();
-  // const searchParams = useSearchParams();
-  // const paramList = searchParams.toString();
+  const [selectedRoom, setSelectedRoom] = useState<string | number | null>(
+    null,
+  );
+  const { setReservation } = useReservationStore();
+
+  const handleClick = useCallback(
+    (room: { [key: string]: string | number | null }, index?: number) => {
+      setSelectedRoom(room.id);
+      setReservation({
+        selectedRoom: { ...room, roomPrice: PLAN_COSTS[index as number] },
+      });
+    },
+    [setSelectedRoom, setReservation],
+  );
 
   if (isLoading) {
     return 'loading';
@@ -30,9 +48,16 @@ export default function RoomSwiper() {
   return (
     <Swiper className='md:w-[570px]' withArrow={true} scroll={300}>
       {roomtypes.map((room, index) => (
-        <Rooms key={`holtel-room-${index}`}>
+        <Rooms
+          key={`hotel-room-${index}`}
+          className={cn({
+            'cursor-pointer opacity-80 transition-shadow duration-300 hover:shadow-lg':
+              true,
+            'opacity-100 shadow-lg': selectedRoom === room.id,
+          })}
+        >
           <Image
-            alt='alt'
+            alt={room.name}
             src={`/images/hotel/room${index + 1}.webp`}
             width={271}
             height={235}
@@ -51,15 +76,14 @@ export default function RoomSwiper() {
               {room.standardCapacity} {t('person.plural')}
             </Typography>
             <Typography className='pb-5' variant='base'>
-              {t('from')} <b>${room.price}/</b>
+              {t('from')} <b>{formatCurrency(PLAN_COSTS[index])}/</b>
               {t('night.singular')}
             </Typography>
+
             <Button
-              type='link'
-              href={`/room-type/${room.id}`}
+              type='button'
               className='mb-4 md:w-full'
-              scroll={true}
-              withSearchParams={true}
+              onClick={() => handleClick(room, index)}
             >
               {t('button.reserve')}
             </Button>

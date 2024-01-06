@@ -136,6 +136,14 @@ export default function MyTrip({ className, roomtype }: Props) {
     selectedPlan,
   ]);
 
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(true);
+    const timer = setTimeout(() => setAnimate(false), 200);
+    return () => clearTimeout(timer);
+  }, [total]);
+
   return (
     <Container className={cn(className)} data-testid='test-element'>
       <Section>
@@ -289,7 +297,13 @@ export default function MyTrip({ className, roomtype }: Props) {
             Total (USD)
           </Typography>
 
-          <Typography variant='sm' className='font-semibold text-neutral-500'>
+          <Typography
+            variant='sm'
+            className={cn(
+              'font-semibold text-neutral-500 transition-colors duration-500',
+              { 'animate-pulse': animate },
+            )}
+          >
             {formatCurrency(total)}
           </Typography>
         </div>

@@ -81,10 +81,20 @@ export default function ToggleComponent({
       />
       <LabelContainer>
         {!!label && (
-          <Label className={cn({ 'text-gray-500': !enabled })}>{label}</Label>
+          <Label
+            className={cn('transition-colors duration-500', {
+              'text-gray-500': !enabled,
+            })}
+          >
+            {label}
+          </Label>
         )}
         {!!subtitle && (
-          <Subtitle className={cn({ 'text-gray-500': !enabled })}>
+          <Subtitle
+            className={cn('transition-colors duration-500', {
+              'text-gray-500': !enabled,
+            })}
+          >
             {subtitle}
           </Subtitle>
         )}

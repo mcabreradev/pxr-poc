@@ -1,9 +1,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
-import useReservationStore, {
-  Reservation,
-} from '@/store/use-reservation-persist.store';
+import useReservationStore from '@/store/use-reservation-persist.store';
 
 import {
   ADULTS,
@@ -18,6 +16,8 @@ import {
   TOTAL_CHILDRENS,
   TOTAL_INFANTS,
 } from '@/constants';
+
+import { Reservation } from '@/types';
 
 const useSearchParamOrStore = () => {
   const searchParams = useSearchParams();

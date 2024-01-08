@@ -1,23 +1,7 @@
 import { create, StateCreator } from 'zustand';
 import { createJSONStorage, persist, PersistOptions } from 'zustand/middleware';
 
-export type Reservation = {
-  checkin?: string | Date | null;
-  checkout?: string | Date | null;
-  adults?: number | null;
-  childrens?: number | null;
-  infants?: number | null;
-  plan?: string | null;
-  extra?: string | null;
-  planCost?: number | null;
-  totalCost?: number | null;
-  taxes?: number | null;
-  extraCost?: number | null;
-  cancelationCost?: number | null;
-  total?: number | null;
-  hasBreakfast?: boolean | null;
-  selectedRoom?: { [key: string]: string | number | null | undefined };
-};
+import { Reservation } from '@/types';
 
 type State = {
   reservation: Reservation;

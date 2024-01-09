@@ -45,7 +45,6 @@
     "@storybook/testing-library": "^0.2.1",
     "@storybook/theming": "^7.4.2",
     "@svgr/webpack": "^8.1.0",
-    "@swc/core": "latest",
     "@tailwindcss/forms": "^0.5.6",
     "@tanstack/eslint-plugin-query": "^4.36.0",
     "@tanstack/react-query": "^4.35.7",

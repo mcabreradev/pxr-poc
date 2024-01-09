@@ -2,21 +2,30 @@
 
 import { Button as Base } from '@material-tailwind/react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
+import { ACTION } from '@/constants';
+
 interface ButtonProps {
   id?: string;
   type?: 'submit' | 'link' | 'button';
-  onClick?: () => void;
-  onBlur?: () => void;
-  onChange?: () => void;
+  ref?: React.MutableRefObject<null>;
+  onClick?: (e: unknown) => void;
+  onBlur?: (e: unknown) => void;
+  onChange?: (e: unknown) => void;
+  onMouseEnter?: (e: unknown) => void;
+  onMouseLeave?: (e: unknown) => void;
+  onFocus?: (e: unknown) => void;
   className?: string;
   children: React.ReactNode;
   fullWidth?: boolean;
   disabled?: boolean;
+  withSearchParams?: boolean;
+  query?: { [key: string]: string };
   variant?:
     | 'primary'
     | 'secondary'
@@ -28,6 +37,7 @@ interface ButtonProps {
   icon?: React.ReactNode | string;
   replace?: boolean;
   scroll?: boolean;
+  loading?: boolean;
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
@@ -53,10 +63,16 @@ export default function Button({
   onClick,
   onBlur,
   onChange,
-  href,
+  onMouseEnter,
+  onMouseLeave,
+  ref,
+  href = '',
   icon,
   replace = true,
   scroll = true,
+  query,
+  withSearchParams = false,
+  loading,
   ...props
 }: ButtonProps) {
   const styling = {
@@ -68,22 +84,38 @@ export default function Button({
     danger: 'bg-red',
     text: 'border-[1px] border-solid border-white bg-white text-black underline hover:opacity-[0.60]',
   };
+  const searchParams = useSearchParams();
 
   if (type === 'link') {
+    const params = new URLSearchParams(query);
+    const search = new URLSearchParams(searchParams.toString());
+    search.delete(ACTION);
+
+    const url = withSearchParams
+      ? `${href}?${params}&${search}`
+      : `${href}?${params}`;
+
     return (
       <Link
-        href={href || '/'}
-        className={cn({ 'w-full': fullWidth })}
+        href={disabled ? '' : url}
+        className={cn('', { 'w-full': fullWidth })}
         replace={replace}
         scroll={scroll}
       >
         <ButtonComponent
           id={id}
+          ref={ref}
           className={cn(styling[variant], className)}
           ripple={false}
           fullWidth={fullWidth}
           data-testid='test-element'
           disabled={disabled}
+          onClick={onClick}
+          onBlur={onBlur}
+          onChange={onChange}
+          onMouseLeave={onMouseLeave}
+          onMouseEnter={onMouseEnter}
+          loading={loading}
           {...props}
         >
           {icon && <span className=''>{icon}</span>}
@@ -98,6 +130,7 @@ export default function Button({
   return (
     <ButtonComponent
       id={id}
+      ref={ref}
       type={type}
       className={cn(styling[variant], className)}
       ripple={false}
@@ -107,6 +140,9 @@ export default function Button({
       onClick={onClick}
       onBlur={onBlur}
       onChange={onChange}
+      onMouseLeave={onMouseLeave}
+      onMouseEnter={onMouseEnter}
+      loading={loading}
       {...props}
     >
       {icon && icon}

@@ -3,10 +3,7 @@
     "plural": "adults",
     "singular": "adult"
   },
-  "baby": {
-    "plural": "babies",
-    "singular": "baby"
-  },
+  "breakfast": "Breakfast",
   "button": {
     "accept": "Accept and continue",
     "all-amemnities": "All Amenities",
@@ -14,12 +11,16 @@
     "apple": "Continue with Apple",
     "cancel": "Cancel",
     "choose-room": "Choose room",
+    "confirm-pay": "Confirm and pay",
     "continue": "Continue",
     "facebook": "Continue with Facebook",
     "google": "Continue with Google",
+    "loading": "Loading...",
     "login": "Login",
     "pay": "Proceed to payment",
+    "processing": "Processing...",
     "reserve": "Book Now",
+    "save": "Save",
     "send": "Send",
     "try-again": "Try again",
     "try-reconnect": "Try to reconnect",
@@ -70,6 +71,7 @@
       "required": "Name is required"
     },
     "password": {
+      "error": "Password is invalid",
       "invalid": "Password is invalid",
       "label": "Password",
       "match": "Passwords don't match",
@@ -91,12 +93,13 @@
     }
   },
   "from": "from",
+  "Guest": "Guest",
   "guest": {
     "adult": {
       "plural": "adults",
       "singular": "adult"
     },
-    "childre": {
+    "children": {
       "plural": "childrens",
       "singular": "child"
     },
@@ -104,6 +107,10 @@
     "singular": "Guest"
   },
   "hide": "Hide",
+  "infants": {
+    "plural": "babies",
+    "singular": "baby"
+  },
   "info": {
     "13years-or-more": "13 years old or more",
     "2to12": "2 to 12 years old",
@@ -162,6 +169,7 @@
     "book-with-us": "Book with us",
     "contact": "Contact",
     "edit": "Edit",
+    "edit-my-trip": "Update My Trip details",
     "exact-location": "Exact location",
     "forgot_password": "Forgot your password?",
     "hotel-amemnities": "Hotel Amenities",

@@ -1,22 +1,26 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
-import { memo } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useQueryString from '@/hooks/use-querystring';
+import useFetchAvailability from '@/queries/use-availabity';
 import useFetchProperty from '@/queries/use-property';
 
 import Button from '@/components/button';
+import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import useReservationStore from '@/store/use-reservation-persist.store';
 import PropertyAmenities from './amenities';
 import data from './data.json';
-import Gallery from './gallery';
 import GuestForm from './guest-form';
 import RoomSwiper from './room-swiper';
 import Skeleton from './skeleton';
@@ -33,7 +37,28 @@ const Row = tw.div`
 
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
+  const searchParams = useSearchParams();
   const { isLoading, isError, data: property } = useFetchProperty();
+  const { removeBlacklistParam } = useQueryString();
+  const { resetReservation } = useReservationStore();
+
+  const checkin = searchParams.get('checkin');
+  const checkout = searchParams.get('checkout');
+
+  const { refetch, data: inventory } = useFetchAvailability({
+    checkin,
+    checkout,
+  });
+
+  useEffect(() => {
+    if (!checkin || !checkout) return;
+    refetch();
+  }, [checkin, checkout, refetch, inventory]);
+
+  useEffect(() => {
+    removeBlacklistParam(['action', 'extra', 'plan']);
+    resetReservation();
+  }, [removeBlacklistParam, resetReservation]);
 
   if (isLoading) {
     return <Skeleton />;

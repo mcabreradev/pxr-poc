@@ -1,38 +1,45 @@
-/* eslint-disable no-console */
-/* eslint-disable simple-import-sort/imports */
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import useEventBus from '@/hooks/use-event-bus';
 import useHostUrl from '@/hooks/use-hosturl';
-import { getEventData, publish, subscribe } from '@/lib/event-bus';
 
 import Modal from '@/components/modal';
 import Typography from '@/components/typography';
+
+import useUserStore from '@/store/use-user.store';
 
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 
 export default function SingleSignOn() {
   const { t } = useTranslation();
-  const { urlStatus, urlSignin } = useHostUrl();
   const [user, setUser] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { urlStatus, urlSignin } = useHostUrl();
+  const { getEventData, subscribe, publish } = useEventBus();
+  const { addUser } = useUserStore();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const handlerEvent = useCallback((eventData) => {
-    const { eventType, data } = eventData;
+  const handlerEvent = useCallback(
+    (eventData) => {
+      const { eventType, data } = eventData;
 
-    if (!eventType) return;
+      if (!eventType) return;
 
-    if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
-      closeModal();
-      setUser(data);
-    }
-    if (eventType === SIGNOUT) {
-      setUser(null);
-    }
-  }, []);
+      if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
+        closeModal();
+        setUser(data);
+        addUser(data);
+      }
+      if (eventType === SIGNOUT) {
+        setUser(null);
+        addUser(null);
+      }
+    },
+    [addUser],
+  );
 
   const signOut = () => {
     publish({
@@ -44,15 +51,13 @@ export default function SingleSignOn() {
   useEffect(() => {
     subscribe(handlerEvent);
     getEventData(urlStatus);
-  }, [handlerEvent, urlStatus]);
+  }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
   if (user) {
     return (
-      <>
-        <Typography variant='sm' onClick={signOut}>
-          {t('signout')}
-        </Typography>
-      </>
+      <Typography variant='sm' onClick={signOut}>
+        {t('signout')}
+      </Typography>
     );
   }
 

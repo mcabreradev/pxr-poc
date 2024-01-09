@@ -1,17 +1,22 @@
+/* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useEventBus from '@/hooks/use-event-bus';
+import useHostUrl from '@/hooks/use-hosturl';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { FORM, URL } from '@/constants';
+import useUserStore from '@/store/use-user.store';
+
+import { FORM, SIGNIN, URL } from '@/constants';
 import { loginSchema } from '@/schemas';
 
 type Props = {
@@ -30,8 +35,11 @@ const Container = tw.div`
 
 export default function FormLoginComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
-
   const [type, setType] = useState(FORM.PASSWORD);
+  const { urlStatus } = useHostUrl();
+  const { getEventData, subscribe, publish } = useEventBus();
+  const { user } = useUserStore();
+
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
   }, [type]);
@@ -39,14 +47,45 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<IForm>({
     resolver: yupResolver(loginSchema(t)),
   });
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+    publish({
+      eventType: SIGNIN,
+      data,
+    });
   };
+
+  const handlerEvent = useCallback(
+    (eventData) => {
+      const { eventType, data } = eventData;
+
+      if (!eventType || eventType !== SIGNIN) return;
+
+      if (data.err) {
+        setError('email', {
+          type: 'manual',
+        });
+        setError('password', {
+          type: 'manual',
+          message: t('form.password.invalid'),
+        });
+      }
+    },
+    [setError, t],
+  );
+
+  useEffect(() => {
+    subscribe(handlerEvent);
+    getEventData(urlStatus);
+  }, [getEventData, handlerEvent, subscribe, urlStatus]);
+
+  useEffect(() => {
+    if (user) true;
+  }, [user]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>
@@ -88,9 +127,9 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
             </span>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.email && errors.email.message}
-          </span>
+          </Typography>
         </div>
 
         <div className='mb-3 flex flex-col flex-wrap justify-between gap-4 py-3'>
@@ -136,12 +175,16 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
             </div>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.password && errors.password.message}
-          </span>
+          </Typography>
         </div>
 
-        <Button className='mt-3 font-semibold' variant='primary' type='submit'>
+        <Button
+          className='mt-3 font-semibold md:w-full'
+          variant='primary'
+          type='submit'
+        >
           {t('button.login')}
         </Button>
       </form>

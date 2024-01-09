@@ -4,7 +4,7 @@ import api from '@/lib/api-pegaso';
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const res = await api.post(`/revervation`, body);
+  const res = await api.post(`/v1/dev/revervation`, body);
 
   return NextResponse.json({ clientSecret: res.clientSecret });
 }

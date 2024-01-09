@@ -8,30 +8,35 @@ import Typography from '@/components/typography';
 interface Props {
   className?: string;
   href?: string;
+  withSearchParams?: boolean;
   children: React.ReactNode;
 }
 
 export default function BackButtonComponent({
   href = '',
   children,
-  className,
+  className = 'layout',
+  withSearchParams = true,
 }: Props) {
   return (
     <>
-      <Link href={href} data-testid='test-element'>
+      <Link
+        href={withSearchParams ? `${href}${window.location.search}` : href}
+        data-testid='test-element'
+      >
         <div
           className={cn(
             className,
-            'flex w-full max-w-3xl items-center rounded-md border-b-[1px] border-solid border-neutral-50 px-8 py-4 text-center',
+            'flex items-center py-4 text-center md:py-8',
           )}
         >
           <Icon variant='arrow-back' width='30' color='#848484' />
 
-          <div className='-ml-10 flex w-full items-center justify-center'>
+          <div className='-ml-10 flex w-full items-center justify-center md:ml-7 md:w-auto'>
             <Typography
               variant='base'
               weight='medium'
-              className='mx-auto text-neutral-300'
+              className='mx-autos text-neutral-300 md:text-5xl'
             >
               {children}
             </Typography>

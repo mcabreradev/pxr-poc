@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,6 @@ import { DateRangePicker } from 'react-next-dates';
 import tw from 'tailwind-styled-components';
 
 import useLocale from '@/hooks/use-locale';
-import { createQueryString } from '@/lib/url';
 import { cn, formatDate, reFormatDate } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -16,7 +15,13 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import Dropdown from './dropdown';
 
+import useQueryString from '@/hooks/use-querystring';
+import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import useReservationStore from '@/store/use-reservation-persist.store';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
+
 import { CHECKIN, CHECKOUT } from '@/constants';
+import { formatCurrency } from '@/lib/number';
 import { selectRoomSchema } from '@/schemas';
 
 interface Props {
@@ -32,21 +37,23 @@ const Container = tw.div`
 sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded border-[1px] border-solid border-neutral-50 bg-white p-5 drop-shadow-lg`;
 
 export default function GuestFormComponent({ className }: Props) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [isOpen, setOpen] = useState(false);
   const { t } = useTranslation();
   const { locale } = useLocale();
+  const { setReservation } = useReservationStore();
+  const { selectedRoom } = useSelectedRoomtypeStore();
+  const { updateQueryString } = useQueryString();
+  const { getCheckin, getCheckout } = useSearchParamOrStore();
 
-  const checkin = formatDate(searchParams.get(CHECKIN));
+  const today = dayjs();
+  const checkin = formatDate(getCheckin());
   const [startDate, setStartDate] = useState<Date | null>(
-    checkin ? new Date(checkin) : new Date(),
+    checkin ? new Date(checkin) : today.toDate(),
   );
 
-  const checkout = formatDate(searchParams.get(CHECKOUT));
+  const tomorrow = today.add(1, 'day').toDate();
+  const checkout = formatDate(getCheckout());
   const [endDate, setEndDate] = useState<Date | null>(
-    checkout ? new Date(checkout) : null,
+    checkout ? new Date(checkout) : tomorrow,
   );
 
   const {
@@ -62,29 +69,17 @@ export default function GuestFormComponent({ className }: Props) {
     console.log(data);
   }, []);
 
-  const handleDropDown = useCallback(() => {
-    setOpen(!isOpen);
-  }, [isOpen]);
-
-  const updateQueryString = useCallback(
-    (key: string, value: string) => {
-      router.replace(
-        `${pathname}?${createQueryString(searchParams, key, value.toString())}`,
-        { scroll: false },
-      );
-    },
-    [pathname, router, searchParams],
-  );
-
   useEffect(() => {
-    if (!checkin) return;
-    updateQueryString(CHECKIN, reFormatDate(startDate?.toString()) || '');
-  }, [checkin, startDate, updateQueryString]);
-
-  useEffect(() => {
-    if (!checkout) return;
-    updateQueryString(CHECKOUT, reFormatDate(endDate?.toString()) || '');
-  }, [checkout, endDate, updateQueryString]);
+    if (!startDate || !endDate) return;
+    updateQueryString({
+      [CHECKIN]: reFormatDate(startDate),
+      [CHECKOUT]: reFormatDate(endDate),
+    });
+    setReservation({
+      checkin: reFormatDate(startDate),
+      checkout: reFormatDate(endDate),
+    });
+  }, [endDate, setReservation, startDate, updateQueryString]);
 
   return (
     <Container className={cn(className)}>
@@ -176,15 +171,20 @@ export default function GuestFormComponent({ className }: Props) {
 
         <hr />
 
-        <Typography variant='sm' weight='semibold' className='mb-4'>
-          Desde $100.00 x noche
-        </Typography>
+        {selectedRoom.roomPrice && (
+          <Typography variant='sm' weight='semibold' className='mb-4'>
+            Desde {`${formatCurrency(Number(selectedRoom.roomPrice) ?? 0)}`} x
+            noche
+          </Typography>
+        )}
 
         <Button
-          type='submit'
+          type='link'
+          href={`/room-type/${selectedRoom.id}`}
           scroll={true}
-          className='mb-4 md:w-full'
-          onClick={handleDropDown}
+          className='mb-4 md:mb-0 md:w-full'
+          disabled={!selectedRoom.roomPrice}
+          withSearchParams={true}
         >
           {t('button.choose-room')}
         </Button>

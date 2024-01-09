@@ -30,25 +30,6 @@ export type Description = {
   en: string;
 };
 
-export type Amenity = {
-  id: number;
-  bcomId: unknown;
-  otaId?: string;
-  name: string;
-  description: string;
-};
-
-export type Photo = {
-  id: number;
-  url: string;
-  caption: unknown;
-  type: string;
-  place: string;
-  order: number;
-  width: unknown;
-  height: unknown;
-};
-
 export type Review = {
   id: string;
   source: string;
@@ -97,19 +78,107 @@ export type Payment = {
 };
 
 export type Currency = {
-  monId: number;
+  currencyId: number;
   code: string;
 };
 
 export type User = {
-  sub: string;
-  email: string;
-  family_name: string;
-  given_name: string;
-  email_verified: boolean;
+  sub?: string;
+  email?: string;
+  family_name?: string;
+  given_name?: string;
+  email_verified?: boolean;
+  password?: string;
+  err?: unknown;
 };
 
 export type EventData = {
-  eventType: 'signin' | 'signout' | 'getsession';
-  data: User | null;
+  eventType: 'signin' | 'signinModal' | 'signout' | 'getsession' | 'checkuser';
+  data: unknown | null;
+};
+
+export type RoomTypeName = {
+  en: string;
+  es: string;
+};
+
+export type Room = {
+  id: number | null;
+  name: string;
+  roomTypeId: number | null;
+  order: number | null;
+  plus: boolean;
+  observation: unknown;
+  cleaningStatus: string;
+  recordStatus: string;
+  updatedAt: string;
+  createdAt: string;
+};
+
+export type Amenity = {
+  id: number | null;
+  bcomId: string;
+  otaId: unknown;
+  name: string;
+  description: string;
+};
+
+export type Photo = {
+  id: number | null;
+  url: string;
+  caption: unknown;
+  type: string;
+  place: string;
+  order: number | null;
+  width: unknown;
+  height: unknown;
+};
+
+export type BedType = {
+  id: number | null;
+  bcomId: unknown;
+  otaId: string;
+  name: string;
+  description: string;
+  numberOfBeds: number | null;
+};
+
+export type SelectedRoomtype = {
+  id?: number | null;
+  name?: RoomTypeName | null;
+  propertyId?: number | null;
+  description?: null | unknown;
+  standardCapacity?: number | null;
+  minCapacity?: number;
+  maxCapacity?: number;
+  childCapacity?: number;
+  addCapacity?: number;
+  totalRooms?: unknown;
+  rooms?: Room[];
+  availability?: unknown[];
+  amenities?: Amenity[];
+  photos?: Photo[];
+  bedTypes?: BedType[];
+  viewTypes?: unknown[];
+  accessibilityFeatures?: unknown[];
+  smokePolicy?: string | null;
+  roomPrice?: number | null;
+};
+
+export type Reservation = {
+  checkin?: string | Date | null;
+  checkout?: string | Date | null;
+  adults?: number | null;
+  childrens?: number | null;
+  infants?: number | null;
+  plan?: string | null;
+  extra?: string | null;
+  planCost?: number | null;
+  totalCost?: number | null;
+  taxes?: number | null;
+  extraCost?: number | null;
+  cancelationCost?: number | null;
+  total?: number | null;
+  hasBreakfast?: boolean | null;
+  selectedRoom?: { [key: string]: string | number | null | undefined };
 };

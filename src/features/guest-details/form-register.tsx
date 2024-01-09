@@ -98,9 +98,9 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
             </span>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.email && errors.email.message}
-          </span>
+          </Typography>
 
           <span className='text-[10px] text-neutral-300'>
             {t('info.email')}
@@ -149,9 +149,9 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
             </span>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.name && errors.name.message}
-          </span>
+          </Typography>
         </div>
 
         <div className='flex flex-col flex-wrap justify-between gap-2 py-3'>
@@ -187,9 +187,9 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
             </span>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.lastname && errors.lastname.message}
-          </span>
+          </Typography>
         </div>
 
         <div className='flex flex-col flex-wrap justify-between gap-2 py-3'>
@@ -225,9 +225,9 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
             </span>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.date_of_birth && errors.date_of_birth.message}
-          </span>
+          </Typography>
         </div>
 
         <div className='mb-3 flex flex-col flex-wrap justify-between gap-2 py-3'>
@@ -274,9 +274,9 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
             </div>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.password && errors.password.message}
-          </span>
+          </Typography>
         </div>
 
         <div className='mb-3 flex flex-col flex-wrap justify-between gap-2 py-3'>
@@ -327,10 +327,10 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
             </div>
           </div>
 
-          <span className='text-warning-600'>
+          <Typography variant='xs' className='text-warning-600'>
             {errors.password_confirmation &&
               errors.password_confirmation.message}
-          </span>
+          </Typography>
         </div>
 
         <Typography variant='xs' className='mb-6'>
@@ -338,7 +338,7 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
         </Typography>
 
         <Button
-          className='mt-3 font-semibold'
+          className='mt-3 font-semibold md:w-full'
           variant='primary'
           type='submit'
           disabled={isSubmitting}

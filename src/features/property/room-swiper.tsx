@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -10,7 +10,7 @@ import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import { PLAN_COSTS } from '@/constants';
 import useRoomTypesQuery from '@/queries/use-roomtypes';
@@ -25,17 +25,23 @@ export default function RoomSwiper() {
   const [selectedRoom, setSelectedRoom] = useState<string | number | null>(
     null,
   );
-  const { setReservation } = useReservationStore();
+  const { setSelectedRoomtype, resetSelectedRoomtype } =
+    useSelectedRoomtypeStore();
 
   const handleClick = useCallback(
     (room: { [key: string]: string | number | null }, index?: number) => {
       setSelectedRoom(room.id);
-      setReservation({
-        selectedRoom: { ...room, roomPrice: PLAN_COSTS[index as number] },
+      setSelectedRoomtype({
+        ...room,
+        roomPrice: PLAN_COSTS[index as number],
       });
     },
-    [setSelectedRoom, setReservation],
+    [setSelectedRoomtype],
   );
+
+  useEffect(() => {
+    resetSelectedRoomtype();
+  }, [resetSelectedRoomtype]);
 
   if (isLoading) {
     return 'loading';

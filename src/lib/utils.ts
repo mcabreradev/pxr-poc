@@ -80,8 +80,8 @@ export function formatDate(date) {
   return [day, month, year].join('-');
 }
 
-export function reFormatDate(date) {
-  const d = new Date(date);
+export function reFormatDate(date: Date | string) {
+  const d = new Date(date?.toString());
   let month = '' + (d.getMonth() + 1),
     day = '' + d.getDate();
   const year = d.getFullYear();

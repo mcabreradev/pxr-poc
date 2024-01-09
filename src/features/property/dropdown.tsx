@@ -1,5 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -8,6 +8,7 @@ import { cn, ps } from '@/lib/utils';
 
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import useReservationStore from '@/store/use-reservation-persist.store';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
@@ -34,22 +35,36 @@ export default function DropdownComponent({ className }: Props) {
   const { t } = useTranslation();
   const { updateQueryString } = useQueryString();
   const { setReservation } = useReservationStore();
+  const {
+    selectedRoom,
+    selectedRoom: { roomPrice, minCapacity, maxCapacity, childCapacity },
+  } = useSelectedRoomtypeStore();
   const [open, setOpen] = useState(false);
+  const [adults, setAdults] = useState(TOTAL_ADULTS_DEFAULT);
+  const [childrens, setChildrens] = useState(TOTAL_CHILDRENS_DEFAULT);
+  const [infants, setInfants] = useState(TOTAL_INFANTS_DEFAULT);
+
   const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
 
-  const [adults, setAdults] = useState(getAdults() || TOTAL_ADULTS_DEFAULT);
-  const [childrens, setChildrens] = useState(
-    getChildrens() || TOTAL_CHILDRENS_DEFAULT,
-  );
-  const [infants, setInfants] = useState(getInfants() || TOTAL_INFANTS_DEFAULT);
-
-  const onClick = useCallback(() => {
+  const toggleOpen = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
-  const onMouseLeave = useCallback(() => {
-    if (open) setOpen(!open);
+  const closeOnMouseLeave = useCallback(() => {
+    if (open) setOpen(false);
   }, [open]);
+
+  useEffect(() => {
+    setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
+    setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
+    setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
+  }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
+
+  const totalGuests = adults + childrens + infants;
+  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
+  const adultsBlockedCondition = isMaxCapacityReached;
+  const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
+  const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
 
   return (
     <Container className={cn(className)} data-testid='test-dropdown-element'>
@@ -58,7 +73,8 @@ export default function DropdownComponent({ className }: Props) {
           className={cn('border-white py-[8px] md:w-full')}
           variant='secondary'
           type='button'
-          onClick={onClick}
+          onClick={toggleOpen}
+          disabled={!roomPrice}
         >
           <div className='flex items-center justify-between'>
             <div className='flex flex-col items-start'>
@@ -88,7 +104,7 @@ export default function DropdownComponent({ className }: Props) {
             'block scale-95 opacity-0': !open,
             hidden: !open,
           })}
-          onBlur={onMouseLeave}
+          onBlur={closeOnMouseLeave}
         >
           <div
             className={cn(
@@ -123,12 +139,14 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='plus'
                   width={20}
-                  color={adults === 8 ? '#d5d3d3' : '#797979'}
+                  color={adultsBlockedCondition ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    adults === 8 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    adultsBlockedCondition
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (adults === 8) return;
+                    if (adultsBlockedCondition) return;
                     setAdults(adults + 1);
                     updateQueryString({ [TOTAL_ADULTS]: adults + 1 });
                     setReservation({ adults: adults + 1 });
@@ -166,12 +184,14 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='plus'
                   width={20}
-                  color={childrens === 8 ? '#d5d3d3' : '#797979'}
+                  color={childrensBlockedCondition ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    childrens === 8 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    childrensBlockedCondition
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (childrens === 8) return;
+                    if (childrensBlockedCondition) return;
                     setChildrens(childrens + 1);
                     updateQueryString({
                       [TOTAL_CHILDRENS]: childrens + 1,
@@ -209,12 +229,14 @@ export default function DropdownComponent({ className }: Props) {
                 <Icon
                   variant='plus'
                   width={20}
-                  color={infants === 8 ? '#d5d3d3' : '#797979'}
+                  color={infantsBlockedCondition ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    infants === 8 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    infantsBlockedCondition
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (infants === 8) return;
+                    if (infantsBlockedCondition) return;
                     setInfants(infants + 1);
                     updateQueryString({ [TOTAL_INFANTS]: infants + 1 });
                     setReservation({ infants: infants + 1 });

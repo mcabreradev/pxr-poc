@@ -1,5 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +18,7 @@ import Dropdown from './dropdown';
 import useQueryString from '@/hooks/use-querystring';
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import useReservationStore from '@/store/use-reservation-persist.store';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
 import { formatCurrency } from '@/lib/number';
@@ -37,18 +39,21 @@ sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded bo
 export default function GuestFormComponent({ className }: Props) {
   const { t } = useTranslation();
   const { locale } = useLocale();
-  const { setReservation, reservation } = useReservationStore();
+  const { setReservation } = useReservationStore();
+  const { selectedRoom } = useSelectedRoomtypeStore();
   const { updateQueryString } = useQueryString();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
 
+  const today = dayjs();
   const checkin = formatDate(getCheckin());
   const [startDate, setStartDate] = useState<Date | null>(
-    checkin ? new Date(checkin) : new Date(),
+    checkin ? new Date(checkin) : today.toDate(),
   );
 
+  const tomorrow = today.add(1, 'day').toDate();
   const checkout = formatDate(getCheckout());
   const [endDate, setEndDate] = useState<Date | null>(
-    checkout ? new Date(checkout) : null,
+    checkout ? new Date(checkout) : tomorrow,
   );
 
   const {
@@ -65,20 +70,16 @@ export default function GuestFormComponent({ className }: Props) {
   }, []);
 
   useEffect(() => {
-    if (!startDate) return;
+    if (!startDate || !endDate) return;
     updateQueryString({
-      [CHECKIN]: reFormatDate(startDate?.toString()) || '',
+      [CHECKIN]: reFormatDate(startDate),
+      [CHECKOUT]: reFormatDate(endDate),
     });
-    setReservation({ checkin: reFormatDate(startDate?.toString()) || '' });
-  }, [setReservation, startDate, updateQueryString]);
-
-  useEffect(() => {
-    if (!endDate) return;
-    updateQueryString({
-      [CHECKOUT]: reFormatDate(endDate?.toString()) || '',
+    setReservation({
+      checkin: reFormatDate(startDate),
+      checkout: reFormatDate(endDate),
     });
-    setReservation({ checkout: reFormatDate(endDate?.toString()) || '' });
-  }, [endDate, setReservation, updateQueryString]);
+  }, [endDate, setReservation, startDate, updateQueryString]);
 
   return (
     <Container className={cn(className)}>
@@ -170,13 +171,10 @@ export default function GuestFormComponent({ className }: Props) {
 
         <hr />
 
-        {reservation.selectedRoom && (
+        {selectedRoom.roomPrice && (
           <Typography variant='sm' weight='semibold' className='mb-4'>
-            Desde{' '}
-            {`${formatCurrency(
-              Number(reservation.selectedRoom.roomPrice) ?? 0,
-            )}`}{' '}
-            x noche
+            Desde {`${formatCurrency(Number(selectedRoom.roomPrice) ?? 0)}`} x
+            noche
           </Typography>
         )}
 
@@ -185,7 +183,7 @@ export default function GuestFormComponent({ className }: Props) {
           scroll={true}
           className='mb-4 md:mb-0 md:w-full'
           onClick={() => null}
-          disabled={!reservation.selectedRoom}
+          disabled={!selectedRoom.roomPrice}
         >
           {t('button.choose-room')}
         </Button>

@@ -1,5 +1,5 @@
-import zukeeper from 'zukeeper';
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 type State = {
   count: number;
@@ -12,7 +12,7 @@ type Actions = {
 };
 
 const useCount = create<State & Actions>()(
-  zukeeper((set, get) => ({
+  devtools((set, get) => ({
     count: 0,
     inc: () => set(() => ({ count: get().count + 1 })),
     dec: () => set(() => ({ count: get().count - 1 })),

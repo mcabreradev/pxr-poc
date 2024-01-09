@@ -3,7 +3,7 @@ import { devtools, persist } from 'zustand/middleware';
 
 import { SelectedRoomtype } from '@/types';
 
-const middlewares = (f) => devtools(persist(f, { name: 'bearStore' }));
+const middlewares = (f) => devtools(persist(f, { name: 'selectedRoomStore' }));
 
 type State = {
   selectedRoom: SelectedRoomtype;

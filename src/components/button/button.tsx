@@ -37,6 +37,7 @@ interface ButtonProps {
   icon?: React.ReactNode | string;
   replace?: boolean;
   scroll?: boolean;
+  loading?: boolean;
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
@@ -71,6 +72,7 @@ export default function Button({
   scroll = true,
   query,
   withSearchParams = false,
+  loading,
   ...props
 }: ButtonProps) {
   const styling = {
@@ -95,8 +97,8 @@ export default function Button({
 
     return (
       <Link
-        href={url}
-        className={cn({ 'w-full': fullWidth })}
+        href={disabled ? '' : url}
+        className={cn('', { 'w-full': fullWidth })}
         replace={replace}
         scroll={scroll}
       >
@@ -113,6 +115,7 @@ export default function Button({
           onChange={onChange}
           onMouseLeave={onMouseLeave}
           onMouseEnter={onMouseEnter}
+          loading={loading}
           {...props}
         >
           {icon && <span className=''>{icon}</span>}
@@ -139,6 +142,7 @@ export default function Button({
       onChange={onChange}
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}
+      loading={loading}
       {...props}
     >
       {icon && icon}

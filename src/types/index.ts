@@ -78,7 +78,7 @@ export type Payment = {
 };
 
 export type Currency = {
-  monId: number;
+  currencyId: number;
   code: string;
 };
 

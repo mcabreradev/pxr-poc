@@ -25,8 +25,8 @@ const StripePayment = memo(() => {
     clientId: 2334,
     email: 'hector@paxer.com',
     currency: {
-      monId: 4,
-      code: 'CLP',
+      currencyId: 1,
+      code: 'USD',
     },
     description:
       'Estadia en Hotel Test2 Funnel P2.0 del 02 Jun 2023 al 03 Jun 2023. Observacion',
@@ -40,9 +40,13 @@ const StripePayment = memo(() => {
     reservationId: '',
   });
 
-  if (isLoadingPaymentIntent)
+  if (isLoadingPaymentIntent) {
     return <div className='animate-pulse p-4'>Loading...</div>;
-  if (isErrorPaymentIntent) return <div className='p-4'>Error</div>;
+  }
+
+  if (isErrorPaymentIntent) {
+    return <div className='p-4'>Error</div>;
+  }
 
   return (
     <div data-testid='test-element'>

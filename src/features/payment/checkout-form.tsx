@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import {
   PaymentElement,
   useElements,
@@ -183,17 +184,22 @@ export default function CheckoutForm() {
           <Button
             disabled={isLoading || !stripe || !elements}
             id='submit'
-            className=''
+            className='md:w-full'
           >
             {isLoading ? (
-              <Icon
-                variant='three-dots-loading'
-                width={24}
-                height={24}
-                color='#fff'
-              />
+              <span className='flex items-center justify-between'>
+                <Icon
+                  variant='three-dots-loading'
+                  width={24}
+                  height={24}
+                  color='#fff'
+                />
+                <span className='ml-2 flex-grow animate-pulse text-center'>
+                  {t('button.processing')}
+                </span>
+              </span>
             ) : (
-              t('button.pay')
+              t('button.confirm-pay')
             )}
           </Button>
           {message && (

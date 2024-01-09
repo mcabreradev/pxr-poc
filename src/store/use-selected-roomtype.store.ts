@@ -1,7 +1,9 @@
 import { create, StateCreator } from 'zustand';
-import { createJSONStorage, persist, PersistOptions } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 import { SelectedRoomtype } from '@/types';
+
+const middlewares = (f) => devtools(persist(f, { name: 'bearStore' }));
 
 type State = {
   selectedRoom: SelectedRoomtype;
@@ -12,28 +14,21 @@ type Actions = {
   resetSelectedRoomtype: () => void;
 };
 
-type Persist = (
-  config: StateCreator<State & Actions>,
-  options: PersistOptions<State & Actions>,
-) => StateCreator<State & Actions>;
+const useSelectedRoomtypeStore = create<State & Actions>(
+  (
+    middlewares as (
+      config: StateCreator<State & Actions>,
+    ) => StateCreator<State & Actions>
+  )((set, get): State & Actions => ({
+    selectedRoom: {},
 
-const useSelectedRoomtypeStore = create<State & Actions, []>(
-  (persist as Persist)(
-    (set, get): State & Actions => ({
-      selectedRoom: {},
+    setSelectedRoomtype: (selectedRoom: SelectedRoomtype) =>
+      set(() => ({
+        selectedRoom: { ...get().selectedRoom, ...selectedRoom },
+      })),
 
-      setSelectedRoomtype: (selectedRoom: SelectedRoomtype) =>
-        set(() => ({
-          selectedRoom: { ...get().selectedRoom, ...selectedRoom },
-        })),
-
-      resetSelectedRoomtype: () => set(() => ({ selectedRoom: {} })),
-    }),
-    {
-      name: 'selectedRoomtype',
-      storage: createJSONStorage(() => sessionStorage),
-    },
-  ),
+    resetSelectedRoomtype: () => set(() => ({ selectedRoom: {} })),
+  })),
 );
 
 export default useSelectedRoomtypeStore;

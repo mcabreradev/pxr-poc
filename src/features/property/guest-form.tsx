@@ -179,11 +179,12 @@ export default function GuestFormComponent({ className }: Props) {
         )}
 
         <Button
-          type='button'
+          type='link'
+          href={`/room-type/${selectedRoom.id}`}
           scroll={true}
           className='mb-4 md:mb-0 md:w-full'
-          onClick={() => null}
           disabled={!selectedRoom.roomPrice}
+          withSearchParams={true}
         >
           {t('button.choose-room')}
         </Button>

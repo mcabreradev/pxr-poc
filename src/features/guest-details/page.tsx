@@ -61,7 +61,9 @@ export default function DetailsComponent({ roomtype }: Props) {
 
       <div className='mb-16'>
         <div className='layout relative flex flex-col md:flex-row-reverse'>
-          <MyTripDetails property={property} room={room} />
+          <div className='w-full md:w-4/12'>
+            <MyTripDetails property={property} room={room} />
+          </div>
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>

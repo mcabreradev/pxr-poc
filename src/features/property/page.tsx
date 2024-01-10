@@ -100,7 +100,7 @@ const PropertyPage = memo(function HotelPage() {
             </div>
           </Section>
           <hr />
-          <Section>
+          <Section id='summary'>
             <p className='my-2 text-2sm'>
               {property.description[i18n.language]}
             </p>
@@ -148,7 +148,10 @@ const PropertyPage = memo(function HotelPage() {
 
           <hr />
 
-          <Section className='p-4 pb-0 pr-0 pt-2 md:flex md:flex-col md:items-center'>
+          <Section
+            className='p-4 pb-0 pr-0 pt-2 md:flex md:flex-col md:items-center'
+            id='rooms'
+          >
             <Typography variant='h2' weight='normal' className='md:self-start'>
               {t('title.wanna-sleep')}
             </Typography>
@@ -163,7 +166,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <hr />
 
-      <Section className='p-4 pb-0 pr-0 pt-2'>
+      <Section className='p-4 pb-0 pr-0 pt-2' id='reviews'>
         <div className='flex flex-row items-center'>
           <Typography variant='h2' weight='normal'>
             {t('title.reviews')}
@@ -173,7 +176,9 @@ const PropertyPage = memo(function HotelPage() {
             {property.reviewRatingScore}
           </Typography>
         </div>
+      </Section>
 
+      <Section>
         <Swiper>
           {property.reviews.map((review) => (
             <div
@@ -214,7 +219,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <hr />
 
-      <Section className='p-4 pb-0 pt-2'>
+      <Section className='p-4 pb-0 pt-2' id='location'>
         <Typography variant='h2' weight='normal'>
           {t('title.exact-location')}
         </Typography>
@@ -243,7 +248,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <hr />
 
-      <Section className='p-4 pb-0 pt-2'>
+      <Section className='p-4 pb-0 pt-2' id='topsites'>
         <Typography variant='h2' weight='normal'>
           {t('title.attractions')}
         </Typography>

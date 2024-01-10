@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -25,8 +25,7 @@ export default function RoomSwiper() {
   const [selectedRoom, setSelectedRoom] = useState<string | number | null>(
     null,
   );
-  const { setSelectedRoomtype, resetSelectedRoomtype } =
-    useSelectedRoomtypeStore();
+  const { setSelectedRoomtype } = useSelectedRoomtypeStore();
 
   const handleClick = useCallback(
     (room: { [key: string]: string | number | null }, index?: number) => {
@@ -38,10 +37,6 @@ export default function RoomSwiper() {
     },
     [setSelectedRoomtype],
   );
-
-  useEffect(() => {
-    resetSelectedRoomtype();
-  }, [resetSelectedRoomtype]);
 
   if (isLoading) {
     return 'loading';

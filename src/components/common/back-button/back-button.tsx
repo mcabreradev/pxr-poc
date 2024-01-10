@@ -23,6 +23,8 @@ export default function BackButtonComponent({
       <Link
         href={withSearchParams ? `${href}${window.location.search}` : href}
         data-testid='test-element'
+        scroll={true}
+        replace={true}
       >
         <div
           className={cn(

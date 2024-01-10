@@ -99,8 +99,8 @@ export default function Button({
       <Link
         href={disabled ? '' : url}
         className={cn('', { 'w-full': fullWidth })}
-        replace={replace}
         scroll={scroll}
+        replace={replace}
       >
         <ButtonComponent
           id={id}

@@ -156,7 +156,7 @@ export default function MyTripDetails({ property, room }: Props) {
               {planDays} {t('night.plural')}
             </Typography>
             <Typography variant='sm' className='text-neutral-500'>
-              {t(`info.${plan}`)}
+              {t(`info.${plan ?? 'non-refundable'}`)}
             </Typography>
           </div>
 

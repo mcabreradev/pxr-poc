@@ -28,7 +28,8 @@ export default function CancelationPoliceComponent({
   const { updateQueryString } = useQueryString();
 
   const isRefundable = (selectedPlan || plan) === PLAN_REFUNDABLE;
-  const isNonRefundable = (selectedPlan || plan) === PLAN_NONREFUNDABLE;
+  const isNonRefundable =
+    (selectedPlan || plan) === PLAN_NONREFUNDABLE || !plan;
 
   const handlePlanChange = useCallback(
     (event) => {

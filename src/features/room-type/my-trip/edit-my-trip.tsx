@@ -39,7 +39,7 @@ export default function EditTripComponent({
         }
       >
         <EditDatesComponent />
-        <EditGuestsComponent />
+        <EditGuestsComponent onClose={onClose} />
       </Modal>
     </Container>
   );

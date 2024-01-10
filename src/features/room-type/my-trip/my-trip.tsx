@@ -14,6 +14,7 @@ import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
 import useReservation from '@/store/use-reservation-persist.store';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import {
   CHECKIN,
@@ -52,6 +53,7 @@ export default function MyTrip({ className, roomtype }: Props) {
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
   const { reservation, setReservation } = useReservation();
+  const { selectedRoom } = useSelectedRoomtypeStore();
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
@@ -101,7 +103,7 @@ export default function MyTrip({ className, roomtype }: Props) {
   }, [breakfast, updateQueryString, setBreakfast]);
 
   const hasBreakfast = breakfast === PLAN_BREAKFAST;
-  const planCost = PLAN_COST;
+  const planCost = selectedRoom.roomPrice || PLAN_COST;
   const planDays = checkout.diff(checkin, 'days');
   const totalCost = planCost * planDays;
   const extraCost = PLAN_BREAKFAST_COST;

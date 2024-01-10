@@ -10,6 +10,7 @@ export const CHECKUSER = 'checkuser';
 
 // App
 export const PROPERTY = 'property';
+export const PROPERTYPATH = '/';
 export const ROOMTYPES = 'room-types';
 export const ROOMTYPE = 'room-type';
 export const ROOMTYPE2 = 'roomtype';

@@ -140,7 +140,12 @@
     "under-2": "less than 2 years"
   },
   "link": {
-    "language": "English"
+    "language": "English",
+    "location": "Location",
+    "reviews": "Reviews",
+    "rooms": "Rooms",
+    "summary": "Summary",
+    "topsites": "Top sites"
   },
   "login": "Login",
   "night": {

@@ -140,7 +140,12 @@
     "under-2": "menos de 2 años"
   },
   "link": {
-    "language": "Español"
+    "language": "Español",
+    "summary": "Resumen",
+    "rooms": "Habitaciones",
+    "reviews": "Reseñas",
+    "location": "Ubicación exacta",
+    "topsites": "Sitios de interés"
   },
   "login": "Ingresar",
   "night": {

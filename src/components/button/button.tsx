@@ -82,7 +82,7 @@ export default function Button({
     alternative: 'bg-blue',
     warning: 'bg-orange',
     danger: 'bg-red',
-    text: 'border-[1px] border-solid border-white bg-white text-black underline hover:opacity-[0.60]',
+    text: 'border-[1px] border-solid border-white bg-white text-black underline hover:bg-white-100 px-2 py-2 rounded-lg',
   };
   const searchParams = useSearchParams();
 

@@ -171,10 +171,8 @@ export default function DropdownComponent({ className }: Props) {
                   )}
                   onClick={() => {
                     if (childrens === 0) return;
-                    setChildrens(childrens - 1);
-                    updateQueryString({
-                      [TOTAL_CHILDRENS]: childrens - 1,
-                    });
+                    setInfants(childrens - 1);
+                    updateQueryString({ [TOTAL_CHILDRENS]: childrens - 1 });
                     setReservation({ childrens: childrens - 1 });
                   }}
                 />
@@ -243,6 +241,21 @@ export default function DropdownComponent({ className }: Props) {
                   }}
                 />
               </div>
+            </div>
+            <div className='flex items-center justify-between px-6 py-2'>
+              <Typography variant='xs2' className='text-neutral-500'>
+                {t('info.guest-room-max-allowed', { maxCapacity })}
+              </Typography>
+            </div>
+            <div className='flex place-content-end px-1 py-1'>
+              <Button
+                className={cn('font-medium')}
+                variant='text'
+                type='button'
+                onClick={toggleOpen}
+              >
+                {t('button.close')}
+              </Button>
             </div>
           </div>
         </div>

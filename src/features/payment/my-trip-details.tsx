@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import { ps } from '@/lib/utils';
 import useReservation from '@/store/use-reservation-persist.store';
 
@@ -28,28 +27,19 @@ export default function MyTripDetails({ property, room }: Props) {
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
 
-  const {
-    getAdults,
-    getCheckin,
-    getCheckout,
-    getChildrens,
-    getInfants,
-    extra,
-    plan,
-  } = useSearchParamOrStore();
   const { reservation } = useReservation();
 
-  const checkin = dayjs(getCheckin());
-  const checkout = dayjs(getCheckout());
+  const checkin = dayjs(reservation.checkin);
+  const checkout = dayjs(reservation.checkout);
 
-  const adults = Number(getAdults());
-  const childrens = Number(getChildrens());
-  const infants = Number(getInfants());
+  const adults = Number(reservation.adults);
+  const childrens = Number(reservation.childrens);
+  const infants = Number(reservation.infants);
 
   const hasBreakfast = reservation.extra === PLAN_BREAKFAST;
   const planDays = checkout.diff(checkin, 'days');
   const totalCost = reservation.totalCost ?? 0;
-  const extraCostTotal = extra ? 10 : 0;
+  const extraCostTotal = reservation.extra ? 10 : 0;
   const taxes = reservation.taxes ?? 0;
   const total = reservation.total ?? 0;
 
@@ -156,7 +146,7 @@ export default function MyTripDetails({ property, room }: Props) {
               {planDays} {t('night.plural')}
             </Typography>
             <Typography variant='sm' className='text-neutral-500'>
-              {t(`info.${plan}`)}
+              {t(`info.${reservation.plan}`)}
             </Typography>
           </div>
 

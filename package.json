@@ -12,7 +12,7 @@
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
     "doctoc": "^2.2.1",
-    "next": "13.5.3",
+    "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.46.1",

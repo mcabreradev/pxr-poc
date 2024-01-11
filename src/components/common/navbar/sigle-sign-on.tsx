@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +8,7 @@ import useHostUrl from '@/hooks/use-hosturl';
 import Modal from '@/components/modal';
 import Typography from '@/components/typography';
 
+import useSessionStore from '@/store/use-session.store';
 import useUserStore from '@/store/use-user.store';
 
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
@@ -18,6 +20,7 @@ export default function SingleSignOn() {
   const { urlStatus, urlSignin } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
   const { addUser } = useUserStore();
+  const { setSession, removeSession } = useSessionStore();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -28,17 +31,21 @@ export default function SingleSignOn() {
 
       if (!eventType) return;
 
+      console.log('SSO', { eventType, data });
+
       if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
         closeModal();
         setUser(data);
         addUser(data);
+        setSession(data);
       }
       if (eventType === SIGNOUT) {
         setUser(null);
         addUser(null);
+        removeSession();
       }
     },
-    [addUser],
+    [addUser, removeSession, setSession],
   );
 
   const signOut = () => {

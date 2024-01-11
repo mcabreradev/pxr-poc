@@ -5,13 +5,19 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import { formatCurrency } from '@/lib/number';
+
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
+
+import useReservationStore from '@/store/use-reservation-persist.store';
+import useSessionStore from '@/store/use-session.store';
 
 import { PAYMENT_STATUS } from '@/constants';
 
@@ -26,11 +32,17 @@ export default function CheckoutForm() {
 
   const stripe = useStripe();
   const elements = useElements();
+  const { session } = useSessionStore();
+  const { reservation } = useReservationStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!session) {
+      redirect('/');
+    }
+
     if (!stripe) {
       return;
     }
@@ -62,7 +74,7 @@ export default function CheckoutForm() {
           break;
       }
     });
-  }, [stripe, t]);
+  }, [session, stripe, t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,21 +107,34 @@ export default function CheckoutForm() {
           <Typography variant='h2' weight='normal'>
             {t('Tu información de pago')}
           </Typography>
-          <Typography variant='sm' className='my-[20px] text-neutral-500'>
-            <p className='pb-1'>Hola Cliente, </p>
-            <p className='pb-1'>
-              Luego de que coloques la información de pago se te enviará la
-              confirmación de esta reserva a email@gmail.com.
-            </p>
-            <p className='pb-1'>
-              Se te cobrará $ 400.00 en este momento de acuerdo a la política de
-              cancelación escogida.
-            </p>
-            <p className='pb-1'>
-              Le recordamos que deberá realizar el pagos de impuestos de $50.00
-              al momento de su llegada al hotel.
-            </p>
+
+          <Typography className='py-4'>
+            {t('info.hello-customer', {
+              name: session?.given_name || t('info.customer'),
+              lastname: session?.family_name || '',
+            })}
           </Typography>
+          <Typography className='pb-4'>
+            {t('info.payment-booking-notification-email', {
+              email: session?.email,
+            })}
+          </Typography>
+
+          {reservation?.planCost && (
+            <Typography className='pb-4'>
+              {t('info.payment-cancellation-policy', {
+                amount: formatCurrency(reservation?.planCost ?? 0),
+              })}
+            </Typography>
+          )}
+
+          {reservation?.taxes && (
+            <Typography className='pb-4'>
+              {t('info.payment-taxes-description', {
+                amount: formatCurrency(reservation?.taxes ?? 0),
+              })}
+            </Typography>
+          )}
 
           <PaymentElement
             id='payment-element'

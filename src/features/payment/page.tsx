@@ -1,9 +1,12 @@
+import { redirect } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
+
+import useSessionStore from '@/store/use-session.store';
 
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
@@ -30,10 +33,15 @@ export default function PaymentFeature({ roomtype, action }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomtype);
+  const { session } = useSessionStore();
 
   const actionPayment = !action;
   const actionSuccess = action === URL.SUCCESS;
   const actionError = action === URL.ERROR;
+
+  if (!session) {
+    redirect('/');
+  }
 
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;

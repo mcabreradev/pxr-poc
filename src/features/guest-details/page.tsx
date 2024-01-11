@@ -11,7 +11,8 @@ import BackButton from '@/components/common/back-button';
 import { ACTION, QUERY } from '@/constants';
 
 import MyTripDetails from '@/features/guest-details/my-trip-details';
-import { useSearchParams } from 'next/navigation';
+import useSessionStore from '@/store/use-session.store';
+import { redirect, useSearchParams } from 'next/navigation';
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
 import FormLoginComponent from './form-login';
@@ -33,6 +34,7 @@ export default function DetailsComponent({ roomtype }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomtype);
+  const { session } = useSessionStore();
 
   const searchParams = useSearchParams();
   const action = searchParams.get(ACTION)?.replace('?', '');
@@ -41,6 +43,10 @@ export default function DetailsComponent({ roomtype }: Props) {
   const actionLogin = action === QUERY.LOGIN;
   const actionRegister = action === QUERY.REGISTER;
   const actionForgot = action === QUERY.FORGOT;
+
+  if (session) {
+    redirect(window.location.pathname.replace('details', 'payment'));
+  }
 
   if (isLoading || roomLoading) {
     return <GuestSkeletonComponent />;

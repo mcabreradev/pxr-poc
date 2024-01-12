@@ -1,18 +1,19 @@
+/* eslint-disable simple-import-sort/imports */
 import { Drawer } from '@material-tailwind/react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-import { createQueryString, removeQueryStringParam } from '@/lib/url';
+import useQueryString from '@/hooks/use-querystring';
 import { cn, uuid } from '@/lib/utils';
 
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 
-import { GALERY } from '@/constants';
+import { ESCAPE, GALERY, IMAGE } from '@/constants';
 
 type Photo = {
   src: string;
@@ -38,36 +39,69 @@ export default function Gallery({
   const [index, setIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { updateQueryString, removeQueryString } = useQueryString();
   const showDrawer = searchParams.get(GALERY);
 
-  const openDrawer = useCallback(() => {
-    setOpen(true);
+  const handleScrollTop = () => {
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
-    router.replace(
-      `${pathname}?${createQueryString(searchParams, { [GALERY]: index })}`,
-      { scroll: false },
-    );
-  }, [pathname, router, searchParams, index]);
+  };
+
+  const openDrawer = useCallback(() => {
+    setOpen(true);
+    handleScrollTop();
+    updateQueryString({ [GALERY]: true });
+  }, [updateQueryString]);
+
+  const openLightbox = useCallback(
+    (index) => {
+      updateQueryString({ [IMAGE]: index });
+      setIndex(index);
+    },
+    [updateQueryString],
+  );
 
   const closeDrawer = useCallback(() => {
     setOpen(false);
-    router.replace(
-      `${pathname}?${removeQueryStringParam(searchParams, GALERY)}`,
-      { scroll: false },
-    );
-  }, [pathname, router, searchParams]);
+    removeQueryString(GALERY);
+  }, [removeQueryString]);
+
+  const closeLightbox = useCallback(() => {
+    setIndex(-1);
+    updateQueryString({ [GALERY]: -1 });
+    removeQueryString(IMAGE);
+  }, [removeQueryString, updateQueryString]);
 
   useEffect(() => {
     if (showDrawer) {
-      Number(showDrawer) >= 0 && setIndex(Number(showDrawer));
       openDrawer();
     }
   }, [openDrawer, showDrawer]);
+
+  useEffect(() => {
+    if (index >= 0) {
+      updateQueryString({ [IMAGE]: index });
+    }
+  }, [index, updateQueryString]);
+
+  useEffect(() => {
+    if (index !== -1 || !showDrawer) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === ESCAPE) {
+        closeDrawer();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeDrawer, showDrawer, index]);
 
   return (
     <>
@@ -79,7 +113,7 @@ export default function Gallery({
             width={980}
             height={551}
             className='opacity-effect h-full w-full cursor-pointer object-cover'
-            onClick={() => openDrawer()}
+            onClick={openDrawer}
           />
         </div>
 
@@ -134,7 +168,7 @@ export default function Gallery({
                     width={image.width}
                     height={image.height}
                     className=' h-full w-full cursor-pointer object-cover'
-                    onClick={() => setIndex(i)}
+                    onClick={() => openLightbox(i)}
                   />
                 </div>
               ))}
@@ -144,9 +178,10 @@ export default function Gallery({
             slides={photos}
             open={index >= 0}
             index={index}
-            close={() => setIndex(-1)}
+            close={closeLightbox}
             plugins={[]}
             noScroll={{ disabled: true }}
+            on={{ view: ({ index: currentIndex }) => setIndex(currentIndex) }}
           />
         </Container>
       </Drawer>

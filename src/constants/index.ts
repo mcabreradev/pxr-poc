@@ -20,6 +20,7 @@ export const ERROR = 'error';
 export const AMENITIES = 'amenities';
 export const TOPSIGHT = 'topsight';
 export const GALERY = 'galery';
+export const IMAGE = 'img';
 export const RESERVATION = 'reservation';
 export const PLURAL = 'plural';
 export const SINGULAR = 'singular';
@@ -102,6 +103,8 @@ export const LANG = {
   EN,
   FR,
 };
+export const DEFAULT_LANG = ES;
+export const LOOKUP_QUERYSTRING_LANG = 'userLang';
 
 // url params
 export const ACTION = 'action';
@@ -158,6 +161,9 @@ export const LOCALES = {
   uruguay: { locale: 'es-UY', currency: 'UYU', currencyDisplay: 'symbol' },
   venezuela: { locale: 'es-VE', currency: 'VES', currencyDisplay: 'symbol' },
 };
+
+// keyboard keys
+export const ESCAPE = 'Escape';
 
 // hardcoded values
 export const PLAN_COST = 100;

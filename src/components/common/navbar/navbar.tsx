@@ -1,3 +1,4 @@
+/* eslint-disable simple-import-sort/imports */
 'use client';
 
 import { setCookie } from 'cookies-next';
@@ -7,14 +8,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import useHydration from '@/hooks/use-hydration';
 import { cn } from '@/lib/utils';
 
+import SingleSignOn from '@/components/common/single-sign-on/sigle-sign-on';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import { PROPERTYPATH } from '@/constants';
-
-import SingleSignOn from './sigle-sign-on';
 
 interface Props {
   className?: string;
@@ -27,7 +28,7 @@ const Nav = tw.nav`
 export default function Navbar({ className }: Props) {
   const { t, i18n } = useTranslation();
   const pathname = usePathname();
-
+  const { isHydrated } = useHydration();
   const [selectedLink, setLink] = useState(0);
 
   const links = useMemo(
@@ -55,6 +56,8 @@ export default function Navbar({ className }: Props) {
   useEffect(() => {
     setCookie('i18next', i18n.language);
   }, [i18n.language]);
+
+  if (!isHydrated) return null;
 
   return (
     <div className='md:border-b-[1px] md:border-solid md:border-white-200'>

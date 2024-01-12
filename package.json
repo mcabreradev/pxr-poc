@@ -164,6 +164,7 @@
     "start": "next start",
     "storybook": "storybook dev -p 6006",
     "test": "jest --silent",
+    "test1": "jest --silent --watch",
     "test:clear": "npx jest --clearCache",
     "test:coverage": "npm run test -- --coverage",
     "test:update-snapshot": "npm run test --updateSnapshot --silent",

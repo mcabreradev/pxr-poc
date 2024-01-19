@@ -12,7 +12,8 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { CHECKUSER, URL } from '@/constants';
+import { CHECKUSER } from '@/constants';
+import SocialSignOn from '@/features/guest-details/social-sign-on';
 import { authSchema } from '@/schemas';
 import { useCallback, useEffect } from 'react';
 
@@ -28,7 +29,7 @@ type Props = {
 const Container = tw.div`
 `;
 
-export default function FormAuthComponent({ className, roomtype }: Props) {
+export default function FormAuthComponent({ className }: Props) {
   const { t } = useTranslation();
 
   const { urlStatus } = useHostUrl();
@@ -125,45 +126,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
 
       <hr />
 
-      <div className='flex flex-col gap-5 py-3 pb-10'>
-        <Button
-          className='md:w-full'
-          variant='secondary'
-          icon={<Icon variant='google' height='24' />}
-          type='link'
-          href={`/room-type/${roomtype}/payment`}
-          replace={true}
-          withSearchParams={true}
-        >
-          {t('button.google')}
-        </Button>
-
-        <Button
-          className='md:w-full'
-          variant='secondary'
-          icon={<Icon variant='facebook' height='24' />}
-          type='link'
-          href={`/room-type/${roomtype}/details`}
-          replace={true}
-          withSearchParams={true}
-          query={{ [URL.ACTION]: 'login' }}
-        >
-          {t('button.facebook')}
-        </Button>
-
-        <Button
-          className='md:w-full'
-          variant='secondary'
-          icon={<Icon variant='apple' height='24' />}
-          type='link'
-          href={`/room-type/${roomtype}/details`}
-          replace={true}
-          withSearchParams={true}
-          query={{ [URL.ACTION]: 'register' }}
-        >
-          {t('button.apple')}
-        </Button>
-      </div>
+      <SocialSignOn />
     </Container>
   );
 }

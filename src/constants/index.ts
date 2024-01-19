@@ -7,6 +7,12 @@ export const SIGNINMODAL = 'signinModal';
 export const SIGNOUT = 'signout';
 export const GET_SESSION = 'getsession';
 export const CHECKUSER = 'checkuser';
+export const PROVIDER_TAG = ':PROVIDER';
+//The following 3 constants are to be used ONLY for SSO links.
+//If you need to name any of these 3 tech giants elsewhere, I'd recommend another constant to avoid mistakes
+export const PROVIDER_GOOGLE = 'Google';
+export const PROVIDER_FACEBOOK = 'Facebook';
+export const PROVIDER_APPLE = 'SignInWithApple';
 
 // App
 export const PROPERTY = 'property';

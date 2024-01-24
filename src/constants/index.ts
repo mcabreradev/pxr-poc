@@ -39,13 +39,14 @@ export const DAYS = 'days';
 
 // GUESTS
 export const CHECKIN = 'checkin';
+export const CHECKIN_DEFAULT_FUTURE_DAYS = 7;
 export const CHECKOUT = 'checkout';
+export const CHECKOUT_DEFAULT_FUTURE_DAYS = 9;
 export const GUESTS = 'guests';
 export const TOTAL_GUESTS = 'totalGuests';
 export const ADULTS = 'adults';
 export const TOTAL_ADULTS = 'totalAdults';
-export const TOTAL_ADULTS_DEFAULT =
-  Number(process.env.HOTEL_ADULTS_DEFAULT) || Number(2);
+export const TOTAL_ADULTS_DEFAULT = 2;
 export const CHILDRENS = 'childrens';
 export const TOTAL_CHILDRENS = 'totalChildren';
 export const TOTAL_CHILDRENS_DEFAULT = 0;

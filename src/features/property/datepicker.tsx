@@ -70,8 +70,13 @@ export default function DatepickerComponent() {
         className={cn(
           'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm leading-normal placeholder:text-sm placeholder:text-neutral-300 focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
         )}
+        onChange={() => null}
       />
     ),
+  );
+
+  const DatePickerDay = (day: string) => (
+    <span className='flex items-center justify-center'>{day}</span>
   );
 
   return (
@@ -86,12 +91,17 @@ export default function DatepickerComponent() {
         endDate={endDate}
         monthsShown={2}
         customInput={<DatePickerInput />}
-        dateFormat='dd/MM/yyyy'
+        renderDayContents={DatePickerDay}
+        dateFormat='MMM dd'
         minDate={today.toDate()}
-        calendarClassName='!flex flex-col md:flex-row gap-0'
+        calendarClassName='!flex flex-col md:flex-row gap-0 !font-sans'
         wrapperClassName='w-full'
         selectsRange
         selectsDisabledDaysInRange
+        withPortal
+        portalId='root-portal'
+        disabledKeyboardNavigation
+        shouldCloseOnSelect={false}
       />
     </div>
   );

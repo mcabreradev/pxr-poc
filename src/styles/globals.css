@@ -135,3 +135,38 @@
 .react-toggle--checked .react-toggle-track {
   background-color: rgb(var(--tw-color-brand-500)) !important;
 }
+
+/* Calendar */
+.react-datepicker {
+  @apply border-[1px] !border-solid !border-white-200;
+}
+
+.react-datepicker__header {
+  @apply border-b-[1px] !border-solid !border-white-200 !bg-white !py-5;
+}
+
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range {
+  @apply !bg-neutral-50 !text-black;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--range-end {
+  @apply !bg-black !text-white;
+}
+
+.react-datepicker__day {
+  @apply !m-1 !inline-flex !items-center !justify-center;
+}
+
+.react-datepicker__navigation {
+  @apply !top-[20px];
+}
+
+.react-datepicker__navigation--previous {
+  @apply !left-[10px];
+}
+
+.react-datepicker__navigation--next {
+  @apply !right-[10px];
+}

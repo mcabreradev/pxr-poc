@@ -7,7 +7,6 @@ import useOauth from '@/hooks/use-oauth';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
-import Modal from '@/components/modal';
 
 import useUserStore from '@/store/use-user.store';
 
@@ -16,20 +15,35 @@ import { GET_SESSION, SIGNIN, SIGNOUT, URL } from '@/constants';
 export default function SocialSignOn() {
   const { t } = useTranslation();
   const [_user, setUser] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [socialUrl, setSocialUrl] = useState('');
+  const [popup, setPopup] = useState(null);
   const { urlStatus } = useHostUrl();
   const { googleUrl, facebookUrl, appleUrl } = useOauth();
   const { getEventData, subscribe } = useEventBus();
   const { addUser } = useUserStore();
 
-  const openModal = (url: string) => {
-    return () => {
-      setSocialUrl(url);
-      setModalOpen(true);
-    };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (popup && popup['closed']) {
+        clearInterval(interval);
+        window.location.reload();
+      } else if (!popup) {
+        clearInterval(interval);
+      }
+    }, 1000);
+  }, [popup]);
+
+  const openPopupCenter = (url, parent) => {
+    const width = 500;
+    const height = 500;
+    const left = parent.top.outerWidth / 2 + parent.top.screenX - width / 2;
+    const top = parent.top.outerHeight / 2 + parent.top.screenY - height / 2;
+    const newWindow = parent.open(
+      url,
+      '',
+      `popup=true, width=${width}, height=${height}, left=${left}, top=${top}`,
+    );
+    setPopup(newWindow);
   };
-  const closeModal = () => setModalOpen(false);
 
   const handlerEvent = useCallback(
     (eventData) => {
@@ -38,7 +52,6 @@ export default function SocialSignOn() {
       if (!eventType) return;
 
       if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
-        closeModal();
         setUser(data);
         addUser(data);
       }
@@ -62,7 +75,7 @@ export default function SocialSignOn() {
         variant='secondary'
         icon={<Icon variant='google' height='24' />}
         type='link'
-        onClick={openModal(googleUrl)}
+        onClick={() => openPopupCenter(googleUrl, window)}
         replace={true}
         withSearchParams={true}
       >
@@ -74,7 +87,7 @@ export default function SocialSignOn() {
         variant='secondary'
         icon={<Icon variant='facebook' height='24' />}
         type='link'
-        onClick={openModal(facebookUrl)}
+        onClick={() => openPopupCenter(facebookUrl, window)}
         replace={true}
         withSearchParams={true}
         query={{ [URL.ACTION]: 'login' }}
@@ -87,23 +100,13 @@ export default function SocialSignOn() {
         variant='secondary'
         icon={<Icon variant='apple' height='24' />}
         type='link'
-        onClick={openModal(appleUrl)}
+        onClick={() => openPopupCenter(appleUrl, window)}
         replace={true}
         withSearchParams={true}
         query={{ [URL.ACTION]: 'register' }}
       >
         {t('button.apple')}
       </Button>
-      <Modal isOpen={modalOpen} onClose={closeModal}>
-        <iframe
-          src={socialUrl}
-          style={{
-            minHeight: '60vh',
-            height: 'auto',
-            width: '100%',
-          }}
-        ></iframe>
-      </Modal>
     </div>
   );
 }

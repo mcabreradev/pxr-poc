@@ -1,0 +1,64 @@
+import { Drawer } from '@material-tailwind/react';
+import { useCallback } from 'react';
+import tw from 'tailwind-styled-components';
+
+import { cn } from '@/lib/utils';
+
+import Icon from '@/components/icon';
+import Typography from '@/components/typography';
+
+type Props = {
+  className?: string;
+  children: React.ReactNode;
+  title?: string;
+  icon?: string;
+  open: boolean | undefined;
+  onClose: () => void;
+};
+
+const Container = tw.div`
+  absolute-container px-4
+`;
+
+export default function DrawerComponent({
+  className,
+  children,
+  title,
+  open = false,
+  onClose,
+  icon,
+}: Props) {
+  const closeDrawer = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
+  return (
+    <Drawer
+      size={9000}
+      placement='bottom'
+      open={open}
+      onClose={closeDrawer}
+      className={cn('p-4', className)}
+      transition={{ duration: 0.5 }}
+    >
+      <Container data-testid='test-element'>
+        <div className='my-4 flex justify-start'>
+          <Icon
+            variant={icon ?? 'outline-chevron-left'}
+            onClick={closeDrawer}
+            width={25}
+            height={25}
+          />
+        </div>
+        {title && (
+          <div className='mt-5 flex justify-start space-x-3 pb-5 pt-3'>
+            <Typography variant='base' className='underline'>
+              {title}
+            </Typography>
+          </div>
+        )}
+        {children}
+      </Container>
+    </Drawer>
+  );
+}

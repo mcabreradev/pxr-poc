@@ -28,6 +28,7 @@ const initialReservationState: Reservation = {
   total: null,
   hasBreakfast: null,
   selectedRoom: {},
+  isOpenDatepickerDrawer: false,
 };
 
 type Actions = {
@@ -39,6 +40,8 @@ type Actions = {
   setAdults: (a: number) => void;
   setChildrens: (c: number) => void;
   setInfants: (i: number) => void;
+  openDatepickerDrawer: () => void;
+  closeDatepickerDrawer: () => void;
 };
 
 type Persist = (
@@ -83,6 +86,16 @@ const useReservationStore = create<State & Actions, []>(
 
     resetReservation: () =>
       set(() => ({ reservation: initialReservationState })),
+
+    openDatepickerDrawer: () =>
+      set(() => ({
+        reservation: { ...get().reservation, isOpenDatepickerDrawer: true },
+      })),
+
+    closeDatepickerDrawer: () =>
+      set(() => ({
+        reservation: { ...get().reservation, isOpenDatepickerDrawer: false },
+      })),
   })),
 );
 

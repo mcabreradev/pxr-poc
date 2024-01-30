@@ -37,7 +37,7 @@ export default function PropertyAmenities({ className, amenities }: Props) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
     router.replace(
-      `${pathname}?${createQueryString(searchParams, { AMENITIES: 1 })}`,
+      `${pathname}?${createQueryString(searchParams, { [AMENITIES]: 1 })}`,
       { scroll: false },
     );
   }, [pathname, router, searchParams]);

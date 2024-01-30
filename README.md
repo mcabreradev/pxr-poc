@@ -6,7 +6,7 @@
 
 ## Tech Stack
 
-- ⚡️ Next.js 13
+- ⚡️ Next.js 14
 - ⚛️ React 18
 - ✨ TypeScript
 - 💨 Tailwind CSS 3
@@ -26,7 +26,7 @@
 - 💎 Storybook - A frontend workshop for building UI components and pages in isolation
 - 🙂 SVG Icons by [Iconify](https://iconify.design/)
 - 🛃 Github Actions
-- 📅 Calendar [react-next-date](https://github.com/sylcastaing/react-next-dates)
+- 📅 Calendar [react-datepicker](https://reactdatepicker.com)
 
 TODO:
 

@@ -2,7 +2,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -10,7 +10,6 @@ import useQueryString from '@/hooks/use-querystring';
 import useFetchAvailability from '@/queries/use-availabity';
 import useFetchProperty from '@/queries/use-property';
 
-import Button from '@/components/button';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
@@ -21,9 +20,11 @@ import Typography from '@/components/typography';
 import useReservationStore from '@/store/use-reservation-persist.store';
 import PropertyAmenities from './amenities';
 import data from './data.json';
+import DrawerDatepicker from './drawer-datepicker';
 import GuestForm from './guest-form';
 import RoomSwiper from './room-swiper';
 import Skeleton from './skeleton';
+import StickyGuestForm from './sticky-guest-form';
 import PropertyTopSights from './topsights';
 
 const Section = tw.div`
@@ -44,6 +45,8 @@ const PropertyPage = memo(function HotelPage() {
 
   const checkin = searchParams.get('checkin');
   const checkout = searchParams.get('checkout');
+
+  const roomSwipperRef = useRef(null);
 
   const { refetch, data: inventory } = useFetchAvailability({
     checkin,
@@ -149,6 +152,7 @@ const PropertyPage = memo(function HotelPage() {
           <hr />
 
           <Section
+            ref={roomSwipperRef}
             className='p-4 pb-0 pr-0 pt-2 md:flex md:flex-col md:items-center'
             id='rooms'
           >
@@ -342,29 +346,11 @@ const PropertyPage = memo(function HotelPage() {
         </Typography>
       </Section>
 
-      <Sticky className='md:sticky md:hidden'>
-        <div className='flex h-full w-full flex-row items-center justify-around bg-white px-2 py-5'>
-          <div className='flex flex-col'>
-            <Typography variant='sm' weight='semibold'>
-              {' '}
-              {t('since')} $100.00 x {t('night.singular')}
-            </Typography>
-            <Typography variant='sm' weight='normal' className='underline'>
-              {' '}
-              {t('since')} $100.00 x {t('night.singular')}
-            </Typography>
-          </div>
-          <div>
-            <Button
-              type='link'
-              href={`/room-type/${property.roomTypes[0]}`}
-              scroll={true}
-            >
-              {t('button.choose-room')}
-            </Button>
-          </div>
-        </div>
+      <Sticky className='md:sticky md:hidden' scrollBottom={true} until={650}>
+        <StickyGuestForm />
       </Sticky>
+
+      <DrawerDatepicker />
     </main>
   );
 });

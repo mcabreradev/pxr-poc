@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import dayjs from 'dayjs';
-import { RefObject, forwardRef, useEffect, useState } from 'react';
+import { forwardRef, RefObject, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';

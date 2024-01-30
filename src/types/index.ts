@@ -181,4 +181,5 @@ export type Reservation = {
   total?: number | null;
   hasBreakfast?: boolean | null;
   selectedRoom?: { [key: string]: string | number | null | undefined };
+  isOpenDatepickerDrawer?: boolean;
 };

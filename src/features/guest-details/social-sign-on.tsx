@@ -1,25 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useEventBus from '@/hooks/use-event-bus';
-import useHostUrl from '@/hooks/use-hosturl';
 import useOauth from '@/hooks/use-oauth';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 
-import useUserStore from '@/store/use-user.store';
+import { QUERY, URL } from '@/constants';
 
-import { GET_SESSION, SIGNIN, SIGNOUT, URL } from '@/constants';
+type Props = {
+  className?: string;
+  roomtype: string;
+};
 
-export default function SocialSignOn() {
+export default function SocialSignOn({ roomtype }: Props) {
   const { t } = useTranslation();
-  const [_user, setUser] = useState(null);
   const [popup, setPopup] = useState(null);
-  const { urlStatus } = useHostUrl();
-  const { googleUrl, facebookUrl, appleUrl } = useOauth();
-  const { getEventData, subscribe } = useEventBus();
-  const { addUser } = useUserStore();
+  const { googleUrl, facebookUrl } = useOauth();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,29 +41,6 @@ export default function SocialSignOn() {
     );
     setPopup(newWindow);
   };
-
-  const handlerEvent = useCallback(
-    (eventData) => {
-      const { eventType, data } = eventData;
-
-      if (!eventType) return;
-
-      if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
-        setUser(data);
-        addUser(data);
-      }
-      if (eventType === SIGNOUT) {
-        setUser(null);
-        addUser(null);
-      }
-    },
-    [addUser],
-  );
-
-  useEffect(() => {
-    subscribe(handlerEvent);
-    getEventData(urlStatus);
-  }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
   return (
     <div className='flex flex-col gap-5 py-3 pb-10'>
@@ -100,10 +74,10 @@ export default function SocialSignOn() {
         variant='secondary'
         icon={<Icon variant='apple' height='24' />}
         type='link'
-        onClick={() => openPopupCenter(appleUrl, window)}
+        href={`/room-type/${roomtype}/details`}
         replace={true}
         withSearchParams={true}
-        query={{ [URL.ACTION]: 'register' }}
+        query={{ [URL.ACTION]: QUERY.IDENTIFICATION }}
       >
         {t('button.apple')}
       </Button>

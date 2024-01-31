@@ -79,23 +79,27 @@ export const DIV = 'div';
 export const SPAN = 'span';
 export const INPUT = 'input';
 export const TEXTAREA = 'textarea';
+export const A = 'a';
 export const TAG = {
   DIV,
   SPAN,
   INPUT,
   LABEL,
   TEXTAREA,
+  A,
 };
 
 export const AUTH = 'auth';
 export const LOGIN = 'login';
 export const REGISTER = 'register';
 export const FORGOT = 'forgot';
+export const IDENTIFICATION = 'identification';
 export const QUERY = {
   AUTH,
   LOGIN,
   REGISTER,
   FORGOT,
+  IDENTIFICATION,
 };
 
 // i18n

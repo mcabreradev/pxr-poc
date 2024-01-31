@@ -29,7 +29,7 @@ type Props = {
 const Container = tw.div`
 `;
 
-export default function FormAuthComponent({ className }: Props) {
+export default function FormAuthComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
 
   const { urlStatus } = useHostUrl();
@@ -126,7 +126,7 @@ export default function FormAuthComponent({ className }: Props) {
 
       <hr />
 
-      <SocialSignOn />
+      <SocialSignOn roomtype={roomtype} />
     </Container>
   );
 }

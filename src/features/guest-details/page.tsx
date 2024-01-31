@@ -10,6 +10,7 @@ import BackButton from '@/components/common/back-button';
 
 import { ACTION, QUERY } from '@/constants';
 
+import FormIdentificationComponent from '@/features/guest-details/form-identification';
 import MyTripDetails from '@/features/guest-details/my-trip-details';
 import { useSearchParams } from 'next/navigation';
 import FormAuthComponent from './form-auth';
@@ -41,6 +42,7 @@ export default function DetailsComponent({ roomtype }: Props) {
   const actionLogin = action === QUERY.LOGIN;
   const actionRegister = action === QUERY.REGISTER;
   const actionForgot = action === QUERY.FORGOT;
+  const actionIdentification = action === QUERY.IDENTIFICATION;
 
   if (isLoading || roomLoading) {
     return <GuestSkeletonComponent />;
@@ -71,6 +73,9 @@ export default function DetailsComponent({ roomtype }: Props) {
               {actionAuth && <FormAuthComponent roomtype={roomtype} />}
               {actionRegister && <FormRegisterComponent roomtype={roomtype} />}
               {actionForgot && <FormForgotComponent roomtype={roomtype} />}
+              {actionIdentification && (
+                <FormIdentificationComponent roomtype={roomtype} />
+              )}
             </section>
           </div>
         </div>

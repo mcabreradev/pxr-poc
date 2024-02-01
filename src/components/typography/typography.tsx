@@ -99,6 +99,7 @@ export type TextProps = {
   onClick?: () => void;
   className?: string;
   tag?: TagType;
+  href?: string;
 };
 
 const StyledSpan = tw.span<TextProps>`
@@ -137,6 +138,7 @@ const Typography = ({
   weight = undefined,
   children,
   tag = TAG.DIV,
+  href,
   ...rest
 }: TextProps) => {
   if (tag === TAG.SPAN) {
@@ -173,6 +175,7 @@ const Typography = ({
         variant={variant}
         weight={weight}
         className={className}
+        href={href}
         {...rest}
       >
         {children}

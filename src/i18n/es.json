@@ -3,6 +3,7 @@
     "plural": "adultos",
     "singular": "adulto"
   },
+  "and": "y",
   "breakfast": "Desayuno",
   "button": {
     "accept": "Aceptar y continuar",
@@ -162,6 +163,15 @@
     "requires_payment_method": "Su pago no se pudo realizar, por favor intente de nuevo.",
     "unexpected-error": "Un error inesperado ha ocurrido.",
     "wrong": "Algo salió mal."
+  },
+  "terms": {
+    "part1": "Al seleccionar",
+    "part2": "confirmo que estoy de acuerdo con",
+    "service": "los términos del servicio",
+    "payment": "los términos de pago del servicio",
+    "nondiscrimination": "la política de no discriminación.",
+    "part3": "Además reconozco y acepto",
+    "privacy": "la política de privacidad"
   },
   "title": {
     "activities": "Actividades",

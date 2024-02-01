@@ -3,6 +3,7 @@
     "plural": "adults",
     "singular": "adult"
   },
+  "and": "and",
   "breakfast": "Breakfast",
   "button": {
     "accept": "Accept and continue",
@@ -162,6 +163,15 @@
     "requires_payment_method": "Your payment was not successful, please try again.",
     "unexpected-error": "An unexpected error occurred.",
     "wrong": "Something went wrong."
+  },
+  "terms": {
+    "part1": "By selecting",
+    "part2": "I agree to Paxer's",
+    "service": "Terms of service",
+    "payment": "Payments Terms of Service",
+    "nondiscrimination": "Nondiscrimination Policy",
+    "part3": "and acknowledge the",
+    "privacy": "Privacy Policy"
   },
   "title": {
     "activities": "Activities",

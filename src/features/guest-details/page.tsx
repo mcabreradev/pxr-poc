@@ -74,7 +74,10 @@ export default function DetailsComponent({ roomtype }: Props) {
               {actionRegister && <FormRegisterComponent roomtype={roomtype} />}
               {actionForgot && <FormForgotComponent roomtype={roomtype} />}
               {actionIdentification && (
-                <FormIdentificationComponent roomtype={roomtype} />
+                <FormIdentificationComponent
+                  roomtype={roomtype}
+                  email={searchParams.get('email')}
+                />
               )}
             </section>
           </div>

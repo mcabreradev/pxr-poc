@@ -1,19 +1,25 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+// prettier and lint were having a conflict with this one
 import { cn } from '@/lib/utils';
+import useEventBus from '@/hooks/use-event-bus';
+import useHostUrl from '@/hooks/use-hosturl';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { CHECKUSER } from '@/constants';
 import { identificationSchema } from '@/schemas';
 
 type Props = {
   className?: string;
   roomtype: string;
+  email: string | null;
 };
 
 interface IForm {
@@ -25,20 +31,52 @@ interface IForm {
 const Container = tw.div``;
 
 /* Remember to add roomtype to props later when you plan to use it */
-export default function FormIdentificationComponent({ className }: Props) {
+export default function FormIdentificationComponent({
+  className,
+  email,
+}: Props) {
   const { t } = useTranslation();
+  const { urlStatus } = useHostUrl();
+  const { getEventData, subscribe, publish } = useEventBus();
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<IForm>({
     resolver: yupResolver(identificationSchema(t)),
+    defaultValues: {
+      email: email ? email : undefined,
+    },
   });
 
+  const handlerEvent = useCallback(
+    (eventData) => {
+      const { eventType, data } = eventData;
+
+      if (!eventType || eventType !== CHECKUSER) return;
+
+      if (data.err) {
+        setError('email', {
+          type: 'manual',
+          message: data.err,
+        });
+      }
+    },
+    [setError],
+  );
+
+  useEffect(() => {
+    subscribe(handlerEvent);
+    getEventData(urlStatus);
+  }, [getEventData, handlerEvent, subscribe, urlStatus]);
+
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+    publish({
+      eventType: CHECKUSER,
+      data,
+    });
   };
 
   return (
@@ -83,7 +121,7 @@ export default function FormIdentificationComponent({ className }: Props) {
             {errors.email && errors.email.message}
           </Typography>
 
-          <span className='text-[12px] text-neutral-300'>
+          <span className='text-[13px] text-neutral-300'>
             {t('info.email')}
           </span>
         </div>
@@ -162,10 +200,30 @@ export default function FormIdentificationComponent({ className }: Props) {
           </Typography>
         </div>
 
-        <Typography variant='xs' className='text-[12px] text-neutral-300'>
-          This is a test{' '}
-          <Typography variant='xs' className='text-[12px]' tag='a'>
-            roadmap
+        <Typography variant='xs' className='text-[13px] text-neutral-300'>
+          {t('terms.part1')} {t('button.accept')}
+          {', '}
+          {t('terms.part2')}{' '}
+          <Typography
+            variant='xs'
+            className='text-[13px]'
+            tag='a'
+            href='https://www.google.com'
+          >
+            {t('terms.service')}
+          </Typography>
+          {', '}
+          <Typography variant='xs' className='text-[13px]' tag='a'>
+            {t('terms.payment')}
+          </Typography>
+          {', '}
+          {t('and')}{' '}
+          <Typography variant='xs' className='text-[13px]' tag='a'>
+            {t('terms.nondiscrimination')}{' '}
+          </Typography>
+          {t('terms.part3')}{' '}
+          <Typography variant='xs' className='text-[13px]' tag='a'>
+            {t('terms.privacy')}
           </Typography>
         </Typography>
 

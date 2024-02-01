@@ -1,21 +1,21 @@
+'use client';
+
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useEventBus from '@/hooks/use-event-bus';
-import useHostUrl from '@/hooks/use-hosturl';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { CHECKUSER } from '@/constants';
+import { QUERY, URL } from '@/constants';
 import SocialSignOn from '@/features/guest-details/social-sign-on';
 import { authSchema } from '@/schemas';
-import { useCallback, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface IForm {
   email: string;
@@ -31,45 +31,23 @@ const Container = tw.div`
 
 export default function FormAuthComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
-
-  const { urlStatus } = useHostUrl();
-  const { getEventData, subscribe, publish } = useEventBus();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<IForm>({
     resolver: yupResolver(authSchema(t)),
   });
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    publish({
-      eventType: CHECKUSER,
-      data,
-    });
+    router.push(
+      `/room-type/${roomtype}/details?${URL.ACTION}=${QUERY.IDENTIFICATION}&` +
+        searchParams.toString() +
+        `&email=${data.email}`,
+    );
   };
-
-  const handlerEvent = useCallback(
-    (eventData) => {
-      const { eventType, data } = eventData;
-
-      if (!eventType || eventType !== CHECKUSER) return;
-
-      if (data.err) {
-        setError('email', {
-          type: 'manual',
-          message: data.err,
-        });
-      }
-    },
-    [setError],
-  );
-
-  useEffect(() => {
-    subscribe(handlerEvent);
-    getEventData(urlStatus);
-  }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>

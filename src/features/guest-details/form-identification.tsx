@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-// prettier and lint were having a conflict with this one
 import { cn } from '@/lib/utils';
 import useEventBus from '@/hooks/use-event-bus';
 import useHostUrl from '@/hooks/use-hosturl';
@@ -34,10 +34,13 @@ const Container = tw.div``;
 export default function FormIdentificationComponent({
   className,
   email,
+  roomtype,
 }: Props) {
   const { t } = useTranslation();
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -62,9 +65,21 @@ export default function FormIdentificationComponent({
           type: 'manual',
           message: data.err,
         });
+      } else {
+        const filteredSearchParams: string[] = [];
+        searchParams.forEach((key, value) => {
+          if (key === 'email' || key === 'action') {
+            return;
+          } else {
+            filteredSearchParams.push(`${key}=${value}`);
+          }
+        });
+        router.push(
+          `/room-type/${roomtype}/payment?` + filteredSearchParams.join('&'),
+        );
       }
     },
-    [setError],
+    [setError, roomtype, router, searchParams],
   );
 
   useEffect(() => {

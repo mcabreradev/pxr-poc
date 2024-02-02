@@ -1,3 +1,4 @@
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,17 +18,21 @@ export default function SocialSignOn({ roomtype }: Props) {
   const { t } = useTranslation();
   const [popup, setPopup] = useState(null);
   const { googleUrl, facebookUrl } = useOauth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (popup && popup['closed']) {
         clearInterval(interval);
-        window.location.reload();
+        router.push(
+          `/room-type/${roomtype}/payment?` + searchParams.toString(),
+        );
       } else if (!popup) {
         clearInterval(interval);
       }
     }, 1000);
-  }, [popup]);
+  }, [popup, router, searchParams, roomtype]);
 
   const openPopupCenter = (url, parent) => {
     const width = 500;

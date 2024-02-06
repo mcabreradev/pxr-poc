@@ -138,7 +138,7 @@
 
 /* Calendar */
 .react-datepicker {
-  @apply border-[1px] !border-solid !border-white-200;
+  @apply !border-[1px] !border-solid !border-white md:!border-white-200;
 }
 
 .react-datepicker__header {
@@ -147,7 +147,7 @@
 
 .react-datepicker__day--in-range,
 .react-datepicker__day--in-selecting-range {
-  @apply !bg-neutral-50 !text-black;
+  @apply !rounded-full !bg-neutral-50 !text-black;
 }
 
 .react-datepicker__day--selected,
@@ -156,7 +156,7 @@
 }
 
 .react-datepicker__day {
-  @apply !m-1 !inline-flex !items-center !justify-center;
+  @apply !m-1 !inline-flex !h-9 !w-9 !items-center !justify-center md:h-7 md:w-7;
 }
 
 .react-datepicker__navigation {

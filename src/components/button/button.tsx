@@ -45,7 +45,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   cursor-pointer flex items-center justify-center flex-row
   shadow-none hover:shadow-none py-[10px] px-6 rounded
   text-[14px] font-medium font-poppins normal-case
-  w-full md:w-auto h-auto
+  md:w-auto h-auto
   ${({ slim }) => slim && 'px-2'}
   ${({ fullWidth }) => fullWidth && 'w-full'}
   ${({ disabled }) =>

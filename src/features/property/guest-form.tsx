@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Typography from '@/components/typography';
-import Datepicker from './datepicker';
+import Datepicker from './datepicker/desktop-datepicker';
 import Dropdown from './dropdown';
 
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';

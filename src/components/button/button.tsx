@@ -46,7 +46,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   shadow-none hover:shadow-none py-[10px] px-6 rounded
   text-[14px] font-medium font-poppins normal-case
   md:w-auto h-auto
-  ${({ slim }) => slim && 'px-2'}
+  ${({ slim }) => !!slim && 'px-2'}
   ${({ fullWidth }) => fullWidth && 'w-full'}
   ${({ disabled }) =>
     disabled
@@ -72,7 +72,7 @@ export default function Button({
   icon,
   replace = true,
   scroll = true,
-  slim = false,
+  slim,
   query,
   withSearchParams = false,
   loading,

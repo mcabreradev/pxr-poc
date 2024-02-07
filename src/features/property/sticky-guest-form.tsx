@@ -3,14 +3,13 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Button from '@/components/button';
-import Typography from '@/components/typography';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-
 import { formatDate, getFormatedMontsDays } from '@/lib/time';
+
+import Button from '@/components/button';
+import Typography from '@/components/typography';
 
 import useReservationStore from '@/store/use-reservation-persist.store';
 
@@ -19,12 +18,13 @@ import {
   CHECKOUT_DEFAULT_FUTURE_DAYS,
   TOTAL_ADULTS_DEFAULT,
 } from '@/constants';
+import useDrawerStore from '@/store/use-drawer.store';
 
 export default function MobileDatepickerComponent() {
   const {
-    openDatepickerDrawer,
     reservation: { adults, childrens, infants },
   } = useReservationStore();
+  const { openDatepickerDrawer } = useDrawerStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { t } = useTranslation();
 

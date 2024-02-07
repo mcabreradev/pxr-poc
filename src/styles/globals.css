@@ -155,7 +155,7 @@
   @apply !bg-black !text-white;
 }
 
-.react-datepicker__day {
+div:not(.react-datepicker__day--outside-month).react-datepicker__day {
   @apply !m-1 !inline-flex !h-9 !w-9 !items-center !justify-center md:h-7 md:w-7;
 }
 

@@ -7,8 +7,6 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useQueryString from '@/hooks/use-querystring';
-import useFetchAvailability from '@/queries/use-availabity';
-import useFetchProperty from '@/queries/use-property';
 
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
@@ -18,9 +16,13 @@ import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
 import useReservationStore from '@/store/use-reservation-persist.store';
+
+import useFetchAvailability from '@/queries/use-availabity';
+import useFetchProperty from '@/queries/use-property';
+
 import PropertyAmenities from './amenities';
 import data from './data.json';
-import DrawerDatepicker from './drawer-datepicker';
+import DrawerDatepicker from './datepicker/drawer-datepicker';
 import GuestForm from './guest-form';
 import RoomSwiper from './room-swiper';
 import Skeleton from './skeleton';

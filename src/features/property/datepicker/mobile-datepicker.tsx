@@ -1,17 +1,16 @@
 /* eslint-disable simple-import-sort/imports */
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
 import useLocale from '@/hooks/use-locale';
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import { formatDate, reFormatDate } from '@/lib/time';
 
-import Button from '@/components/button';
-import Drawer from '@/components/drawer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import useDrawerStore from '@/store/use-drawer.store';
 import useReservationStore from '@/store/use-reservation-persist.store';
 
 import {
@@ -22,16 +21,14 @@ import {
 } from '@/constants';
 import useQueryString from '@/hooks/use-querystring';
 
-export default function DrawerDatepickerComponent() {
+export default function MobileDatepicker() {
   const { locale } = useLocale();
-  const {
-    reservation,
-    reservation: { isOpenDatepickerDrawer },
-    closeDatepickerDrawer,
-    setReservation,
-  } = useReservationStore();
+  const { setReservation } = useReservationStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { updateQueryString } = useQueryString();
+  const { closeDatepickerDrawer } = useDrawerStore();
+
+  const [step, setStep] = useState(1);
 
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
@@ -48,10 +45,35 @@ export default function DrawerDatepickerComponent() {
     checkout ? new Date(checkout) : checkoutDefault,
   );
 
-  const onChange = (dates) => {
+  const [isOpenDatepickerDrawer, setOpenDatepickerDrawer] = useState(false);
+
+  const onChange = useCallback((dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+  }, []);
+
+  const onReset = useCallback(() => {
+    setStartDate(null);
+    setEndDate(null);
+  }, []);
+
+  const handleTouchStart = useCallback(
+    (e: TouchEvent) => e.stopPropagation(),
+    [],
+  );
+
+  const handleCalendarOpen = useCallback(() => {
+    document.addEventListener('touchstart', handleTouchStart, true);
+    const datepickerDays = document.getElementsByClassName(
+      'react-datepicker__day',
+    );
+    const element = datepickerDays[0] as HTMLElement;
+    if (element) element.focus();
+  }, [handleTouchStart]);
+
+  const handleCalendarClose = () => {
+    document.removeEventListener('touchstart', handleTouchStart, true);
   };
 
   useEffect(() => {
@@ -65,6 +87,14 @@ export default function DrawerDatepickerComponent() {
       checkout: reFormatDate(endDate),
     });
   }, [endDate, setReservation, startDate, updateQueryString]);
+
+  useEffect(() => {
+    const unsub = useDrawerStore.subscribe(({ isOpenDatepickerDrawer }) => {
+      setOpenDatepickerDrawer(isOpenDatepickerDrawer || false);
+    });
+
+    return unsub;
+  }, []);
 
   const DayPickerText = ({
     value,
@@ -89,45 +119,28 @@ export default function DrawerDatepickerComponent() {
   );
 
   return (
-    <Drawer
-      icon='cancel'
-      open={isOpenDatepickerDrawer}
-      onClose={closeDatepickerDrawer}
-    >
-      <>
-        <h1>Escoje tu fecha</h1>
-        <DatePicker
-          showPopperArrow={false}
-          locale={locale}
-          selected={startDate}
-          onChange={onChange}
-          selectsStart
-          startDate={startDate}
-          endDate={endDate}
-          monthsShown={2}
-          customInput={<DayPickerText />}
-          renderDayContents={DatePickerDay}
-          dateFormat='MMM dd'
-          minDate={today.toDate()}
-          calendarClassName='!flex flex-col md:flex-row gap-0 !font-sans'
-          wrapperClassName='w-full'
-          selectsRange
-          selectsDisabledDaysInRange
-          withPortal
-          portalId='root-portal'
-          disabledKeyboardNavigation
-          shouldCloseOnSelect={false}
-          inline
-        />
-        <div className='mt-2 flex justify-between'>
-          <Button type='link' variant='text' slim={true}>
-            Borrar
-          </Button>
-          <Button type='button' variant='primary' className=''>
-            Siguiente
-          </Button>
-        </div>
-      </>
-    </Drawer>
+    <DatePicker
+      onCalendarOpen={handleCalendarOpen}
+      onCalendarClose={handleCalendarClose}
+      showPopperArrow={false}
+      locale={locale}
+      selected={startDate}
+      onChange={onChange}
+      selectsStart
+      startDate={startDate}
+      endDate={endDate}
+      monthsShown={2}
+      customInput={<DayPickerText />}
+      renderDayContents={DatePickerDay}
+      dateFormat='MMM dd'
+      minDate={today.toDate()}
+      calendarClassName='!flex flex-col md:flex-row gap-0 !font-sans'
+      wrapperClassName='w-full'
+      selectsRange
+      selectsDisabledDaysInRange
+      disabledKeyboardNavigation
+      shouldCloseOnSelect={false}
+      inline
+    />
   );
 }

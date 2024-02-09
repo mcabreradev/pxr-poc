@@ -1,13 +1,13 @@
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import useEventBus from '@/hooks/use-event-bus';
 import useOauth from '@/hooks/use-oauth';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 
-import { QUERY, URL } from '@/constants';
+import { GET_SESSION, QUERY, URL } from '@/constants';
 
 type Props = {
   className?: string;
@@ -17,22 +17,23 @@ type Props = {
 export default function SocialSignOn({ roomtype }: Props) {
   const { t } = useTranslation();
   const [popup, setPopup] = useState(null);
+  const { publish } = useEventBus();
   const { googleUrl, facebookUrl } = useOauth();
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (popup && popup['closed']) {
         clearInterval(interval);
-        router.push(
-          `/room-type/${roomtype}/payment?` + searchParams.toString(),
-        );
+        publish({
+          eventType: GET_SESSION,
+          data: {},
+        });
+        setPopup(null);
       } else if (!popup) {
         clearInterval(interval);
       }
     }, 1000);
-  }, [popup, router, searchParams, roomtype]);
+  }, [popup, publish]);
 
   const openPopupCenter = (url, parent) => {
     const width = 500;

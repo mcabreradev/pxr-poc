@@ -12,7 +12,9 @@ import { ACTION, QUERY } from '@/constants';
 
 import FormIdentificationComponent from '@/features/guest-details/form-identification';
 import MyTripDetails from '@/features/guest-details/my-trip-details';
-import { useSearchParams } from 'next/navigation';
+import useUserStore from '@/store/use-user.store';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
 import FormLoginComponent from './form-login';
@@ -34,7 +36,9 @@ export default function DetailsComponent({ roomtype }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomtype);
+  const { user } = useUserStore();
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get(ACTION)?.replace('?', '');
 
@@ -43,6 +47,12 @@ export default function DetailsComponent({ roomtype }: Props) {
   const actionRegister = action === QUERY.REGISTER;
   const actionForgot = action === QUERY.FORGOT;
   const actionIdentification = action === QUERY.IDENTIFICATION;
+
+  useEffect(() => {
+    if (user) {
+      router.push(`/room-type/${roomtype}/payment?` + searchParams.toString());
+    }
+  }, [user, router, searchParams, roomtype]);
 
   if (isLoading || roomLoading) {
     return <GuestSkeletonComponent />;

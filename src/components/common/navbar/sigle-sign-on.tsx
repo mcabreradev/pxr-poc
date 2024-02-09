@@ -11,12 +11,15 @@ import useUserStore from '@/store/use-user.store';
 
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 
+import { EventData } from '@/types';
+
 export default function SingleSignOn() {
   const { t } = useTranslation();
   const [user, setUser] = useState(null);
+  const [lastMessage, setLastMessage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const { urlStatus, urlSignin } = useHostUrl();
-  const { getEventData, subscribe, publish } = useEventBus();
+  const { getEventData, publish } = useEventBus();
   const { addUser } = useUserStore();
 
   const openModal = () => setModalOpen(true);
@@ -28,6 +31,11 @@ export default function SingleSignOn() {
 
       if (!eventType) return;
 
+      // Without this logout may behave unexpectedly at certain views (payment view for example)
+      if (eventType === lastMessage && data && !data.err) return;
+
+      setLastMessage(eventType);
+
       if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
         closeModal();
         setUser(data);
@@ -38,20 +46,26 @@ export default function SingleSignOn() {
         addUser(null);
       }
     },
-    [addUser],
+    [addUser, lastMessage],
   );
 
   const signOut = () => {
     publish({
       eventType: SIGNOUT,
-      data: user,
+      data: {},
     });
   };
 
   useEffect(() => {
-    subscribe(handlerEvent);
+    const messageListener = (event) => {
+      if (event.data) {
+        const eventData: EventData = event.data;
+        handlerEvent(eventData);
+      }
+    };
+    window.addEventListener('message', messageListener);
     getEventData(urlStatus);
-  }, [getEventData, handlerEvent, subscribe, urlStatus]);
+  }, [getEventData, handlerEvent, urlStatus]);
 
   if (user) {
     return (

@@ -23,6 +23,7 @@ import {
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
 import useQueryString from '@/hooks/use-querystring';
+import { cn, ps } from '@/lib/utils';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 import { useTranslation } from 'react-i18next';
 
@@ -35,6 +36,9 @@ export default function DrawerDatepickerComponent() {
   const { closeDatepickerDrawer } = useGlobalStore();
 
   const [step, setStep] = useState(1);
+  const [show, setShow] = useState<string | null>(null);
+
+  const setShowHandler = useCallback((view) => setShow(view), []);
 
   // Calendar
   const today = dayjs();
@@ -127,7 +131,7 @@ export default function DrawerDatepickerComponent() {
   }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
 
   const totalGuests = adults + childrens + infants;
-  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
+  const isMaxCapacityReached = false; //totalGuests >= (maxCapacity ?? 0);
   const adultsBlockedCondition = isMaxCapacityReached;
   const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
   const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
@@ -182,7 +186,7 @@ export default function DrawerDatepickerComponent() {
 
   const StepOne = () => (
     <div className='flex h-screen flex-col '>
-      <div className='m-4 flex-none'>
+      <div className='m-2 my-4 flex-none'>
         <Typography variant='h1'>
           {planDays
             ? `${planDays} ${t('night.plural')}`
@@ -198,14 +202,80 @@ export default function DrawerDatepickerComponent() {
         </Typography>
       </div>
 
-      <div className='flex flex-1 items-center justify-center'>
-        <Calendar />
+      <div className='flex-1 items-center justify-center'>
+        {show === 'calendar' && (
+          <div className='rounded-[24px] border-solid border-white bg-white drop-shadow-xl'>
+            <Calendar />
+          </div>
+        )}
+
+        {!show && (
+          <Typography
+            className='my-4 flex flex-row justify-between justify-self-start rounded-[16px] border-solid border-white bg-white px-4 py-5 drop-shadow'
+            onClick={() => setShowHandler('calendar')}
+          >
+            <Typography
+              variant='sm'
+              className='text-neutral-400'
+              weight='semibold'
+            >
+              {t('button.date.plural')}
+            </Typography>
+            <Typography
+              variant='sm'
+              className='text-neutral-500'
+              weight='semibold'
+            >
+              {t('button.add-date.plural')}
+            </Typography>
+          </Typography>
+        )}
+
+        {!show && (
+          <Typography className='my-4 flex flex-row justify-between justify-self-start rounded-[16px] border-solid border-white bg-white px-4 py-5 drop-shadow'>
+            <Typography
+              variant='sm'
+              className='text-neutral-400'
+              weight='semibold'
+            >
+              {t('button.guest.plural')}
+            </Typography>
+            <Typography
+              variant='sm'
+              className='text-neutral-500'
+              weight='semibold'
+            >
+              {t('button.add-guest.plural')}
+            </Typography>
+          </Typography>
+        )}
       </div>
 
       <div className='m-4 flex flex-none justify-between'>
-        <Button type='button' variant='text' slim={true} onClick={resetHandler}>
-          Borrar
-        </Button>
+        <span>
+          {!!planDays && (
+            <Button
+              type='button'
+              variant='text'
+              slim={true}
+              onClick={resetHandler}
+            >
+              Reestableecer
+            </Button>
+          )}
+
+          {!planDays && (
+            <Button
+              type='button'
+              variant='text'
+              slim={true}
+              onClick={() => setShowHandler(null)}
+            >
+              Omitir
+            </Button>
+          )}
+        </span>
+
         <Button type='button' variant='primary' onClick={() => setStep(2)}>
           Siguiente
         </Button>
@@ -213,32 +283,168 @@ export default function DrawerDatepickerComponent() {
     </div>
   );
 
+  const GuestsData = () => (
+    <div className='right-0 w-full origin-top-right bg-white text-black  outline-none'>
+      <div className='flex items-center justify-between'>
+        <div className='flex flex-col items-start'>
+          <Typography variant='sm'>{t('adult.plural')}</Typography>
+          <Typography variant='sm' className='text-neutral-300'>
+            {t('info.13years-or-more')}
+          </Typography>
+        </div>
+        <div className='flex flex-row items-center justify-between'>
+          <Icon
+            variant='minus'
+            width={20}
+            color={adults === 1 ? '#d5d3d3' : '#797979'}
+            className={cn(
+              adults === 1 ? 'cursor-not-allowed' : 'cursor-pointer',
+            )}
+            onClick={() => {
+              if (adults === 1) return;
+              setAdults(adults - 1);
+            }}
+          />
+          <Typography variant='sm' className='w-6 text-center'>
+            {adults}
+          </Typography>
+          <Icon
+            variant='plus'
+            width={20}
+            color={adultsBlockedCondition ? '#d5d3d3' : '#797979'}
+            className={cn(
+              adultsBlockedCondition ? 'cursor-not-allowed' : 'cursor-pointer',
+            )}
+            onClick={() => {
+              if (adultsBlockedCondition) return;
+              setAdults(adults + 1);
+            }}
+          />
+        </div>
+      </div>
+      <div className='flex items-center justify-between py-3'>
+        <div className='flex flex-col items-start'>
+          <Typography variant='sm'>{t('children.plural')}</Typography>
+          <Typography variant='sm' className='text-neutral-300'>
+            {t('info.2to12')}
+          </Typography>
+        </div>
+        <div className='flex flex-row items-center justify-between'>
+          <Icon
+            variant='minus'
+            width={20}
+            color={childrens === 0 ? '#d5d3d3' : '#797979'}
+            className={cn(
+              childrens === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
+            )}
+            onClick={() => {
+              if (childrens === 0) return;
+              setInfants(childrens - 1);
+            }}
+          />
+          <Typography variant='sm' className='w-6 text-center'>
+            {childrens}
+          </Typography>
+          <Icon
+            variant='plus'
+            width={20}
+            color={childrensBlockedCondition ? '#d5d3d3' : '#797979'}
+            className={cn(
+              childrensBlockedCondition
+                ? 'cursor-not-allowed'
+                : 'cursor-pointer',
+            )}
+            onClick={() => {
+              if (childrensBlockedCondition) return;
+              setChildrens(childrens + 1);
+            }}
+          />
+        </div>
+      </div>
+      <div className='flex items-center justify-between pb-3'>
+        <div className='flex flex-col items-start'>
+          <Typography variant='sm'>{t('infant.plural')}</Typography>
+          <Typography variant='sm' className='text-neutral-300'>
+            {t('info.under-2')}
+          </Typography>
+        </div>
+        <div className='flex flex-row items-center justify-between'>
+          <Icon
+            variant='minus'
+            width={20}
+            color={infants === 0 ? '#d5d3d3' : '#797979'}
+            className={cn(
+              infants === 0 ? 'cursor-not-allowed' : 'cursor-pointer',
+            )}
+            onClick={() => {
+              if (infants === 0) return;
+              setInfants(infants - 1);
+            }}
+          />
+          <Typography variant='sm' className='w-6 text-center'>
+            {infants}
+          </Typography>
+          <Icon
+            variant='plus'
+            width={20}
+            color={infantsBlockedCondition ? '#d5d3d3' : '#797979'}
+            className={cn(
+              infantsBlockedCondition ? 'cursor-not-allowed' : 'cursor-pointer',
+            )}
+            onClick={() => {
+              if (infantsBlockedCondition) return;
+              setInfants(infants + 1);
+            }}
+          />
+        </div>
+      </div>
+      <Typography
+        variant='xs2'
+        className='flex items-start py-2 text-neutral-500'
+      >
+        {t('info.guest-room-max-allowed', { maxCapacity })}
+      </Typography>
+    </div>
+  );
+
   const StepTwo = () => (
-    <div className='mb-4 flex h-screen flex-col'>
+    <div className='flex h-screen flex-col'>
       <div className='m-4 flex-none'>
         <Typography variant='h1'>Cuantos vienen?</Typography>
         <Typography
-          variant='sm2'
+          variant='sm'
           weight='medium'
           className='lowercase text-neutral-400'
         >
-          4
+          {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
+          {childrens > 0 && `, ${childrens} ${t('children.' + ps(childrens))}`}
+          {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
         </Typography>
       </div>
 
-      <div className='flex-1'></div>
+      <div className='m-4 mt-7 flex-1'>
+        <Typography variant='sm' weight='semibold' className='mb-4'>
+          {t('info.guest')}
+        </Typography>
+        <GuestsData />
+      </div>
 
-      <div className='mt-2 flex flex-none justify-between'>
+      <div className='m-4 flex flex-none justify-between'>
         <Button
-          type='link'
+          type='button'
           variant='text'
           slim={true}
           onClick={() => setStep(1)}
         >
           Atras
         </Button>
-        <Button type='button' variant='primary' onClick={() => null}>
-          Guardar
+        <Button
+          type='button'
+          variant='primary'
+          onClick={() => null}
+          icon={<Icon variant='search' color='white' />}
+        >
+          Buscar
         </Button>
       </div>
     </div>

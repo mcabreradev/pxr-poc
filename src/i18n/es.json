@@ -6,6 +6,14 @@
   "breakfast": "Desayuno",
   "button": {
     "accept": "Aceptar y continuar",
+    "add-date": {
+      "plural": "Agrega tus fechas",
+      "singular": "Agrega tu fecha"
+    },
+    "add-guest": {
+      "plural": "Agrega tus huéspedes",
+      "singular": "Agrega tu huésped"
+    },
     "all-amemnities": "Ver todos los servicios",
     "all-atractions": "Mostrar todos los sitios",
     "apple": "Continuar con Apple",
@@ -14,8 +22,16 @@
     "close": "Cerrar",
     "confirm-pay": "Confirmar y pagar",
     "continue": "Continuar",
+    "date": {
+      "plural": "Fechas",
+      "singular": "Fecha"
+    },
     "facebook": "Continuar con Facebook",
     "google": "Continuar con Google",
+    "guest": {
+      "plural": "Huéspedes",
+      "singular": "Huésped"
+    },
     "loading": "Cargando...",
     "login": "Ingresar",
     "pay": "Proceder al pago",

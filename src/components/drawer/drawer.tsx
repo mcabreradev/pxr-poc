@@ -40,11 +40,11 @@ export default function DrawerComponent({
       placement='bottom'
       open={open}
       onClose={closeDrawer}
-      className={cn('p-4', className)}
+      className={cn('bg-white-100 p-0', className)}
       transition={{ duration: 0.5 }}
     >
       <Container data-testid='test-element'>
-        <div className='my-4 flex justify-start'>
+        <div className='ml-2 mt-4 flex justify-start'>
           <Icon
             variant={icon ?? 'outline-chevron-left'}
             onClick={closeDrawer}

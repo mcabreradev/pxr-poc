@@ -138,7 +138,7 @@ export default withMT({
         white: {
           DEFAULT: '#FFFFFF',
           50: '#FFFFFF',
-          100: '#F1F1F1',
+          100: '#F7F7F7',
           200: '#e6e6e6',
           300: '#B9B9B9',
           400: '#9D9D9D',

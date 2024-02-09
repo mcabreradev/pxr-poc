@@ -85,7 +85,7 @@ export default function Button({
     alternative: 'bg-blue',
     warning: 'bg-orange',
     danger: 'bg-red',
-    text: 'border-[1px] border-solid border-white bg-white text-black underline hover:bg-white-100 px-2 py-2 rounded-lg',
+    text: 'border-[1px] border-none border-white !bg-transparent text-black underline hover:bg-white-100 px-2 py-2 rounded-lg',
   };
   const searchParams = useSearchParams();
 
@@ -122,7 +122,7 @@ export default function Button({
           slim={slim}
           {...props}
         >
-          {icon && <span className=''>{icon}</span>}
+          {icon && <span className='mr-2'>{icon}</span>}
           <span className='flex-grow cursor-pointer text-center'>
             {children}
           </span>
@@ -150,7 +150,7 @@ export default function Button({
       slim={slim}
       {...props}
     >
-      {icon && icon}
+      {icon && <span className='mr-2'>{icon}</span>}
       <span className='flex-grow cursor-pointer text-center'>{children}</span>
     </ButtonComponent>
   );

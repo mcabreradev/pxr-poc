@@ -12,6 +12,7 @@ type Props = {
   children: React.ReactNode;
   title?: string;
   icon?: string;
+  size?: number;
   open: boolean | undefined;
   onClose: () => void;
 };
@@ -26,6 +27,7 @@ export default function DrawerComponent({
   title,
   open = false,
   onClose,
+  size,
   icon,
 }: Props) {
   const closeDrawer = useCallback(() => {
@@ -34,7 +36,7 @@ export default function DrawerComponent({
 
   return (
     <Drawer
-      size={9000}
+      size={size || window.innerHeight}
       placement='bottom'
       open={open}
       onClose={closeDrawer}

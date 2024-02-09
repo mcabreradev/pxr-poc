@@ -142,11 +142,12 @@
 }
 
 .react-datepicker__header {
-  @apply border-b-[1px] !border-solid !border-white-200 !bg-white !py-5;
+  @apply border-b-[1px] !border-solid !border-white-200 !bg-white !py-3 md:!py-5;
 }
 
 .react-datepicker__day--in-range,
-.react-datepicker__day--in-selecting-range {
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--selected {
   @apply !rounded-full !bg-neutral-50 !text-black;
 }
 

@@ -1,6 +1,5 @@
 import { create, StateCreator } from 'zustand';
 import {
-  createJSONStorage,
   devtools,
   persist,
   PersistOptions,
@@ -15,7 +14,7 @@ type State = {
 type Actions = {
   openDatepickerDrawer: () => void;
   closeDatepickerDrawer: () => void;
-  clear: (value: boolean) => void;
+  resetCalendar: () => void;
 };
 
 type Persist = (
@@ -27,13 +26,12 @@ const middlewares = (f) =>
   devtools(
     subscribeWithSelector(
       persist(f, {
-        name: 'drawer',
-        storage: createJSONStorage(() => localStorage),
+        name: 'global-store',
       }),
     ),
   );
 
-const useDrawerStore = create<State & Actions, []>(
+const useGlobalStore = create<State & Actions, []>(
   (middlewares as Persist)((set): State & Actions => ({
     isOpenDatepickerDrawer: false,
     isClearCalendar: false,
@@ -48,11 +46,11 @@ const useDrawerStore = create<State & Actions, []>(
         isOpenDatepickerDrawer: false,
       })),
 
-    clear: (value: boolean) =>
+    resetCalendar: () =>
       set(() => ({
-        isClearCalendar: value,
+        isClearCalendar: true,
       })),
   })),
 );
 
-export default useDrawerStore;
+export default useGlobalStore;

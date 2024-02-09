@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Typography from '@/components/typography';
-import Datepicker from './datepicker/desktop-datepicker';
+import DatepickerDesktop from './datepicker/desktop-datepicker';
 import Dropdown from './dropdown';
 
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
@@ -30,7 +30,7 @@ export default function GuestFormComponent({ className }: Props) {
         {`${t('checkin')} - ${t('checkout')}`}
       </Typography>
 
-      <Datepicker />
+      <DatepickerDesktop />
 
       <Typography variant='sm' weight='semibold' className='my-4'>
         {t('info.guest')}

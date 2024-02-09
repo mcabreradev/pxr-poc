@@ -116,6 +116,7 @@
   "info": {
     "13years-or-more": "13 years old or more",
     "2to12": "2 to 12 years old",
+    "add-date": "Add your dates",
     "age": "Age",
     "better-rate": "Best rate guaranteed",
     "breakfast": "Breakfast included",
@@ -147,6 +148,8 @@
     "payment-unexpected-error": "An unexpected error has occurred.",
     "payment-unsuccessful": "Your payment could not be made, please try again.",
     "refundable": "Refundable",
+    "select-date": "Select date",
+    "select-room": "Select room",
     "show-more": "Show more",
     "taxes": "Taxes",
     "taxes-description": "Taxes must be paid upon arrival at the hotel",

@@ -18,13 +18,13 @@ import {
   CHECKOUT_DEFAULT_FUTURE_DAYS,
   TOTAL_ADULTS_DEFAULT,
 } from '@/constants';
-import useDrawerStore from '@/store/use-drawer.store';
+import useGlobalStore from '@/store/use-global.store';
 
 export default function MobileDatepickerComponent() {
   const {
     reservation: { adults, childrens, infants },
   } = useReservationStore();
-  const { openDatepickerDrawer } = useDrawerStore();
+  const { openDatepickerDrawer } = useGlobalStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { t } = useTranslation();
 

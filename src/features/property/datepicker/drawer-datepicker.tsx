@@ -5,33 +5,38 @@ import DatePicker from 'react-datepicker';
 
 import useLocale from '@/hooks/use-locale';
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import { formatDate, reFormatDate } from '@/lib/time';
+import { formatDate, getFormatedMontsDays } from '@/lib/time';
 
 import Button from '@/components/button';
 import Drawer from '@/components/drawer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import useDrawerStore from '@/store/use-drawer.store';
+import useGlobalStore from '@/store/use-global.store';
 import useReservationStore from '@/store/use-reservation-persist.store';
 
 import {
-  CHECKIN,
   CHECKIN_DEFAULT_FUTURE_DAYS,
-  CHECKOUT,
   CHECKOUT_DEFAULT_FUTURE_DAYS,
+  TOTAL_ADULTS_DEFAULT,
+  TOTAL_CHILDRENS_DEFAULT,
+  TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
 import useQueryString from '@/hooks/use-querystring';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
+import { useTranslation } from 'react-i18next';
 
 export default function DrawerDatepickerComponent() {
   const { locale } = useLocale();
+  const { t } = useTranslation();
   const { setReservation } = useReservationStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { updateQueryString } = useQueryString();
-  const { closeDatepickerDrawer } = useDrawerStore();
+  const { closeDatepickerDrawer } = useGlobalStore();
 
   const [step, setStep] = useState(1);
 
+  // Calendar
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
   const checkin = formatDate(getCheckin());
@@ -55,7 +60,7 @@ export default function DrawerDatepickerComponent() {
     setEndDate(end);
   }, []);
 
-  const onReset = useCallback(() => {
+  const resetHandler = useCallback(() => {
     setStartDate(null);
     setEndDate(null);
   }, []);
@@ -80,23 +85,52 @@ export default function DrawerDatepickerComponent() {
 
   useEffect(() => {
     if (!startDate || !endDate) return;
-    updateQueryString({
-      [CHECKIN]: reFormatDate(startDate),
-      [CHECKOUT]: reFormatDate(endDate),
-    });
-    setReservation({
-      checkin: reFormatDate(startDate),
-      checkout: reFormatDate(endDate),
-    });
+    // updateQueryString({
+    //   [CHECKIN]: reFormatDate(startDate),
+    //   [CHECKOUT]: reFormatDate(endDate),
+    // });
+    // setReservation({
+    //   checkin: reFormatDate(startDate),
+    //   checkout: reFormatDate(endDate),
+    // });
   }, [endDate, setReservation, startDate, updateQueryString]);
 
   useEffect(() => {
-    const unsub = useDrawerStore.subscribe(({ isOpenDatepickerDrawer }) => {
+    const unsub = useGlobalStore.subscribe(({ isOpenDatepickerDrawer }) => {
       setOpenDatepickerDrawer(isOpenDatepickerDrawer || false);
     });
 
     return unsub;
   }, []);
+
+  const planDays = dayjs(endDate).diff(dayjs(startDate), 'days');
+  const dayMonthYear =
+    startDate && endDate
+      ? getFormatedMontsDays(startDate, endDate, 'DD MMM. YYYY')
+      : null;
+
+  // Select Guests
+  const [adults, setAdults] = useState(TOTAL_ADULTS_DEFAULT);
+  const [childrens, setChildrens] = useState(TOTAL_CHILDRENS_DEFAULT);
+  const [infants, setInfants] = useState(TOTAL_INFANTS_DEFAULT);
+
+  const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
+  const {
+    selectedRoom,
+    selectedRoom: { minCapacity, maxCapacity, childCapacity },
+  } = useSelectedRoomtypeStore();
+
+  useEffect(() => {
+    setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
+    setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
+    setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
+  }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
+
+  const totalGuests = adults + childrens + infants;
+  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
+  const adultsBlockedCondition = isMaxCapacityReached;
+  const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
+  const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
 
   const DayPickerText = ({
     value,
@@ -147,17 +181,29 @@ export default function DrawerDatepickerComponent() {
   );
 
   const StepOne = () => (
-    <div className='mb-4 flex h-screen flex-col'>
-      <div className='flex-none'>
-        <h1>Escoje tu fecha</h1>
+    <div className='flex h-screen flex-col '>
+      <div className='m-4 flex-none'>
+        <Typography variant='h1'>
+          {planDays
+            ? `${planDays} ${t('night.plural')}`
+            : t('info.select-date')}
+        </Typography>
+
+        <Typography
+          variant='sm2'
+          weight='medium'
+          className='lowercase text-neutral-400'
+        >
+          {dayMonthYear ? dayMonthYear : t('info.select-date')}
+        </Typography>
       </div>
 
-      <div className='flex-1'>
+      <div className='flex flex-1 items-center justify-center'>
         <Calendar />
       </div>
 
-      <div className='mt-2 flex flex-none justify-between'>
-        <Button type='link' variant='text' slim={true} onClick={onReset}>
+      <div className='m-4 flex flex-none justify-between'>
+        <Button type='button' variant='text' slim={true} onClick={resetHandler}>
           Borrar
         </Button>
         <Button type='button' variant='primary' onClick={() => setStep(2)}>
@@ -169,8 +215,15 @@ export default function DrawerDatepickerComponent() {
 
   const StepTwo = () => (
     <div className='mb-4 flex h-screen flex-col'>
-      <div className='flex-none'>
-        <h1>Paso 2</h1>
+      <div className='m-4 flex-none'>
+        <Typography variant='h1'>Cuantos vienen?</Typography>
+        <Typography
+          variant='sm2'
+          weight='medium'
+          className='lowercase text-neutral-400'
+        >
+          4
+        </Typography>
       </div>
 
       <div className='flex-1'></div>

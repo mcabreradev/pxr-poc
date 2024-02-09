@@ -56,7 +56,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
 
 export default function Button({
   id,
-  type = 'submit',
+  type = 'button',
   className,
   children,
   variant = 'primary',

@@ -116,6 +116,7 @@
   "info": {
     "13years-or-more": "13 años o más",
     "2to12": "2 a 12 años",
+    "add-date": "Agrega tus fechas",
     "age": "Edad",
     "better-rate": "Mejor tarifa garantizada",
     "breakfast": "Desayuno incluido",
@@ -147,6 +148,8 @@
     "payment-unexpected-error": "Un error inesperado ha ocurrido.",
     "payment-unsuccessful": "Su pago no se pudo realizar, por favor intente de nuevo.",
     "refundable": "Reembolsable",
+    "select-date": "Selecciona la fecha",
+    "select-room": "Selecciona tu habitación",
     "show-more": "Mostrar más",
     "taxes": "Impuestos",
     "taxes-description": "Los impuestos deben ser pagados a tu llegada al hotel",

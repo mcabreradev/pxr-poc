@@ -22,13 +22,20 @@ export function reFormatDate(date: Date | string) {
   return [year, month, day].join('-');
 }
 
-export function getMonthDayFormat(date: Date | string) {
-  return dayjs(date).format('MMM DD');
+export function getMonthDayFormat(
+  date: Date | string,
+  format: string = 'MMM DD',
+) {
+  return dayjs(date).format(format);
 }
 
 export function getFormatedMontsDays(
-  checkin: Date | string,
-  checkout: Date | string,
+  checkin: Date,
+  checkout: Date,
+  format: string = 'MMM DD',
 ) {
-  return `${getMonthDayFormat(checkin)} - ${getMonthDayFormat(checkout)}`;
+  return `${getMonthDayFormat(checkin, format)} - ${getMonthDayFormat(
+    checkout,
+    format,
+  )}`;
 }

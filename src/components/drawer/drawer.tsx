@@ -44,7 +44,7 @@ export default function DrawerComponent({
       transition={{ duration: 0.5 }}
     >
       <Container data-testid='test-element'>
-        <div className='ml-2 mt-4 flex justify-start'>
+        <div className='my-4 ml-2 flex justify-start'>
           <Icon
             variant={icon ?? 'outline-chevron-left'}
             onClick={closeDrawer}

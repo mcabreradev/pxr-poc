@@ -27,6 +27,8 @@ export const SINGULAR = 'singular';
 export const INVENTORY = 'inventory';
 export const AVAILABILITY = 'availability';
 export const RATES = 'rates';
+export const CALENDAR = 'calendar';
+export const GUESTSINFO = 'guestsinfo';
 
 // RATE PLANS
 export const PLAN_REFUNDABLE = 'refundable';

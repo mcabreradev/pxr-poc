@@ -23,7 +23,7 @@ import {
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
 import useQueryString from '@/hooks/use-querystring';
-import { cn, ps } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 import { useTranslation } from 'react-i18next';
 
@@ -184,107 +184,19 @@ export default function DrawerDatepickerComponent() {
     />
   );
 
-  const StepOne = () => (
-    <div className='flex h-screen flex-col '>
-      <div className='m-2 my-4 flex-none'>
-        <Typography variant='h1'>
-          {planDays
-            ? `${planDays} ${t('night.plural')}`
-            : t('info.select-date')}
-        </Typography>
-
+  const GuestsData = () => (
+    <div className='right-0 w-full origin-top-right rounded-[24px] border-solid  border-white bg-white p-6 text-black outline-none drop-shadow-xl'>
+      {/* <div className=''>
         <Typography
-          variant='sm2'
+          variant='sm'
           weight='medium'
           className='lowercase text-neutral-400'
         >
-          {dayMonthYear ? dayMonthYear : t('info.select-date')}
+          {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
+          {childrens > 0 && `, ${childrens} ${t('children.' + ps(childrens))}`}
+          {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
         </Typography>
-      </div>
-
-      <div className='flex-1 items-center justify-center'>
-        {show === 'calendar' && (
-          <div className='rounded-[24px] border-solid border-white bg-white drop-shadow-xl'>
-            <Calendar />
-          </div>
-        )}
-
-        {!show && (
-          <Typography
-            className='my-4 flex flex-row justify-between justify-self-start rounded-[16px] border-solid border-white bg-white px-4 py-5 drop-shadow'
-            onClick={() => setShowHandler('calendar')}
-          >
-            <Typography
-              variant='sm'
-              className='text-neutral-400'
-              weight='semibold'
-            >
-              {t('button.date.plural')}
-            </Typography>
-            <Typography
-              variant='sm'
-              className='text-neutral-500'
-              weight='semibold'
-            >
-              {t('button.add-date.plural')}
-            </Typography>
-          </Typography>
-        )}
-
-        {!show && (
-          <Typography className='my-4 flex flex-row justify-between justify-self-start rounded-[16px] border-solid border-white bg-white px-4 py-5 drop-shadow'>
-            <Typography
-              variant='sm'
-              className='text-neutral-400'
-              weight='semibold'
-            >
-              {t('button.guest.plural')}
-            </Typography>
-            <Typography
-              variant='sm'
-              className='text-neutral-500'
-              weight='semibold'
-            >
-              {t('button.add-guest.plural')}
-            </Typography>
-          </Typography>
-        )}
-      </div>
-
-      <div className='m-4 flex flex-none justify-between'>
-        <span>
-          {!!planDays && (
-            <Button
-              type='button'
-              variant='text'
-              slim={true}
-              onClick={resetHandler}
-            >
-              Reestableecer
-            </Button>
-          )}
-
-          {!planDays && (
-            <Button
-              type='button'
-              variant='text'
-              slim={true}
-              onClick={() => setShowHandler(null)}
-            >
-              Omitir
-            </Button>
-          )}
-        </span>
-
-        <Button type='button' variant='primary' onClick={() => setStep(2)}>
-          Siguiente
-        </Button>
-      </div>
-    </div>
-  );
-
-  const GuestsData = () => (
-    <div className='right-0 w-full origin-top-right bg-white text-black  outline-none'>
+      </div> */}
       <div className='flex items-center justify-between'>
         <div className='flex flex-col items-start'>
           <Typography variant='sm'>{t('adult.plural')}</Typography>
@@ -407,59 +319,121 @@ export default function DrawerDatepickerComponent() {
     </div>
   );
 
-  const StepTwo = () => (
-    <div className='flex h-screen flex-col'>
-      <div className='m-4 flex-none'>
-        <Typography variant='h1'>Cuantos vienen?</Typography>
-        <Typography
-          variant='sm'
-          weight='medium'
-          className='lowercase text-neutral-400'
-        >
-          {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
-          {childrens > 0 && `, ${childrens} ${t('children.' + ps(childrens))}`}
-          {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
-        </Typography>
-      </div>
-
-      <div className='m-4 mt-7 flex-1'>
-        <Typography variant='sm' weight='semibold' className='mb-4'>
-          {t('info.guest')}
-        </Typography>
-        <GuestsData />
-      </div>
-
-      <div className='m-4 flex flex-none justify-between'>
-        <Button
-          type='button'
-          variant='text'
-          slim={true}
-          onClick={() => setStep(1)}
-        >
-          Atras
-        </Button>
-        <Button
-          type='button'
-          variant='primary'
-          onClick={() => null}
-          icon={<Icon variant='search' color='white' />}
-        >
-          Buscar
-        </Button>
-      </div>
-    </div>
-  );
-
   return (
     <Drawer
       icon='cancel'
       open={isOpenDatepickerDrawer}
       onClose={closeDatepickerDrawer}
     >
-      <>
-        {step === 1 && <StepOne />}
-        {step === 2 && <StepTwo />}
-      </>
+      <div className='flex h-screen flex-col '>
+        <div className='m-2 my-4 flex-none'>
+          <Typography variant='h1'>
+            {planDays
+              ? `${planDays} ${t('night.plural')}`
+              : t('info.select-date')}
+          </Typography>
+
+          <Typography
+            variant='sm2'
+            weight='medium'
+            className='lowercase text-neutral-400'
+          >
+            {dayMonthYear ? dayMonthYear : t('info.select-date')}
+          </Typography>
+        </div>
+
+        <div className='flex-1 items-center justify-center'>
+          {show === 'calendar' && (
+            <div className='rounded-[24px] border-solid border-white bg-white drop-shadow-xl'>
+              <Calendar />
+            </div>
+          )}
+
+          {show === 'guestdata' && (
+            <div className='rounded-[24px] border-solid border-white bg-white drop-shadow-xl'>
+              <GuestsData />
+            </div>
+          )}
+
+          {!show && (
+            <Typography
+              className='my-4 flex flex-row justify-between justify-self-start rounded-[16px] border-solid border-white bg-white px-4 py-5 drop-shadow'
+              onClick={() => setShowHandler('calendar')}
+            >
+              <Typography
+                variant='sm'
+                className='text-neutral-400'
+                weight='semibold'
+              >
+                {t('button.date.plural')}
+              </Typography>
+              <Typography
+                variant='sm'
+                className='text-neutral-500'
+                weight='semibold'
+              >
+                {t('button.add-date.plural')}
+              </Typography>
+            </Typography>
+          )}
+
+          {!show && (
+            <Typography
+              className='my-4 flex flex-row justify-between justify-self-start rounded-[16px] border-solid border-white bg-white px-4 py-5 drop-shadow'
+              onClick={() => setShowHandler('guestdata')}
+            >
+              <Typography
+                variant='sm'
+                className='text-neutral-400'
+                weight='semibold'
+              >
+                {t('button.guest.plural')}
+              </Typography>
+              <Typography
+                variant='sm'
+                className='text-neutral-500'
+                weight='semibold'
+              >
+                {t('button.add-guest.plural')}
+              </Typography>
+            </Typography>
+          )}
+        </div>
+
+        <div className='m-4 flex flex-none justify-between'>
+          <span>
+            {!!planDays && (
+              <Button
+                type='button'
+                variant='text'
+                slim={true}
+                onClick={resetHandler}
+              >
+                Reestableecer
+              </Button>
+            )}
+
+            {!planDays && (
+              <Button
+                type='button'
+                variant='text'
+                slim={true}
+                onClick={() => setShowHandler(null)}
+              >
+                Omitir
+              </Button>
+            )}
+          </span>
+
+          <Button
+            type='button'
+            variant='primary'
+            onClick={() => setShowHandler('guestdata')}
+          >
+            Siguiente
+          </Button>
+        </div>
+      </div>
     </Drawer>
   );
 }

@@ -13,6 +13,8 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import useUserStore from '@/store/use-user.store';
+
 import { PAYMENT_STATUS } from '@/constants';
 
 import data from './data.json';
@@ -26,6 +28,7 @@ export default function CheckoutForm() {
 
   const stripe = useStripe();
   const elements = useElements();
+  const { user } = useUserStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -96,10 +99,14 @@ export default function CheckoutForm() {
             {t('Tu información de pago')}
           </Typography>
           <Typography variant='sm' className='my-[20px] text-neutral-500'>
-            <p className='pb-1'>Hola Cliente, </p>
+            <p className='pb-1'>{`Hola ${
+              user ? user.given_name : 'su email'
+            }, `}</p>
             <p className='pb-1'>
-              Luego de que coloques la información de pago se te enviará la
-              confirmación de esta reserva a email@gmail.com.
+              {`Luego de que coloques la información de pago se te enviará la
+              confirmación de esta reserva a ${
+                user ? user.email : 'su email'
+              }.`}
             </p>
             <p className='pb-1'>
               Se te cobrará $ 400.00 en este momento de acuerdo a la política de

@@ -1,12 +1,6 @@
 import { create } from 'zustand';
 
-type User = {
-  sub: string;
-  email: string;
-  family_name?: string;
-  given_name?: string;
-  email_verified: string;
-};
+import { User } from '@/types';
 
 type UserStore = {
   user: User | null;

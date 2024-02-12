@@ -49,7 +49,7 @@ export default function DetailsComponent({ roomtype }: Props) {
   const actionIdentification = action === QUERY.IDENTIFICATION;
 
   useEffect(() => {
-    if (user) {
+    if (user && user.isAuth) {
       router.push(`/room-type/${roomtype}/payment?` + searchParams.toString());
     }
   }, [user, router, searchParams, roomtype]);

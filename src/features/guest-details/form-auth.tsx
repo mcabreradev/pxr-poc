@@ -15,6 +15,7 @@ import Typography from '@/components/typography';
 import { QUERY, URL } from '@/constants';
 import SocialSignOn from '@/features/guest-details/social-sign-on';
 import { authSchema } from '@/schemas';
+import useUserStore from '@/store/use-user.store';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 interface IForm {
@@ -33,6 +34,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { user } = useUserStore();
 
   const {
     register,
@@ -40,6 +42,9 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
     formState: { errors },
   } = useForm<IForm>({
     resolver: yupResolver(authSchema(t)),
+    defaultValues: {
+      email: user && user.email ? user.email : undefined,
+    },
   });
   const onSubmit: SubmitHandler<IForm> = (data) => {
     router.push(

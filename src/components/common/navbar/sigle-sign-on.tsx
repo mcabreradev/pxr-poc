@@ -39,7 +39,7 @@ export default function SingleSignOn() {
       if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
         closeModal();
         setUser(data);
-        addUser(data);
+        addUser({ ...data, isAuth: true });
       }
       if (eventType === SIGNOUT) {
         setUser(null);

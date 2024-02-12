@@ -13,6 +13,8 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import useUserStore from '@/store/use-user.store';
+
 import { CHECKUSER } from '@/constants';
 import { identificationSchema } from '@/schemas';
 
@@ -41,6 +43,7 @@ export default function FormIdentificationComponent({
   const { getEventData, subscribe, publish } = useEventBus();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { user, addUser } = useUserStore();
 
   const {
     register,
@@ -51,6 +54,9 @@ export default function FormIdentificationComponent({
     resolver: yupResolver(identificationSchema(t)),
     defaultValues: {
       email: email ? email : undefined,
+      name: email && user && email === user.email ? user.given_name : undefined,
+      lastname:
+        email && user && email === user.email ? user.family_name : undefined,
     },
   });
 
@@ -66,6 +72,8 @@ export default function FormIdentificationComponent({
           message: data.err,
         });
       } else {
+        const userData = data.data;
+        addUser({ ...userData, isAuth: false });
         const filteredSearchParams: string[] = [];
         searchParams.forEach((key, value) => {
           if (key === 'email' || key === 'action') {
@@ -79,7 +87,7 @@ export default function FormIdentificationComponent({
         );
       }
     },
-    [setError, roomtype, router, searchParams],
+    [setError, roomtype, router, searchParams, addUser],
   );
 
   useEffect(() => {

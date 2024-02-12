@@ -10,6 +10,7 @@ import Typography from '@/components/typography';
 type Props = {
   className?: string;
   children: React.ReactNode;
+  footer?: React.ReactNode;
   title?: string;
   icon?: string;
   size?: number;
@@ -24,6 +25,7 @@ const Container = tw.div`
 export default function DrawerComponent({
   className,
   children,
+  footer,
   title,
   open = false,
   onClose,
@@ -60,6 +62,7 @@ export default function DrawerComponent({
           </div>
         )}
         {children}
+        <>{footer ?? footer}</>
       </Container>
     </Drawer>
   );

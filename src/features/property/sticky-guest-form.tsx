@@ -1,12 +1,10 @@
 /* eslint-disable simple-import-sort/imports */
 import dayjs from 'dayjs';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import { formatDate, getFormatedMontsDays } from '@/lib/time';
+import { getFormatedMontsDays } from '@/lib/time';
 
 import Button from '@/components/button';
 import Typography from '@/components/typography';
@@ -25,7 +23,7 @@ export default function MobileDatepickerComponent() {
     reservation: { adults, childrens, infants },
   } = useReservationStore();
   const { openDatepickerDrawer } = useGlobalStore();
-  const { getCheckin, getCheckout } = useSearchParamOrStore();
+  // const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { t } = useTranslation();
 
   const total =
@@ -33,18 +31,18 @@ export default function MobileDatepickerComponent() {
 
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  const checkin = formatDate(getCheckin());
-  const [startDate, setStartDate] = useState<Date | null>(
-    checkin ? new Date(checkin) : checkinDefault,
-  );
+  // const checkin = formatDate(getCheckin());
+  // const [startDate, setStartDate] = useState<Date | null>(
+  //   checkin ? new Date(checkin) : checkinDefault,
+  // );
 
   const checkoutDefault = today
     .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
     .toDate();
-  const checkout = formatDate(getCheckout());
-  const [endDate, setEndDate] = useState<Date | null>(
-    checkout ? new Date(checkout) : checkoutDefault,
-  );
+  // const checkout = formatDate(getCheckout());
+  // const [endDate, setEndDate] = useState<Date | null>(
+  //   checkout ? new Date(checkout) : checkoutDefault,
+  // );
 
   return (
     <div

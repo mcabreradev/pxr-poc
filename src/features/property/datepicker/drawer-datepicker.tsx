@@ -2,10 +2,14 @@
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { useTranslation } from 'react-i18next';
 
+import useClickAway from '@/hooks/use-clickaway';
 import useLocale from '@/hooks/use-locale';
+import useQueryString from '@/hooks/use-querystring';
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import { formatDate, getFormatedMontsDays } from '@/lib/time';
+import { formatDate, getFormatedMontsDays, reFormatDate } from '@/lib/time';
+import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Drawer from '@/components/drawer';
@@ -14,21 +18,23 @@ import Typography from '@/components/typography';
 
 import useGlobalStore from '@/store/use-global.store';
 import useReservationStore from '@/store/use-reservation-persist.store';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import {
+  ADULTS,
   CALENDAR,
+  CHECKIN,
   CHECKIN_DEFAULT_FUTURE_DAYS,
+  CHECKOUT,
   CHECKOUT_DEFAULT_FUTURE_DAYS,
+  CHILDRENS,
   GUESTSINFO,
+  INFANTS,
   TOTAL_ADULTS_DEFAULT,
   TOTAL_CHILDRENS_DEFAULT,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
-import useClickAway from '@/hooks/use-clickoutside';
-import useQueryString from '@/hooks/use-querystring';
-import { cn, ps } from '@/lib/utils';
-import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
-import { useTranslation } from 'react-i18next';
+import useWindowSize from '@/hooks/use-windowsize';
 
 export default function DrawerDatepickerComponent() {
   const { locale } = useLocale();
@@ -37,8 +43,11 @@ export default function DrawerDatepickerComponent() {
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { updateQueryString } = useQueryString();
   const { closeDatepickerDrawer } = useGlobalStore();
+  const { size } = useWindowSize();
+  const refView = useClickAway(() => {
+    setShowHandler(null);
+  });
 
-  const [step, setStep] = useState(1);
   const [show, setShow] = useState<string | null>(null);
 
   const setShowHandler = useCallback((view) => setShow(view), []);
@@ -67,10 +76,21 @@ export default function DrawerDatepickerComponent() {
     setEndDate(end);
   }, []);
 
-  const resetHandler = useCallback(() => {
+  const resetCalendarHandler = useCallback(() => {
     setStartDate(null);
     setEndDate(null);
   }, []);
+
+  const resetGuestsInforHandler = useCallback(() => {
+    setAdults(0);
+    setChildrens(0);
+    setInfants(0);
+  }, []);
+
+  const resetAllHandler = useCallback(() => {
+    resetCalendarHandler();
+    resetGuestsInforHandler();
+  }, [resetCalendarHandler, resetGuestsInforHandler]);
 
   const handleTouchStart = useCallback(
     (e: TouchEvent) => e.stopPropagation(),
@@ -91,24 +111,17 @@ export default function DrawerDatepickerComponent() {
   };
 
   useEffect(() => {
-    if (!startDate || !endDate) return;
-    // updateQueryString({
-    //   [CHECKIN]: reFormatDate(startDate),
-    //   [CHECKOUT]: reFormatDate(endDate),
-    // });
-    // setReservation({
-    //   checkin: reFormatDate(startDate),
-    //   checkout: reFormatDate(endDate),
-    // });
-  }, [endDate, setReservation, startDate, updateQueryString]);
-
-  useEffect(() => {
     const unsub = useGlobalStore.subscribe(({ isOpenDatepickerDrawer }) => {
-      setOpenDatepickerDrawer(isOpenDatepickerDrawer || false);
+      if (isOpenDatepickerDrawer) {
+        setOpenDatepickerDrawer(isOpenDatepickerDrawer);
+        setShowHandler(null);
+        return;
+      }
+      setOpenDatepickerDrawer(false);
     });
 
     return unsub;
-  }, []);
+  }, [setShowHandler]);
 
   const planDays = dayjs(endDate).diff(dayjs(startDate), 'days');
   const dayMonthYear =
@@ -121,30 +134,61 @@ export default function DrawerDatepickerComponent() {
       : null;
 
   // Select Guests
-  const refView = useClickAway(() => {
-    setShowHandler(null);
-  });
-  const [adults, setAdults] = useState(TOTAL_ADULTS_DEFAULT);
-  const [childrens, setChildrens] = useState(TOTAL_CHILDRENS_DEFAULT);
-  const [infants, setInfants] = useState(TOTAL_INFANTS_DEFAULT);
-
   const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
+  const [adults, setAdults] = useState(
+    () => getAdults() || TOTAL_ADULTS_DEFAULT,
+  );
+  const [childrens, setChildrens] = useState(
+    () => getChildrens() || TOTAL_CHILDRENS_DEFAULT,
+  );
+  const [infants, setInfants] = useState(
+    () => getInfants() || TOTAL_INFANTS_DEFAULT,
+  );
+
   const {
-    selectedRoom,
-    selectedRoom: { minCapacity, maxCapacity, childCapacity },
+    selectedRoom: { maxCapacity, childCapacity },
   } = useSelectedRoomtypeStore();
 
-  useEffect(() => {
-    setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
-    setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
-    setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
-  }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
+  // useEffect(() => {
+  //   setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
+  //   setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
+  //   setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
+  // }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
 
   const totalGuests = adults + childrens + infants;
   const isMaxCapacityReached = false; //totalGuests >= (maxCapacity ?? 0);
   const adultsBlockedCondition = isMaxCapacityReached;
   const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
   const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
+
+  /// Search - final step
+  const handleSearch = useCallback(() => {
+    if (!startDate || !endDate) return;
+    setTimeout(() => {
+      setReservation({
+        checkin: reFormatDate(startDate),
+        checkout: reFormatDate(endDate),
+        adults,
+        childrens,
+        infants,
+      });
+      updateQueryString({
+        [CHECKIN]: reFormatDate(startDate),
+        [CHECKOUT]: reFormatDate(endDate),
+        [ADULTS]: adults,
+        [CHILDRENS]: childrens,
+        [INFANTS]: infants,
+      });
+    }, 300);
+  }, [
+    adults,
+    childrens,
+    endDate,
+    infants,
+    setReservation,
+    startDate,
+    updateQueryString,
+  ]);
 
   const DayPickerText = ({
     value,
@@ -216,7 +260,7 @@ export default function DrawerDatepickerComponent() {
             )}
             onClick={() => {
               if (adults === 1) return;
-              setAdults(adults - 1);
+              setAdults((pre) => pre - 1);
             }}
           />
           <Typography variant='sm' className='w-6 text-center'>
@@ -231,7 +275,7 @@ export default function DrawerDatepickerComponent() {
             )}
             onClick={() => {
               if (adultsBlockedCondition) return;
-              setAdults(adults + 1);
+              setAdults((pre) => pre + 1);
             }}
           />
         </div>
@@ -253,7 +297,7 @@ export default function DrawerDatepickerComponent() {
             )}
             onClick={() => {
               if (childrens === 0) return;
-              setInfants(childrens - 1);
+              setChildrens((pre) => pre - 1);
             }}
           />
           <Typography variant='sm' className='w-6 text-center'>
@@ -270,7 +314,7 @@ export default function DrawerDatepickerComponent() {
             )}
             onClick={() => {
               if (childrensBlockedCondition) return;
-              setChildrens(childrens + 1);
+              setChildrens((pre) => pre + 1);
             }}
           />
         </div>
@@ -292,7 +336,7 @@ export default function DrawerDatepickerComponent() {
             )}
             onClick={() => {
               if (infants === 0) return;
-              setInfants(infants - 1);
+              setInfants((pre) => pre - 1);
             }}
           />
           <Typography variant='sm' className='w-6 text-center'>
@@ -307,7 +351,7 @@ export default function DrawerDatepickerComponent() {
             )}
             onClick={() => {
               if (infantsBlockedCondition) return;
-              setInfants(infants + 1);
+              setInfants((pre) => pre + 1);
             }}
           />
         </div>
@@ -321,31 +365,15 @@ export default function DrawerDatepickerComponent() {
     </div>
   );
 
-  const Title = () => (
-    <div className='m-2 my-4 flex-none'>
-      <Typography variant='h1'>
-        {planDays ? `${planDays} ${t('night.plural')}` : t('info.select-date')}
-      </Typography>
-
-      <Typography
-        variant='sm2'
-        weight='medium'
-        className='lowercase text-neutral-400'
-      >
-        {dayMonthYear ? dayMonthYear : t('info.select-date')}
-      </Typography>
-    </div>
-  );
-
   const Buttons = () => (
     <div className='m-4 flex flex-none justify-between'>
       <span>
-        {!!planDays && (
+        {show === CALENDAR && !!planDays && (
           <Button
             type='button'
             variant='text'
             slim={true}
-            onClick={resetHandler}
+            onClick={resetCalendarHandler}
           >
             Reestableecer
           </Button>
@@ -361,9 +389,32 @@ export default function DrawerDatepickerComponent() {
             Omitir
           </Button>
         )}
+
+        {show === GUESTSINFO && (
+          <Button
+            type='button'
+            variant='text'
+            slim={true}
+            onClick={() => setShowHandler(CALENDAR)}
+          >
+            Regresar
+          </Button>
+        )}
+
+        {!show && planDays && totalGuests > 0 && (
+          <Button
+            type='button'
+            variant='text'
+            slim={true}
+            onClick={resetAllHandler}
+          >
+            Borrar todo
+          </Button>
+        )}
       </span>
+
       <span>
-        {planDays < 0 && totalGuests > 1 && (
+        {show === CALENDAR && !!planDays && (
           <Button
             type='button'
             variant='primary'
@@ -373,11 +424,28 @@ export default function DrawerDatepickerComponent() {
           </Button>
         )}
 
-        {planDays > 0 && totalGuests > 0 && (
+        {show === GUESTSINFO && planDays && (
           <Button
             type='button'
             variant='primary'
-            onClick={() => setShowHandler(GUESTSINFO)}
+            icon={
+              <Icon variant='search' color='white' width={15} height={15} />
+            }
+            onClick={handleSearch}
+          >
+            Buscar
+          </Button>
+        )}
+
+        {!show && (
+          <Button
+            type='button'
+            variant='primary'
+            disabled={!planDays}
+            icon={
+              <Icon variant='search' color='white' width={15} height={15} />
+            }
+            onClick={handleSearch}
           >
             Buscar
           </Button>
@@ -471,25 +539,24 @@ export default function DrawerDatepickerComponent() {
           )}
 
           {show === CALENDAR && (
-            <div
-              ref={refView}
-              className='rounded-[24px] border-solid border-white bg-white px-4 py-3 drop-shadow'
-            >
-              <div className='m-2 my-4 flex-none'>
-                <Typography variant='h1'>
-                  {planDays
-                    ? `${planDays} ${t('night.plural')}`
-                    : t('info.when-is-the-travel')}
-                </Typography>
+            <div className='rounded-[24px] border-solid border-white bg-white py-3 pl-4 drop-shadow'>
+              {size.height > 700 && (
+                <div className='m-2 my-2 flex-none'>
+                  <Typography variant='h1'>
+                    {planDays
+                      ? `${planDays} ${t('night.plural')}`
+                      : t('info.when-is-the-travel')}
+                  </Typography>
 
-                <Typography
-                  variant='sm2'
-                  weight='medium'
-                  className='lowercase text-neutral-400'
-                >
-                  {dayMonthYear ? dayMonthYear : t('info.select-your-date')}
-                </Typography>
-              </div>
+                  <Typography
+                    variant='sm2'
+                    weight='medium'
+                    className='lowercase text-neutral-400'
+                  >
+                    {dayMonthYear ? dayMonthYear : t('info.select-your-date')}
+                  </Typography>
+                </div>
+              )}
               <Calendar />
             </div>
           )}

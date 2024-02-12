@@ -24,6 +24,7 @@ import {
   TOTAL_CHILDRENS_DEFAULT,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
+import useClickAway from '@/hooks/use-clickoutside';
 import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
@@ -120,6 +121,9 @@ export default function DrawerDatepickerComponent() {
       : null;
 
   // Select Guests
+  const refView = useClickAway(() => {
+    setShowHandler(null);
+  });
   const [adults, setAdults] = useState(TOTAL_ADULTS_DEFAULT);
   const [childrens, setChildrens] = useState(TOTAL_CHILDRENS_DEFAULT);
   const [infants, setInfants] = useState(TOTAL_INFANTS_DEFAULT);
@@ -191,18 +195,10 @@ export default function DrawerDatepickerComponent() {
   );
 
   const GuestsData = () => (
-    <div className='right-0 w-full origin-top-right rounded-[24px] border-solid  border-white bg-white p-6 text-black outline-none drop-shadow-xl'>
-      {/* <div className=''>
-        <Typography
-          variant='sm'
-          weight='medium'
-          className='lowercase text-neutral-400'
-        >
-          {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
-          {childrens > 0 && `, ${childrens} ${t('children.' + ps(childrens))}`}
-          {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
-        </Typography>
-      </div> */}
+    <div
+      ref={refView}
+      className='right-0 w-full origin-top-right rounded-[24px] border-solid  border-white bg-white p-6 text-black outline-none drop-shadow-xl'
+    >
       <div className='flex items-center justify-between'>
         <div className='flex flex-col items-start'>
           <Typography variant='sm'>{t('adult.plural')}</Typography>
@@ -366,14 +362,27 @@ export default function DrawerDatepickerComponent() {
           </Button>
         )}
       </span>
+      <span>
+        {planDays < 0 && totalGuests > 1 && (
+          <Button
+            type='button'
+            variant='primary'
+            onClick={() => setShowHandler(GUESTSINFO)}
+          >
+            Siguiente
+          </Button>
+        )}
 
-      <Button
-        type='button'
-        variant='primary'
-        onClick={() => setShowHandler(GUESTSINFO)}
-      >
-        Siguiente
-      </Button>
+        {planDays > 0 && totalGuests > 0 && (
+          <Button
+            type='button'
+            variant='primary'
+            onClick={() => setShowHandler(GUESTSINFO)}
+          >
+            Buscar
+          </Button>
+        )}
+      </span>
     </div>
   );
 
@@ -462,7 +471,10 @@ export default function DrawerDatepickerComponent() {
           )}
 
           {show === CALENDAR && (
-            <div className='rounded-[24px] border-solid border-white bg-white px-4 py-3 drop-shadow'>
+            <div
+              ref={refView}
+              className='rounded-[24px] border-solid border-white bg-white px-4 py-3 drop-shadow'
+            >
               <div className='m-2 my-4 flex-none'>
                 <Typography variant='h1'>
                   {planDays
@@ -475,7 +487,7 @@ export default function DrawerDatepickerComponent() {
                   weight='medium'
                   className='lowercase text-neutral-400'
                 >
-                  {dayMonthYear ? dayMonthYear : t('info.when-is-the-travel')}
+                  {dayMonthYear ? dayMonthYear : t('info.select-your-date')}
                 </Typography>
               </div>
               <Calendar />
@@ -484,6 +496,19 @@ export default function DrawerDatepickerComponent() {
 
           {show === GUESTSINFO && (
             <div className='rounded-[24px] border-solid border-white bg-white drop-shadow'>
+              <div className='m-2 my-4 flex-none pl-4 pt-5 '>
+                <Typography variant='h1'>Cuantos viajan contigo?</Typography>
+
+                <Typography
+                  variant='sm2'
+                  className='text-left text-neutral-300'
+                >
+                  {adults > 0 && `${adults} ${t('adult.' + ps(adults))}`}
+                  {childrens > 0 &&
+                    `, ${childrens} ${t('children.' + ps(childrens))}`}
+                  {infants > 0 && `, ${infants} ${t('infant.' + ps(infants))}`}
+                </Typography>
+              </div>
               <GuestsData />
             </div>
           )}

@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
+
+import useUserStore from '@/store/use-user.store';
 
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
@@ -30,10 +33,19 @@ export default function PaymentFeature({ roomtype, action }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomtype);
+  const { setLoginEnabled } = useUserStore();
 
   const actionPayment = !action;
   const actionSuccess = action === URL.SUCCESS;
   const actionError = action === URL.ERROR;
+
+  useEffect(() => {
+    setLoginEnabled(false);
+
+    return () => {
+      setLoginEnabled(true);
+    };
+  }, [setLoginEnabled]);
 
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;

@@ -20,7 +20,7 @@ export default function SingleSignOn() {
   const [modalOpen, setModalOpen] = useState(false);
   const { urlStatus, urlSignin } = useHostUrl();
   const { getEventData, publish } = useEventBus();
-  const { addUser } = useUserStore();
+  const { addUser, loginEnabled } = useUserStore();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -69,7 +69,7 @@ export default function SingleSignOn() {
 
   if (user) {
     return (
-      <Typography variant='sm' onClick={signOut}>
+      <Typography variant='sm' onClick={loginEnabled ? signOut : () => {}}>
         {t('signout')}
       </Typography>
     );
@@ -77,7 +77,7 @@ export default function SingleSignOn() {
 
   return (
     <>
-      <Typography variant='sm' onClick={openModal}>
+      <Typography variant='sm' onClick={loginEnabled ? openModal : () => {}}>
         {t('signin')}
       </Typography>
       <Modal isOpen={modalOpen} onClose={closeModal}>

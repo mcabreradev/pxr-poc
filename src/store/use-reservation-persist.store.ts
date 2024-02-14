@@ -4,7 +4,10 @@ import {
   devtools,
   persist,
   PersistOptions,
+  subscribeWithSelector,
 } from 'zustand/middleware';
+
+import { TOTAL_ADULTS_DEFAULT } from '@/constants';
 
 import { Reservation } from '@/types';
 
@@ -15,9 +18,9 @@ type State = {
 const initialReservationState: Reservation = {
   checkin: null,
   checkout: null,
-  adults: null,
-  childrens: null,
-  infants: null,
+  adults: TOTAL_ADULTS_DEFAULT,
+  childrens: 0,
+  infants: 0,
   plan: null,
   extra: null,
   planCost: null,
@@ -48,10 +51,12 @@ type Persist = (
 
 const middlewares = (f) =>
   devtools(
-    persist(f, {
-      name: 'reservation',
-      storage: createJSONStorage(() => sessionStorage),
-    }),
+    subscribeWithSelector(
+      persist(f, {
+        name: 'reservation',
+        storage: createJSONStorage(() => localStorage),
+      }),
+    ),
   );
 
 const useReservationStore = create<State & Actions, []>(
@@ -72,13 +77,13 @@ const useReservationStore = create<State & Actions, []>(
     setCheckout: (checkout: string | Date | null) =>
       set(() => ({ reservation: { ...get().reservation, checkout } })),
 
-    setAdults: (adults: number | null) =>
+    setAdults: (adults: number) =>
       set(() => ({ reservation: { ...get().reservation, adults } })),
 
-    setChildrens: (childrens: number | null) =>
+    setChildrens: (childrens: number) =>
       set(() => ({ reservation: { ...get().reservation, childrens } })),
 
-    setInfants: (infants: number | null) =>
+    setInfants: (infants: number) =>
       set(() => ({ reservation: { ...get().reservation, infants } })),
 
     resetReservation: () =>

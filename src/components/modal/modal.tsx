@@ -2,7 +2,7 @@
 
 import type { CustomFlowbiteTheme } from 'flowbite-react';
 import { Modal, ModalProps } from 'flowbite-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
@@ -31,13 +31,26 @@ export default function ModalComponent({
 }: Props & ModalProps) {
   const [isAnimating, setIsAnimating] = useState(false);
 
+  const ANIMATION_DURATION = 300;
+
   const handleClose = () => {
     setIsAnimating(true);
-    setTimeout(() => {
-      setIsAnimating(false);
-      onClose();
-    }, 300);
   };
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (isAnimating) {
+      timeoutId = setTimeout(() => {
+        setIsAnimating(false);
+        onClose();
+      }, ANIMATION_DURATION);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isAnimating, onClose]);
 
   if (!isOpen) {
     return null;

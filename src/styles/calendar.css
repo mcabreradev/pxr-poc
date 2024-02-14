@@ -1,0 +1,39 @@
+/* Calendar */
+.react-datepicker {
+  @apply !border-[1px] !border-solid !border-white md:!border-white-200;
+}
+
+.react-datepicker__header {
+  @apply border-b-[1px] !border-solid !border-white-200 !bg-white !py-3 md:!py-5;
+}
+
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--selected {
+  @apply !rounded-full !bg-neutral-50 !text-black;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--range-end {
+  @apply !bg-black !text-white;
+}
+
+/* .testx {
+  height: calc(100vh - theme('spacing.7'));
+} */
+
+div:not(.react-datepicker__day--outside-month).react-datepicker__day {
+  @apply !m-1 !inline-flex !h-[calc(3.5_*(100vh_/_100))] !w-[calc(3.5_*(100vh_/_100))] !items-center !justify-center md:h-7 md:w-7;
+}
+
+.react-datepicker__navigation {
+  @apply !top-[20px];
+}
+
+.react-datepicker__navigation--previous {
+  @apply !left-[10px];
+}
+
+.react-datepicker__navigation--next {
+  @apply !right-[10px];
+}

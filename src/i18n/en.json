@@ -6,6 +6,14 @@
   "breakfast": "Breakfast",
   "button": {
     "accept": "Accept and continue",
+    "add-date": {
+      "plural": "Add your dates",
+      "singular": "Add your date"
+    },
+    "add-guest": {
+      "plural": "Add your guests",
+      "singular": "Add your guest"
+    },
     "all-amemnities": "All Amenities",
     "all-atractions": "All Atractions",
     "apple": "Continue with Apple",
@@ -14,8 +22,16 @@
     "close": "Close",
     "confirm-pay": "Confirm and pay",
     "continue": "Continue",
+    "date": {
+      "plural": "Dates",
+      "singular": "Date"
+    },
     "facebook": "Continue with Facebook",
     "google": "Continue with Google",
+    "guest": {
+      "plural": "Guests",
+      "singular": "Guest"
+    },
     "loading": "Loading...",
     "login": "Login",
     "pay": "Proceed to payment",
@@ -41,6 +57,7 @@
     "plural": "Dates",
     "singular": "Date"
   },
+  "description": "In consequat do et nisi. Tempor ad pariatur fugiat tempor quis exercitation laborum quis incididunt consectetur ullamco. Adipisicing officia labore cupidatat consequat labore.",
   "error": {
     "message": "Something went wrong, please try again later.",
     "not-connected": {
@@ -116,6 +133,7 @@
   "info": {
     "13years-or-more": "13 years old or more",
     "2to12": "2 to 12 years old",
+    "add-date": "Add your dates",
     "age": "Age",
     "better-rate": "Best rate guaranteed",
     "breakfast": "Breakfast included",
@@ -147,12 +165,16 @@
     "payment-unexpected-error": "An unexpected error has occurred.",
     "payment-unsuccessful": "Your payment could not be made, please try again.",
     "refundable": "Refundable",
+    "select-date": "Select date",
+    "select-room": "Select room",
+    "select-your-date": "Select your travel's date",
     "show-more": "Show more",
     "taxes": "Taxes",
     "taxes-description": "Taxes must be paid upon arrival at the hotel",
     "taxes-details": "Taxes details",
     "termsandconditions": "By selecting Accept and continue, I agree to the Terms of Service and Privacy Policy.",
-    "under-2": "less than 2 years"
+    "under-2": "less than 2 years",
+    "when-is-the-travel": "When is the travel?"
   },
   "link": {
     "language": "English",

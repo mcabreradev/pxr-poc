@@ -6,6 +6,14 @@
   "breakfast": "Desayuno",
   "button": {
     "accept": "Aceptar y continuar",
+    "add-date": {
+      "plural": "Agrega tus fechas",
+      "singular": "Agrega tu fecha"
+    },
+    "add-guest": {
+      "plural": "Agrega tus huéspedes",
+      "singular": "Agrega tu huésped"
+    },
     "all-amemnities": "Ver todos los servicios",
     "all-atractions": "Mostrar todos los sitios",
     "apple": "Continuar con Apple",
@@ -14,8 +22,16 @@
     "close": "Cerrar",
     "confirm-pay": "Confirmar y pagar",
     "continue": "Continuar",
+    "date": {
+      "plural": "Fechas",
+      "singular": "Fecha"
+    },
     "facebook": "Continuar con Facebook",
     "google": "Continuar con Google",
+    "guest": {
+      "plural": "Huéspedes",
+      "singular": "Huésped"
+    },
     "loading": "Cargando...",
     "login": "Ingresar",
     "pay": "Proceder al pago",
@@ -41,6 +57,7 @@
     "plural": "Fechas",
     "singular": "Fecha"
   },
+  "description": "In consequat do et nisi. Tempor ad pariatur fugiat tempor quis exercitation laborum quis incididunt consectetur ullamco. Adipisicing officia labore cupidatat consequat labore.",
   "error": {
     "message": "Algo salió mal, por favor intenta de nuevo más tarde.",
     "not-connected": {
@@ -116,6 +133,7 @@
   "info": {
     "13years-or-more": "13 años o más",
     "2to12": "2 a 12 años",
+    "add-date": "Agrega tus fechas",
     "age": "Edad",
     "better-rate": "Mejor tarifa garantizada",
     "breakfast": "Desayuno incluido",
@@ -147,12 +165,16 @@
     "payment-unexpected-error": "Un error inesperado ha ocurrido.",
     "payment-unsuccessful": "Su pago no se pudo realizar, por favor intente de nuevo.",
     "refundable": "Reembolsable",
+    "select-date": "Selecciona la fecha",
+    "select-room": "Selecciona tu habitación",
+    "select-your-date": "Selecciona tus fechas de viaje",
     "show-more": "Mostrar más",
     "taxes": "Impuestos",
     "taxes-description": "Los impuestos deben ser pagados a tu llegada al hotel",
     "taxes-details": "Detalles de los impuestos",
     "termsandconditions": "Al seleccionar Aceptar y continuar, acepto los Términos de servicio y la Política de privacidad.",
-    "under-2": "menos de 2 años"
+    "under-2": "menos de 2 años",
+    "when-is-the-travel": "¿Cuándo es tu viaje?"
   },
   "link": {
     "language": "Español",

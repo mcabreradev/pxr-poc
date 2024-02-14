@@ -135,3 +135,5 @@
 .react-toggle--checked .react-toggle-track {
   background-color: rgb(var(--tw-color-brand-500)) !important;
 }
+
+@import 'calendar.css';

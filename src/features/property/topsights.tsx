@@ -37,7 +37,7 @@ export default function PropertyTopSights({ className, topSights }: Props) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
     router.replace(
-      `${pathname}?${createQueryString(searchParams, { TOPSIGHT: 1 })}`,
+      `${pathname}?${createQueryString(searchParams, { [TOPSIGHT]: 1 })}`,
       { scroll: false },
     );
   }, [pathname, router, searchParams]);

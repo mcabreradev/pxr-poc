@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const useWindowSize = () => {
-  const [screenSize, setScreenSize] = useState({
+  const [size, setScreenSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
@@ -33,7 +33,7 @@ const useWindowSize = () => {
     };
   }, []);
 
-  return { screenSize, ...screenSize, isMobile, isBrowser: !isMobile };
+  return { size, ...size, isMobile, isBrowser: !isMobile };
 };
 
 export default useWindowSize;

@@ -168,9 +168,9 @@ export type SelectedRoomtype = {
 export type Reservation = {
   checkin?: string | Date | null;
   checkout?: string | Date | null;
-  adults?: number | null;
-  childrens?: number | null;
-  infants?: number | null;
+  adults?: number;
+  childrens?: number;
+  infants?: number;
   plan?: string | null;
   extra?: string | null;
   planCost?: number | null;

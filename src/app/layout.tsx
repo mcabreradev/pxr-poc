@@ -1,8 +1,9 @@
 /* eslint-disable simple-import-sort/imports */
 import { ReactNode } from 'react';
-import 'react-next-dates/dist/style.css';
 
+import '@/styles/animations.css';
 import '@/styles/globals.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { fontPoppins } from '@/lib/fonts';
 import { cn } from '@/lib/utils';

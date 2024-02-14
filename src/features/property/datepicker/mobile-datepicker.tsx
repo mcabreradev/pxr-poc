@@ -36,7 +36,7 @@ import {
 } from '@/constants';
 import useWindowSize from '@/hooks/use-windowsize';
 
-export default function DrawerDatepickerComponent() {
+export default function MobileDatepickerComponent() {
   const { locale } = useLocale();
   const { t } = useTranslation();
   const { setReservation } = useReservationStore();

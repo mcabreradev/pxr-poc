@@ -34,7 +34,7 @@
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.1",
     "@iconify/react": "^4.1.1",
-    "@material-tailwind/react": "^2.1.2",
+    "@material-tailwind/react": "2.1.8",
     "@reduxjs/toolkit": "^1.9.5",
     "@storybook/addon-essentials": "^7.4.2",
     "@storybook/addon-interactions": "^7.4.2",

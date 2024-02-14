@@ -22,7 +22,7 @@ import useFetchProperty from '@/queries/use-property';
 
 import PropertyAmenities from './amenities';
 import data from './data.json';
-import DrawerDatepicker from './datepicker/drawer-datepicker';
+import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
 import RoomSwiper from './room-swiper';
 import Skeleton from './skeleton';
@@ -107,7 +107,9 @@ const PropertyPage = memo(function HotelPage() {
           <hr />
           <Section id='summary'>
             <p className='my-2 text-2sm'>
-              {property.description[i18n.language]}
+              {property.description
+                ? property.description[i18n.language]
+                : t('description')}
             </p>
           </Section>
 
@@ -352,7 +354,7 @@ const PropertyPage = memo(function HotelPage() {
         <StickyGuestForm />
       </Sticky>
 
-      <DrawerDatepicker />
+      <MobileDatepicker />
     </main>
   );
 });

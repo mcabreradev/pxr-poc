@@ -102,7 +102,9 @@ const PropertyPage = memo(function HotelPage() {
           <hr />
           <Section>
             <p className='my-2 text-2sm'>
-              {property.description[i18n.language]}
+              {property.description
+                ? property.description[i18n.language]
+                : t('description')}
             </p>
           </Section>
 

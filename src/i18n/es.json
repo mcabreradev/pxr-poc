@@ -164,6 +164,17 @@
     "unexpected-error": "Un error inesperado ha ocurrido.",
     "wrong": "Algo salió mal."
   },
+  "summary": {
+    "address": "Dirección",
+    "contact": "Contacta al hotel",
+    "cost": "Costo total",
+    "directions": "Cómo llegar",
+    "fill-data": "Completar datos",
+    "guests": "Huéspedes",
+    "hotel-information": "Ver información del hotel",
+    "reservation-code": "Código de reserva",
+    "stay": "Tu estadía en"
+  },
   "terms": {
     "part1": "Al seleccionar",
     "part2": "confirmo que estoy de acuerdo con",
@@ -197,6 +208,7 @@
     "room-details": "Detalle de la habitación",
     "search": "Busca tu hotel",
     "show-more": "Mostrar más",
+    "summary": "Reserva confirmada",
     "termsandconditions": "Terms and Conditions",
     "wanna-sleep": "¿Dónde quieres dormir?"
   },

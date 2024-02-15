@@ -164,6 +164,17 @@
     "unexpected-error": "An unexpected error occurred.",
     "wrong": "Something went wrong."
   },
+  "summary": {
+    "address": "Address",
+    "contact": "Contact hotel",
+    "cost": "Total cost",
+    "directions": "Directions",
+    "fill-data": "Fill data",
+    "guests": "Guests",
+    "hotel-information": "View hotel information",
+    "reservation-code": "Reservation code",
+    "stay": "Your stay at"
+  },
   "terms": {
     "part1": "By selecting",
     "part2": "I agree to Paxer's",
@@ -197,6 +208,7 @@
     "room-details": "Room Details",
     "search": "Search",
     "show-more": "Show more",
+    "summary": "Reservation confirmed",
     "termsandconditions": "Terms and Conditions",
     "wanna-sleep": "Where do you wanna sleep?"
   },

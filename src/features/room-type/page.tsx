@@ -1,9 +1,10 @@
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable simple-import-sort/imports */
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useQueryString from '@/hooks/use-querystring';
+import { useQueryString, useSearchParamOrStore } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -13,7 +14,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import MyTrip from './my-trip/my-trip';
 
-import useRoomTypeQuery from '@/queries/use-roomtype';
+import { useRatePlanByRoomtypeIdQuery, useRoomTypeQuery } from '@/queries';
 
 import data from './data.json';
 import Skeleton from './skeleton';
@@ -32,6 +33,14 @@ px-4 text-black md:px-0
 
 export default function RoomTypePage({ className, roomtype }: Props) {
   const { t, i18n } = useTranslation();
+
+  const { checkin, checkout } = useSearchParamOrStore();
+
+  const { data: ratePlan } = useRatePlanByRoomtypeIdQuery({
+    roomTypeId: roomtype,
+    checkin,
+    checkout,
+  });
 
   const {
     isError,

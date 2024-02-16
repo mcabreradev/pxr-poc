@@ -13,7 +13,7 @@ import Button from '@/components/button';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import useReservation from '@/store/use-reservation-persist.store';
+import useReservationQuery from '@/store/use-reservation-persist.store';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import {
@@ -52,7 +52,7 @@ px-4 text-black md:px-0
 export default function MyTrip({ className, roomtype }: Props) {
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
-  const { reservation, setReservation } = useReservation();
+  const { reservation, setReservation } = useReservationQuery();
   const { selectedRoom } = useSelectedRoomtypeStore();
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();

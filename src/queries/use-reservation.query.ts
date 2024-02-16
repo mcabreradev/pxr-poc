@@ -3,15 +3,15 @@ import axios from 'axios';
 
 import { PROPERTY, RESERVATION } from '@/constants';
 
-const createPaymentIntent = async (body) => {
+const fetchReservaction = async (body) => {
   const { data } = await axios.post(`/api/reservation`, body);
   return data.clientSecret;
 };
 
-export default function useReservation(body) {
+export default function useReservationQuery(body) {
   return useQuery({
     queryKey: [PROPERTY, RESERVATION],
-    queryFn: () => createPaymentIntent(body),
+    queryFn: () => fetchReservaction(body),
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnMount: false,

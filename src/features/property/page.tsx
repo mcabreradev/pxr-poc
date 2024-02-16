@@ -15,10 +15,13 @@ import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import { useReservationQueryStore } from '@/store';
 
-import useFetchAvailability from '@/queries/use-availabity';
-import useFetchProperty from '@/queries/use-property';
+import {
+  useAvailabilityQuery,
+  usePropertyQuery,
+  useRatesPlanQuery,
+} from '@/queries';
 
 import PropertyAmenities from './amenities';
 import data from './data.json';
@@ -41,24 +44,29 @@ const Row = tw.div`
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
   const searchParams = useSearchParams();
-  const { isLoading, isError, data: property } = useFetchProperty();
+  const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
-  const { resetReservation } = useReservationStore();
+  const { resetReservation } = useReservationQueryStore();
 
   const checkin = searchParams.get('checkin');
   const checkout = searchParams.get('checkout');
-
   const roomSwipperRef = useRef(null);
 
-  const { refetch, data: inventory } = useFetchAvailability({
+  const { refetch: fetchAvailability, data: inventory } = useAvailabilityQuery({
+    checkin,
+    checkout,
+  });
+  const { refetch: fetchRatesPlan } = useRatesPlanQuery({
     checkin,
     checkout,
   });
 
   useEffect(() => {
-    if (!checkin || !checkout) return;
-    refetch();
-  }, [checkin, checkout, refetch, inventory]);
+    if (checkin && checkout) {
+      fetchAvailability();
+      fetchRatesPlan();
+    }
+  }, [checkin, checkout, fetchAvailability, fetchRatesPlan, inventory]);
 
   useEffect(() => {
     removeBlacklistParam(['action', 'extra', 'plan']);

@@ -17,7 +17,7 @@ const initalState: State = {
   description: null,
 };
 
-const useSeo = create<State & Actions>((set) => ({
+const useSeoStore = create<State & Actions>((set) => ({
   ...initalState,
 
   setSeoTitle: (title: string) => {
@@ -31,4 +31,4 @@ const useSeo = create<State & Actions>((set) => ({
   remove: () => set(initalState),
 }));
 
-export default useSeo;
+export default useSeoStore;

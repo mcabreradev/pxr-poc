@@ -11,7 +11,7 @@ const fetchAvailability = async ({ checkin, checkout }) => {
   return data;
 };
 
-export default function useFetchAvailability(params) {
+export default function useAvailabilityQuery(params) {
   return useQuery({
     queryKey: [PROPERTY, propertyId, AVAILABILITY],
     queryFn: () => fetchAvailability(params),

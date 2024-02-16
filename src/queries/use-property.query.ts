@@ -9,7 +9,7 @@ const fetchProperty = async () => {
   return data;
 };
 
-export default function useFetchProperty() {
+export default function usePropertyQuery() {
   return useQuery({
     queryKey: [PROPERTY, propertyId],
     queryFn: () => fetchProperty(),

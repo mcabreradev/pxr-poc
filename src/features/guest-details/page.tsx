@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
-import useFetchProperty from '@/queries/use-property';
-import useRoomTypeQuery from '@/queries/use-roomtype';
+import usePropertyQuery from '@/queries/use-property.query';
+import useRoomTypeQuery from '@/queries/use-roomtype.query';
 
 import BackButton from '@/components/common/back-button';
 
@@ -28,7 +28,7 @@ const Container = tw.div`
 
 export default function DetailsComponent({ roomtype }: Props) {
   const { t } = useTranslation();
-  const { isError, isLoading, data: property } = useFetchProperty();
+  const { isError, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,

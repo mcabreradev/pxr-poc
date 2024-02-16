@@ -59,7 +59,7 @@ const middlewares = (f) =>
     ),
   );
 
-const useReservationStore = create<State & Actions, []>(
+const useReservationQueryStore = create<State & Actions, []>(
   (middlewares as Persist)((set, get): State & Actions => ({
     reservation: { ...initialReservationState },
 
@@ -91,4 +91,4 @@ const useReservationStore = create<State & Actions, []>(
   })),
 );
 
-export default useReservationStore;
+export default useReservationQueryStore;

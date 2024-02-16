@@ -10,7 +10,7 @@ import useQueryString from '@/hooks/use-querystring';
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import { cn, formatDate, reFormatDate } from '@/lib/utils';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation-persist.store';
 
 import {
   CHECKIN,
@@ -21,7 +21,7 @@ import {
 
 export default function DatepickerComponent() {
   const { locale } = useLocale();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
   const { updateQueryString } = useQueryString();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
 

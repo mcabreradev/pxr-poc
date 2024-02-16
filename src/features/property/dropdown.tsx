@@ -7,7 +7,7 @@ import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation-persist.store';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import Button from '@/components/button';
@@ -34,7 +34,7 @@ flex items-center justify-center
 export default function DropdownComponent({ className }: Props) {
   const { t } = useTranslation();
   const { updateQueryString } = useQueryString();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
   const {
     selectedRoom,
     selectedRoom: { roomPrice, minCapacity, maxCapacity, childCapacity },

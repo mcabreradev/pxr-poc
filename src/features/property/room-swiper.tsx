@@ -13,7 +13,7 @@ import Typography from '@/components/typography';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import { PLAN_COSTS } from '@/constants';
-import useRoomTypesQuery from '@/queries/use-roomtypes';
+import useRoomTypesQuery from '@/queries/use-roomtypes.query';
 
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-50 bg-white shadow
@@ -67,7 +67,7 @@ export default function RoomSwiper() {
           />
           <div className='p-4'>
             <Typography variant='h3' weight='medium' className='pb-4'>
-              {room.name[i18n.language] ?? t('title.room')}
+              {room.name[i18n.language] ?? t('title.room')} {' ->' + room.id}
             </Typography>
             <Typography className='pb-1'>
               {`Max ${room.maxCapacity} ${t('person.plural')}`}

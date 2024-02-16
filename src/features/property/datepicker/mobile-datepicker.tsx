@@ -17,7 +17,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import useGlobalStore from '@/store/use-global.store';
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation-persist.store';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import {
@@ -39,7 +39,7 @@ import useWindowSize from '@/hooks/use-windowsize';
 export default function MobileDatepickerComponent() {
   const { locale } = useLocale();
   const { t } = useTranslation();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { updateQueryString } = useQueryString();
   const { closeDatepickerDrawer } = useGlobalStore();

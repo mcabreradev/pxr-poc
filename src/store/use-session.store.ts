@@ -36,7 +36,7 @@ const middlewares = (f) =>
     }),
   );
 
-const useSession = create<State & Actions>()(
+const useSessionStore = create<State & Actions>()(
   (middlewares as Persist)((set, get) => ({
     session: null,
     setSession: (session: Session) =>
@@ -45,4 +45,4 @@ const useSession = create<State & Actions>()(
   })),
 );
 
-export default useSession;
+export default useSessionStore;

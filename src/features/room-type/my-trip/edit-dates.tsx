@@ -14,7 +14,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import useQueryString from '@/hooks/use-querystring';
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation-persist.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
 import useHydration from '@/hooks/use-hydration';
@@ -36,7 +36,7 @@ export default function EditGuestsComponent({ className }: Props) {
   const searchParams = useSearchParams();
   const { t } = useTranslation();
   const { locale } = useLocale();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
   const { updateQueryString } = useQueryString();
 
   const checkin = formatDate(searchParams.get(CHECKIN));

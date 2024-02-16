@@ -16,7 +16,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation-persist.store';
 import useSessionStore from '@/store/use-session.store';
 
 import { PAYMENT_STATUS } from '@/constants';
@@ -33,7 +33,7 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const { session } = useSessionStore();
-  const { reservation } = useReservationStore();
+  const { reservation } = useReservationQueryStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);

@@ -51,7 +51,7 @@ type Actions = {
   setInfants: (i: number) => void;
 };
 
-const useReservationStore = create<State & Actions>((set, get) => ({
+const useReservationQueryStore = create<State & Actions>((set, get) => ({
   reservation: { ...initialReservationState },
 
   setReservation: (reservation: Reservation) =>
@@ -80,4 +80,4 @@ const useReservationStore = create<State & Actions>((set, get) => ({
   resetReservation: () => set(() => ({ reservation: initialReservationState })),
 }));
 
-export default useReservationStore;
+export default useReservationQueryStore;

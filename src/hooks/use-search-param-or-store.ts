@@ -1,7 +1,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation-persist.store';
 
 import {
   ADULTS,
@@ -21,7 +21,7 @@ import { Reservation } from '@/types';
 
 const useSearchParamOrStore = () => {
   const searchParams = useSearchParams();
-  const { getReservationBy } = useReservationStore();
+  const { getReservationBy } = useReservationQueryStore();
 
   const getByQueryParamOrStoreItem = useCallback(
     (p: string, s: keyof Reservation) => {

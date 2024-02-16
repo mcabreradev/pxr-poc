@@ -9,7 +9,7 @@ import { getFormatedMontsDays } from '@/lib/time';
 import Button from '@/components/button';
 import Typography from '@/components/typography';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation-persist.store';
 
 import {
   CHECKIN_DEFAULT_FUTURE_DAYS,
@@ -21,7 +21,7 @@ import useGlobalStore from '@/store/use-global.store';
 export default function MobileDatepickerComponent() {
   const {
     reservation: { adults, childrens, infants },
-  } = useReservationStore();
+  } = useReservationQueryStore();
   const { openDatepickerDrawer } = useGlobalStore();
   // const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { t } = useTranslation();

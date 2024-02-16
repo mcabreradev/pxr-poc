@@ -6,7 +6,7 @@ import tw from 'tailwind-styled-components';
 
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import { ps } from '@/lib/utils';
-import useReservation from '@/store/use-reservation-persist.store';
+import useReservationQuery from '@/store/use-reservation-persist.store';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
@@ -37,7 +37,7 @@ export default function MyTripDetails({ property, room }: Props) {
     extra,
     plan,
   } = useSearchParamOrStore();
-  const { reservation } = useReservation();
+  const { reservation } = useReservationQuery();
 
   const checkin = dayjs(getCheckin());
   const checkout = dayjs(getCheckout());

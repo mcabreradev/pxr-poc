@@ -6,13 +6,12 @@ import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 
-import useSessionStore from '@/store/use-session.store';
+import { useSessionStore } from '@/store';
 
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
 import StripePayment from '@/features/payment/strype-payment';
-import useFetchProperty from '@/queries/use-property';
-import useRoomTypeQuery from '@/queries/use-roomtype';
+import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import MyTripDetails from './my-trip-details';
 import SkeletonComponent from './skeleton';
@@ -27,7 +26,7 @@ const Container = tw.div`
 
 export default function PaymentFeature({ roomtype, action }: Props) {
   const { t } = useTranslation();
-  const { error, isError, isLoading, data: property } = useFetchProperty();
+  const { error, isError, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
@@ -48,7 +47,7 @@ export default function PaymentFeature({ roomtype, action }: Props) {
   }
 
   if (isError || roomError) {
-    if ((error as { code: string }).code === ERRORS.ERR_NETWORK) {
+    if ((error as unknown as { code: string }).code === ERRORS.ERR_NETWORK) {
       return <NotConnected />;
     }
     return <span>Error</span>;

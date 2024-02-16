@@ -26,8 +26,8 @@ export default function SummaryRow({
   className = '',
 }: Props) {
   return (
-    <div className={cn('mx-6 mt-3 flex', className)}>
-      <div className='basis-2/3'>
+    <div className={cn('mx-4 mt-3 flex', className)}>
+      <div className='mr-3 basis-2/3'>
         <Typography variant='sm' weight='normal' tag={leftMainTag}>
           {leftMainText}
         </Typography>

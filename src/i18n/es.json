@@ -166,14 +166,20 @@
   },
   "summary": {
     "address": "Dirección",
+    "cancel-reservation": "Anular reserva",
     "contact": "Contacta al hotel",
     "cost": "Costo total",
     "directions": "Cómo llegar",
     "fill-data": "Completar datos",
     "guests": "Huéspedes",
     "hotel-information": "Ver información del hotel",
+    "invoice": "Obtener recibo",
+    "no-payment": "Ningún pago ha sido realizado",
+    "payment-title": "Pagos",
     "reservation-code": "Código de reserva",
-    "stay": "Tu estadía en"
+    "stay": "Tu estadía en",
+    "taxes-reminder-1": "Le recordamos que deberá realizar el pago de impuestos de",
+    "taxes-reminder-2": "al momento de su llegada al hotel"
   },
   "terms": {
     "part1": "Al seleccionar",

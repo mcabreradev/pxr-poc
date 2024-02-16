@@ -1,23 +1,58 @@
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
+import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 
 import BackButton from '@/components/common/back-button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import useReservation from '@/store/use-reservation-persist.store';
+
+import PriceDetails from '@/features/components/price-details';
+import SkeletonComponent from '@/features/payment/skeleton';
+import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
+import useRoomTypeQuery from '@/queries/use-roomtype';
 
 type Props = {
   className?: string;
+  roomtype: string;
 };
+
+const HR = tw.div`
+  hr border-t-[10px] border-neutral-60
+`;
 
 const Container = tw.div`
 `;
 
-export default function SummaryFeature({ className }: Props) {
+export default function SummaryFeature({ className, roomtype }: Props) {
+  const { getCheckin, getCheckout, extra, plan } = useSearchParamOrStore();
+  const {
+    isError: roomError,
+    isLoading: roomLoading,
+    data: room,
+  } = useRoomTypeQuery(roomtype);
   const { t } = useTranslation();
+  const { reservation } = useReservation();
+
+  const checkin = dayjs(getCheckin());
+  const checkout = dayjs(getCheckout());
+
+  //Temp
+  const payment = { amount: reservation.total ?? null, currency: 'USD' };
+
+  if (roomLoading) {
+    return <SkeletonComponent />;
+  }
+
+  if (roomError) {
+    return <span>Error</span>;
+  }
+
   return (
     <Container
       className={cn('sm:absolute-container md:relative', className)}
@@ -26,16 +61,28 @@ export default function SummaryFeature({ className }: Props) {
       <BackButton href='/'>{t('title.summary')}</BackButton>
       <div className='mb-16'>
         <div className='layout'>
-          <div className='w-full bg-[url("/images/hotel/image318.png")] bg-cover'>
+          <div className='mb-2 h-[200px] w-full bg-[url("/images/hotel/image318.png")] bg-cover'>
             <Typography
               variant='h1'
               weight='medium'
-              className='mx-6 my-2 pb-12 pt-3 text-white'
+              className='mx-4 my-2 pt-3 text-white'
             >
               {t('summary.stay')} Terrazas de La Posta
             </Typography>
+            <div className='mx-4 flex flex-row'>
+              <Icon
+                variant='star'
+                height='18px'
+                width='18px'
+                color='white'
+                className='mt-0.5'
+              />
+              <Typography variant='sm' className='ml-1 text-white'>
+                4.5 (3)
+              </Typography>
+            </div>
           </div>
-          <div className='mb-2 flex w-full flex-row divide-x px-2'>
+          <div className='mb-2 flex w-full flex-row divide-x px-0.5'>
             <div className='basis-1/2 px-4 py-2'>
               <Typography variant='sm' weight='bold'>
                 {t('checkin')}
@@ -47,7 +94,7 @@ export default function SummaryFeature({ className }: Props) {
                 03:00pm
               </Typography>
             </div>
-            <div className='basis-1/2 px-5 py-2'>
+            <div className='basis-1/2 px-4 py-2'>
               <Typography variant='sm' weight='bold'>
                 {t('checkout')}
               </Typography>
@@ -59,7 +106,7 @@ export default function SummaryFeature({ className }: Props) {
               </Typography>
             </div>
           </div>
-          <div className='mx-6 border-b'></div>
+          <div className='mx-4 border-b'></div>
           <SummaryRow
             leftMainText={t('summary.address')}
             leftSecondaryText='Pje Santa Rosa de Lima s/n, Purmamarca, Argentina'
@@ -82,8 +129,8 @@ export default function SummaryFeature({ className }: Props) {
             rightMainText='SFFE3553'
             className='mb-5'
           />
-          <div className='mx-6 border-b'></div>
-          <div className='mx-6 my-5 flex flex-row'>
+          <div className='mx-4 border-b'></div>
+          <div className='mx-4 my-5 flex flex-row'>
             <Typography variant='sm' tag='a' className='text-black'>
               {t('summary.contact')}
             </Typography>
@@ -110,19 +157,62 @@ export default function SummaryFeature({ className }: Props) {
             />
             <Icon
               variant='whatsapp'
-              color='#757575'
               height='20px'
               width='20px'
               className='ml-1 mt-0.5'
             />
           </div>
-          <div className='mx-6 border-b'></div>
-          <div className='mx-6 my-5 flex flex-row'>
+          <div className='mx-4 border-b'></div>
+          <div className='mx-4 my-5 flex flex-row'>
             <Typography variant='sm' tag='a' className='text-black'>
               {t('summary.hotel-information')}
             </Typography>
           </div>
-          <div className='border-b-8 border-b-gray-50'></div>
+          <HR />
+          <PriceDetails
+            room={room}
+            reservation={reservation}
+            extra={extra}
+            plan={plan}
+            checkin={checkin}
+            checkout={checkout}
+          />
+          <HR />
+          <section>
+            <Typography variant='h2' weight='normal' className='px-4'>
+              {t('summary.payment-title')}
+            </Typography>
+            {payment.amount ? (
+              <SummaryRow
+                leftMainText={`$ ${payment.amount} ${payment.currency}`}
+                rightMainText={t('summary.invoice')}
+                rightMainTag='a'
+                className='mb-5'
+              />
+            ) : (
+              <SummaryRow
+                leftMainText={t('summary.no-payment')}
+                rightMainText=''
+                className='mb-5'
+              />
+            )}
+          </section>
+          <HR />
+          <Cancellation plan={plan} />
+          <HR />
+          <section>
+            <div className='px-4'>
+              <Typography variant='h2' weight='normal'>
+                {t('info.taxes-details')}
+              </Typography>
+              <div className='my-3' />
+              <Typography variant='sm' className='text-neutral-500'>
+                {t('summary.taxes-reminder-1')} ${payment.amount}{' '}
+                {payment.currency} {t('summary.taxes-reminder-2')}
+              </Typography>
+            </div>
+          </section>
+          <HR />
         </div>
       </div>
     </Container>

@@ -166,14 +166,20 @@
   },
   "summary": {
     "address": "Address",
+    "cancel-reservation": "Cancel reservation",
     "contact": "Contact hotel",
     "cost": "Total cost",
     "directions": "Directions",
     "fill-data": "Fill data",
     "guests": "Guests",
     "hotel-information": "View hotel information",
+    "invoice": "Get invoice",
+    "no-payment": "No payment has been made",
+    "payment-title": "Payments",
     "reservation-code": "Reservation code",
-    "stay": "Your stay at"
+    "stay": "Your stay at",
+    "taxes-reminder-1": "We remind you you must pay",
+    "taxes-reminder-2": "in taxes when you arrive at the hotel"
   },
   "terms": {
     "part1": "By selecting",

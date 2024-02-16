@@ -2,29 +2,29 @@
   //#region  //*=========== React ===========
   "import React": {
     "prefix": "ir",
-    "body": ["import * as React from 'react';"]
+    "body": ["import * as React from 'react';"],
   },
   "React.useState": {
     "prefix": "us",
     "body": [
-      "const [${1}, set${1/(^[a-zA-Z])(.*)/${1:/upcase}${2}/}] = React.useState<$3>(${2:initial${1/(^[a-zA-Z])(.*)/${1:/upcase}${2}/}})$0"
-    ]
+      "const [${1}, set${1/(^[a-zA-Z])(.*)/${1:/upcase}${2}/}] = React.useState<$3>(${2:initial${1/(^[a-zA-Z])(.*)/${1:/upcase}${2}/}})$0",
+    ],
   },
   "React.useEffect": {
     "prefix": "uf",
-    "body": ["React.useEffect(() => {", "  $0", "}, []);"]
+    "body": ["React.useEffect(() => {", "  $0", "}, []);"],
   },
   "React.useReducer": {
     "prefix": "ur",
     "body": [
       "const [state, dispatch] = React.useReducer(${0:someReducer}, {",
       "  ",
-      "})"
-    ]
+      "})",
+    ],
   },
   "React.useRef": {
     "prefix": "urf",
-    "body": ["const ${1:someRef} = React.useRef($0)"]
+    "body": ["const ${1:someRef} = React.useRef($0)"],
   },
   "React Functional Component": {
     "prefix": "rc",
@@ -36,8 +36,8 @@
       "      $0",
       "    </div>",
       "  )",
-      "}"
-    ]
+      "}",
+    ],
   },
   "React Functional Component with Props": {
     "prefix": "rcp",
@@ -52,8 +52,8 @@
       "      $0",
       "    </div>",
       "  )",
-      "}"
-    ]
+      "}",
+    ],
   },
   //#endregion  //*======== React ===========
 
@@ -64,8 +64,8 @@
     "body": [
       "//#region  //*=========== ${1} ===========",
       "${TM_SELECTED_TEXT}$0",
-      "//#endregion  //*======== ${1} ==========="
-    ]
+      "//#endregion  //*======== ${1} ===========",
+    ],
   },
   "Region CSS": {
     "prefix": "regc",
@@ -73,8 +73,8 @@
     "body": [
       "/* #region  /**=========== ${1} =========== */",
       "${TM_SELECTED_TEXT}$0",
-      "/* #endregion  /**======== ${1} =========== */"
-    ]
+      "/* #endregion  /**======== ${1} =========== */",
+    ],
   },
   //#endregion  //*======== Commons ===========
 
@@ -88,9 +88,9 @@
       "  params: { slug: string }",
       "}) {",
       "  return <h1>My Page</h1>",
-      "}"
+      "}",
     ],
-    "description": ""
+    "description": "",
   },
 
   "Next Layout": {
@@ -110,8 +110,8 @@
       "     <body>{children}</body>",
       "   </html>",
       "  )",
-      " }"
-    ]
+      " }",
+    ],
   },
 
   "Next API": {
@@ -124,8 +124,8 @@
       "  } else {",
       "    res.status(405).json({ message: 'Method Not Allowed' });",
       "  }",
-      "}"
-    ]
+      "}",
+    ],
   },
   "Get Static Props": {
     "prefix": "gsp",
@@ -134,8 +134,8 @@
       "  return {",
       "    props: {}",
       "  };",
-      "}"
-    ]
+      "}",
+    ],
   },
   "Get Static Paths": {
     "prefix": "gspa",
@@ -147,8 +147,8 @@
       "    ],",
       "    fallback: ",
       "  };",
-      "}"
-    ]
+      "}",
+    ],
   },
   "Get Server Side Props": {
     "prefix": "gssp",
@@ -157,78 +157,78 @@
       "  return {",
       "    props: {}",
       "  };",
-      "}"
-    ]
+      "}",
+    ],
   },
   "Infer Get Static Props": {
     "prefix": "igsp",
-    "body": "InferGetStaticPropsType<typeof getStaticProps>"
+    "body": "InferGetStaticPropsType<typeof getStaticProps>",
   },
   "Infer Get Server Side Props": {
     "prefix": "igssp",
-    "body": "InferGetServerSidePropsType<typeof getServerSideProps>"
+    "body": "InferGetServerSidePropsType<typeof getServerSideProps>",
   },
   "Import useRouter": {
     "prefix": "imust",
-    "body": ["import { useRouter } from 'next/router';"]
+    "body": ["import { useRouter } from 'next/router';"],
   },
   "Import Next Image": {
     "prefix": "imimg",
-    "body": ["import Image from 'next/image';"]
+    "body": ["import Image from 'next/image';"],
   },
   "Import Next Link": {
     "prefix": "iml",
-    "body": ["import Link from 'next/link';"]
+    "body": ["import Link from 'next/link';"],
   },
   "Import className lib": {
     "prefix": "icn",
-    "body": ["import { cn } from '@/lib/utils';"]
+    "body": ["import { cn } from '@/lib/utils';"],
   },
   "Import Typography": {
     "prefix": "itypo",
     "body": [
-      "import Typography, {TextFontWeight, TextVariant} from '@/components/typography';"
-    ]
+      "import Typography, {TextFontWeight, TextVariant} from '@/components/typography';",
+    ],
   },
   //#endregion  //*======== Next.js ===========
 
   //#region  //*=========== Snippet Wrap ===========
   "Wrap with Fragment": {
     "prefix": "ff",
-    "body": ["<>", "\t${TM_SELECTED_TEXT}", "</>"]
+    "body": ["<>", "\t${TM_SELECTED_TEXT}", "</>"],
   },
   "Wrap with cn": {
     "prefix": "cn",
-    "body": ["{cn([${TM_SELECTED_TEXT}$0])}"]
+    "body": ["{cn([${TM_SELECTED_TEXT}$0])}"],
   },
   "Wrap with div": {
     "prefix": "di",
-    "body": ["<div className='$0'></div>"]
+    "body": ["<div className='$0'></div>"],
   },
   "Wrap with div and cn": {
     "prefix": "di",
-    "body": ["<div className={cn($0)}></div>"]
+    "body": ["<div className={cn($0)}></div>"],
   },
   "Wrap with Typography": {
     "prefix": "typo",
-    "body": ["<Typography>$0</Typography>"]
+    "body": ["<Typography>$0</Typography>"],
   },
   "Wrap with Typography with variant and weight": {
     "prefix": "typovw",
-    "body": ["<Typography variant='base' weight='normal'>$0</Typography>"]
+    "body": ["<Typography variant='base' weight='normal'>$0</Typography>"],
   },
 
   "Wrap with i18n": {
     "prefix": ["t(", "i18n"],
-    "body": ["{t('$0')}"]
+    "body": ["{t('$0')}"],
   },
   //#endregion  //*======== Snippet Wrap ===========
 
   "Logger": {
     "prefix": "lg",
     "body": [
-      "logger({ ${1:${CLIPBOARD}} }, '${TM_FILENAME} line ${TM_LINE_NUMBER}')"
-    ]
+      "logger({ ${1:${CLIPBOARD}} }, '${TM_FILENAME} line ${TM_LINE_NUMBER}')",
+    ],
   },
 
   //#region //*=========== Paxer Snippets ===========
@@ -250,9 +250,9 @@
       "    Hi I'm ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} Component",
       "  </Container>;",
       "}",
-      ""
+      "",
     ],
-    "description": "Paxer Component Props Styled Component"
+    "description": "Paxer Component Props Styled Component",
   },
 
   "Paxer Component": {
@@ -263,9 +263,9 @@
       "    Hi I'm ${TM_FILENAME/^([a-zA-Z]+)(?:-([a-zA-Z]+))*\\..+$/${1:/capitalize}${2:/capitalize}/} Component",
       "  </div>;",
       "}",
-      ""
+      "",
     ],
-    "description": "Paxer Component"
+    "description": "Paxer Component",
   },
 
   "Paxer Storybook": {
@@ -290,9 +290,9 @@
       "    className: '',",
       "  },",
       "};",
-      ""
+      "",
     ],
-    "description": "Paxer Storybook"
+    "description": "Paxer Storybook",
   },
 
   "Paxer Test": {
@@ -309,9 +309,9 @@
       "    expect(element).toBeInTheDocument();",
       "  });",
       "});",
-      ""
+      "",
     ],
-    "description": "Paxer Test"
+    "description": "Paxer Test",
   },
 
   "Paxer Import Export": {
@@ -320,9 +320,9 @@
       "import ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/} from './${TM_DIRECTORY/^.+\\/(.*)$/$1/}';",
       "",
       "export default ${TM_DIRECTORY/^.+\\/(.*)$/${1:/capitalize}/}",
-      ""
+      "",
     ],
-    "description": "Paxer Import Export"
-  }
+    "description": "Paxer Import Export",
+  },
   //#region //*=========== Paxer Snippets ===========
 }

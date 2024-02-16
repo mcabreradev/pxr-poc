@@ -46,3 +46,6 @@ sitemap-*.xml
 .swc
 tsconfig.tsbuildinfo
 build-storybook.log
+
+
+/.zed/

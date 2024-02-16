@@ -61,14 +61,14 @@ export default function MyTrip({ className, roomtype }: Props) {
   const checkin = searchParams.get(CHECKIN)
     ? dayjs(searchParams.get(CHECKIN))
     : reservation?.checkin
-    ? dayjs(reservation?.checkin)
-    : dayjs(new Date());
+      ? dayjs(reservation?.checkin)
+      : dayjs(new Date());
 
   const checkout = searchParams.get(CHECKOUT)
     ? dayjs(searchParams.get(CHECKOUT))
     : reservation?.checkin
-    ? dayjs(reservation?.checkout)
-    : dayjs(new Date());
+      ? dayjs(reservation?.checkout)
+      : dayjs(new Date());
 
   const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
   const childrens =

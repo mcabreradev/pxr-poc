@@ -16,6 +16,7 @@ import Typography from '@/components/typography';
 import useUserStore from '@/store/use-user.store';
 
 import { PAYMENT_STATUS } from '@/constants';
+import HotelRules from '@/features/components/hotel-rules';
 
 import data from './data.json';
 
@@ -159,25 +160,7 @@ export default function CheckoutForm() {
 
         <section className='px-4'>
           <div className='py-4 pb-7'>
-            <Typography variant='h2' weight='normal'>
-              {t('title.hotel-rules')}
-            </Typography>
-
-            <div className='my-4'>
-              {data.rules.map((rule, key) => (
-                <div
-                  key={`$rules-${key}`}
-                  className='flex justify-between py-2'
-                >
-                  <Typography>{rule.name}</Typography>
-                  <Typography weight='light'>{rule.description}</Typography>
-                </div>
-              ))}
-            </div>
-
-            <Typography weight='semibold' className='underline'>
-              {t('info.show-more')}
-            </Typography>
+            <HotelRules rules={data.rules} />
           </div>
         </section>
         <HR />

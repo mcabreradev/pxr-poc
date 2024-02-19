@@ -15,6 +15,7 @@ import MyTrip from './my-trip/my-trip';
 
 import useRoomTypeQuery from '@/queries/use-roomtype';
 
+import HotelRules from '@/features/components/hotel-rules';
 import data from './data.json';
 import Skeleton from './skeleton';
 
@@ -126,25 +127,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
 
             <Section>
               <div className='py-4 pb-7 md:w-96'>
-                <Typography variant='h2' weight='normal'>
-                  {t('title.hotel-rules')}
-                </Typography>
-
-                <div className='my-4'>
-                  {data.rules.map((rule, key) => (
-                    <div
-                      key={`$rules-${key}`}
-                      className='flex justify-between py-2'
-                    >
-                      <Typography>{rule.name}</Typography>
-                      <Typography weight='light'>{rule.description}</Typography>
-                    </div>
-                  ))}
-                </div>
-
-                <Typography weight='semibold' className='underline'>
-                  {t('info.show-more')}
-                </Typography>
+                <HotelRules rules={data.rules} />
               </div>
             </Section>
           </div>

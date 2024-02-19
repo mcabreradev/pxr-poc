@@ -11,11 +11,16 @@ import Typography from '@/components/typography';
 
 import useReservation from '@/store/use-reservation-persist.store';
 
+import HotelRules from '@/features/components/hotel-rules';
 import PriceDetails from '@/features/components/price-details';
 import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
+import useFetchProperty from '@/queries/use-property';
 import useRoomTypeQuery from '@/queries/use-roomtype';
+
+import data from '../payment/data.json';
+require('dayjs/locale/es'); //This require is necessary to get the weekday name in correct language
 
 type Props = {
   className?: string;
@@ -29,27 +34,54 @@ const HR = tw.div`
 const Container = tw.div`
 `;
 
+function capitalize(word: string) {
+  return word[0].toUpperCase() + word.slice(1);
+}
+
+function formatTime(timestring: string) {
+  const sections: string[] = timestring.split(':');
+  const hour: number = Number(sections[0]);
+  let meridiem: string;
+  let hourStr: string;
+
+  if (hour <= 12) {
+    meridiem = hour === 12 ? 'PM' : 'AM';
+    hourStr = hour < 10 ? '0' + hour.toString() : hour.toString();
+  } else {
+    const hourMod12 = hour % 12;
+    meridiem = hour === 0 ? 'AM' : 'PM';
+    hourStr = hourMod12 < 10 ? '0' + hourMod12.toString() : hour.toString();
+  }
+
+  return `${hourStr}:${sections[1]} ${meridiem}`;
+}
+
 export default function SummaryFeature({ className, roomtype }: Props) {
   const { getCheckin, getCheckout, extra, plan } = useSearchParamOrStore();
+  const { error, isLoading, data: property } = useFetchProperty();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomtype);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { reservation } = useReservation();
 
   const checkin = dayjs(getCheckin());
   const checkout = dayjs(getCheckout());
+  const passengers =
+    (reservation.adults ?? 0) +
+    (reservation.childrens ?? 0) +
+    (reservation.infants ?? 0);
 
   //Temp
   const payment = { amount: reservation.total ?? null, currency: 'USD' };
 
-  if (roomLoading) {
+  if (isLoading || roomLoading) {
     return <SkeletonComponent />;
   }
 
-  if (roomError) {
+  if (error || roomError) {
     return <span>Error</span>;
   }
 
@@ -59,15 +91,15 @@ export default function SummaryFeature({ className, roomtype }: Props) {
       data-testid='test-element'
     >
       <BackButton href='/'>{t('title.summary')}</BackButton>
-      <div className='mb-16'>
+      <div className='mb-1'>
         <div className='layout'>
-          <div className='mb-2 h-[200px] w-full bg-[url("/images/hotel/image318.png")] bg-cover'>
+          <div className='mb-2 h-[200px] w-full bg-[url("/images/hotel/image318.png")] bg-cover md:h-[250px]'>
             <Typography
               variant='h1'
               weight='medium'
               className='mx-4 my-2 pt-3 text-white'
             >
-              {t('summary.stay')} Terrazas de La Posta
+              {t('summary.stay')} {property.name}
             </Typography>
             <div className='mx-4 flex flex-row'>
               <Icon
@@ -78,7 +110,9 @@ export default function SummaryFeature({ className, roomtype }: Props) {
                 className='mt-0.5'
               />
               <Typography variant='sm' className='ml-1 text-white'>
-                4.5 (3)
+                {property.reviewRatingCount
+                  ? `${property.reviewRatingScore} (${property.reviewRatingCount})`
+                  : 'No reviews yet'}
               </Typography>
             </div>
           </div>
@@ -88,10 +122,12 @@ export default function SummaryFeature({ className, roomtype }: Props) {
                 {t('checkin')}
               </Typography>
               <Typography variant='sm' weight='normal'>
-                Lunes, 07 may 2023
+                {capitalize(
+                  checkin.locale(i18n.language).format('dddd, DD MMM YYYY'),
+                )}
               </Typography>
               <Typography variant='sm' weight='normal'>
-                03:00pm
+                {formatTime(property.checkInTime)}
               </Typography>
             </div>
             <div className='basis-1/2 px-4 py-2'>
@@ -99,29 +135,31 @@ export default function SummaryFeature({ className, roomtype }: Props) {
                 {t('checkout')}
               </Typography>
               <Typography variant='sm' weight='normal'>
-                Viernes, 11 may 2023
+                {capitalize(
+                  checkout.locale(i18n.language).format('dddd, DD MMM YYYY'),
+                )}
               </Typography>
               <Typography variant='sm' weight='normal'>
-                11:00am
+                {formatTime(property.checkOutTime)}
               </Typography>
             </div>
           </div>
           <div className='mx-4 border-b'></div>
           <SummaryRow
             leftMainText={t('summary.address')}
-            leftSecondaryText='Pje Santa Rosa de Lima s/n, Purmamarca, Argentina'
+            leftSecondaryText={`${property.street}, ${property.city}, ${property.state}, ${property.countryName}`}
             rightMainText={t('summary.directions')}
             rightMainTag='a'
           />
           <SummaryRow
             leftMainText={t('summary.guests')}
-            leftSecondaryText='2'
+            leftSecondaryText={passengers.toString()}
             rightMainText={t('summary.fill-data')}
             rightMainTag='a'
           />
           <SummaryRow
             leftMainText={t('summary.cost')}
-            rightMainText='$ 470.00 USD'
+            rightMainText={`$ ${reservation.total}`}
             className='mb-6'
           />
           <SummaryRow
@@ -207,12 +245,17 @@ export default function SummaryFeature({ className, roomtype }: Props) {
               </Typography>
               <div className='my-3' />
               <Typography variant='sm' className='text-neutral-500'>
-                {t('summary.taxes-reminder-1')} ${payment.amount}{' '}
+                {t('summary.taxes-reminder-1')} ${reservation.taxes}{' '}
                 {payment.currency} {t('summary.taxes-reminder-2')}
               </Typography>
             </div>
           </section>
           <HR />
+          <section className='px-4'>
+            <div className='py-0 pb-7'>
+              <HotelRules rules={data.rules} />
+            </div>
+          </section>
         </div>
       </div>
     </Container>

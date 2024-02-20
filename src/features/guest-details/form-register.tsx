@@ -17,7 +17,7 @@ import { registerSchema } from '@/schemas';
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomTypeId: number;
 };
 
 interface IForm {
@@ -31,7 +31,10 @@ interface IForm {
 
 const Container = tw.div``;
 
-export default function FormRegisterComponent({ className, roomtype }: Props) {
+export default function FormRegisterComponent({
+  className,
+  roomTypeId,
+}: Props) {
   const { t } = useTranslation();
 
   const [type, setType] = useState(FORM.PASSWORD);
@@ -109,7 +112,7 @@ export default function FormRegisterComponent({ className, roomtype }: Props) {
           <span className='text-[12px] text-neutral-500'>
             {t('info.have_account')}{' '}
             <Link
-              href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
+              href={`/room-type/${roomTypeId}/details?${URL.ACTION}=login`}
               replace={true}
             >
               <span className='underline'>{t('login')}</span>

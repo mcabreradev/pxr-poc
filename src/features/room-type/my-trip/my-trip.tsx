@@ -39,7 +39,7 @@ import EditTripComponent from './edit-my-trip';
 
 type Props = {
   className?: string;
-  roomtype?: string;
+  roomTypeId?: number;
 };
 
 const Container = tw.div`
@@ -49,7 +49,7 @@ const Section = tw.div`
 px-4 text-black md:px-0
 `;
 
-export default function MyTrip({ className, roomtype }: Props) {
+export default function MyTrip({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
   const { reservation, setReservation } = useReservationQuery();
@@ -315,7 +315,7 @@ export default function MyTrip({ className, roomtype }: Props) {
             className='font-semibold md:w-full'
             variant='primary'
             type='link'
-            href={`/room-type/${roomtype}/details`}
+            href={`/room-type/${roomTypeId}/details`}
             withSearchParams={true}
             fullWidth
           >

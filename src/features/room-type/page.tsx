@@ -14,13 +14,13 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import MyTrip from './my-trip/my-trip';
 
-import { useRatePlanByRoomtypeIdQuery, useRoomTypeQuery } from '@/queries';
+import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
 import data from './data.json';
 import Skeleton from './skeleton';
 
 type Props = {
-  roomtype: string;
+  roomTypeId: number;
   className?: string;
 };
 
@@ -31,22 +31,20 @@ const Section = tw.div`
 px-4 text-black md:px-0
 `;
 
-export default function RoomTypePage({ className, roomtype }: Props) {
+export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
 
   const { checkin, checkout } = useSearchParamOrStore();
 
-  const { data: ratePlan } = useRatePlanByRoomtypeIdQuery({
-    roomTypeId: roomtype,
+  const { data: ratePlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
+    roomTypeId: roomTypeId,
     checkin,
     checkout,
   });
 
-  const {
-    isError,
-    isLoading,
-    data: room,
-  } = useRoomTypeQuery(roomtype as string);
+  // console.log('ratePlan', ratePlan);
+
+  const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam } = useQueryString();
 
   useEffect(() => {
@@ -105,7 +103,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
 
             <hr />
 
-            <MyTrip roomtype={roomtype} className='md:hidden' />
+            <MyTrip roomTypeId={roomTypeId} className='md:hidden' />
 
             <hr className='md:hidden' />
 
@@ -159,7 +157,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
           </div>
 
           <div className='relative mb-5 hidden md:flex md:w-4/12'>
-            <MyTrip roomtype={roomtype} />
+            <MyTrip roomTypeId={roomTypeId} />
           </div>
         </div>
       </div>

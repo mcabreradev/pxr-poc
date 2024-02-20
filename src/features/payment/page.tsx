@@ -17,21 +17,21 @@ import MyTripDetails from './my-trip-details';
 import SkeletonComponent from './skeleton';
 
 type Props = {
-  roomtype: string;
+  roomTypeId: number;
   action?: string;
 };
 
 const Container = tw.div`
 `;
 
-export default function PaymentFeature({ roomtype, action }: Props) {
+export default function PaymentFeature({ roomTypeId, action }: Props) {
   const { t } = useTranslation();
   const { error, isError, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
-  } = useRoomTypeQuery(roomtype);
+  } = useRoomTypeQuery(roomTypeId);
   const { session } = useSessionStore();
 
   const actionPayment = !action;
@@ -58,7 +58,7 @@ export default function PaymentFeature({ roomtype, action }: Props) {
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
-      <BackButton href={`/room-type/${roomtype}`}>
+      <BackButton href={`/room-type/${roomTypeId}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>
 

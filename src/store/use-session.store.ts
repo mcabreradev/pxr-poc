@@ -31,7 +31,7 @@ type Persist = (
 const middlewares = (f) =>
   devtools(
     persist(f, {
-      name: 'session',
+      name: 'store-session',
       storage: createJSONStorage(() => sessionStorage),
     }),
   );

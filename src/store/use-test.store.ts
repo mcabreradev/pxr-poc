@@ -18,8 +18,8 @@ const usePersistStore = create<PersistStore, []>(
       addPersist: (u: unknown) => set(() => ({ test: u })),
     }),
     {
-      name: 'test-storage',
-      storage: createJSONStorage(() => sessionStorage),
+      name: 'storage-test',
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );

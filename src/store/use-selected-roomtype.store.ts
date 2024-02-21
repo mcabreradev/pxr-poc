@@ -25,8 +25,8 @@ type Persist = (
 const middlewares = (f) =>
   devtools(
     persist(f, {
-      name: 'selectedRoomStore',
-      storage: createJSONStorage(() => sessionStorage),
+      name: 'store-selected-roomtype',
+      storage: createJSONStorage(() => localStorage),
     }),
   );
 

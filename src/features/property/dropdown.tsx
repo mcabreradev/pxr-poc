@@ -3,11 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import useReservationQueryStore from '@/store/use-reservation-persist.store';
+import { useClickAway, useQueryString, useSearchParamOrStore } from '@/hooks';
+import useReservationQueryStore from '@/store/use-reservation.store';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import Button from '@/components/button';
@@ -46,13 +45,13 @@ export default function DropdownComponent({ className }: Props) {
 
   const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
 
-  const toggleOpen = useCallback(() => {
+  const toggleDropdown = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
-  const closeOnMouseLeave = useCallback(() => {
+  const refDropdown = useClickAway(() => {
     if (open) setOpen(false);
-  }, [open]);
+  });
 
   useEffect(() => {
     setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
@@ -67,13 +66,17 @@ export default function DropdownComponent({ className }: Props) {
   const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
 
   return (
-    <Container className={cn(className)} data-testid='test-dropdown-element'>
+    <Container
+      className={cn(className)}
+      data-testid='test-dropdown-element'
+      ref={refDropdown}
+    >
       <div className={cn('dropdown relative inline-block w-full text-left')}>
         <Button
           className={cn('border-white py-[8px] md:w-full')}
           variant='secondary'
           type='button'
-          onClick={toggleOpen}
+          onClick={toggleDropdown}
           disabled={!roomPrice}
         >
           <div className='flex items-center justify-between'>
@@ -104,7 +107,6 @@ export default function DropdownComponent({ className }: Props) {
             'block scale-95 opacity-0': !open,
             hidden: !open,
           })}
-          onBlur={closeOnMouseLeave}
         >
           <div
             className={cn(
@@ -252,7 +254,7 @@ export default function DropdownComponent({ className }: Props) {
                 className={cn('font-medium')}
                 variant='text'
                 type='button'
-                onClick={toggleOpen}
+                onClick={toggleDropdown}
               >
                 {t('button.close')}
               </Button>

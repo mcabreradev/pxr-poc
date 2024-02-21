@@ -46,6 +46,8 @@ export default function RoomSwiper() {
     return 'error';
   }
 
+  console.log({ selectedRoom });
+
   return (
     <Swiper className='md:w-[570px]' withArrow={true} scroll={300}>
       {roomtypes.map((room, index) => (

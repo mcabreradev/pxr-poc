@@ -26,7 +26,7 @@ const middlewares = (f) =>
   devtools(
     subscribeWithSelector(
       persist(f, {
-        name: 'global-store',
+        name: 'store-global',
       }),
     ),
   );

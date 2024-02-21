@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { useQueryString } from '@/hooks';
+import { useQueryString, useSearchParamOrStore } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -14,7 +14,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import MyTrip from './my-trip/my-trip';
 
-import { useRoomTypeQuery } from '@/queries';
+import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
 import data from './data.json';
 import Skeleton from './skeleton';
@@ -36,6 +36,13 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam } = useQueryString();
 
+  const { checkin, checkout } = useSearchParamOrStore();
+  const { data: ratesPlan } = useRatesPlanQuery({
+    checkin,
+    checkout,
+    roomTypeId,
+  });
+
   useEffect(() => {
     removeBlacklistParam(['']);
   }, [removeBlacklistParam]);
@@ -47,6 +54,8 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   if (isError) {
     return <span>Error</span>;
   }
+
+  console.log('ratesPlan', ratesPlan);
 
   return (
     <Container
@@ -67,9 +76,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
                 'person.plural',
               )} • ${room.description}`}</Typography>
             </Section>
-
             <hr />
-
             <Section>
               <Typography variant='h2' weight='normal'>
                 {t('title.room-amemnities')}
@@ -89,13 +96,9 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
                 {t('button.view-all-services')}
               </Button>
             </Section>
-
             <hr />
-
             <MyTrip roomTypeId={roomTypeId} className='md:hidden' />
-
             <hr className='md:hidden' />
-
             <Section>
               <div className='py-2'>
                 <Typography variant='h2' weight='normal'>
@@ -103,11 +106,13 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
                 </Typography>
                 <div className='my-3' />
                 <Typography variant='sm' className='text-neutral-500'>
-                  {t('info.non-refundable')}
+                  {ratesPlan && ratesPlan.length > 0
+                    ? ratesPlan[0].reservationPolicies[0].cancellationPolicy
+                        .policyDescription
+                    : t('info.non-refundabled')}
                 </Typography>
               </div>
             </Section>
-
             <Section>
               <div className='py-5'>
                 <Typography variant='h2' weight='normal'>
@@ -119,7 +124,6 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
                 </Typography>
               </div>
             </Section>
-
             <Section>
               <div className='py-4 pb-7 md:w-96'>
                 <Typography variant='h2' weight='normal'>

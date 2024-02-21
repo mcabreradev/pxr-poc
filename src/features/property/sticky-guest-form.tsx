@@ -9,7 +9,7 @@ import { getFormatedMontsDays } from '@/lib/time';
 import Button from '@/components/button';
 import Typography from '@/components/typography';
 
-import useReservationQueryStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import {
   CHECKIN_DEFAULT_FUTURE_DAYS,

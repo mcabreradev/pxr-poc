@@ -16,7 +16,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import useReservationQueryStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 import useSessionStore from '@/store/use-session.store';
 
 import { PAYMENT_STATUS } from '@/constants';

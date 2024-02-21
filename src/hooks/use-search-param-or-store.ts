@@ -1,7 +1,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
-import useReservationQueryStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import {
   ADULTS,

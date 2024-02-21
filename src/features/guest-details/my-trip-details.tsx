@@ -6,7 +6,7 @@ import tw from 'tailwind-styled-components';
 
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import { ps } from '@/lib/utils';
-import useReservationQuery from '@/store/use-reservation-persist.store';
+import useReservationQuery from '@/store/use-reservation.store';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';

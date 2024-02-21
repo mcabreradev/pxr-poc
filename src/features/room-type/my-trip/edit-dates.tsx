@@ -14,7 +14,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import useQueryString from '@/hooks/use-querystring';
-import useReservationQueryStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
 import useHydration from '@/hooks/use-hydration';

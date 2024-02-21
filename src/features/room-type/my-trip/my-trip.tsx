@@ -1,4 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
+import filter from '@mcabreradev/filter';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -9,9 +10,7 @@ import { useQueryString, useSearchParamOrStore } from '@/hooks';
 import { formatCurrency } from '@/lib/number';
 import { cn, ps } from '@/lib/utils';
 
-import Button from '@/components/button';
-import Toggle from '@/components/toggle';
-import Typography from '@/components/typography';
+import { Button, Toggle, Typography } from '@/components';
 
 import { useReservationQueryStore, useSelectedRoomtypeStore } from '@/store';
 
@@ -31,12 +30,11 @@ import {
   TOTAL_CHILDRENS,
   TOTAL_INFANTS,
 } from '@/constants';
-
-import RatesPlansSkeleton from '@/features/room-type/my-trip/rates-plan-skeleton';
 import { useRatesPlanQuery } from '@/queries';
-import filter from '@mcabreradev/filter';
+
 import CancelationPolice from './cancelation-police';
 import EditTripComponent from './edit-my-trip';
+import RatesPlansSkeleton from './rates-plan-skeleton';
 
 type Props = {
   className?: string;

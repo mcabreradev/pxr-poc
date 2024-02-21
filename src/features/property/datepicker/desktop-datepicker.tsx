@@ -10,7 +10,7 @@ import useQueryString from '@/hooks/use-querystring';
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import { cn, formatDate, reFormatDate } from '@/lib/utils';
 
-import useReservationQueryStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import {
   CHECKIN,

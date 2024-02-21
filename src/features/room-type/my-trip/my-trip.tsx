@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useQueryString from '@/hooks/use-querystring';
+import { useQueryString, useSearchParamOrStore } from '@/hooks';
 import { formatCurrency } from '@/lib/number';
 import { cn, ps } from '@/lib/utils';
 
@@ -13,8 +13,7 @@ import Button from '@/components/button';
 import Toggle from '@/components/toggle';
 import Typography from '@/components/typography';
 
-import useReservationQuery from '@/store/use-reservation-persist.store';
-import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
+import { useReservationQueryStore, useSelectedRoomtypeStore } from '@/store';
 
 import {
   CHECKIN,
@@ -33,7 +32,9 @@ import {
   TOTAL_INFANTS,
 } from '@/constants';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import RatesPlansSkeleton from '@/features/room-type/my-trip/rates-plan-skeleton';
+import { useRatesPlanQuery } from '@/queries';
+import filter from '@mcabreradev/filter';
 import CancelationPolice from './cancelation-police';
 import EditTripComponent from './edit-my-trip';
 
@@ -51,12 +52,12 @@ px-4 text-black md:px-0
 
 export default function MyTrip({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
-  dayjs.locale(i18n.language);
-  const { reservation, setReservation } = useReservationQuery();
+  const { reservation, setReservation } = useReservationQueryStore();
   const { selectedRoom } = useSelectedRoomtypeStore();
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
+  dayjs.locale(i18n.language);
 
   const checkin = searchParams.get(CHECKIN)
     ? dayjs(searchParams.get(CHECKIN))
@@ -70,6 +71,12 @@ export default function MyTrip({ className, roomTypeId }: Props) {
       ? dayjs(reservation?.checkout)
       : dayjs(new Date());
 
+  const { data: ratesPlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
+    roomTypeId: roomTypeId,
+    checkin: checkin.format('YYYY-MM-DD'), // Convert checkin to a string
+    checkout: checkout.format('YYYY-MM-DD'), // Convert checkout to a string
+  });
+
   const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
   const childrens =
     Number(searchParams.get(TOTAL_CHILDRENS)) || reservation?.childrens;
@@ -82,6 +89,10 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   const [breakfast, setBreakfast] = useState(
     searchParams.get(EXTRA) || reservation?.extra,
   );
+
+  const [product, setSelectedProduct] = useState<{
+    [key: string]: string | number | null | undefined;
+  } | null>(null);
 
   const handleCancelationPlan = useCallback((value) => {
     setSelectedPlan(value);
@@ -97,11 +108,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setEditModal(value);
   }, []);
 
-  useEffect(() => {
-    if (!breakfast) return;
-    updateQueryString({ [EXTRA]: breakfast });
-  }, [breakfast, updateQueryString, setBreakfast]);
-
   const hasBreakfast = breakfast === PLAN_BREAKFAST;
   const planCost = selectedRoom.roomPrice || PLAN_COST;
   const planDays = checkout.diff(checkin, 'days');
@@ -114,6 +120,24 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   const total = totalCost + extraCostTotal + cancelationCost + taxes;
 
   useEffect(() => {
+    if (!breakfast || !ratesPlan) return;
+    updateQueryString({ [EXTRA]: breakfast });
+
+    const plan = filter(ratesPlan, ({ mealPlans }) =>
+      hasBreakfast ? mealPlans.length > 0 : mealPlans.length === 0,
+    )[0] as { [key: string]: string };
+
+    setSelectedProduct(plan);
+  }, [
+    breakfast,
+    updateQueryString,
+    setBreakfast,
+    setSelectedProduct,
+    ratesPlan,
+    hasBreakfast,
+  ]);
+
+  useEffect(() => {
     setReservation({
       planCost,
       totalCost,
@@ -124,6 +148,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
       hasBreakfast,
       extra: breakfast,
       plan: selectedPlan,
+      product,
     });
   }, [
     breakfast,
@@ -136,6 +161,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     totalCost,
     hasBreakfast,
     selectedPlan,
+    product,
   ]);
 
   const [animate, setAnimate] = useState(false);
@@ -236,41 +262,48 @@ export default function MyTrip({ className, roomTypeId }: Props) {
           </Typography>
         </div>
 
-        <CancelationPolice
-          plan={selectedPlan}
-          onChange={handleCancelationPlan}
-          cancelCost={cancelCost}
-        />
+        {loadingRatePlan ? (
+          <RatesPlansSkeleton />
+        ) : (
+          <>
+            <CancelationPolice
+              ratesPlan={ratesPlan}
+              plan={selectedPlan}
+              onChange={handleCancelationPlan}
+              cancelCost={cancelCost}
+            />
 
-        <div className='flex flex-wrap justify-between pb-0 pt-2'>
-          <div>
-            <Typography
-              variant='sm'
-              weight='semibold'
-              className='text-neutral-400'
-            >
-              {t('info.extras')}
-            </Typography>
-          </div>
-        </div>
+            <div className='flex flex-wrap justify-between pb-0 pt-2'>
+              <div>
+                <Typography
+                  variant='sm'
+                  weight='semibold'
+                  className='text-neutral-400'
+                >
+                  {t('info.extras')}
+                </Typography>
+              </div>
+            </div>
 
-        <div className='flex flex-wrap justify-between py-1'>
-          <Toggle
-            label={t('breakfast')}
-            value={breakfast}
-            onChange={handleBreakfast}
-            toggled={hasBreakfast}
-          />
+            <div className='flex flex-wrap justify-between py-1'>
+              <Toggle
+                label={t('breakfast')}
+                value={breakfast}
+                onChange={handleBreakfast}
+                toggled={hasBreakfast}
+              />
 
-          <Typography
-            variant='sm'
-            className={cn('text-neutral-500', {
-              'text-gray-500': !hasBreakfast,
-            })}
-          >
-            + {formatCurrency(extraCost)}
-          </Typography>
-        </div>
+              <Typography
+                variant='sm'
+                className={cn('text-neutral-500', {
+                  'text-gray-500': !hasBreakfast,
+                })}
+              >
+                + {formatCurrency(extraCost)}
+              </Typography>
+            </div>
+          </>
+        )}
 
         <div className='flex flex-wrap justify-between pb-0 pt-4'>
           <div>

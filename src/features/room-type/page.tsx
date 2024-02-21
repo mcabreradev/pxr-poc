@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { useQueryString, useSearchParamOrStore } from '@/hooks';
+import { useQueryString } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -14,7 +14,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 import MyTrip from './my-trip/my-trip';
 
-import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
+import { useRoomTypeQuery } from '@/queries';
 
 import data from './data.json';
 import Skeleton from './skeleton';
@@ -33,17 +33,6 @@ px-4 text-black md:px-0
 
 export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
-
-  const { checkin, checkout } = useSearchParamOrStore();
-
-  const { data: ratePlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
-    roomTypeId: roomTypeId,
-    checkin,
-    checkout,
-  });
-
-  // console.log('ratePlan', ratePlan);
-
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam } = useQueryString();
 

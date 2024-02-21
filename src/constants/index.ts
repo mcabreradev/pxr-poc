@@ -9,6 +9,8 @@ export const GET_SESSION = 'getsession';
 export const CHECKUSER = 'checkuser';
 
 // App
+export const PROPERTY_CURRENCY = 'CLP';
+export const PROPERTY_CURRENCY_OTA = 'EUR';
 export const PROPERTY = 'property';
 export const PROPERTYPATH = '/';
 export const ROOMTYPES = 'room-types';

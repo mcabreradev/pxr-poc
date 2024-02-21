@@ -31,6 +31,7 @@ const initialReservationState: Reservation = {
   total: null,
   hasBreakfast: null,
   selectedRoom: {},
+  product: {},
 };
 
 type Actions = {

@@ -180,5 +180,6 @@ export type Reservation = {
   cancelationCost?: number | null;
   total?: number | null;
   hasBreakfast?: boolean | null;
-  selectedRoom?: { [key: string]: string | number | null | undefined };
+  selectedRoom?: { [key: string]: string | number | null | undefined } | null;
+  product?: { [key: string]: string | number | null | undefined } | null;
 };

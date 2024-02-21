@@ -2,7 +2,7 @@ import { filter } from '@mcabreradev/filter';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { PROPERTY, RATES } from '@/constants';
+import { PROPERTY, PROPERTY_CURRENCY, RATES } from '@/constants';
 import { propertyId } from '@/constants/env';
 
 type Props = {
@@ -21,11 +21,16 @@ const fetchRatesPlan = async ({ checkin, checkout }: Props) => {
 export default function useRatesPlanQuery({
   checkin,
   checkout,
-  roomTypeId,
+  roomTypeId: _roomTypeId,
 }: Props) {
+  const predicade = ({ roomTypeId, currency, reservationPolicies }) =>
+    roomTypeId === Number(_roomTypeId) &&
+    currency === PROPERTY_CURRENCY &&
+    reservationPolicies;
+
   return useQuery({
     queryKey: [PROPERTY, propertyId, RATES],
     queryFn: () => fetchRatesPlan({ checkin, checkout }),
-    select: (data) => (roomTypeId ? filter(data, { roomTypeId }) : data),
+    select: (data) => (_roomTypeId ? filter(data, predicade) : data),
   });
 }

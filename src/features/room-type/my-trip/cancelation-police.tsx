@@ -1,18 +1,18 @@
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable simple-import-sort/imports */
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useQueryString from '@/hooks/use-querystring';
+import { useQueryString } from '@/hooks';
+
+import { Radio, Typography } from '@/components';
+import { PLAN, PLAN_NONREFUNDABLE, PLAN_REFUNDABLE } from '@/constants';
 import { formatCurrency } from '@/lib/number';
 import { cn } from '@/lib/utils';
 
-import Radio from '@/components/radio';
-import Typography from '@/components/typography';
-
-import { PLAN, PLAN_NONREFUNDABLE, PLAN_REFUNDABLE } from '@/constants';
-
 type Props = {
   plan: string | null | undefined;
+  ratesPlan: string[] | unknown[] | null | undefined;
   onChange: (event: unknown) => void;
   cancelCost: number;
 };
@@ -21,6 +21,7 @@ export default function CancelationPoliceComponent({
   plan,
   onChange,
   cancelCost,
+  ratesPlan,
 }: Props) {
   const { t } = useTranslation();
 
@@ -61,41 +62,50 @@ export default function CancelationPoliceComponent({
       </div>
 
       <div className='flex flex-wrap justify-between py-1'>
-        <Radio
-          label={t('info.non-refundable')}
-          name='cancellation-policy'
-          value={PLAN_NONREFUNDABLE}
-          checked={isNonRefundable}
-          onChange={handlePlanChange}
-        />
-        <Typography
-          variant='sm'
-          className={cn('text-neutral-500', {
-            'text-gray-500': !isNonRefundable,
-          })}
-        >
-          + {formatCurrency(0.0)}
+        <Typography variant='sm' className='mb-1 text-neutral-500'>
+          {t('info.non-refundable')}
         </Typography>
       </div>
 
-      <div className='flex flex-wrap justify-between py-1'>
-        <Radio
-          label={t('info.refundable')}
-          subtitle={t('info.free-cancellation-before')}
-          name='cancellation-policy'
-          value={PLAN_REFUNDABLE}
-          checked={isRefundable}
-          onChange={handlePlanChange}
-        />
-        <Typography
-          variant='sm'
-          className={cn('text-neutral-500', {
-            'text-gray-500': !isRefundable,
-          })}
-        >
-          + {formatCurrency(cancelCost)}
-        </Typography>
-      </div>
+      {false && (
+        <>
+          <div className='flex flex-wrap justify-between py-1'>
+            <Radio
+              label={t('info.non-refundable')}
+              name='cancellation-policy'
+              value={PLAN_NONREFUNDABLE}
+              checked={isNonRefundable}
+              onChange={handlePlanChange}
+            />
+            <Typography
+              variant='sm'
+              className={cn('text-neutral-500', {
+                'text-gray-500': !isNonRefundable,
+              })}
+            >
+              + {formatCurrency(0.0)}
+            </Typography>
+          </div>
+          <div className='flex flex-wrap justify-between py-1'>
+            <Radio
+              label={t('info.refundable')}
+              subtitle={t('info.free-cancellation-before')}
+              name='cancellation-policy'
+              value={PLAN_REFUNDABLE}
+              checked={isRefundable}
+              onChange={handlePlanChange}
+            />
+            <Typography
+              variant='sm'
+              className={cn('text-neutral-500', {
+                'text-gray-500': !isRefundable,
+              })}
+            >
+              + {formatCurrency(cancelCost)}
+            </Typography>
+          </div>{' '}
+        </>
+      )}
     </Fragment>
   );
 }

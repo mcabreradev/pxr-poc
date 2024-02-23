@@ -73,6 +73,18 @@ const useSearchParamOrStore = () => {
     [getByQueryParamOrStoreItem],
   );
 
+  /**
+   * Retrieves a value by querying the search parameter or store item.
+   *
+   * @param q - The query string.
+   * @param s - The key of the store item.
+   * @returns The value retrieved from the search parameter or store item.
+   */
+  const get = useCallback(
+    (q: string, s: keyof Reservation) => getByQueryParamOrStoreItem(q, s),
+    [getByQueryParamOrStoreItem],
+  );
+
   return {
     getCheckin,
     checkin: getCheckin(),
@@ -88,6 +100,7 @@ const useSearchParamOrStore = () => {
     plan: getPlan(),
     getExtra,
     extra: getExtra(),
+    get,
   };
 };
 

@@ -2,12 +2,11 @@
 import filter from '@mcabreradev/filter';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { useQueryString, useSearchParamOrStore } from '@/hooks';
-import { formatCurrency } from '@/lib/number';
 import { cn, ps } from '@/lib/utils';
 
 import { Button, Toggle, Typography } from '@/components';
@@ -32,6 +31,7 @@ import {
 } from '@/constants';
 import { useRatesPlanQuery } from '@/queries';
 
+import { formatCurrency } from '@/lib/number';
 import CancelationPolice from './cancelation-police';
 import EditTripComponent from './edit-my-trip';
 import RatesPlansSkeleton from './rates-plan-skeleton';
@@ -65,7 +65,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
 
   const checkout = searchParams.get(CHECKOUT)
     ? dayjs(searchParams.get(CHECKOUT))
-    : reservation?.checkin
+    : reservation?.checkout
       ? dayjs(reservation?.checkout)
       : dayjs(new Date());
 
@@ -135,7 +135,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     hasBreakfast,
   ]);
 
-  useEffect(() => {
+  useMemo(() => {
     setReservation({
       planCost,
       totalCost,
@@ -161,6 +161,33 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     selectedPlan,
     product,
   ]);
+
+  // useEffect(() => {
+  //   setReservation({
+  //     planCost,
+  //     totalCost,
+  //     taxes,
+  //     extraCost: extraCostTotal,
+  //     cancelationCost,
+  //     total,
+  //     hasBreakfast,
+  //     extra: breakfast,
+  //     plan: selectedPlan,
+  //     product,
+  //   });
+  // }, [
+  //   breakfast,
+  //   cancelationCost,
+  //   extraCostTotal,
+  //   planCost,
+  //   setReservation,
+  //   taxes,
+  //   total,
+  //   totalCost,
+  //   hasBreakfast,
+  //   selectedPlan,
+  //   product,
+  // ]);
 
   const [animate, setAnimate] = useState(false);
 

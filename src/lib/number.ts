@@ -1,12 +1,16 @@
-import { LOCALES } from '@/constants';
+import { CURRENCIES, PROPERTY_CURRENCY } from '@/constants';
 
-export const formatCurrency = (numero: number, locale: string = 'us') => {
-  const format = LOCALES?.[locale]?.format;
-  const currency = LOCALES?.[locale]?.currency;
-  const currencyDisplay = LOCALES?.[locale]?.currencyDisplay;
+export const formatCurrency = (
+  amount: number,
+  currency: string = PROPERTY_CURRENCY,
+) => {
+  const currencyLocale = CURRENCIES.find((c) => c.currency === currency);
+
+  const { format, currencyDisplay } = currencyLocale!; // Add type assertion to ensure currencyLocale is not undefined
+
   return new Intl.NumberFormat(format, {
     style: 'currency',
     currency,
     currencyDisplay,
-  }).format(numero);
+  }).format(amount);
 };

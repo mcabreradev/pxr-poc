@@ -162,7 +162,7 @@ export type SelectedRoomtype = {
   viewTypes?: unknown[];
   accessibilityFeatures?: unknown[];
   smokePolicy?: string | null;
-  roomPrice?: number | null;
+  roomPrice?: { [key: string]: string | number | null } | number | null;
 };
 
 export type Reservation = {

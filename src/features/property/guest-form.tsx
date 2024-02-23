@@ -9,9 +9,8 @@ import Typography from '@/components/typography';
 import DatepickerDesktop from './datepicker/desktop-datepicker';
 import Dropdown from './dropdown';
 
-import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
-
 import { formatCurrency } from '@/lib/number';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 interface Props {
   className?: string;

@@ -1,8 +1,9 @@
+/* eslint-disable simple-import-sort/imports */
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { formatCurrency } from '@/lib/number';
+import { useSearchParamOrStore } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -12,8 +13,9 @@ import Typography from '@/components/typography';
 
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
-import { PLAN_COSTS } from '@/constants';
-import useRoomTypesQuery from '@/queries/use-roomtypes.query';
+import { CHECKIN, CHECKOUT } from '@/constants';
+import { formatCurrency } from '@/lib/number';
+import { useRatesPlanQuery, useRoomTypesQuery } from '@/queries';
 
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-50 bg-white shadow
@@ -26,17 +28,46 @@ export default function RoomSwiper() {
     null,
   );
   const { setSelectedRoomtype } = useSelectedRoomtypeStore();
+  const { get } = useSearchParamOrStore();
+
+  const checkin = get(CHECKIN, CHECKIN);
+  const checkout = get(CHECKOUT, CHECKOUT);
+
+  const { data: ratesPlan } = useRatesPlanQuery({
+    checkin: checkin || null,
+    checkout: checkout || null,
+  });
 
   const handleClick = useCallback(
-    (room: { [key: string]: string | number | null }, index?: number) => {
+    (
+      room: { [key: string]: string | number | null },
+      roomPrice: { [key: string]: string },
+    ) => {
       setSelectedRoom(room.id);
       setSelectedRoomtype({
         ...room,
-        roomPrice: PLAN_COSTS[index as number],
+        roomPrice,
       });
     },
     [setSelectedRoomtype],
   );
+
+  function getRatesPerRoom(roomId: string | number | null) {
+    const plan = ratesPlan.filter(({ roomTypeId }) => roomTypeId === roomId)[0];
+
+    if (!plan) return;
+
+    const productDates = Object.keys(plan?.productDates).map(
+      (date) => plan?.productDates[date],
+    );
+
+    const rates = productDates[0].rates[1];
+
+    return {
+      ...rates,
+      currency: productDates[0].currency,
+    };
+  }
 
   if (isLoading) {
     return 'loading';
@@ -45,8 +76,6 @@ export default function RoomSwiper() {
   if (isError) {
     return 'error';
   }
-
-  console.log({ selectedRoom });
 
   return (
     <Swiper className='md:w-[570px]' withArrow={true} scroll={300}>
@@ -79,14 +108,23 @@ export default function RoomSwiper() {
               {room.standardCapacity} {t('person.plural')}
             </Typography>
             <Typography className='pb-5' variant='base'>
-              {t('from')} <b>{formatCurrency(PLAN_COSTS[index])}/</b>
-              {t('night.singular')}
+              <>
+                {t('from')}{' '}
+                <b>
+                  {formatCurrency(
+                    getRatesPerRoom(room.id)?.rate,
+                    getRatesPerRoom(room.id)?.curency,
+                  )}
+                  /
+                </b>
+                {t('night.singular')}
+              </>
             </Typography>
 
             <Button
               type='button'
               className='mb-4 md:w-full'
-              onClick={() => handleClick(room, index)}
+              onClick={() => handleClick(room, getRatesPerRoom(room.id))}
             >
               {t('button.reserve')}
             </Button>

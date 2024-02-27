@@ -1,5 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -13,124 +13,116 @@ import Typography from '@/components/typography';
 
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
-import { CHECKIN, CHECKOUT } from '@/constants';
-import { formatCurrency } from '@/lib/number';
-import { useRatesPlanQuery, useRoomTypesQuery } from '@/queries';
+import { PROPERTY_CURRENCY } from '@/constants';
+import { formatCurrency, getRatesPerRoom } from '@/lib/number';
+import { useRoomTypeWithRatesPlansQuery } from '@/queries/use-roomtypes.query';
+import { SelectedRoomtype } from '@/types';
 
 const Rooms = tw.div`
   box-border h-auto w-[271px] border-[1px] border-solid border-gray-50 bg-white shadow
 `;
 
-export default function RoomSwiper() {
+const RoomSwiper = () => {
   const { t, i18n } = useTranslation();
-  const { isLoading, isError, data: roomtypes } = useRoomTypesQuery();
-  const [selectedRoom, setSelectedRoom] = useState<string | number | null>(
-    null,
-  );
+  const [selectedRoom, setSelectedRoom] = useState<SelectedRoomtype>();
   const { setSelectedRoomtype } = useSelectedRoomtypeStore();
-  const { get } = useSearchParamOrStore();
+  const { getCheckin, getCheckout } = useSearchParamOrStore();
 
-  const checkin = get(CHECKIN, CHECKIN);
-  const checkout = get(CHECKOUT, CHECKOUT);
+  const checkin = getCheckin();
+  const checkout = getCheckout();
 
-  const { data: ratesPlan } = useRatesPlanQuery({
-    checkin: checkin || null,
-    checkout: checkout || null,
+  const { data, pending, loading, error } = useRoomTypeWithRatesPlansQuery({
+    checkin,
+    checkout,
   });
 
+  const [roomtypes, ratesPlan] = [data?.[0], data?.[1]];
+
   const handleClick = useCallback(
-    (
-      room: { [key: string]: string | number | null },
-      roomPrice: { [key: string]: string },
-    ) => {
-      setSelectedRoom(room.id);
+    (room: SelectedRoomtype) => {
+      const roomPrice = getRatesPerRoom(ratesPlan, room.id);
+      const filteredRatesPlan = ratesPlan.filter(
+        (r) => r.roomTypeId === room.id && r.currency === PROPERTY_CURRENCY,
+      );
+
+      setSelectedRoom(room);
       setSelectedRoomtype({
         ...room,
         roomPrice,
+        ratesPlan: filteredRatesPlan,
       });
     },
-    [setSelectedRoomtype],
+    [ratesPlan, setSelectedRoomtype],
   );
 
-  function getRatesPerRoom(roomId: string | number | null) {
-    const plan = ratesPlan.filter(({ roomTypeId }) => roomTypeId === roomId)[0];
-
-    if (!plan) return;
-
-    const productDates = Object.keys(plan?.productDates).map(
-      (date) => plan?.productDates[date],
-    );
-
-    const rates = productDates[0].rates[1];
-
-    return {
-      ...rates,
-      currency: productDates[0].currency,
-    };
-  }
-
-  if (isLoading) {
+  if (loading) {
     return 'loading';
   }
 
-  if (isError) {
+  if (pending) {
+    return 'pending';
+  }
+
+  if (error) {
     return 'error';
   }
 
   return (
     <Swiper className='md:w-[570px]' withArrow={true} scroll={300}>
-      {roomtypes.map((room, index) => (
-        <Rooms
-          key={`hotel-room-${index}`}
-          className={cn({
-            'cursor-pointer opacity-80 transition-shadow duration-300 hover:shadow-lg':
-              true,
-            'opacity-100 shadow-lg': selectedRoom === room.id,
-          })}
-        >
-          <Image
-            alt={room.name}
-            src={`/images/hotel/room${index + 1}.webp`}
-            width={271}
-            height={235}
-            className='w-full object-cover'
-            title={t('title.room')}
-          />
-          <div className='p-4'>
-            <Typography variant='h3' weight='medium' className='pb-4'>
-              {room.name[i18n.language] ?? t('title.room')} {' ->' + room.id}
-            </Typography>
-            <Typography className='pb-1'>
-              {`Max ${room.maxCapacity} ${t('person.plural')}`}
-            </Typography>
-            <Typography className='pb-4'>{room.description}</Typography>
-            <Typography weight='medium' className='pb-6 underline'>
-              {room.standardCapacity} {t('person.plural')}
-            </Typography>
-            <Typography className='pb-5' variant='base'>
-              <>
-                {t('from')}{' '}
-                <b>
-                  {formatCurrency(
-                    getRatesPerRoom(room.id)?.rate,
-                    getRatesPerRoom(room.id)?.curency,
-                  )}
-                  /
-                </b>
-                {t('night.singular')}
-              </>
-            </Typography>
+      {roomtypes.map((room, index) => {
+        const roomRate = getRatesPerRoom(ratesPlan, room.id);
+        const formattedCurrency = formatCurrency(
+          roomRate?.amountBeforeTax,
+          roomRate?.currency,
+        );
+        return (
+          <Rooms
+            key={`hotel-room-${index}`}
+            className={cn({
+              'cursor-pointer opacity-80 transition-shadow duration-300 hover:shadow-lg':
+                true,
+              'opacity-100 shadow-lg': selectedRoom?.id === room.id,
+            })}
+          >
+            <Image
+              alt={room.name}
+              src={`/images/hotel/room${index + 1}.webp`}
+              width={271}
+              height={235}
+              className='w-full object-cover'
+              title={t('title.room')}
+            />
+            <div className='p-4'>
+              <Typography variant='h3' weight='medium' className='pb-4'>
+                {room.name[i18n.language] ?? t('title.room')} {room.id}
+              </Typography>
+              <Typography className='pb-1'>
+                {`Max ${room.maxCapacity} ${t('person.plural')}`}
+              </Typography>
+              <Typography className='pb-4'>{room.description}</Typography>
+              <Typography weight='medium' className='pb-6 underline'>
+                {room.standardCapacity} {t('person.plural')}
+              </Typography>
+              <Typography className='pb-5' variant='base'>
+                <>
+                  {t('from')} <b>{formattedCurrency}</b>
+                  {t('night.singular')}
+                </>
+              </Typography>
 
-            <Button
-              type='button'
-              className='mb-4 md:w-full'
-              onClick={() => handleClick(room, getRatesPerRoom(room.id))}
-            >
-              {t('button.reserve')}
-            </Button>
-          </div>
-        </Rooms>
-      ))}
+              <Button
+                type='button'
+                className='mb-4 md:w-full'
+                onClick={() => handleClick(room)}
+              >
+                {t('button.reserve')}
+              </Button>
+            </div>
+          </Rooms>
+        );
+      })}
     </Swiper>
   );
-}
+};
+
+export default memo(RoomSwiper);

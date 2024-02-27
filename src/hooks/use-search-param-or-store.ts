@@ -1,6 +1,8 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
+import { getCheckinDefault, getCheckoutDefault } from '@/lib/time';
+
 import useReservationQueryStore from '@/store/use-reservation.store';
 
 import {
@@ -34,12 +36,13 @@ const useSearchParamOrStore = () => {
   );
 
   const getCheckin = useCallback(
-    () => getByQueryParamOrStoreItem(CHECKIN, CHECKIN) || undefined,
+    () => getByQueryParamOrStoreItem(CHECKIN, CHECKIN) || getCheckinDefault(),
     [getByQueryParamOrStoreItem],
   );
 
   const getCheckout = useCallback(
-    () => getByQueryParamOrStoreItem(CHECKOUT, CHECKOUT) || undefined,
+    () =>
+      getByQueryParamOrStoreItem(CHECKOUT, CHECKOUT) || getCheckoutDefault(),
     [getByQueryParamOrStoreItem],
   );
 

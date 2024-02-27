@@ -162,7 +162,15 @@ export type SelectedRoomtype = {
   viewTypes?: unknown[];
   accessibilityFeatures?: unknown[];
   smokePolicy?: string | null;
-  roomPrice?: { [key: string]: string | number | null } | number | null;
+  roomPrice?: RoomPrice;
+  ratesPlan?: { [key: string]: string | number | null | undefined };
+};
+
+export type RoomPrice = {
+  amountAfterTax?: number | null | undefined;
+  amountBeforeTax?: number | null | undefined;
+  currency?: number | null | undefined;
+  rate?: number | null | undefined;
 };
 
 export type Reservation = {

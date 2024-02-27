@@ -20,7 +20,6 @@ import {
   PLAN,
   PLAN_BREAKFAST,
   PLAN_BREAKFAST_COST,
-  PLAN_COST,
   PLAN_NONBREAKFAST,
   PLAN_REFUNDABLE,
   PLAN_REFUNDABLE_PERCENT,
@@ -106,8 +105,11 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setEditModal(value);
   }, []);
 
+  console.log('selectedRoom', selectedRoom);
+
   const hasBreakfast = breakfast === PLAN_BREAKFAST;
-  const planCost = selectedRoom.roomPrice || PLAN_COST;
+  const planCost = (selectedRoom.roomPrice as { amountBeforeTax: number })
+    ?.amountBeforeTax;
   const planDays = checkout.diff(checkin, 'days');
   const totalCost = planCost * planDays;
   const extraCost = PLAN_BREAKFAST_COST;
@@ -126,14 +128,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     )[0] as { [key: string]: string };
 
     setSelectedProduct(plan);
-  }, [
-    breakfast,
-    updateQueryString,
-    setBreakfast,
-    setSelectedProduct,
-    ratesPlan,
-    hasBreakfast,
-  ]);
+  }, [breakfast, hasBreakfast, ratesPlan, updateQueryString]);
 
   useMemo(() => {
     setReservation({
@@ -161,33 +156,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     selectedPlan,
     product,
   ]);
-
-  // useEffect(() => {
-  //   setReservation({
-  //     planCost,
-  //     totalCost,
-  //     taxes,
-  //     extraCost: extraCostTotal,
-  //     cancelationCost,
-  //     total,
-  //     hasBreakfast,
-  //     extra: breakfast,
-  //     plan: selectedPlan,
-  //     product,
-  //   });
-  // }, [
-  //   breakfast,
-  //   cancelationCost,
-  //   extraCostTotal,
-  //   planCost,
-  //   setReservation,
-  //   taxes,
-  //   total,
-  //   totalCost,
-  //   hasBreakfast,
-  //   selectedPlan,
-  //   product,
-  // ]);
 
   const [animate, setAnimate] = useState(false);
 

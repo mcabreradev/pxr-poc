@@ -1,5 +1,12 @@
 import dayjs from 'dayjs';
 
+import {
+  CHECKIN_DEFAULT_FUTURE_DAYS,
+  CHECKOUT_DEFAULT_FUTURE_DAYS,
+} from '@/constants';
+
+const today = dayjs();
+
 export function formatDate(date) {
   if (!date) return '';
 
@@ -38,4 +45,12 @@ export function getFormatedMontsDays(
     checkout,
     format,
   )}`;
+}
+
+export function getCheckinDefault() {
+  return today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toString();
+}
+
+export function getCheckoutDefault() {
+  return today.add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day').toString();
 }

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { PROPERTY } from '@/constants';
 import { propertyId } from '@/constants/env';
 
-const fetchProperty = async () => {
+export const fetchProperty = async () => {
   const { data } = await axios.get(`/api/property?propertyId=${propertyId}`);
   return data;
 };

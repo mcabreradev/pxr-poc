@@ -9,7 +9,7 @@ import Typography from '@/components/typography';
 import DatepickerDesktop from './datepicker/desktop-datepicker';
 import Dropdown from './dropdown';
 
-import { formatCurrency } from '@/lib/number';
+import { formatCurrency, getRatesPerRoom } from '@/lib/number';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 interface Props {
@@ -22,6 +22,9 @@ sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded bo
 export default function GuestFormComponent({ className }: Props) {
   const { t } = useTranslation();
   const { selectedRoom } = useSelectedRoomtypeStore();
+
+  const selectedRoomId = selectedRoom.id;
+  const ratesPlan = selectedRoom.ratesPlan;
 
   return (
     <Container className={cn(className)}>
@@ -38,10 +41,14 @@ export default function GuestFormComponent({ className }: Props) {
       <Dropdown />
 
       <hr />
-      {selectedRoom.roomPrice && (
+      {selectedRoom.ratesPlan && (
         <Typography variant='sm' weight='semibold' className='mb-4'>
-          Desde {`${formatCurrency(Number(selectedRoom.roomPrice) ?? 0)}`} x
-          noche
+          Desde{' '}
+          {`${formatCurrency(
+            getRatesPerRoom(ratesPlan, selectedRoomId)?.amountBeforeTax,
+            getRatesPerRoom(ratesPlan, selectedRoomId)?.curency,
+          )}`}{' '}
+          x noche
         </Typography>
       )}
       <Button
@@ -49,10 +56,10 @@ export default function GuestFormComponent({ className }: Props) {
         href={`/room-type/${selectedRoom.id}`}
         scroll={true}
         className='mb-4 md:mb-0 md:w-full'
-        disabled={!selectedRoom.roomPrice}
+        disabled={!selectedRoom.ratesPlan}
         withSearchParams={true}
       >
-        {t('button.choose-room')}
+        {selectedRoom.ratesPlan ? t('button.search') : t('button.choose-room')}
       </Button>
     </Container>
   );

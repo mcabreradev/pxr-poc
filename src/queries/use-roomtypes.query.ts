@@ -22,8 +22,6 @@ export function useRoomTypeWithRatesPlansQuery({ checkin, checkout }) {
   const predicade = ({ currency, reservationPolicies }) =>
     currency === PROPERTY_CURRENCY && reservationPolicies;
 
-  console.log({ checkin, checkout });
-
   return useQueries({
     queries: [
       { queryKey: [ROOMTYPES, propertyId], queryFn: () => fetchRoomTypes() },

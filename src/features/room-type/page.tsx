@@ -55,8 +55,6 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
     return <span>Error</span>;
   }
 
-  console.log('ratesPlan', ratesPlan);
-
   return (
     <Container
       className={cn('relative', className)}

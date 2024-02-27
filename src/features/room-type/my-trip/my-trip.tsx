@@ -105,8 +105,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setEditModal(value);
   }, []);
 
-  console.log('selectedRoom', selectedRoom);
-
   const hasBreakfast = breakfast === PLAN_BREAKFAST;
   const planCost = (selectedRoom.roomPrice as { amountBeforeTax: number })
     ?.amountBeforeTax;

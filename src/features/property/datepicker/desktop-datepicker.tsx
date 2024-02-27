@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import useLocale from '@/hooks/use-locale';
 import useQueryString from '@/hooks/use-querystring';
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import { cn, formatDate, reFormatDate } from '@/lib/utils';
+import { cn, formatDateToString, formatStringToDate } from '@/lib/utils';
 
 import useReservationQueryStore from '@/store/use-reservation.store';
 
@@ -27,7 +27,7 @@ export default function DatepickerComponent() {
 
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  const checkin = formatDate(getCheckin());
+  const checkin = formatStringToDate(getCheckin());
   const [startDate, setStartDate] = useState<Date | null>(
     checkin ? new Date(checkin) : checkinDefault,
   );
@@ -35,7 +35,7 @@ export default function DatepickerComponent() {
   const checkoutDefault = today
     .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
     .toDate();
-  const checkout = formatDate(getCheckout());
+  const checkout = formatStringToDate(getCheckout());
   const [endDate, setEndDate] = useState<Date | null>(
     checkout ? new Date(checkout) : checkoutDefault,
   );
@@ -49,12 +49,12 @@ export default function DatepickerComponent() {
   useEffect(() => {
     if (!startDate || !endDate) return;
     updateQueryString({
-      [CHECKIN]: reFormatDate(startDate),
-      [CHECKOUT]: reFormatDate(endDate),
+      [CHECKIN]: formatDateToString(startDate),
+      [CHECKOUT]: formatDateToString(endDate),
     });
     setReservation({
-      checkin: reFormatDate(startDate),
-      checkout: reFormatDate(endDate),
+      checkin: formatDateToString(startDate),
+      checkout: formatDateToString(endDate),
     });
   }, [endDate, setReservation, startDate, updateQueryString]);
 

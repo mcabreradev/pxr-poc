@@ -10,7 +10,11 @@ import {
   useQueryString,
   useSearchParamOrStore,
 } from '@/hooks';
-import { formatDate, getFormatedMontsDays, reFormatDate } from '@/lib/time';
+import {
+  formatDateToString,
+  formatStringToDate,
+  getFormatedMontsDays,
+} from '@/lib/time';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -57,7 +61,7 @@ export default function MobileDatepickerComponent() {
   // Calendar
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  const checkin = formatDate(getCheckin());
+  const checkin = formatStringToDate(getCheckin());
   const [startDate, setStartDate] = useState<Date | null>(
     checkin ? new Date(checkin) : checkinDefault,
   );
@@ -65,7 +69,7 @@ export default function MobileDatepickerComponent() {
   const checkoutDefault = today
     .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
     .toDate();
-  const checkout = formatDate(getCheckout());
+  const checkout = formatStringToDate(getCheckout());
   const [endDate, setEndDate] = useState<Date | null>(
     checkout ? new Date(checkout) : checkoutDefault,
   );
@@ -168,15 +172,15 @@ export default function MobileDatepickerComponent() {
     if (!startDate || !endDate) return;
     setTimeout(() => {
       setReservation({
-        checkin: reFormatDate(startDate),
-        checkout: reFormatDate(endDate),
+        checkin: formatDateToString(startDate),
+        checkout: formatDateToString(endDate),
         adults,
         childrens,
         infants,
       });
       updateQueryString({
-        [CHECKIN]: reFormatDate(startDate),
-        [CHECKOUT]: reFormatDate(endDate),
+        [CHECKIN]: formatDateToString(startDate),
+        [CHECKOUT]: formatDateToString(endDate),
         [ADULTS]: adults,
         [CHILDRENS]: childrens,
         [INFANTS]: infants,

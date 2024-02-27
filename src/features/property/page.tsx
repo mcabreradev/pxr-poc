@@ -1,7 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { memo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -23,14 +22,16 @@ import {
   useRatesPlanQuery,
 } from '@/queries';
 
+import { useCheckinCheckoutHook } from '@/hooks';
 import PropertyAmenities from './amenities';
-import data from './data.json';
 import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
 import RoomSwiper from './room-swiper';
 import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';
 import PropertyTopSights from './topsights';
+
+import data from './data.json';
 
 const Section = tw.div`
   px-4 text-black
@@ -43,19 +44,17 @@ const Row = tw.div`
 
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
-  const searchParams = useSearchParams();
   const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
   const { resetReservation } = useReservationQueryStore();
-
-  const checkin = searchParams.get('checkin');
-  const checkout = searchParams.get('checkout');
+  const { checkin, checkout } = useCheckinCheckoutHook();
   const roomSwipperRef = useRef(null);
 
-  const { refetch: fetchAvailability, data: inventory } = useAvailabilityQuery({
+  const { refetch: fetchAvailability } = useAvailabilityQuery({
     checkin,
     checkout,
   });
+
   const { refetch: fetchRatesPlan } = useRatesPlanQuery({
     checkin,
     checkout,
@@ -66,7 +65,7 @@ const PropertyPage = memo(function HotelPage() {
       fetchAvailability();
       fetchRatesPlan();
     }
-  }, [checkin, checkout, fetchAvailability, fetchRatesPlan, inventory]);
+  }, [checkin, checkout, fetchAvailability, fetchRatesPlan]);
 
   useEffect(() => {
     removeBlacklistParam(['action', 'extra', 'plan']);

@@ -3,7 +3,7 @@ import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { useSearchParamOrStore } from '@/hooks';
+import { useCheckinCheckoutHook } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -26,10 +26,7 @@ const RoomSwiper = () => {
   const { t, i18n } = useTranslation();
   const [selectedRoom, setSelectedRoom] = useState<SelectedRoomtype>();
   const { setSelectedRoomtype } = useSelectedRoomtypeStore();
-  const { getCheckin, getCheckout } = useSearchParamOrStore();
-
-  const checkin = getCheckin();
-  const checkout = getCheckout();
+  const { checkin, checkout } = useCheckinCheckoutHook();
 
   const { data, pending, loading, error } = useRoomTypeWithRatesPlansQuery({
     checkin,

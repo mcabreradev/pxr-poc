@@ -31,7 +31,7 @@ export default function MobileDatepickerComponent() {
 
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  // const checkin = formatDate(getCheckin());
+  // const checkin = formatStringToDate(getCheckin());
   // const [startDate, setStartDate] = useState<Date | null>(
   //   checkin ? new Date(checkin) : checkinDefault,
   // );
@@ -39,7 +39,7 @@ export default function MobileDatepickerComponent() {
   const checkoutDefault = today
     .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
     .toDate();
-  // const checkout = formatDate(getCheckout());
+  // const checkout = formatStringToDate(getCheckout());
   // const [endDate, setEndDate] = useState<Date | null>(
   //   checkout ? new Date(checkout) : checkoutDefault,
   // );

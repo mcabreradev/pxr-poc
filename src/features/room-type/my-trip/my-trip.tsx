@@ -1,12 +1,17 @@
 /* eslint-disable simple-import-sort/imports */
+'use client';
 import filter from '@mcabreradev/filter';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { useQueryString, useSearchParamOrStore } from '@/hooks';
+import {
+  useCheckinCheckoutHook,
+  useQueryString,
+  useSearchParamOrStore,
+} from '@/hooks';
 import { cn, ps } from '@/lib/utils';
 
 import { Button, Toggle, Typography } from '@/components';
@@ -14,8 +19,6 @@ import { Button, Toggle, Typography } from '@/components';
 import { useReservationQueryStore, useSelectedRoomtypeStore } from '@/store';
 
 import {
-  CHECKIN,
-  CHECKOUT,
   EXTRA,
   PLAN,
   PLAN_BREAKFAST,
@@ -50,28 +53,20 @@ px-4 text-black md:px-0
 export default function MyTrip({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
   const { reservation, setReservation } = useReservationQueryStore();
+  const { checkin, checkout, checkinDayjs, checkoutDayjs } =
+    useCheckinCheckoutHook();
   const { selectedRoom } = useSelectedRoomtypeStore();
+  // eslint-disable-next-line no-console
+  console.log('selectedRoom', selectedRoom);
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
   dayjs.locale(i18n.language);
 
-  const checkin = searchParams.get(CHECKIN)
-    ? dayjs(searchParams.get(CHECKIN))
-    : reservation?.checkin
-      ? dayjs(reservation?.checkin)
-      : dayjs(new Date());
-
-  const checkout = searchParams.get(CHECKOUT)
-    ? dayjs(searchParams.get(CHECKOUT))
-    : reservation?.checkout
-      ? dayjs(reservation?.checkout)
-      : dayjs(new Date());
-
   const { data: ratesPlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
-    roomTypeId: roomTypeId,
-    checkin: checkin.format('YYYY-MM-DD'), // Convert checkin to a string
-    checkout: checkout.format('YYYY-MM-DD'), // Convert checkout to a string
+    roomTypeId,
+    checkin,
+    checkout,
   });
 
   const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
@@ -105,10 +100,11 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setEditModal(value);
   }, []);
 
-  const hasBreakfast = breakfast === PLAN_BREAKFAST;
-  const planCost = (selectedRoom.roomPrice as { amountBeforeTax: number })
-    ?.amountBeforeTax;
-  const planDays = checkout.diff(checkin, 'days');
+  // const planCost = (selectedRoom.ratesPlan[0] as { rate: number })?.rate || 0;
+  // console.log('planCost', planCost);
+
+  const planCost = 1;
+  const planDays = checkoutDayjs.diff(checkinDayjs, 'days');
   const totalCost = planCost * planDays;
   const extraCost = PLAN_BREAKFAST_COST;
   const extraCostTotal = extra === PLAN_BREAKFAST ? PLAN_BREAKFAST_COST : 0;
@@ -116,6 +112,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   const cancelationCost = selectedPlan === PLAN_REFUNDABLE ? cancelCost : 0;
   const taxes = totalCost * PLAN_TAXES;
   const total = totalCost + extraCostTotal + cancelationCost + taxes;
+  const hasBreakfast = breakfast === PLAN_BREAKFAST;
 
   useEffect(() => {
     if (!breakfast || !ratesPlan) return;
@@ -128,7 +125,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setSelectedProduct(plan);
   }, [breakfast, hasBreakfast, ratesPlan, updateQueryString]);
 
-  useMemo(() => {
+  useEffect(() => {
     setReservation({
       planCost,
       totalCost,
@@ -179,7 +176,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
               {t('date.plural')}
             </Typography>
             <Typography variant='sm' className='text-neutral-500'>
-              {`${checkin.format('DD MMM YYYY')} - ${checkout.format(
+              {`${checkinDayjs.format('DD MMM YYYY')} - ${checkoutDayjs.format(
                 'DD MMM YYYY',
               )}`}
             </Typography>
@@ -244,8 +241,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
         </Typography>
         <div className='flex flex-wrap justify-between py-3'>
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(planCost)} {t('per')}{' '}
-            {checkout.diff(checkin, 'days')} {t('night.plural')}
+            {formatCurrency(planCost)} {t('per')} {planDays} {t('night.plural')}
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>

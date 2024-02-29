@@ -18,16 +18,17 @@ export const formatCurrency = (
 export const getRatesPerRoom = (ratesPlan, roomId) => {
   if (!ratesPlan) return;
 
-  const plan = ratesPlan.filter(({ roomTypeId }) => roomTypeId === roomId)[0];
-  if (!plan) return;
+  const plans = ratesPlan
+    .filter(({ roomTypeId }) => roomTypeId === roomId)
+    .map((plan) => {
+      const productDates = Object.keys(plan?.productDates).map(
+        (date) => plan?.productDates[date],
+      );
+      return {
+        ...productDates[0].rates[1],
+        ...plan,
+      };
+    });
 
-  const productDates = Object.keys(plan?.productDates).map(
-    (date) => plan?.productDates[date],
-  );
-  const rates = productDates[0].rates[1];
-
-  return {
-    ...rates,
-    currency: productDates[0].currency,
-  };
+  return plans;
 };

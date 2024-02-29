@@ -5,12 +5,10 @@ import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import useLocale from '@/hooks/use-locale';
-import useQueryString from '@/hooks/use-querystring';
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import { useLocale, useQueryString, useSearchParamOrStore } from '@/hooks';
 import { cn, formatDateToString, formatStringToDate } from '@/lib/utils';
 
-import useReservationQueryStore from '@/store/use-reservation.store';
+import { useReservationQueryStore } from '@/store';
 
 import {
   CHECKIN,

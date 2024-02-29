@@ -1,4 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
+'use client';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 

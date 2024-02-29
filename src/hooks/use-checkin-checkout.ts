@@ -14,8 +14,12 @@ import { useSearchParamOrStore } from '@/hooks';
 import { formatDateToString, formatStringToDate } from '@/lib/time';
 
 import { CHECKIN_DEFAULT_FUTURE_DAYS } from '@/constants';
+import { useTranslation } from 'react-i18next';
 
 export default function useCheckinCheckoutHook() {
+  const { i18n } = useTranslation();
+  dayjs.locale(i18n.language);
+
   const { getCheckin, getCheckout } = useSearchParamOrStore();
 
   const today = dayjs();
@@ -46,7 +50,9 @@ export default function useCheckinCheckoutHook() {
   return {
     checkin,
     checkinDate: formatStringToDate(checkin),
+    checkinDayjs: dayjs(checkin),
     checkout,
     checkoutDate: formatStringToDate(checkout),
+    checkoutDayjs: dayjs(checkout),
   };
 }

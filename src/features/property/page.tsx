@@ -26,7 +26,7 @@ import { useCheckinCheckoutHook } from '@/hooks';
 import PropertyAmenities from './amenities';
 import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
-import RoomSwiper from './room-swiper';
+import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';
 import PropertyTopSights from './topsights';
@@ -170,7 +170,7 @@ const PropertyPage = memo(function HotelPage() {
             <Typography variant='h2' weight='normal' className='md:self-start'>
               {t('title.wanna-sleep')}
             </Typography>
-            <RoomSwiper />
+            <RoomSelection />
           </Section>
         </div>
 

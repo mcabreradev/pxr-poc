@@ -21,6 +21,7 @@ import {
   TOTAL_INFANTS,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
+import { Ratesplan, SelectedRoomtype } from '@/types';
 
 interface Props {
   className?: string;
@@ -34,10 +35,22 @@ export default function DropdownComponent({ className }: Props) {
   const { t } = useTranslation();
   const { updateQueryString } = useQueryString();
   const { setReservation } = useReservationQueryStore();
-  const {
-    selectedRoom,
-    selectedRoom: { roomPrice, minCapacity, maxCapacity, childCapacity },
-  } = useSelectedRoomtypeStore();
+
+  const [selectedRoom, setRoom] = useState<SelectedRoomtype>();
+  const [roomPrice, setRatesPlan] = useState<Ratesplan>();
+
+  useEffect(() => {
+    /**
+     * Subscribes to the selected room type store and updates the room and rates plan state.
+     * @returns {void}
+     */
+    const unsub = useSelectedRoomtypeStore.subscribe(({ selectedRoom }) => {
+      setRoom(selectedRoom);
+      setRatesPlan(selectedRoom?.ratesPlan);
+    });
+    return unsub;
+  }, []);
+
   const [open, setOpen] = useState(false);
   const [adults, setAdults] = useState(TOTAL_ADULTS_DEFAULT);
   const [childrens, setChildrens] = useState(TOTAL_CHILDRENS_DEFAULT);
@@ -54,16 +67,25 @@ export default function DropdownComponent({ className }: Props) {
   });
 
   useEffect(() => {
-    setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
+    setAdults(getAdults() || selectedRoom?.minCapacity || TOTAL_ADULTS_DEFAULT);
     setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
     setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
-  }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
+  }, [
+    getAdults,
+    getChildrens,
+    getInfants,
+    selectedRoom?.minCapacity,
+    selectedRoom,
+  ]);
 
   const totalGuests = adults + childrens + infants;
-  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
+  const maxCapacity = selectedRoom?.maxCapacity ?? 0;
+  const isMaxCapacityReached = totalGuests >= maxCapacity;
   const adultsBlockedCondition = isMaxCapacityReached;
-  const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
-  const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
+  const childrensBlockedCondition =
+    !selectedRoom?.childCapacity && isMaxCapacityReached;
+  const infantsBlockedCondition =
+    !selectedRoom?.childCapacity && isMaxCapacityReached;
 
   return (
     <Container

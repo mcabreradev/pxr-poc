@@ -1,5 +1,6 @@
-/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable simple-import-sort/imports */
+'use client';
+
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -12,11 +13,11 @@ import BackButton from '@/components/common/back-button';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
-import MyTrip from './my-trip/my-trip';
 
 import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
 import data from './data.json';
+import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';
 
 type Props = {

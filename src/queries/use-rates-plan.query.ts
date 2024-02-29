@@ -32,6 +32,7 @@ export default function useRatesPlanQuery({
     queryKey: [PROPERTY, propertyId, RATES],
     queryFn: () => fetchRatesPlan({ checkin, checkout }),
     select: (data) => (_roomTypeId ? filter(data, predicade) : data),
-    retry: 3, // Will retry failed requests 10 times before displaying an error
+    // retry: 3, // Will retry failed requests 3 times before displaying an error
+    retry: false,
   });
 }

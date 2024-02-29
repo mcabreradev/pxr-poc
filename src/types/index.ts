@@ -1,3 +1,5 @@
+import Ratesplan from './ratesplans';
+
 export type PropertyType = {
   id: number;
   name: string;
@@ -191,3 +193,5 @@ export type Reservation = {
   selectedRoom?: { [key: string]: string | number | null | undefined } | null;
   product?: { [key: string]: string | number | null | undefined } | null;
 };
+
+export type { Ratesplan };

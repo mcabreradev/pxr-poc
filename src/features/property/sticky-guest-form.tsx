@@ -23,7 +23,6 @@ export default function MobileDatepickerComponent() {
     reservation: { adults, childrens, infants },
   } = useReservationQueryStore();
   const { openDatepickerDrawer } = useGlobalStore();
-  // const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { t } = useTranslation();
 
   const total =
@@ -31,18 +30,10 @@ export default function MobileDatepickerComponent() {
 
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  // const checkin = formatStringToDate(getCheckin());
-  // const [startDate, setStartDate] = useState<Date | null>(
-  //   checkin ? new Date(checkin) : checkinDefault,
-  // );
 
   const checkoutDefault = today
     .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
     .toDate();
-  // const checkout = formatStringToDate(getCheckout());
-  // const [endDate, setEndDate] = useState<Date | null>(
-  //   checkout ? new Date(checkout) : checkoutDefault,
-  // );
 
   return (
     <div

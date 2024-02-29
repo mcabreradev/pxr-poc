@@ -1,4 +1,3 @@
-import filter from '@mcabreradev/filter';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -28,8 +27,17 @@ export function useRoomTypeWithRatesPlansQuery({ checkin, checkout }) {
       {
         queryKey: [PROPERTY, propertyId, RATES],
         queryFn: () => fetchRatesPlan({ checkin, checkout }),
-        select: (data) => filter(data, predicade),
-        retry: 3,
+        select: (data) =>
+          data.filter(predicade).map((plan) => {
+            const productDates = Object.keys(plan.productDates).map(
+              (date) => plan?.productDates[date],
+            );
+            return {
+              ...productDates[0].rates[1],
+              ...plan,
+            };
+          }),
+        retry: false,
       },
     ],
     combine: (results) => {

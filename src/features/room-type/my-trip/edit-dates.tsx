@@ -8,13 +8,13 @@ import { DateRangePicker } from 'react-next-dates';
 import tw from 'tailwind-styled-components';
 
 import useLocale from '@/hooks/use-locale';
-import { cn, formatDate, reFormatDate } from '@/lib/utils';
+import { cn, formatDateToString, formatStringToDate } from '@/lib/utils';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import useQueryString from '@/hooks/use-querystring';
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
 import useHydration from '@/hooks/use-hydration';
@@ -36,15 +36,15 @@ export default function EditGuestsComponent({ className }: Props) {
   const searchParams = useSearchParams();
   const { t } = useTranslation();
   const { locale } = useLocale();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
   const { updateQueryString } = useQueryString();
 
-  const checkin = formatDate(searchParams.get(CHECKIN));
+  const checkin = formatStringToDate(searchParams.get(CHECKIN));
   const [startDate, setStartDate] = useState<Date | null>(
     checkin ? new Date(checkin) : new Date(),
   );
 
-  const checkout = formatDate(searchParams.get(CHECKOUT));
+  const checkout = formatStringToDate(searchParams.get(CHECKOUT));
   const [endDate, setEndDate] = useState<Date | null>(
     checkout ? new Date(checkout) : null,
   );
@@ -65,17 +65,19 @@ export default function EditGuestsComponent({ className }: Props) {
   useEffect(() => {
     if (!startDate) return;
     updateQueryString({
-      [CHECKIN]: reFormatDate(startDate?.toString()) || '',
+      [CHECKIN]: formatDateToString(startDate?.toString()) || '',
     });
-    setReservation({ checkin: reFormatDate(startDate?.toString()) || '' });
+    setReservation({
+      checkin: formatDateToString(startDate?.toString()) || '',
+    });
   }, [setReservation, startDate, updateQueryString]);
 
   useEffect(() => {
     if (!endDate) return;
     updateQueryString({
-      [CHECKOUT]: reFormatDate(endDate?.toString()) || '',
+      [CHECKOUT]: formatDateToString(endDate?.toString()) || '',
     });
-    setReservation({ checkout: reFormatDate(endDate?.toString()) || '' });
+    setReservation({ checkout: formatDateToString(endDate?.toString()) || '' });
   }, [endDate, setReservation, updateQueryString]);
 
   const { isHydrated } = useHydration();

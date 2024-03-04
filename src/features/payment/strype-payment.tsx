@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { memo } from 'react';
 
 import { uuid } from '@/lib/utils';
-import useStripePaymentIntent from '@/queries/use-stripe';
+import useStripePaymentIntentQuery from '@/queries/use-stripe.query';
 
 import CheckoutForm from '@/features/payment/checkout-form';
 
@@ -19,7 +19,7 @@ const StripePayment = memo(() => {
     data: clientSecret,
     isLoading: isLoadingPaymentIntent,
     isError: isErrorPaymentIntent,
-  } = useStripePaymentIntent({
+  } = useStripePaymentIntentQuery({
     propertyId: '219',
     amount: 100000,
     clientId: 2334,

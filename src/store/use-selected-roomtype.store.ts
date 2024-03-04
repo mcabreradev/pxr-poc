@@ -4,6 +4,7 @@ import {
   devtools,
   persist,
   PersistOptions,
+  subscribeWithSelector,
 } from 'zustand/middleware';
 
 import { SelectedRoomtype } from '@/types';
@@ -24,10 +25,12 @@ type Persist = (
 
 const middlewares = (f) =>
   devtools(
-    persist(f, {
-      name: 'selectedRoomStore',
-      storage: createJSONStorage(() => sessionStorage),
-    }),
+    subscribeWithSelector(
+      persist(f, {
+        name: 'store-selected-roomtype',
+        storage: createJSONStorage(() => localStorage),
+      }),
+    ),
   );
 
 const useSelectedRoomtypeStore = create<State & Actions>(

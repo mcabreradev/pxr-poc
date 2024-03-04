@@ -9,9 +9,11 @@ import Typography from '@/components/typography';
 import DatepickerDesktop from './datepicker/desktop-datepicker';
 import Dropdown from './dropdown';
 
-import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
-
+import { PROPERTY_CURRENCY } from '@/constants';
 import { formatCurrency } from '@/lib/number';
+import { useSelectedRoomtypeStore } from '@/store';
+import { Ratesplan, SelectedRoomtype } from '@/types';
+import { useEffect, useState } from 'react';
 
 interface Props {
   className?: string;
@@ -22,7 +24,20 @@ sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded bo
 
 export default function GuestFormComponent({ className }: Props) {
   const { t } = useTranslation();
-  const { selectedRoom } = useSelectedRoomtypeStore();
+  const [room, setRoom] = useState<SelectedRoomtype>();
+  const [ratesPlan, setRatesPlan] = useState<Ratesplan>();
+
+  useEffect(() => {
+    /**
+     * Subscribes to the selected room type store and updates the room and rates plan state.
+     * @returns {void}
+     */
+    const unsub = useSelectedRoomtypeStore.subscribe(({ selectedRoom }) => {
+      setRoom(selectedRoom);
+      setRatesPlan(selectedRoom?.ratesPlan);
+    });
+    return unsub;
+  }, []);
 
   return (
     <Container className={cn(className)}>
@@ -39,21 +54,25 @@ export default function GuestFormComponent({ className }: Props) {
       <Dropdown />
 
       <hr />
-      {selectedRoom.roomPrice && (
+      {ratesPlan && (
         <Typography variant='sm' weight='semibold' className='mb-4'>
-          Desde {`${formatCurrency(Number(selectedRoom.roomPrice) ?? 0)}`} x
-          noche
+          Desde{' '}
+          {`${formatCurrency(
+            ratesPlan[0]?.amountBeforeTax ?? NaN, // change to rate or amountBeforeTax
+            ratesPlan[0]?.currency ?? PROPERTY_CURRENCY,
+          )}`}{' '}
+          x noche
         </Typography>
       )}
       <Button
         type='link'
-        href={`/room-type/${selectedRoom.id}`}
+        href={`/room-type/${room?.id}`}
         scroll={true}
         className='mb-4 md:mb-0 md:w-full'
-        disabled={!selectedRoom.roomPrice}
+        disabled={!ratesPlan}
         withSearchParams={true}
       >
-        {t('button.choose-room')}
+        {ratesPlan ? t('button.search') : t('button.choose-room')}
       </Button>
     </Container>
   );

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
-import useFetchProperty from '@/queries/use-property';
+import usePropertyQuery from '@/queries/use-property.query';
 
 import Icon from '@/components/icon';
 
@@ -46,7 +46,7 @@ const Layout = tw.div`
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
-  const { data: property, isLoading } = useFetchProperty();
+  const { data: property, isLoading } = usePropertyQuery();
   const pathname = usePathname();
 
   const onClickHandler = () => {

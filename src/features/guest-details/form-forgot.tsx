@@ -14,7 +14,7 @@ import { forgotSchema } from '@/schemas';
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomTypeId: number;
 };
 
 interface IForm {
@@ -25,7 +25,7 @@ const Container = tw.div`
   pb-5
 `;
 
-export default function FormForgotComponent({ className, roomtype }: Props) {
+export default function FormForgotComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
 
   const {
@@ -97,7 +97,7 @@ export default function FormForgotComponent({ className, roomtype }: Props) {
           variant='text'
           className='mt-4 text-neutral-400 underline md:w-full'
           type='link'
-          href={`/room-type/${roomtype}/details?${URL.ACTION}=login`}
+          href={`/room-type/${roomTypeId}/details?${URL.ACTION}=login`}
           replace={true}
         >
           {t('button.cancel')}

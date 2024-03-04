@@ -9,11 +9,13 @@ export const GET_SESSION = 'getsession';
 export const CHECKUSER = 'checkuser';
 
 // App
+export const PROPERTY_CURRENCY = 'CLP';
+export const PROPERTY_CURRENCY_OTA = 'EUR';
 export const PROPERTY = 'property';
 export const PROPERTYPATH = '/';
 export const ROOMTYPES = 'room-types';
 export const ROOMTYPE = 'room-type';
-export const ROOMTYPE2 = 'roomtype';
+export const ROOMTYPE2 = 'roomTypeId';
 export const PAYMENT = 'payment';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
@@ -138,32 +140,60 @@ export const PAYMENT_STATUS = {
 export const breakpoints = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];
 
 export const LOCALES = {
-  us: { locale: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
-  euro: { locale: 'es-ES', currency: 'EURO', currencyDisplay: 'symbol' },
-  argentina: { locale: 'es-AR', currency: 'ARS', currencyDisplay: 'symbol' },
-  bolivia: { locale: 'es-BO', currency: 'BOB', currencyDisplay: 'symbol' },
-  chile: { locale: 'es-CL', currency: 'CLP', currencyDisplay: 'symbol' },
-  colombia: { locale: 'es-CO', currency: 'COP', currencyDisplay: 'symbol' },
-  costa_rica: { locale: 'es-CR', currency: 'CRC', currencyDisplay: 'symbol' },
-  cuba: { locale: 'es-CU', currency: 'CUP', currencyDisplay: 'symbol' },
-  ecuador: { locale: 'es-EC', currency: 'USD', currencyDisplay: 'symbol' },
-  el_salvador: { locale: 'es-SV', currency: 'USD', currencyDisplay: 'symbol' },
-  guatemala: { locale: 'es-GT', currency: 'GTQ', currencyDisplay: 'symbol' },
-  honduras: { locale: 'es-HN', currency: 'HNL', currencyDisplay: 'symbol' },
-  mexico: { locale: 'es-MX', currency: 'MXN', currencyDisplay: 'symbol' },
-  nicaragua: { locale: 'es-NI', currency: 'NIO', currencyDisplay: 'symbol' },
-  panama: { locale: 'es-PA', currency: 'PAB', currencyDisplay: 'symbol' },
-  paraguay: { locale: 'es-PY', currency: 'PYG', currencyDisplay: 'symbol' },
-  peru: { locale: 'es-PE', currency: 'PEN', currencyDisplay: 'symbol' },
-  puerto_rico: { locale: 'es-PR', currency: 'USD', currencyDisplay: 'symbol' },
+  us: { format: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
+  euro: { format: 'es-ES', currency: 'EUR', currencyDisplay: 'symbol' },
+  argentina: { format: 'es-AR', currency: 'ARS', currencyDisplay: 'symbol' },
+  bolivia: { format: 'es-BO', currency: 'BOB', currencyDisplay: 'symbol' },
+  chile: { format: 'es-CL', currency: 'CLP', currencyDisplay: 'symbol' },
+  colombia: { format: 'es-CO', currency: 'COP', currencyDisplay: 'symbol' },
+  costa_rica: { format: 'es-CR', currency: 'CRC', currencyDisplay: 'symbol' },
+  cuba: { format: 'es-CU', currency: 'CUP', currencyDisplay: 'symbol' },
+  ecuador: { format: 'es-EC', currency: 'USD', currencyDisplay: 'symbol' },
+  el_salvador: { format: 'es-SV', currency: 'USD', currencyDisplay: 'symbol' },
+  guatemala: { format: 'es-GT', currency: 'GTQ', currencyDisplay: 'symbol' },
+  honduras: { format: 'es-HN', currency: 'HNL', currencyDisplay: 'symbol' },
+  mexico: { format: 'es-MX', currency: 'MXN', currencyDisplay: 'symbol' },
+  nicaragua: { format: 'es-NI', currency: 'NIO', currencyDisplay: 'symbol' },
+  panama: { format: 'es-PA', currency: 'PAB', currencyDisplay: 'symbol' },
+  paraguay: { format: 'es-PY', currency: 'PYG', currencyDisplay: 'symbol' },
+  peru: { format: 'es-PE', currency: 'PEN', currencyDisplay: 'symbol' },
+  puerto_rico: { format: 'es-PR', currency: 'USD', currencyDisplay: 'symbol' },
   republica_dominicana: {
-    locale: 'es-DO',
+    format: 'es-DO',
     currency: 'DOP',
     currencyDisplay: 'symbol',
   },
-  uruguay: { locale: 'es-UY', currency: 'UYU', currencyDisplay: 'symbol' },
-  venezuela: { locale: 'es-VE', currency: 'VES', currencyDisplay: 'symbol' },
+  uruguay: { format: 'es-UY', currency: 'UYU', currencyDisplay: 'symbol' },
+  venezuela: { format: 'es-VE', currency: 'VES', currencyDisplay: 'symbol' },
 };
+
+export const CURRENCIES = [
+  { format: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
+  { format: 'es-ES', currency: 'EUR', currencyDisplay: 'symbol' },
+  { format: 'es-AR', currency: 'ARS', currencyDisplay: 'symbol' },
+  { format: 'es-BO', currency: 'BOB', currencyDisplay: 'symbol' },
+  { format: 'es-CL', currency: 'CLP', currencyDisplay: 'symbol' },
+  { format: 'es-CO', currency: 'COP', currencyDisplay: 'symbol' },
+  { format: 'es-CR', currency: 'CRC', currencyDisplay: 'symbol' },
+  { format: 'es-CU', currency: 'CUP', currencyDisplay: 'symbol' },
+  { format: 'es-EC', currency: 'USD', currencyDisplay: 'symbol' },
+  { format: 'es-SV', currency: 'USD', currencyDisplay: 'symbol' },
+  { format: 'es-GT', currency: 'GTQ', currencyDisplay: 'symbol' },
+  { format: 'es-HN', currency: 'HNL', currencyDisplay: 'symbol' },
+  { format: 'es-MX', currency: 'MXN', currencyDisplay: 'symbol' },
+  { format: 'es-NI', currency: 'NIO', currencyDisplay: 'symbol' },
+  { format: 'es-PA', currency: 'PAB', currencyDisplay: 'symbol' },
+  { format: 'es-PY', currency: 'PYG', currencyDisplay: 'symbol' },
+  { format: 'es-PE', currency: 'PEN', currencyDisplay: 'symbol' },
+  { format: 'es-PR', currency: 'USD', currencyDisplay: 'symbol' },
+  {
+    format: 'es-DO',
+    currency: 'DOP',
+    currencyDisplay: 'symbol',
+  },
+  { format: 'es-UY', currency: 'UYU', currencyDisplay: 'symbol' },
+  { format: 'es-VE', currency: 'VES', currencyDisplay: 'symbol' },
+];
 
 // keyboard keys
 export const ESCAPE = 'Escape';

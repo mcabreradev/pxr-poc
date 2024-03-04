@@ -22,13 +22,13 @@ interface IForm {
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomTypeId: number;
 };
 
 const Container = tw.div`
 `;
 
-export default function FormAuthComponent({ className, roomtype }: Props) {
+export default function FormAuthComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
 
   const { urlStatus } = useHostUrl();
@@ -131,7 +131,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           variant='secondary'
           icon={<Icon variant='google' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/payment`}
+          href={`/room-type/${roomTypeId}/payment`}
           replace={true}
           withSearchParams={true}
         >
@@ -143,7 +143,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           variant='secondary'
           icon={<Icon variant='facebook' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details`}
+          href={`/room-type/${roomTypeId}/details`}
           replace={true}
           withSearchParams={true}
           query={{ [URL.ACTION]: 'login' }}
@@ -156,7 +156,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
           variant='secondary'
           icon={<Icon variant='apple' height='24' />}
           type='link'
-          href={`/room-type/${roomtype}/details`}
+          href={`/room-type/${roomTypeId}/details`}
           replace={true}
           withSearchParams={true}
           query={{ [URL.ACTION]: 'register' }}

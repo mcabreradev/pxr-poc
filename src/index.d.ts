@@ -5,3 +5,5 @@ declare global {
     store: unknown;
   }
 }
+
+declare module '@mcabreradev/filter';

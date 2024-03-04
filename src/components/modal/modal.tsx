@@ -76,6 +76,7 @@ export default function ModalComponent({
         popup
         position='center'
         theme={theme}
+        dismissible
         {...props}
       >
         {header && (

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { ps } from '@/lib/utils';
-import useReservation from '@/store/use-reservation-persist.store';
+import useReservationQuery from '@/store/use-reservation.store';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
@@ -27,7 +27,7 @@ export default function MyTripDetails({ property, room }: Props) {
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
 
-  const { reservation } = useReservation();
+  const { reservation } = useReservationQuery();
 
   const checkin = dayjs(reservation.checkin);
   const checkout = dayjs(reservation.checkout);

@@ -6,7 +6,7 @@ import tw from 'tailwind-styled-components';
 import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
@@ -35,7 +35,7 @@ flex items-center justify-center
 export default function EditGuestsComponent({ className, onClose }: Props) {
   const { t } = useTranslation();
   const { updateQueryString } = useQueryString();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
   const {
     selectedRoom,
     selectedRoom: { minCapacity, maxCapacity, childCapacity },

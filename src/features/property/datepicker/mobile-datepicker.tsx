@@ -4,11 +4,17 @@ import { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 
-import useClickAway from '@/hooks/use-clickaway';
-import useLocale from '@/hooks/use-locale';
-import useQueryString from '@/hooks/use-querystring';
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import { formatDate, getFormatedMontsDays, reFormatDate } from '@/lib/time';
+import {
+  useClickAway,
+  useLocale,
+  useQueryString,
+  useSearchParamOrStore,
+} from '@/hooks';
+import {
+  formatDateToString,
+  formatStringToDate,
+  getFormatedMontsDays,
+} from '@/lib/time';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -17,7 +23,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import useGlobalStore from '@/store/use-global.store';
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import {
@@ -39,7 +45,7 @@ import useWindowSize from '@/hooks/use-windowsize';
 export default function MobileDatepickerComponent() {
   const { locale } = useLocale();
   const { t } = useTranslation();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { updateQueryString } = useQueryString();
   const { closeDatepickerDrawer } = useGlobalStore();
@@ -55,7 +61,7 @@ export default function MobileDatepickerComponent() {
   // Calendar
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  const checkin = formatDate(getCheckin());
+  const checkin = formatStringToDate(getCheckin());
   const [startDate, setStartDate] = useState<Date | null>(
     checkin ? new Date(checkin) : checkinDefault,
   );
@@ -63,7 +69,7 @@ export default function MobileDatepickerComponent() {
   const checkoutDefault = today
     .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
     .toDate();
-  const checkout = formatDate(getCheckout());
+  const checkout = formatStringToDate(getCheckout());
   const [endDate, setEndDate] = useState<Date | null>(
     checkout ? new Date(checkout) : checkoutDefault,
   );
@@ -166,15 +172,15 @@ export default function MobileDatepickerComponent() {
     if (!startDate || !endDate) return;
     setTimeout(() => {
       setReservation({
-        checkin: reFormatDate(startDate),
-        checkout: reFormatDate(endDate),
+        checkin: formatDateToString(startDate),
+        checkout: formatDateToString(endDate),
         adults,
         childrens,
         infants,
       });
       updateQueryString({
-        [CHECKIN]: reFormatDate(startDate),
-        [CHECKOUT]: reFormatDate(endDate),
+        [CHECKIN]: formatDateToString(startDate),
+        [CHECKOUT]: formatDateToString(endDate),
         [ADULTS]: adults,
         [CHILDRENS]: childrens,
         [INFANTS]: infants,

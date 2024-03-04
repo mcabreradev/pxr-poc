@@ -31,12 +31,12 @@ type Persist = (
 const middlewares = (f) =>
   devtools(
     persist(f, {
-      name: 'session',
+      name: 'store-session',
       storage: createJSONStorage(() => sessionStorage),
     }),
   );
 
-const useSession = create<State & Actions>()(
+const useSessionStore = create<State & Actions>()(
   (middlewares as Persist)((set, get) => ({
     session: null,
     setSession: (session: Session) =>
@@ -45,4 +45,4 @@ const useSession = create<State & Actions>()(
   })),
 );
 
-export default useSession;
+export default useSessionStore;

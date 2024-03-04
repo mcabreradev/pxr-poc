@@ -1,8 +1,8 @@
 'use client';
 
-import I18nProvider from '@/providers/i18n-provider';
-import ReactQueryProvider from '@/providers/react-query-provider';
-import ThemeProvider from '@/providers/theme';
+import I18nProvider from './i18n.provider';
+import ReactQueryProvider from './tanstack.provider';
+import ThemeProvider from './theme.provider';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

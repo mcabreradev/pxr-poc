@@ -1,6 +1,13 @@
 import dayjs from 'dayjs';
 
-export function formatDate(date) {
+import {
+  CHECKIN_DEFAULT_FUTURE_DAYS,
+  CHECKOUT_DEFAULT_FUTURE_DAYS,
+} from '@/constants';
+
+const today = dayjs();
+
+export function formatStringToDate(date) {
   if (!date) return '';
 
   const d = date.split('-');
@@ -10,7 +17,7 @@ export function formatDate(date) {
   return [day, month, year].join('-');
 }
 
-export function reFormatDate(date: Date | string) {
+export function formatDateToString(date: Date | string) {
   const d = new Date(date?.toString());
   let month = '' + (d.getMonth() + 1),
     day = '' + d.getDate();
@@ -38,4 +45,12 @@ export function getFormatedMontsDays(
     checkout,
     format,
   )}`;
+}
+
+export function getCheckinDefault() {
+  return today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toString();
+}
+
+export function getCheckoutDefault() {
+  return today.add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day').toString();
 }

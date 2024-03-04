@@ -181,7 +181,7 @@ export type Reservation = {
   adults?: number;
   childrens?: number;
   infants?: number;
-  plan?: string | null;
+  plan?: number | string | null;
   extra?: string | null;
   planCost?: number | null;
   totalCost?: number | null;

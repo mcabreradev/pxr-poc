@@ -80,6 +80,8 @@ const RoomSelectionComponent = () => {
           ratesPlan,
         } = room;
 
+        // console.log('ratesPlan', ratesPlan);
+
         return (
           <Rooms
             key={`hotel-room-${index}`}
@@ -113,10 +115,10 @@ const RoomSelectionComponent = () => {
                   {t('from')}{' '}
                   <b>
                     {formatCurrency(
-                      ratesPlan[0]?.rate ?? NaN,
+                      ratesPlan[0]?.amountBeforeTax ?? NaN, // here chacge to rate o amountBeforeTax
                       ratesPlan[0]?.currency ?? PROPERTY_CURRENCY,
                     )}
-                  </b>
+                  </b>{' '}
                   {t('night.singular')}
                 </>
               </Typography>

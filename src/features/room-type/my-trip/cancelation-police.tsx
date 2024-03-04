@@ -11,7 +11,7 @@ import { formatCurrency } from '@/lib/number';
 import { cn } from '@/lib/utils';
 
 type Props = {
-  plan: string | null | undefined;
+  plan: number | string | null | undefined;
   ratesPlan: string[] | unknown[] | null | undefined;
   onChange: (event: unknown) => void;
   cancelCost: number;

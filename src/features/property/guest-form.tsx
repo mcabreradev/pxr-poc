@@ -58,7 +58,7 @@ export default function GuestFormComponent({ className }: Props) {
         <Typography variant='sm' weight='semibold' className='mb-4'>
           Desde{' '}
           {`${formatCurrency(
-            ratesPlan[0]?.rate ?? NaN,
+            ratesPlan[0]?.amountBeforeTax ?? NaN, // change to rate or amountBeforeTax
             ratesPlan[0]?.currency ?? PROPERTY_CURRENCY,
           )}`}{' '}
           x noche

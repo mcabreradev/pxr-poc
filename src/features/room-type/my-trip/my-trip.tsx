@@ -26,7 +26,6 @@ import {
   PLAN_NONBREAKFAST,
   PLAN_REFUNDABLE,
   PLAN_REFUNDABLE_PERCENT,
-  PLAN_TAXES,
   TOTAL_ADULTS,
   TOTAL_CHILDRENS,
   TOTAL_INFANTS,
@@ -56,8 +55,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   const { checkin, checkout, checkinDayjs, checkoutDayjs } =
     useCheckinCheckoutHook();
   const { selectedRoom } = useSelectedRoomtypeStore();
-  // eslint-disable-next-line no-console
-  console.log('selectedRoom', selectedRoom);
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
@@ -86,6 +83,8 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     [key: string]: string | number | null | undefined;
   } | null>(null);
 
+  const [ratesPlanIndex, setPlanCostIndex] = useState(0);
+
   const handleCancelationPlan = useCallback((value) => {
     setSelectedPlan(value);
   }, []);
@@ -100,18 +99,48 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setEditModal(value);
   }, []);
 
-  // const planCost = (selectedRoom.ratesPlan[0] as { rate: number })?.rate || 0;
-  // console.log('planCost', planCost);
+  useEffect(() => {
+    if (breakfast === PLAN_BREAKFAST) {
+      setPlanCostIndex(0);
+    } else {
+      setPlanCostIndex(1);
+    }
+  }, [breakfast, selectedRoom]);
 
-  const planCost = 1;
+  const planCost = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      amountBeforeTax: number;
+    }
+  )?.amountBeforeTax;
+
+  const currency = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      currency: string;
+    }
+  )?.currency;
+
+  const planCostWithTaxes = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      rate: number;
+    }
+  )?.rate;
+
+  const planId = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      productId: number;
+    }
+  )?.productId;
+
   const planDays = checkoutDayjs.diff(checkinDayjs, 'days');
   const totalCost = planCost * planDays;
+  const totalCostWithTaxes = planCostWithTaxes * planDays;
   const extraCost = PLAN_BREAKFAST_COST;
-  const extraCostTotal = extra === PLAN_BREAKFAST ? PLAN_BREAKFAST_COST : 0;
+  const extraCostTotal = extra === PLAN_BREAKFAST ? extraCost : 0;
   const cancelCost = totalCost * PLAN_REFUNDABLE_PERCENT;
   const cancelationCost = selectedPlan === PLAN_REFUNDABLE ? cancelCost : 0;
-  const taxes = totalCost * PLAN_TAXES;
-  const total = totalCost + extraCostTotal + cancelationCost + taxes;
+  const taxes = totalCostWithTaxes - totalCost;
+  // const total = totalCost + extraCostTotal + cancelationCost + taxes;
+  const total = totalCostWithTaxes;
   const hasBreakfast = breakfast === PLAN_BREAKFAST;
 
   useEffect(() => {
@@ -135,7 +164,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
       total,
       hasBreakfast,
       extra: breakfast,
-      plan: selectedPlan,
+      plan: planId,
       product,
     });
   }, [
@@ -150,6 +179,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     hasBreakfast,
     selectedPlan,
     product,
+    planId,
   ]);
 
   const [animate, setAnimate] = useState(false);
@@ -241,11 +271,12 @@ export default function MyTrip({ className, roomTypeId }: Props) {
         </Typography>
         <div className='flex flex-wrap justify-between py-3'>
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(planCost)} {t('per')} {planDays} {t('night.plural')}
+            {formatCurrency(planCost, currency)} {t('per')} {planDays}{' '}
+            {t('night.plural')}
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(totalCost)}
+            {formatCurrency(totalCost, currency)}
           </Typography>
         </div>
 
@@ -286,7 +317,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
                   'text-gray-500': !hasBreakfast,
                 })}
               >
-                + {formatCurrency(extraCost)}
+                {/* + {formatCurrency(extraCost)} */}
               </Typography>
             </div>
           </>
@@ -310,7 +341,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            + {formatCurrency(taxes)}
+            + {formatCurrency(taxes, currency)}
           </Typography>
         </div>
 
@@ -326,7 +357,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
               { 'animate-pulse': animate },
             )}
           >
-            {formatCurrency(total)}
+            {formatCurrency(total, currency)}
           </Typography>
         </div>
 

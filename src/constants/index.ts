@@ -141,7 +141,7 @@ export const breakpoints = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];
 
 export const LOCALES = {
   us: { format: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
-  euro: { format: 'es-ES', currency: 'EURO', currencyDisplay: 'symbol' },
+  euro: { format: 'es-ES', currency: 'EUR', currencyDisplay: 'symbol' },
   argentina: { format: 'es-AR', currency: 'ARS', currencyDisplay: 'symbol' },
   bolivia: { format: 'es-BO', currency: 'BOB', currencyDisplay: 'symbol' },
   chile: { format: 'es-CL', currency: 'CLP', currencyDisplay: 'symbol' },
@@ -169,7 +169,7 @@ export const LOCALES = {
 
 export const CURRENCIES = [
   { format: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
-  { format: 'es-ES', currency: 'EURO', currencyDisplay: 'symbol' },
+  { format: 'es-ES', currency: 'EUR', currencyDisplay: 'symbol' },
   { format: 'es-AR', currency: 'ARS', currencyDisplay: 'symbol' },
   { format: 'es-BO', currency: 'BOB', currencyDisplay: 'symbol' },
   { format: 'es-CL', currency: 'CLP', currencyDisplay: 'symbol' },

@@ -1,7 +1,7 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { PROPERTY, PROPERTY_CURRENCY, RATES, ROOMTYPES } from '@/constants';
+import { PROPERTY, RATES, ROOMTYPES } from '@/constants';
 import { propertyId } from '@/constants/env';
 import { fetchRatesPlan } from '@/queries/use-rates-plan.query';
 
@@ -18,8 +18,11 @@ export default function useRoomTypesQuery() {
 }
 
 export function useRoomTypeWithRatesPlansQuery({ checkin, checkout }) {
-  const predicade = ({ currency, reservationPolicies }) =>
-    currency === PROPERTY_CURRENCY && reservationPolicies;
+  // change when CLP is present
+  // const predicade = ({ currency, reservationPolicies }) =>
+  //   currency === PROPERTY_CURRENCY && reservationPolicies;
+
+  const predicade = ({ reservationPolicies }) => reservationPolicies;
 
   return useQueries({
     queries: [

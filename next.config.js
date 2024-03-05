@@ -2,6 +2,7 @@
 const nextConfig = {
   env: {
     SITE_API_URL: process.env.SITE_API_URL,
+    SITE_PEGASO_URL: process.env.SITE_PEGASO_URL,
     AUTH_URL: process.env.AUTH_URL,
     AUTH_CLIENT_ID: process.env.AUTH_CLIENT_ID,
     AUTH_CLIENT_SECRET: process.env.AUTH_CLIENT_SECRET,

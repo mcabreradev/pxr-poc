@@ -8,7 +8,7 @@ const checkGuest = async (body) => {
   return data;
 };
 
-export default function useCheckGuest(body) {
+export default function useCheckGuestMutation(body) {
   return useMutation({
     mutationKey: [GUEST],
     mutationFn: () => checkGuest(body),

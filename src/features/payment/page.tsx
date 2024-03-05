@@ -75,9 +75,9 @@ export default function PaymentFeature({ roomtype, action }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              {actionPayment && <StripePayment />}
-              {actionSuccess && <StripePayment />}
-              {actionError && <StripePayment />}
+              {actionPayment && <StripePayment roomtype={roomtype} />}
+              {actionSuccess && <StripePayment roomtype={roomtype} />}
+              {actionError && <StripePayment roomtype={roomtype} />}
             </section>
           </div>
         </div>

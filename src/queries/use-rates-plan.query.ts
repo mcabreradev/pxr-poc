@@ -1,4 +1,4 @@
-import { filter } from '@mcabreradev/filter';
+import filter from '@mcabreradev/filter';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 

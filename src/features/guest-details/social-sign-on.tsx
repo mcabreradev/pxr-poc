@@ -11,10 +11,10 @@ import { GET_SESSION, QUERY, URL } from '@/constants';
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomTypeId: number;
 };
 
-export default function SocialSignOn({ roomtype }: Props) {
+export default function SocialSignOn({ roomTypeId }: Props) {
   const { t } = useTranslation();
   const [popup, setPopup] = useState(null);
   const { publish } = useEventBus();
@@ -80,7 +80,7 @@ export default function SocialSignOn({ roomtype }: Props) {
         variant='secondary'
         icon={<Icon variant='apple' height='24' />}
         type='link'
-        href={`/room-type/${roomtype}/details`}
+        href={`/room-type/${roomTypeId}/details`}
         replace={true}
         withSearchParams={true}
         query={{ [URL.ACTION]: QUERY.IDENTIFICATION }}

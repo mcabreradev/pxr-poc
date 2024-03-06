@@ -9,6 +9,8 @@ export default function ReactQueryProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const MINUTE = 1000 * 60;
+
   /** @fyi ReactQueryProvider
    *  react-query default options must be set here
    */
@@ -17,8 +19,8 @@ export default function ReactQueryProvider({
       queries: {
         refetchOnWindowFocus:
           Boolean(process.env.NEXT_PUBLIC_REFECTH_ON_FOCUS) || false,
-        staleTime: 1000 * 60 * 1, // 1 minute
-        cacheTime: 1000 * 60 * 10, // 10 minutes
+        staleTime: MINUTE * 1, // 1 minute
+        gcTime: MINUTE * 10, // 10 minutes
       },
     },
   };

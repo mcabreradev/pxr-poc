@@ -1,3 +1,5 @@
+import Ratesplan from './ratesplans';
+
 export type PropertyType = {
   id: number;
   name: string;
@@ -162,16 +164,24 @@ export type SelectedRoomtype = {
   viewTypes?: unknown[];
   accessibilityFeatures?: unknown[];
   smokePolicy?: string | null;
-  roomPrice?: number | null;
+  roomPrice?: RoomPrice;
+  ratesPlan?: { [key: string]: string | number | null | undefined };
+};
+
+export type RoomPrice = {
+  amountAfterTax?: number | null | undefined;
+  amountBeforeTax?: number | null | undefined;
+  currency?: number | null | undefined;
+  rate?: number | null | undefined;
 };
 
 export type Reservation = {
   checkin?: string | Date | null;
   checkout?: string | Date | null;
-  adults?: number | null;
-  childrens?: number | null;
-  infants?: number | null;
-  plan?: string | null;
+  adults?: number;
+  childrens?: number;
+  infants?: number;
+  plan?: number | string | null;
   extra?: string | null;
   planCost?: number | null;
   totalCost?: number | null;
@@ -180,5 +190,8 @@ export type Reservation = {
   cancelationCost?: number | null;
   total?: number | null;
   hasBreakfast?: boolean | null;
-  selectedRoom?: { [key: string]: string | number | null | undefined };
+  selectedRoom?: { [key: string]: string | number | null | undefined } | null;
+  product?: { [key: string]: string | number | null | undefined } | null;
 };
+
+export type { Ratesplan };

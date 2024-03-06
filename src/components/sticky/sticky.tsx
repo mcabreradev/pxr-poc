@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
@@ -14,40 +14,52 @@ const Container = tw.div`
 export default function StickyComponent({
   children,
   className,
-  scrollTop = 0,
+  scrollTop = false,
+  scrollBottom = false,
+  until = 0,
 }: {
   children: React.ReactNode;
   className?: string;
-  scrollTop?: number;
+  scrollTop?: boolean;
+  scrollBottom?: boolean;
+  until?: number;
 }) {
   const [stickyClass, setStickyClass] = useState('');
+  const ANIMATION_UP = 'fixed bottom-0 animate-fade-up animate-normal';
+  const ANIMATION_DOWN = 'animate-fade-up animate-reverse';
+
+  const handleScroll = useCallback(() => {
+    const scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop && scrollPosition <= until) {
+      setStickyClass(ANIMATION_DOWN);
+    } else if (scrollTop && scrollPosition > until) {
+      setStickyClass(ANIMATION_UP);
+    }
+
+    if (scrollBottom && scrollPosition <= until) {
+      setStickyClass(ANIMATION_UP);
+    } else if (scrollBottom && scrollPosition > until) {
+      setStickyClass(ANIMATION_DOWN);
+    }
+  }, [scrollTop, scrollBottom, until]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition =
-        window.pageYOffset || document.documentElement.scrollTop;
-
-      if (scrollPosition > scrollTop) {
-        setStickyClass(`
-        fixed bottom-0 animate-fade-up animate-normal
-        `);
-      } else {
-        setStickyClass(`
-        animate-fade-up animate-reverse
-        `);
-      }
-    };
+    if (scrollBottom) {
+      setStickyClass(ANIMATION_UP);
+    }
 
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [scrollTop]);
+  }, [handleScroll, scrollBottom]);
 
   return (
     <Container
-      data-testid='test-element'
+      data-testid='test-sticky-element'
       className={cn(stickyClass, className)}
     >
       {children}

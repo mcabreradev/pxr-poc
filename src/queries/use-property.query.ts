@@ -4,12 +4,12 @@ import axios from 'axios';
 import { PROPERTY } from '@/constants';
 import { propertyId } from '@/constants/env';
 
-const fetchProperty = async () => {
+export const fetchProperty = async () => {
   const { data } = await axios.get(`/api/property?propertyId=${propertyId}`);
   return data;
 };
 
-export default function useFetchProperty() {
+export default function usePropertyQuery() {
   return useQuery({
     queryKey: [PROPERTY, propertyId],
     queryFn: () => fetchProperty(),

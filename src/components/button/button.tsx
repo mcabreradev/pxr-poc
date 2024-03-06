@@ -38,13 +38,15 @@ interface ButtonProps {
   replace?: boolean;
   scroll?: boolean;
   loading?: boolean;
+  slim?: boolean;
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   cursor-pointer flex items-center justify-center flex-row
   shadow-none hover:shadow-none py-[10px] px-6 rounded
-  text-[14px] font-normal font-poppins normal-case
-  w-full md:w-auto h-auto
+  text-[14px] font-medium font-poppins normal-case
+  md:w-auto h-auto
+  ${({ slim }) => !!slim && 'px-2'}
   ${({ fullWidth }) => fullWidth && 'w-full'}
   ${({ disabled }) =>
     disabled
@@ -54,7 +56,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
 
 export default function Button({
   id,
-  type = 'submit',
+  type = 'button',
   className,
   children,
   variant = 'primary',
@@ -70,6 +72,7 @@ export default function Button({
   icon,
   replace = true,
   scroll = true,
+  slim,
   query,
   withSearchParams = false,
   loading,
@@ -82,7 +85,7 @@ export default function Button({
     alternative: 'bg-blue',
     warning: 'bg-orange',
     danger: 'bg-red',
-    text: 'border-[1px] border-solid border-white bg-white text-black underline hover:opacity-[0.60]',
+    text: 'border-[1px] border-none border-white !bg-transparent text-black underline hover:bg-white-100 px-2 py-2 rounded-lg',
   };
   const searchParams = useSearchParams();
 
@@ -99,8 +102,8 @@ export default function Button({
       <Link
         href={disabled ? '' : url}
         className={cn('', { 'w-full': fullWidth })}
-        replace={replace}
         scroll={scroll}
+        replace={replace}
       >
         <ButtonComponent
           id={id}
@@ -116,9 +119,10 @@ export default function Button({
           onMouseLeave={onMouseLeave}
           onMouseEnter={onMouseEnter}
           loading={loading}
+          slim={slim}
           {...props}
         >
-          {icon && <span className=''>{icon}</span>}
+          {icon && <span className='mr-2'>{icon}</span>}
           <span className='flex-grow cursor-pointer text-center'>
             {children}
           </span>
@@ -143,9 +147,10 @@ export default function Button({
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}
       loading={loading}
+      slim={slim}
       {...props}
     >
-      {icon && icon}
+      {icon && <span className='mr-2'>{icon}</span>}
       <span className='flex-grow cursor-pointer text-center'>{children}</span>
     </ButtonComponent>
   );

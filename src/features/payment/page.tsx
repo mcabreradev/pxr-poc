@@ -1,3 +1,6 @@
+'use client';
+
+import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -6,34 +9,34 @@ import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 
-import useUserStore from '@/store/use-user.store';
+import { useSessionStore, useUserStore } from '@/store';
 
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
 import StripePayment from '@/features/payment/strype-payment';
-import useFetchProperty from '@/queries/use-property';
-import useRoomTypeQuery from '@/queries/use-roomtype';
+import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import MyTripDetails from './my-trip-details';
 import SkeletonComponent from './skeleton';
 
 type Props = {
-  roomtype: string;
+  roomTypeId: number;
   action?: string;
 };
 
 const Container = tw.div`
 `;
 
-export default function PaymentFeature({ roomtype, action }: Props) {
+export default function PaymentFeature({ roomTypeId, action }: Props) {
   const { t } = useTranslation();
-  const { error, isError, isLoading, data: property } = useFetchProperty();
+  const { error, isError, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
-  } = useRoomTypeQuery(roomtype);
+  } = useRoomTypeQuery(roomTypeId);
   const { setLoginEnabled } = useUserStore();
+  const { session } = useSessionStore();
 
   const actionPayment = !action;
   const actionSuccess = action === URL.SUCCESS;
@@ -47,12 +50,16 @@ export default function PaymentFeature({ roomtype, action }: Props) {
     };
   }, [setLoginEnabled]);
 
+  if (!session) {
+    redirect('/');
+  }
+
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;
   }
 
   if (isError || roomError) {
-    if ((error as { code: string }).code === ERRORS.ERR_NETWORK) {
+    if ((error as unknown as { code: string }).code === ERRORS.ERR_NETWORK) {
       return <NotConnected />;
     }
     return <span>Error</span>;
@@ -63,7 +70,7 @@ export default function PaymentFeature({ roomtype, action }: Props) {
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
-      <BackButton href={`/room-type/${roomtype}`}>
+      <BackButton href={`/room-type/${roomTypeId}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>
 
@@ -75,9 +82,9 @@ export default function PaymentFeature({ roomtype, action }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              {actionPayment && <StripePayment roomtype={roomtype} />}
-              {actionSuccess && <StripePayment roomtype={roomtype} />}
-              {actionError && <StripePayment roomtype={roomtype} />}
+              {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
+              {actionSuccess && <StripePayment roomTypeId={roomTypeId} />}
+              {actionError && <StripePayment roomTypeId={roomTypeId} />}
             </section>
           </div>
         </div>

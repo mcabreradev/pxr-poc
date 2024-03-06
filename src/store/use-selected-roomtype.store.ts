@@ -1,9 +1,13 @@
 import { create, StateCreator } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import {
+  createJSONStorage,
+  devtools,
+  persist,
+  PersistOptions,
+  subscribeWithSelector,
+} from 'zustand/middleware';
 
 import { SelectedRoomtype } from '@/types';
-
-const middlewares = (f) => devtools(persist(f, { name: 'selectedRoomStore' }));
 
 type State = {
   selectedRoom: SelectedRoomtype;
@@ -14,12 +18,23 @@ type Actions = {
   resetSelectedRoomtype: () => void;
 };
 
+type Persist = (
+  config: StateCreator<State & Actions>,
+  options?: PersistOptions<State & Actions>,
+) => StateCreator<State & Actions>;
+
+const middlewares = (f) =>
+  devtools(
+    subscribeWithSelector(
+      persist(f, {
+        name: 'store-selected-roomtype',
+        storage: createJSONStorage(() => localStorage),
+      }),
+    ),
+  );
+
 const useSelectedRoomtypeStore = create<State & Actions>(
-  (
-    middlewares as (
-      config: StateCreator<State & Actions>,
-    ) => StateCreator<State & Actions>
-  )((set, get): State & Actions => ({
+  (middlewares as Persist)((set, get): State & Actions => ({
     selectedRoom: {},
 
     setSelectedRoomtype: (selectedRoom: SelectedRoomtype) =>

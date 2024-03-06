@@ -1,10 +1,10 @@
 /* eslint-disable simple-import-sort/imports */
+'use client';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
-import useFetchProperty from '@/queries/use-property';
-import useRoomTypeQuery from '@/queries/use-roomtype';
+import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import BackButton from '@/components/common/back-button';
 
@@ -12,8 +12,8 @@ import { ACTION, QUERY } from '@/constants';
 
 import FormIdentificationComponent from '@/features/guest-details/form-identification';
 import MyTripDetails from '@/features/guest-details/my-trip-details';
-import useUserStore from '@/store/use-user.store';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSessionStore, useUserStore } from '@/store';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
@@ -22,21 +22,22 @@ import FormRegisterComponent from './form-register';
 import GuestSkeletonComponent from './guest-skeleton';
 
 type Props = {
-  roomtype: string;
+  roomTypeId: number;
 };
 
 const Container = tw.div`
 `;
 
-export default function DetailsComponent({ roomtype }: Props) {
+export default function DetailsComponent({ roomTypeId }: Props) {
   const { t } = useTranslation();
-  const { isError, isLoading, data: property } = useFetchProperty();
+  const { isError, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
-  } = useRoomTypeQuery(roomtype);
+  } = useRoomTypeQuery(roomTypeId);
   const { user } = useUserStore();
+  const { session } = useSessionStore();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -50,9 +51,15 @@ export default function DetailsComponent({ roomtype }: Props) {
 
   useEffect(() => {
     if (user && user.isAuth) {
-      router.push(`/room-type/${roomtype}/payment?` + searchParams.toString());
+      router.push(
+        `/room-type/${roomTypeId}/payment?` + searchParams.toString(),
+      );
     }
-  }, [user, router, searchParams, roomtype]);
+  }, [user, router, searchParams, roomTypeId]);
+
+  if (session) {
+    redirect(window.location.pathname.replace('details', 'payment'));
+  }
 
   if (isLoading || roomLoading) {
     return <GuestSkeletonComponent />;
@@ -67,7 +74,7 @@ export default function DetailsComponent({ roomtype }: Props) {
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
-      <BackButton href={`/room-type/${roomtype}`}>
+      <BackButton href={`/room-type/${roomTypeId}`}>
         {t('title.room-confirm-reserve')}
       </BackButton>
 
@@ -79,13 +86,15 @@ export default function DetailsComponent({ roomtype }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              {actionLogin && <FormLoginComponent roomtype={roomtype} />}
-              {actionAuth && <FormAuthComponent roomtype={roomtype} />}
-              {actionRegister && <FormRegisterComponent roomtype={roomtype} />}
-              {actionForgot && <FormForgotComponent roomtype={roomtype} />}
+              {actionLogin && <FormLoginComponent roomTypeId={roomTypeId} />}
+              {actionAuth && <FormAuthComponent roomTypeId={roomTypeId} />}
+              {actionRegister && (
+                <FormRegisterComponent roomTypeId={roomTypeId} />
+              )}
+              {actionForgot && <FormForgotComponent roomTypeId={roomTypeId} />}
               {actionIdentification && (
                 <FormIdentificationComponent
-                  roomtype={roomtype}
+                  roomTypeId={roomTypeId}
                   email={searchParams.get('email')}
                 />
               )}

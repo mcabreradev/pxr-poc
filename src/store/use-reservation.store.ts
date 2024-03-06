@@ -1,23 +1,15 @@
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
+import {
+  createJSONStorage,
+  devtools,
+  persist,
+  PersistOptions,
+  subscribeWithSelector,
+} from 'zustand/middleware';
 
-import { PLAN_NONBREAKFAST, PLAN_NONREFUNDABLE } from '@/constants';
+import { TOTAL_ADULTS_DEFAULT } from '@/constants';
 
-export type Reservation = {
-  checkin?: string | Date | null;
-  checkout?: string | Date | null;
-  adults?: number | null;
-  childrens?: number | null;
-  infants?: number | null;
-  plan?: string | null;
-  extra?: string | null;
-  planCost?: number | null;
-  totalCost?: number | null;
-  taxes?: number | null;
-  extraCost?: number | null;
-  cancelationCost?: number | null;
-  total?: number | null;
-  hasBreakfast?: boolean | null;
-};
+import { Reservation } from '@/types';
 
 type State = {
   reservation: Reservation;
@@ -26,11 +18,11 @@ type State = {
 const initialReservationState: Reservation = {
   checkin: null,
   checkout: null,
-  adults: null,
-  childrens: null,
-  infants: null,
-  plan: PLAN_NONREFUNDABLE,
-  extra: PLAN_NONBREAKFAST,
+  adults: TOTAL_ADULTS_DEFAULT,
+  childrens: 0,
+  infants: 0,
+  plan: null,
+  extra: null,
   planCost: null,
   totalCost: null,
   taxes: null,
@@ -38,6 +30,8 @@ const initialReservationState: Reservation = {
   cancelationCost: null,
   total: null,
   hasBreakfast: null,
+  selectedRoom: {},
+  product: {},
 };
 
 type Actions = {
@@ -51,33 +45,51 @@ type Actions = {
   setInfants: (i: number) => void;
 };
 
-const useReservationStore = create<State & Actions>((set, get) => ({
-  reservation: { ...initialReservationState },
+type Persist = (
+  config: StateCreator<State & Actions>,
+  options?: PersistOptions<State & Actions>,
+) => StateCreator<State & Actions>;
 
-  setReservation: (reservation: Reservation) =>
-    set(() => ({ reservation: { ...get().reservation, ...reservation } })),
+const middlewares = (f) =>
+  devtools(
+    subscribeWithSelector(
+      persist(f, {
+        name: 'store-reservation',
+        storage: createJSONStorage(() => localStorage),
+      }),
+    ),
+  );
 
-  getReservationBy: (s: keyof Reservation) => {
-    const reservation = get().reservation as Reservation;
-    reservation[s as keyof Reservation];
-  },
+const useReservationQueryStore = create<State & Actions, []>(
+  (middlewares as Persist)((set, get): State & Actions => ({
+    reservation: { ...initialReservationState },
 
-  setCheckin: (checkin: string | Date | null) =>
-    set(() => ({ reservation: { ...get().reservation, checkin } })),
+    setReservation: (reservation: Reservation) =>
+      set(() => ({ reservation: { ...get().reservation, ...reservation } })),
 
-  setCheckout: (checkout: string | Date | null) =>
-    set(() => ({ reservation: { ...get().reservation, checkout } })),
+    getReservationBy: (s: keyof Reservation) => {
+      const reservation = get().reservation as Reservation;
+      reservation[s as keyof Reservation];
+    },
 
-  setAdults: (adults: number | null) =>
-    set(() => ({ reservation: { ...get().reservation, adults } })),
+    setCheckin: (checkin: string | Date | null) =>
+      set(() => ({ reservation: { ...get().reservation, checkin } })),
 
-  setChildrens: (childrens: number | null) =>
-    set(() => ({ reservation: { ...get().reservation, childrens } })),
+    setCheckout: (checkout: string | Date | null) =>
+      set(() => ({ reservation: { ...get().reservation, checkout } })),
 
-  setInfants: (infants: number | null) =>
-    set(() => ({ reservation: { ...get().reservation, infants } })),
+    setAdults: (adults: number) =>
+      set(() => ({ reservation: { ...get().reservation, adults } })),
 
-  resetReservation: () => set(() => ({ reservation: initialReservationState })),
-}));
+    setChildrens: (childrens: number) =>
+      set(() => ({ reservation: { ...get().reservation, childrens } })),
 
-export default useReservationStore;
+    setInfants: (infants: number) =>
+      set(() => ({ reservation: { ...get().reservation, infants } })),
+
+    resetReservation: () =>
+      set(() => ({ reservation: initialReservationState })),
+  })),
+);
+
+export default useReservationQueryStore;

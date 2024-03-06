@@ -1,16 +1,12 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useQueryString from '@/hooks/use-querystring';
-import useFetchAvailability from '@/queries/use-availabity';
-import useFetchProperty from '@/queries/use-property';
 
-import Button from '@/components/button';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
@@ -19,13 +15,24 @@ import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
 import HotelRules from '@/features/components/hotel-rules';
-import useReservationStore from '@/store/use-reservation-persist.store';
+import { useReservationQueryStore } from '@/store';
+
+import {
+  useAvailabilityQuery,
+  usePropertyQuery,
+  useRatesPlanQuery,
+} from '@/queries';
+
+import { useCheckinCheckoutHook } from '@/hooks';
 import PropertyAmenities from './amenities';
-import data from './data.json';
+import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
-import RoomSwiper from './room-swiper';
+import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
+import StickyGuestForm from './sticky-guest-form';
 import PropertyTopSights from './topsights';
+
+import data from './data.json';
 
 const Section = tw.div`
   px-4 text-black
@@ -38,23 +45,28 @@ const Row = tw.div`
 
 const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
-  const searchParams = useSearchParams();
-  const { isLoading, isError, data: property } = useFetchProperty();
+  const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
-  const { resetReservation } = useReservationStore();
+  const { resetReservation } = useReservationQueryStore();
+  const { checkin, checkout } = useCheckinCheckoutHook();
+  const roomSwipperRef = useRef(null);
 
-  const checkin = searchParams.get('checkin');
-  const checkout = searchParams.get('checkout');
+  const { refetch: fetchAvailability } = useAvailabilityQuery({
+    checkin,
+    checkout,
+  });
 
-  const { refetch, data: inventory } = useFetchAvailability({
+  const { refetch: fetchRatesPlan } = useRatesPlanQuery({
     checkin,
     checkout,
   });
 
   useEffect(() => {
-    if (!checkin || !checkout) return;
-    refetch();
-  }, [checkin, checkout, refetch, inventory]);
+    if (checkin && checkout) {
+      fetchAvailability();
+      fetchRatesPlan();
+    }
+  }, [checkin, checkout, fetchAvailability, fetchRatesPlan]);
 
   useEffect(() => {
     removeBlacklistParam(['action', 'extra', 'plan']);
@@ -101,7 +113,7 @@ const PropertyPage = memo(function HotelPage() {
             </div>
           </Section>
           <hr />
-          <Section>
+          <Section id='summary'>
             <p className='my-2 text-2sm'>
               {property.description
                 ? property.description[i18n.language]
@@ -151,11 +163,15 @@ const PropertyPage = memo(function HotelPage() {
 
           <hr />
 
-          <Section className='p-4 pb-0 pr-0 pt-2 md:flex md:flex-col md:items-center'>
+          <Section
+            ref={roomSwipperRef}
+            className='p-4 pb-0 pr-0 pt-2 md:flex md:flex-col md:items-center'
+            id='rooms'
+          >
             <Typography variant='h2' weight='normal' className='md:self-start'>
               {t('title.wanna-sleep')}
             </Typography>
-            <RoomSwiper />
+            <RoomSelection />
           </Section>
         </div>
 
@@ -166,7 +182,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <hr />
 
-      <Section className='p-4 pb-0 pr-0 pt-2'>
+      <Section className='p-4 pb-0 pr-0 pt-2' id='reviews'>
         <div className='flex flex-row items-center'>
           <Typography variant='h2' weight='normal'>
             {t('title.reviews')}
@@ -176,7 +192,9 @@ const PropertyPage = memo(function HotelPage() {
             {property.reviewRatingScore}
           </Typography>
         </div>
+      </Section>
 
+      <Section>
         <Swiper>
           {property.reviews.map((review) => (
             <div
@@ -217,7 +235,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <hr />
 
-      <Section className='p-4 pb-0 pt-2'>
+      <Section className='p-4 pb-0 pt-2' id='location'>
         <Typography variant='h2' weight='normal'>
           {t('title.exact-location')}
         </Typography>
@@ -246,7 +264,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <hr />
 
-      <Section className='p-4 pb-0 pt-2'>
+      <Section className='p-4 pb-0 pt-2' id='topsites'>
         <Typography variant='h2' weight='normal'>
           {t('title.attractions')}
         </Typography>
@@ -325,29 +343,11 @@ const PropertyPage = memo(function HotelPage() {
         <HotelRules rules={data.rules} classname='pr-16 md:w-1/3' />
       </Section>
 
-      <Sticky className='md:sticky md:hidden'>
-        <div className='flex h-full w-full flex-row items-center justify-around bg-white px-2 py-5'>
-          <div className='flex flex-col'>
-            <Typography variant='sm' weight='semibold'>
-              {' '}
-              {t('since')} $100.00 x {t('night.singular')}
-            </Typography>
-            <Typography variant='sm' weight='normal' className='underline'>
-              {' '}
-              {t('since')} $100.00 x {t('night.singular')}
-            </Typography>
-          </div>
-          <div>
-            <Button
-              type='link'
-              href={`/room-type/${property.roomTypes[0]}`}
-              scroll={true}
-            >
-              {t('button.choose-room')}
-            </Button>
-          </div>
-        </div>
+      <Sticky className='md:sticky md:hidden' scrollBottom={true} until={650}>
+        <StickyGuestForm />
       </Sticky>
+
+      <MobileDatepicker />
     </main>
   );
 });

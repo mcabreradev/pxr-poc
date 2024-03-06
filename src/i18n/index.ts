@@ -3,6 +3,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import XHR from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
+import { DEFAULT_LANG, LOOKUP_QUERYSTRING_LANG } from '@/constants';
+
 type Languages = {
   [lang: string]: {
     [key: string]: string;
@@ -23,7 +25,7 @@ const LANGUAGES: Languages = {
   // Add other languages
 };
 
-const defaultLanguage = 'es';
+const defaultLanguage = DEFAULT_LANG;
 
 const getResources = () => {
   const resources: Resources = {};
@@ -48,7 +50,7 @@ const options = {
     'path',
     'subdomain',
   ],
-  lookupQuerystring: 'userLang',
+  lookupQuerystring: LOOKUP_QUERYSTRING_LANG,
 };
 
 i18n
@@ -60,7 +62,6 @@ i18n
     fallbackLng: defaultLanguage,
     debug: false,
     detection: options,
-    // lng: defaultLanguage,
     interpolation: {
       escapeValue: false,
     },

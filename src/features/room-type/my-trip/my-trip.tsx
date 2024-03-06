@@ -1,44 +1,45 @@
 /* eslint-disable simple-import-sort/imports */
+'use client';
+import filter from '@mcabreradev/filter';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useQueryString from '@/hooks/use-querystring';
-import { formatCurrency } from '@/lib/number';
+import {
+  useCheckinCheckoutHook,
+  useQueryString,
+  useSearchParamOrStore,
+} from '@/hooks';
 import { cn, ps } from '@/lib/utils';
 
-import Button from '@/components/button';
-import Toggle from '@/components/toggle';
-import Typography from '@/components/typography';
+import { Button, Toggle, Typography } from '@/components';
 
-import useReservation from '@/store/use-reservation-persist.store';
+import { useReservationQueryStore, useSelectedRoomtypeStore } from '@/store';
 
 import {
-  CHECKIN,
-  CHECKOUT,
   EXTRA,
   PLAN,
   PLAN_BREAKFAST,
   PLAN_BREAKFAST_COST,
-  PLAN_COST,
   PLAN_NONBREAKFAST,
   PLAN_REFUNDABLE,
   PLAN_REFUNDABLE_PERCENT,
-  PLAN_TAXES,
   TOTAL_ADULTS,
   TOTAL_CHILDRENS,
   TOTAL_INFANTS,
 } from '@/constants';
+import { useRatesPlanQuery } from '@/queries';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import { formatCurrency } from '@/lib/number';
 import CancelationPolice from './cancelation-police';
 import EditTripComponent from './edit-my-trip';
+import RatesPlansSkeleton from './rates-plan-skeleton';
 
 type Props = {
   className?: string;
-  roomtype?: string;
+  roomTypeId?: number;
 };
 
 const Container = tw.div`
@@ -48,25 +49,22 @@ const Section = tw.div`
 px-4 text-black md:px-0
 `;
 
-export default function MyTrip({ className, roomtype }: Props) {
+export default function MyTrip({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
-  dayjs.locale(i18n.language);
-  const { reservation, setReservation } = useReservation();
+  const { reservation, setReservation } = useReservationQueryStore();
+  const { checkin, checkout, checkinDayjs, checkoutDayjs } =
+    useCheckinCheckoutHook();
+  const { selectedRoom } = useSelectedRoomtypeStore();
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
+  dayjs.locale(i18n.language);
 
-  const checkin = searchParams.get(CHECKIN)
-    ? dayjs(searchParams.get(CHECKIN))
-    : reservation?.checkin
-    ? dayjs(reservation?.checkin)
-    : dayjs(new Date());
-
-  const checkout = searchParams.get(CHECKOUT)
-    ? dayjs(searchParams.get(CHECKOUT))
-    : reservation?.checkin
-    ? dayjs(reservation?.checkout)
-    : dayjs(new Date());
+  const { data: ratesPlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
+    roomTypeId,
+    checkin,
+    checkout,
+  });
 
   const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
   const childrens =
@@ -80,6 +78,12 @@ export default function MyTrip({ className, roomtype }: Props) {
   const [breakfast, setBreakfast] = useState(
     searchParams.get(EXTRA) || reservation?.extra,
   );
+
+  const [product, setSelectedProduct] = useState<{
+    [key: string]: string | number | null | undefined;
+  } | null>(null);
+
+  const [ratesPlanIndex, setPlanCostIndex] = useState(0);
 
   const handleCancelationPlan = useCallback((value) => {
     setSelectedPlan(value);
@@ -96,20 +100,59 @@ export default function MyTrip({ className, roomtype }: Props) {
   }, []);
 
   useEffect(() => {
-    if (!breakfast) return;
-    updateQueryString({ [EXTRA]: breakfast });
-  }, [breakfast, updateQueryString, setBreakfast]);
+    if (breakfast === PLAN_BREAKFAST) {
+      setPlanCostIndex(0);
+    } else {
+      setPlanCostIndex(1);
+    }
+  }, [breakfast, selectedRoom]);
 
-  const hasBreakfast = breakfast === PLAN_BREAKFAST;
-  const planCost = PLAN_COST;
-  const planDays = checkout.diff(checkin, 'days');
+  const planCost = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      amountBeforeTax: number;
+    }
+  )?.amountBeforeTax;
+
+  const currency = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      currency: string;
+    }
+  )?.currency;
+
+  const planCostWithTaxes = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      rate: number;
+    }
+  )?.rate;
+
+  const planId = (
+    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+      productId: number;
+    }
+  )?.productId;
+
+  const planDays = checkoutDayjs.diff(checkinDayjs, 'days');
   const totalCost = planCost * planDays;
+  const totalCostWithTaxes = planCostWithTaxes * planDays;
   const extraCost = PLAN_BREAKFAST_COST;
-  const extraCostTotal = extra === PLAN_BREAKFAST ? PLAN_BREAKFAST_COST : 0;
+  const extraCostTotal = extra === PLAN_BREAKFAST ? extraCost : 0;
   const cancelCost = totalCost * PLAN_REFUNDABLE_PERCENT;
   const cancelationCost = selectedPlan === PLAN_REFUNDABLE ? cancelCost : 0;
-  const taxes = totalCost * PLAN_TAXES;
-  const total = totalCost + extraCostTotal + cancelationCost + taxes;
+  const taxes = totalCostWithTaxes - totalCost;
+  // const total = totalCost + extraCostTotal + cancelationCost + taxes;
+  const total = totalCostWithTaxes;
+  const hasBreakfast = breakfast === PLAN_BREAKFAST;
+
+  useEffect(() => {
+    if (!breakfast || !ratesPlan) return;
+    updateQueryString({ [EXTRA]: breakfast });
+
+    const plan = filter(ratesPlan, ({ mealPlans }) =>
+      hasBreakfast ? mealPlans.length > 0 : mealPlans.length === 0,
+    )[0] as { [key: string]: string };
+
+    setSelectedProduct(plan);
+  }, [breakfast, hasBreakfast, ratesPlan, updateQueryString]);
 
   useEffect(() => {
     setReservation({
@@ -121,7 +164,8 @@ export default function MyTrip({ className, roomtype }: Props) {
       total,
       hasBreakfast,
       extra: breakfast,
-      plan: selectedPlan,
+      plan: planId,
+      product,
     });
   }, [
     breakfast,
@@ -134,6 +178,8 @@ export default function MyTrip({ className, roomtype }: Props) {
     totalCost,
     hasBreakfast,
     selectedPlan,
+    product,
+    planId,
   ]);
 
   const [animate, setAnimate] = useState(false);
@@ -160,7 +206,7 @@ export default function MyTrip({ className, roomtype }: Props) {
               {t('date.plural')}
             </Typography>
             <Typography variant='sm' className='text-neutral-500'>
-              {`${checkin.format('DD MMM YYYY')} - ${checkout.format(
+              {`${checkinDayjs.format('DD MMM YYYY')} - ${checkoutDayjs.format(
                 'DD MMM YYYY',
               )}`}
             </Typography>
@@ -225,50 +271,57 @@ export default function MyTrip({ className, roomtype }: Props) {
         </Typography>
         <div className='flex flex-wrap justify-between py-3'>
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(planCost)} {t('per')}{' '}
-            {checkout.diff(checkin, 'days')} {t('night.plural')}
+            {formatCurrency(planCost, currency)} {t('per')} {planDays}{' '}
+            {t('night.plural')}
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(totalCost)}
+            {formatCurrency(totalCost, currency)}
           </Typography>
         </div>
 
-        <CancelationPolice
-          plan={selectedPlan}
-          onChange={handleCancelationPlan}
-          cancelCost={cancelCost}
-        />
+        {loadingRatePlan ? (
+          <RatesPlansSkeleton />
+        ) : (
+          <>
+            <CancelationPolice
+              ratesPlan={ratesPlan}
+              plan={selectedPlan}
+              onChange={handleCancelationPlan}
+              cancelCost={cancelCost}
+            />
 
-        <div className='flex flex-wrap justify-between pb-0 pt-2'>
-          <div>
-            <Typography
-              variant='sm'
-              weight='semibold'
-              className='text-neutral-400'
-            >
-              {t('info.extras')}
-            </Typography>
-          </div>
-        </div>
+            <div className='flex flex-wrap justify-between pb-0 pt-2'>
+              <div>
+                <Typography
+                  variant='sm'
+                  weight='semibold'
+                  className='text-neutral-400'
+                >
+                  {t('info.extras')}
+                </Typography>
+              </div>
+            </div>
 
-        <div className='flex flex-wrap justify-between py-1'>
-          <Toggle
-            label={t('breakfast')}
-            value={breakfast}
-            onChange={handleBreakfast}
-            toggled={hasBreakfast}
-          />
+            <div className='flex flex-wrap justify-between py-1'>
+              <Toggle
+                label={t('breakfast')}
+                value={breakfast}
+                onChange={handleBreakfast}
+                toggled={hasBreakfast}
+              />
 
-          <Typography
-            variant='sm'
-            className={cn('text-neutral-500', {
-              'text-gray-500': !hasBreakfast,
-            })}
-          >
-            + {formatCurrency(extraCost)}
-          </Typography>
-        </div>
+              <Typography
+                variant='sm'
+                className={cn('text-neutral-500', {
+                  'text-gray-500': !hasBreakfast,
+                })}
+              >
+                {/* + {formatCurrency(extraCost)} */}
+              </Typography>
+            </div>
+          </>
+        )}
 
         <div className='flex flex-wrap justify-between pb-0 pt-4'>
           <div>
@@ -288,7 +341,7 @@ export default function MyTrip({ className, roomtype }: Props) {
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            + {formatCurrency(taxes)}
+            + {formatCurrency(taxes, currency)}
           </Typography>
         </div>
 
@@ -304,7 +357,7 @@ export default function MyTrip({ className, roomtype }: Props) {
               { 'animate-pulse': animate },
             )}
           >
-            {formatCurrency(total)}
+            {formatCurrency(total, currency)}
           </Typography>
         </div>
 
@@ -313,7 +366,7 @@ export default function MyTrip({ className, roomtype }: Props) {
             className='font-semibold md:w-full'
             variant='primary'
             type='link'
-            href={`/room-type/${roomtype}/details`}
+            href={`/room-type/${roomTypeId}/details`}
             withSearchParams={true}
             fullWidth
           >

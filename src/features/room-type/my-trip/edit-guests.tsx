@@ -1,17 +1,17 @@
 /* eslint-disable simple-import-sort/imports */
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
-import useReservationStore from '@/store/use-reservation-persist.store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import Button from '@/components/button';
 import {
   TOTAL_ADULTS,
   TOTAL_ADULTS_DEFAULT,
@@ -20,30 +20,44 @@ import {
   TOTAL_INFANTS,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
+import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 interface Props {
   className?: string;
+  onClose?: () => void;
 }
 
 const Container = tw.div`
 flex items-center justify-center
 `;
 
-export default function EditGuestsComponent({ className }: Props) {
+export default function EditGuestsComponent({ className, onClose }: Props) {
   const { t } = useTranslation();
-  const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
-  const { setReservation } = useReservationStore();
+  const { setReservation } = useReservationQueryStore();
+  const {
+    selectedRoom,
+    selectedRoom: { minCapacity, maxCapacity, childCapacity },
+  } = useSelectedRoomtypeStore();
 
-  const [adults, setAdults] = useState(
-    Number(searchParams.get(TOTAL_ADULTS)) || TOTAL_ADULTS_DEFAULT,
-  );
-  const [childrens, setChildrens] = useState(
-    Number(searchParams.get(TOTAL_CHILDRENS)) || TOTAL_CHILDRENS_DEFAULT,
-  );
-  const [infants, setInfants] = useState(
-    Number(searchParams.get(TOTAL_INFANTS)) || TOTAL_INFANTS_DEFAULT,
-  );
+  const [adults, setAdults] = useState(TOTAL_ADULTS_DEFAULT);
+  const [childrens, setChildrens] = useState(TOTAL_CHILDRENS_DEFAULT);
+  const [infants, setInfants] = useState(TOTAL_INFANTS_DEFAULT);
+
+  const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
+
+  useEffect(() => {
+    setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
+    setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
+    setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
+  }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
+
+  const totalGuests = adults + childrens + infants;
+  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
+  const adultsBlockedCondition = isMaxCapacityReached;
+  const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
+  const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
 
   return (
     <Container className={cn(className)} data-testid='test-dropdown-element'>
@@ -90,12 +104,14 @@ export default function EditGuestsComponent({ className }: Props) {
                 <Icon
                   variant='plus'
                   width={20}
-                  color={adults === 8 ? '#d5d3d3' : '#797979'}
+                  color={adultsBlockedCondition ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    adults === 8 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    adultsBlockedCondition
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (adults === 8) return;
+                    if (adultsBlockedCondition) return;
                     setAdults(adults + 1);
                     updateQueryString({ [TOTAL_ADULTS]: adults + 1 });
                     setReservation({ adults: adults + 1 });
@@ -120,10 +136,8 @@ export default function EditGuestsComponent({ className }: Props) {
                   )}
                   onClick={() => {
                     if (childrens === 0) return;
-                    setChildrens(childrens - 1);
-                    updateQueryString({
-                      [TOTAL_CHILDRENS]: childrens - 1,
-                    });
+                    setInfants(childrens - 1);
+                    updateQueryString({ [TOTAL_CHILDRENS]: childrens - 1 });
                     setReservation({ childrens: childrens - 1 });
                   }}
                 />
@@ -133,12 +147,14 @@ export default function EditGuestsComponent({ className }: Props) {
                 <Icon
                   variant='plus'
                   width={20}
-                  color={childrens === 8 ? '#d5d3d3' : '#797979'}
+                  color={childrensBlockedCondition ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    childrens === 8 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    childrensBlockedCondition
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (childrens === 8) return;
+                    if (childrensBlockedCondition) return;
                     setChildrens(childrens + 1);
                     updateQueryString({
                       [TOTAL_CHILDRENS]: childrens + 1,
@@ -176,18 +192,37 @@ export default function EditGuestsComponent({ className }: Props) {
                 <Icon
                   variant='plus'
                   width={20}
-                  color={infants === 8 ? '#d5d3d3' : '#797979'}
+                  color={infantsBlockedCondition ? '#d5d3d3' : '#797979'}
                   className={cn(
-                    infants === 8 ? 'cursor-not-allowed' : 'cursor-pointer',
+                    infantsBlockedCondition
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer',
                   )}
                   onClick={() => {
-                    if (infants === 8) return;
+                    if (infantsBlockedCondition) return;
                     setInfants(infants + 1);
                     updateQueryString({ [TOTAL_INFANTS]: infants + 1 });
                     setReservation({ infants: infants + 1 });
                   }}
                 />
               </div>
+            </div>
+            <Typography
+              variant='xs2'
+              className='flex items-start py-2 text-neutral-500'
+            >
+              {t('info.guest-room-max-allowed', { maxCapacity })}
+            </Typography>
+
+            <div className='flex place-content-end px-1 py-1'>
+              <Button
+                className={cn('font-medium')}
+                variant='text'
+                type='button'
+                onClick={onClose}
+              >
+                {t('button.close')}
+              </Button>
             </div>
           </div>
         </div>

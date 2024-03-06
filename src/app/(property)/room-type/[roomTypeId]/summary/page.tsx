@@ -2,20 +2,19 @@
 
 import useHydration from '@/hooks/use-hydration';
 
-import DetailsComponent from '@/features/guest-details/page';
+import SummaryFeature from '@/features/summary/page';
 
 type Props = {
-  params: { roomtype: string };
-  searchParams: { action: string };
+  params: { roomType: number };
 };
 
 export default function Page(props: Props) {
   const {
-    params: { roomtype },
+    params: { roomType },
   } = props;
 
   const { isHydrated } = useHydration();
   if (!isHydrated) return null;
 
-  return <DetailsComponent roomtype={roomtype} />;
+  return <SummaryFeature roomType={roomType} />;
 }

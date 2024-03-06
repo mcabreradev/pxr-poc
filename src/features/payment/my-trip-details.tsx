@@ -4,14 +4,14 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
 import { ps } from '@/lib/utils';
+import useReservationQuery from '@/store/use-reservation.store';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import PriceDetails from '@/features/components/price-details';
-import useReservation from '@/store/use-reservation-persist.store';
+
 import type { PropertyType } from '@/types';
 
 type Props = {
@@ -25,25 +25,16 @@ const HR = tw.div`
 
 export default function MyTripDetails({ property, room }: Props) {
   const { t, i18n } = useTranslation();
-  const { reservation } = useReservation();
   dayjs.locale(i18n.language);
 
-  const {
-    getAdults,
-    getCheckin,
-    getCheckout,
-    getChildrens,
-    getInfants,
-    extra,
-    plan,
-  } = useSearchParamOrStore();
+  const { reservation } = useReservationQuery();
 
-  const checkin = dayjs(getCheckin());
-  const checkout = dayjs(getCheckout());
+  const checkin = dayjs(reservation.checkin);
+  const checkout = dayjs(reservation.checkout);
 
-  const adults = Number(getAdults());
-  const childrens = Number(getChildrens());
-  const infants = Number(getInfants());
+  const adults = Number(reservation.adults);
+  const childrens = Number(reservation.childrens);
+  const infants = Number(reservation.infants);
 
   return (
     <div
@@ -134,8 +125,8 @@ export default function MyTripDetails({ property, room }: Props) {
       <PriceDetails
         room={room}
         reservation={reservation}
-        extra={extra}
-        plan={plan}
+        extra={reservation.extra}
+        plan={reservation.plan}
         checkin={checkin}
         checkout={checkout}
       />

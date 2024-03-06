@@ -10,7 +10,7 @@ const createPaymentIntent = async (body: Payment) => {
   return data.clientSecret;
 };
 
-export default function useStripePaymentIntent(body: Payment) {
+export default function useStripePaymentIntentQuery(body: Payment) {
   return useQuery({
     queryKey: [PROPERTY, PAYMENT],
     queryFn: () => createPaymentIntent(body),

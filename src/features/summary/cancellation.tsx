@@ -6,7 +6,7 @@ import { PLAN_REFUNDABLE } from '@/constants';
 import SummaryRow from '@/features/summary/summaryRow';
 
 type Props = {
-  plan: string | void;
+  plan: string | number | null | undefined;
 };
 
 export default function Cancellation({ plan }: Props) {

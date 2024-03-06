@@ -3,11 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useQueryString from '@/hooks/use-querystring';
 import { cn, ps } from '@/lib/utils';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import useReservationStore from '@/store/use-reservation-persist.store';
+import { useClickAway, useQueryString, useSearchParamOrStore } from '@/hooks';
+import useReservationQueryStore from '@/store/use-reservation.store';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import Button from '@/components/button';
@@ -22,6 +21,7 @@ import {
   TOTAL_INFANTS,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
+import { Ratesplan, SelectedRoomtype } from '@/types';
 
 interface Props {
   className?: string;
@@ -34,11 +34,23 @@ flex items-center justify-center
 export default function DropdownComponent({ className }: Props) {
   const { t } = useTranslation();
   const { updateQueryString } = useQueryString();
-  const { setReservation } = useReservationStore();
-  const {
-    selectedRoom,
-    selectedRoom: { roomPrice, minCapacity, maxCapacity, childCapacity },
-  } = useSelectedRoomtypeStore();
+  const { setReservation } = useReservationQueryStore();
+
+  const [selectedRoom, setRoom] = useState<SelectedRoomtype>();
+  const [roomPrice, setRatesPlan] = useState<Ratesplan>();
+
+  useEffect(() => {
+    /**
+     * Subscribes to the selected room type store and updates the room and rates plan state.
+     * @returns {void}
+     */
+    const unsub = useSelectedRoomtypeStore.subscribe(({ selectedRoom }) => {
+      setRoom(selectedRoom);
+      setRatesPlan(selectedRoom?.ratesPlan);
+    });
+    return unsub;
+  }, []);
+
   const [open, setOpen] = useState(false);
   const [adults, setAdults] = useState(TOTAL_ADULTS_DEFAULT);
   const [childrens, setChildrens] = useState(TOTAL_CHILDRENS_DEFAULT);
@@ -46,34 +58,47 @@ export default function DropdownComponent({ className }: Props) {
 
   const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
 
-  const toggleOpen = useCallback(() => {
+  const toggleDropdown = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
 
-  const closeOnMouseLeave = useCallback(() => {
+  const refDropdown = useClickAway(() => {
     if (open) setOpen(false);
-  }, [open]);
+  });
 
   useEffect(() => {
-    setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
+    setAdults(getAdults() || selectedRoom?.minCapacity || TOTAL_ADULTS_DEFAULT);
     setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
     setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
-  }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
+  }, [
+    getAdults,
+    getChildrens,
+    getInfants,
+    selectedRoom?.minCapacity,
+    selectedRoom,
+  ]);
 
   const totalGuests = adults + childrens + infants;
-  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
+  const maxCapacity = selectedRoom?.maxCapacity ?? 0;
+  const isMaxCapacityReached = totalGuests >= maxCapacity;
   const adultsBlockedCondition = isMaxCapacityReached;
-  const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
-  const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
+  const childrensBlockedCondition =
+    !selectedRoom?.childCapacity && isMaxCapacityReached;
+  const infantsBlockedCondition =
+    !selectedRoom?.childCapacity && isMaxCapacityReached;
 
   return (
-    <Container className={cn(className)} data-testid='test-dropdown-element'>
+    <Container
+      className={cn(className)}
+      data-testid='test-dropdown-element'
+      ref={refDropdown}
+    >
       <div className={cn('dropdown relative inline-block w-full text-left')}>
         <Button
           className={cn('border-white py-[8px] md:w-full')}
           variant='secondary'
           type='button'
-          onClick={toggleOpen}
+          onClick={toggleDropdown}
           disabled={!roomPrice}
         >
           <div className='flex items-center justify-between'>
@@ -104,7 +129,6 @@ export default function DropdownComponent({ className }: Props) {
             'block scale-95 opacity-0': !open,
             hidden: !open,
           })}
-          onBlur={closeOnMouseLeave}
         >
           <div
             className={cn(
@@ -171,10 +195,8 @@ export default function DropdownComponent({ className }: Props) {
                   )}
                   onClick={() => {
                     if (childrens === 0) return;
-                    setChildrens(childrens - 1);
-                    updateQueryString({
-                      [TOTAL_CHILDRENS]: childrens - 1,
-                    });
+                    setInfants(childrens - 1);
+                    updateQueryString({ [TOTAL_CHILDRENS]: childrens - 1 });
                     setReservation({ childrens: childrens - 1 });
                   }}
                 />
@@ -243,6 +265,21 @@ export default function DropdownComponent({ className }: Props) {
                   }}
                 />
               </div>
+            </div>
+            <div className='flex items-center justify-between px-6 py-2'>
+              <Typography variant='xs2' className='text-neutral-500'>
+                {t('info.guest-room-max-allowed', { maxCapacity })}
+              </Typography>
+            </div>
+            <div className='flex place-content-end px-1 py-1'>
+              <Button
+                className={cn('font-medium')}
+                variant='text'
+                type='button'
+                onClick={toggleDropdown}
+              >
+                {t('button.close')}
+              </Button>
             </div>
           </div>
         </div>

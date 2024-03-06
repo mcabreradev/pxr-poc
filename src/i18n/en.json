@@ -7,21 +7,39 @@
   "breakfast": "Breakfast",
   "button": {
     "accept": "Accept and continue",
+    "add-date": {
+      "plural": "Add your dates",
+      "singular": "Add your date"
+    },
+    "add-guest": {
+      "plural": "Add your guests",
+      "singular": "Add your guest"
+    },
     "all-amemnities": "All Amenities",
     "all-atractions": "All Atractions",
     "apple": "Continue with Apple",
     "cancel": "Cancel",
     "choose-room": "Choose room",
+    "close": "Close",
     "confirm-pay": "Confirm and pay",
     "continue": "Continue",
+    "date": {
+      "plural": "Dates",
+      "singular": "Date"
+    },
     "facebook": "Continue with Facebook",
     "google": "Continue with Google",
+    "guest": {
+      "plural": "Guests",
+      "singular": "Guest"
+    },
     "loading": "Loading...",
     "login": "Login",
     "pay": "Proceed to payment",
     "processing": "Processing...",
     "reserve": "Book Now",
     "save": "Save",
+    "search": "Search",
     "send": "Send",
     "try-again": "Try again",
     "try-reconnect": "Try to reconnect",
@@ -34,12 +52,14 @@
     "plural": "childrens",
     "singular": "child"
   },
+  "customer": "Customer",
   "date": {
     "check-in": "Check-in date",
     "check-out": "Check-out date",
     "plural": "Dates",
     "singular": "Date"
   },
+  "description": "In consequat do et nisi. Tempor ad pariatur fugiat tempor quis exercitation laborum quis incididunt consectetur ullamco. Adipisicing officia labore cupidatat consequat labore.",
   "error": {
     "message": "Something went wrong, please try again later.",
     "not-connected": {
@@ -115,6 +135,7 @@
   "info": {
     "13years-or-more": "13 years old or more",
     "2to12": "2 to 12 years old",
+    "add-date": "Add your dates",
     "age": "Age",
     "better-rate": "Best rate guaranteed",
     "breakfast": "Breakfast included",
@@ -125,23 +146,45 @@
     "forgot_password": "Enter the email address associated with your account and we'll send you a link to reset your password.",
     "free-cancellation-before": "Free cancellation before 3:00 p.m.",
     "guest": "Guests",
+    "guest-room-max-allowed": "This room has a maximum capacity of {{maxCapacity}} guests",
     "have_account": "¿Already have an account?",
+    "hello-customer": "Hi {{name}} {{lastname}}!",
     "no_account": "¿Don't have an account?",
     "no_promo": "I don't want to receive promotions from Paxer",
     "non-refundable": "Non refundable",
     "offers": "Paxer will send you exclusive offers, commercial emails and push notifications. You can choose to stop receiving them at any time through the settings section of your account or directly from any of the notifications that you receive.",
     "offers-beneficts": "Exclusive offers and benefits",
     "other_options": "Other options",
+    "payment-booking-notification-email": "You will receive a booking confirmation email to {{email}} once payment has been processed",
+    "payment-cancellation-policy": "You will be charged {{amount}} at this time according to your chosen cancellation policy.",
+    "payment-cancelled": "Your payment has been cancelled.",
+    "payment-cancelled-description": "Your payment has been cancelled, please try again.",
+    "payment-cancelled-title": "Payment canceled",
+    "payment-confirm-notification-email": "You will receive a payment confirmation email to {{email}} once it has been processed.",
+    "payment-processing": "Your payment is being processed.",
+    "payment-succeeded": "Payment made successfully!",
+    "payment-taxes-description": "We remind you that you must make the tax payment of {{amount}} upon arrival at the hotel..",
+    "payment-unexpected-error": "An unexpected error has occurred.",
+    "payment-unsuccessful": "Your payment could not be made, please try again.",
     "refundable": "Refundable",
+    "select-date": "Select date",
+    "select-room": "Select room",
+    "select-your-date": "Select your travel's date",
     "show-more": "Show more",
     "taxes": "Taxes",
     "taxes-description": "Taxes must be paid upon arrival at the hotel",
     "taxes-details": "Taxes details",
     "termsandconditions": "By selecting Accept and continue, I agree to the Terms of Service and Privacy Policy.",
-    "under-2": "less than 2 years"
+    "under-2": "less than 2 years",
+    "when-is-the-travel": "When is the travel?"
   },
   "link": {
-    "language": "English"
+    "language": "English",
+    "location": "Location",
+    "reviews": "Reviews",
+    "rooms": "Rooms",
+    "summary": "Summary",
+    "topsites": "Top sites"
   },
   "login": "Login",
   "night": {

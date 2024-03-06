@@ -24,13 +24,13 @@ interface IForm {
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomTypeId: number;
 };
 
 const Container = tw.div`
 `;
 
-export default function FormAuthComponent({ className, roomtype }: Props) {
+export default function FormAuthComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -48,7 +48,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
   });
   const onSubmit: SubmitHandler<IForm> = (data) => {
     router.push(
-      `/room-type/${roomtype}/details?${URL.ACTION}=${QUERY.IDENTIFICATION}&` +
+      `/room-type/${roomTypeId}/details?${URL.ACTION}=${QUERY.IDENTIFICATION}&` +
         searchParams.toString() +
         `&email=${data.email}`,
     );
@@ -109,7 +109,7 @@ export default function FormAuthComponent({ className, roomtype }: Props) {
 
       <hr />
 
-      <SocialSignOn roomtype={roomtype} />
+      <SocialSignOn roomTypeId={roomTypeId} />
     </Container>
   );
 }

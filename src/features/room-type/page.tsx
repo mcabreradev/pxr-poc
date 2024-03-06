@@ -1,9 +1,11 @@
 /* eslint-disable simple-import-sort/imports */
+'use client';
+
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useQueryString from '@/hooks/use-querystring';
+import { useQueryString, useSearchParamOrStore } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -11,16 +13,16 @@ import BackButton from '@/components/common/back-button';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
-import MyTrip from './my-trip/my-trip';
 
-import useRoomTypeQuery from '@/queries/use-roomtype';
+import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
 import HotelRules from '@/features/components/hotel-rules';
 import data from './data.json';
+import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';
 
 type Props = {
-  roomtype: string;
+  roomTypeId: number;
   className?: string;
 };
 
@@ -31,15 +33,17 @@ const Section = tw.div`
 px-4 text-black md:px-0
 `;
 
-export default function RoomTypePage({ className, roomtype }: Props) {
+export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
-
-  const {
-    isError,
-    isLoading,
-    data: room,
-  } = useRoomTypeQuery(roomtype as string);
+  const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam } = useQueryString();
+
+  const { checkin, checkout } = useSearchParamOrStore();
+  const { data: ratesPlan } = useRatesPlanQuery({
+    checkin,
+    checkout,
+    roomTypeId,
+  });
 
   useEffect(() => {
     removeBlacklistParam(['']);
@@ -72,9 +76,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
                 'person.plural',
               )} • ${room.description}`}</Typography>
             </Section>
-
             <hr />
-
             <Section>
               <Typography variant='h2' weight='normal'>
                 {t('title.room-amemnities')}
@@ -94,13 +96,9 @@ export default function RoomTypePage({ className, roomtype }: Props) {
                 {t('button.view-all-services')}
               </Button>
             </Section>
-
             <hr />
-
-            <MyTrip roomtype={roomtype} className='md:hidden' />
-
+            <MyTrip roomTypeId={roomTypeId} className='md:hidden' />
             <hr className='md:hidden' />
-
             <Section>
               <div className='py-2'>
                 <Typography variant='h2' weight='normal'>
@@ -108,11 +106,13 @@ export default function RoomTypePage({ className, roomtype }: Props) {
                 </Typography>
                 <div className='my-3' />
                 <Typography variant='sm' className='text-neutral-500'>
-                  {t('info.non-refundable')}
+                  {ratesPlan && ratesPlan.length > 0
+                    ? ratesPlan[0].reservationPolicies[0].cancellationPolicy
+                        .policyDescription
+                    : t('info.non-refundabled')}
                 </Typography>
               </div>
             </Section>
-
             <Section>
               <div className='py-5'>
                 <Typography variant='h2' weight='normal'>
@@ -124,7 +124,6 @@ export default function RoomTypePage({ className, roomtype }: Props) {
                 </Typography>
               </div>
             </Section>
-
             <Section>
               <div className='py-4 pb-7 md:w-96'>
                 <HotelRules rules={data.rules} />
@@ -133,7 +132,7 @@ export default function RoomTypePage({ className, roomtype }: Props) {
           </div>
 
           <div className='relative mb-5 hidden md:flex md:w-4/12'>
-            <MyTrip roomtype={roomtype} />
+            <MyTrip roomTypeId={roomTypeId} />
           </div>
         </div>
       </div>

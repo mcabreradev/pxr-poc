@@ -21,7 +21,7 @@ import { loginSchema } from '@/schemas';
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomTypeId: number;
 };
 
 interface IForm {
@@ -33,7 +33,7 @@ const Container = tw.div`
   pb-5
 `;
 
-export default function FormLoginComponent({ className, roomtype }: Props) {
+export default function FormLoginComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
   const [type, setType] = useState(FORM.PASSWORD);
   const { urlStatus } = useHostUrl();
@@ -190,7 +190,7 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
       </form>
 
       <Link
-        href={`/room-type/${roomtype}/details?${URL.ACTION}=forgot`}
+        href={`/room-type/${roomTypeId}/details?${URL.ACTION}=forgot`}
         replace={true}
       >
         <Typography className='mt-4 underline'>
@@ -199,7 +199,7 @@ export default function FormLoginComponent({ className, roomtype }: Props) {
       </Link>
 
       <Link
-        href={`/room-type/${roomtype}/details?${URL.ACTION}=auth`}
+        href={`/room-type/${roomTypeId}/details?${URL.ACTION}=auth`}
         replace={true}
       >
         <Typography className='mt-4 underline'>

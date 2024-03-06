@@ -10,15 +10,14 @@ import BackButton from '@/components/common/back-button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import useReservation from '@/store/use-reservation-persist.store';
+import { useReservationQueryStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
 import PriceDetails from '@/features/components/price-details';
 import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
-import useFetchProperty from '@/queries/use-property';
-import useRoomTypeQuery from '@/queries/use-roomtype';
+import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';
@@ -26,7 +25,7 @@ require('dayjs/locale/es'); //This require is necessary to get the weekday name 
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomType: number;
 };
 
 const HR = tw.div`
@@ -58,16 +57,16 @@ function formatTime(timestring: string) {
   return `${hourStr}:${sections[1]} ${meridiem}`;
 }
 
-export default function SummaryFeature({ className, roomtype }: Props) {
-  const { getCheckin, getCheckout, extra, plan } = useSearchParamOrStore();
-  const { error, isLoading, data: property } = useFetchProperty();
+export default function SummaryFeature({ className, roomType }: Props) {
+  const { getCheckin, getCheckout } = useSearchParamOrStore();
+  const { error, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
-  } = useRoomTypeQuery(roomtype);
+  } = useRoomTypeQuery(roomType);
   const { t, i18n } = useTranslation();
-  const { reservation } = useReservation();
+  const { reservation } = useReservationQueryStore();
 
   const checkin = dayjs(getCheckin());
   const checkout = dayjs(getCheckout());
@@ -224,8 +223,8 @@ export default function SummaryFeature({ className, roomtype }: Props) {
               <PriceDetails
                 room={room}
                 reservation={reservation}
-                extra={extra}
-                plan={plan}
+                extra={reservation.extra}
+                plan={reservation.plan}
                 checkin={checkin}
                 checkout={checkout}
               />
@@ -250,7 +249,7 @@ export default function SummaryFeature({ className, roomtype }: Props) {
                 )}
               </section>
               <HR />
-              <Cancellation plan={plan} />
+              <Cancellation plan={reservation.plan} />
               <HR />
               <section>
                 <div className='px-4'>

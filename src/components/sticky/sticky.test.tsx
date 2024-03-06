@@ -9,11 +9,11 @@ describe('Sticky component', () => {
         <div data-testid='test-children-element'>test</div>
       </Sticky>,
     );
-    const element = screen.getByTestId('test-element');
+    const element = screen.getByTestId('test-sticky-element');
     expect(element).toBeInTheDocument();
   });
 
-  it('should renders Sticky childer correctly', () => {
+  it('should renders Sticky children correctly', () => {
     render(
       <Sticky>
         <div data-testid='test-children-element'>test</div>

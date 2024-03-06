@@ -5,15 +5,16 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import Button from '@/components/button';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { formatCurrency } from '@/lib/number';
 
-import useUserStore from '@/store/use-user.store';
+import { Button, Icon, Typography } from '@/components';
+
+import { useReservationQueryStore, useSessionStore } from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
 import HotelRules from '@/features/components/hotel-rules';
@@ -21,24 +22,29 @@ import HotelRules from '@/features/components/hotel-rules';
 import data from './data.json';
 
 type Props = {
-  roomtype: string;
+  roomTypeId: number;
 };
 
 const HR = tw.div`
   hr border-t-[10px] border-neutral-60
 `;
 
-export default function CheckoutForm({ roomtype }: Props) {
+export default function CheckoutForm({ roomTypeId }: Props) {
   const { t } = useTranslation();
 
   const stripe = useStripe();
   const elements = useElements();
-  const { user } = useUserStore();
+  const { session } = useSessionStore();
+  const { reservation } = useReservationQueryStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!session) {
+      redirect('/');
+    }
+
     if (!stripe) {
       return;
     }
@@ -70,7 +76,7 @@ export default function CheckoutForm({ roomtype }: Props) {
           break;
       }
     });
-  }, [stripe, t]);
+  }, [session, stripe, t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,7 +90,7 @@ export default function CheckoutForm({ roomtype }: Props) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `http://localhost:3000/room-type/${roomtype}/summary${window.location.search}`,
+        return_url: `http://localhost:3000/room-type/${roomTypeId}/summary${window.location.search}`,
       },
     });
 
@@ -103,25 +109,34 @@ export default function CheckoutForm({ roomtype }: Props) {
           <Typography variant='h2' weight='normal'>
             {t('Tu información de pago')}
           </Typography>
-          <Typography variant='sm' className='my-[20px] text-neutral-500'>
-            <p className='pb-1'>{`Hola ${
-              user ? user.given_name : 'su email'
-            }, `}</p>
-            <p className='pb-1'>
-              {`Luego de que coloques la información de pago se te enviará la
-              confirmación de esta reserva a ${
-                user ? user.email : 'su email'
-              }.`}
-            </p>
-            <p className='pb-1'>
-              Se te cobrará $ 400.00 en este momento de acuerdo a la política de
-              cancelación escogida.
-            </p>
-            <p className='pb-1'>
-              Le recordamos que deberá realizar el pagos de impuestos de $50.00
-              al momento de su llegada al hotel.
-            </p>
+
+          <Typography className='py-4'>
+            {t('info.hello-customer', {
+              name: session?.given_name || t('info.customer'),
+              lastname: session?.family_name || '',
+            })}
           </Typography>
+          <Typography className='pb-4'>
+            {t('info.payment-booking-notification-email', {
+              email: session?.email,
+            })}
+          </Typography>
+
+          {reservation?.planCost && (
+            <Typography className='pb-4'>
+              {t('info.payment-cancellation-policy', {
+                amount: formatCurrency(reservation?.planCost ?? 0),
+              })}
+            </Typography>
+          )}
+
+          {reservation?.taxes && (
+            <Typography className='pb-4'>
+              {t('info.payment-taxes-description', {
+                amount: formatCurrency(reservation?.taxes ?? 0),
+              })}
+            </Typography>
+          )}
 
           <PaymentElement
             id='payment-element'

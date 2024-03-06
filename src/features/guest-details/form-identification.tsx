@@ -21,7 +21,7 @@ import { identificationSchema } from '@/schemas';
 
 type Props = {
   className?: string;
-  roomtype: string;
+  roomTypeId: number;
   email: string | null;
 };
 
@@ -37,7 +37,7 @@ const Container = tw.div``;
 export default function FormIdentificationComponent({
   className,
   email,
-  roomtype,
+  roomTypeId,
 }: Props) {
   const { t } = useTranslation();
   const { urlStatus } = useHostUrl();
@@ -84,11 +84,11 @@ export default function FormIdentificationComponent({
           }
         });
         router.push(
-          `/room-type/${roomtype}/payment?` + filteredSearchParams.join('&'),
+          `/room-type/${roomTypeId}/payment?` + filteredSearchParams.join('&'),
         );
       }
     },
-    [setError, roomtype, router, searchParams, addUser],
+    [setError, roomTypeId, router, searchParams, addUser],
   );
 
   useEffect(() => {

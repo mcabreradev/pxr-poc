@@ -4,12 +4,12 @@ import { loadStripe } from '@stripe/stripe-js';
 import { memo } from 'react';
 
 import { uuid } from '@/lib/utils';
-import useStripePaymentIntent from '@/queries/use-stripe';
+import useStripePaymentIntentQuery from '@/queries/use-stripe.query';
 
 import CheckoutForm from '@/features/payment/checkout-form';
 
 type Props = {
-  roomtype: string;
+  roomTypeId: number;
 };
 
 const stripePromise = loadStripe(
@@ -18,12 +18,12 @@ const stripePromise = loadStripe(
 
 const idempotentKey = uuid();
 
-const StripePayment = memo(({ roomtype }: Props) => {
+const StripePayment = memo(({ roomTypeId }: Props) => {
   const {
     data: clientSecret,
     isLoading: isLoadingPaymentIntent,
     isError: isErrorPaymentIntent,
-  } = useStripePaymentIntent({
+  } = useStripePaymentIntentQuery({
     propertyId: '219',
     amount: 100000,
     clientId: 2334,
@@ -56,7 +56,7 @@ const StripePayment = memo(({ roomtype }: Props) => {
     <div data-testid='test-element'>
       {stripePromise && clientSecret && (
         <Elements options={{ clientSecret }} stripe={stripePromise}>
-          <CheckoutForm roomtype={roomtype} />
+          <CheckoutForm roomTypeId={roomTypeId} />
         </Elements>
       )}
     </div>

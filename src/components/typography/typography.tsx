@@ -139,6 +139,7 @@ const Typography = ({
   children,
   tag = TAG.DIV,
   href,
+  onClick,
   ...rest
 }: TextProps) => {
   if (tag === TAG.SPAN) {
@@ -147,6 +148,7 @@ const Typography = ({
         variant={variant}
         weight={weight}
         className={className}
+        onClick={onClick}
         {...rest}
       >
         {children}
@@ -161,6 +163,7 @@ const Typography = ({
         variant={variant}
         weight={weight}
         className={className}
+        onClick={onClick}
         {...rest}
       >
         {children}
@@ -189,6 +192,7 @@ const Typography = ({
       variant={variant}
       weight={weight}
       className={className}
+      onClick={onClick}
       {...rest}
     >
       {children}

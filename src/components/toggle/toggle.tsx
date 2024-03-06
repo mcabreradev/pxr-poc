@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Toggle from 'react-toggle';
 import tw from 'tailwind-styled-components';
 
@@ -16,7 +16,7 @@ type ToggleProps = {
   disabled?: boolean;
   readonly?: boolean;
   toggled?: boolean;
-  onChange?: (event: unknown) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Content = tw.div`
@@ -55,11 +55,14 @@ export default function ToggleComponent({
 
   const checkboxRef = useRef<HTMLInputElement>(null);
 
-  const onChangeHandler = (e) => {
-    if (readonly) return;
-    setEnabled((prev) => !prev);
-    onChange && onChange(e);
-  };
+  const onChangeHandler = useCallback(
+    (e) => {
+      if (readonly) return;
+      setEnabled((prev) => !prev);
+      onChange && onChange(e);
+    },
+    [readonly, onChange],
+  );
 
   useEffect(() => {
     toggled && setEnabled(true);
@@ -70,7 +73,7 @@ export default function ToggleComponent({
       <CustomToggle
         id={id}
         name={name}
-        value={value}
+        value={value ?? undefined}
         ref={checkboxRef}
         checked={enabled || toggled}
         onChange={onChangeHandler}
@@ -79,6 +82,7 @@ export default function ToggleComponent({
         icons={false}
         data-testid='test-element'
       />
+
       <LabelContainer>
         {!!label && (
           <Label

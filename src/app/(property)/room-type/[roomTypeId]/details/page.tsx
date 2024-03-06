@@ -2,21 +2,20 @@
 
 import useHydration from '@/hooks/use-hydration';
 
-import PaymentFeature from '@/features/payment/page';
+import DetailsComponent from '@/features/guest-details/page';
 
 type Props = {
-  params: { roomtype: string };
+  params: { roomTypeId: number };
   searchParams: { action: string };
 };
 
 export default function Page(props: Props) {
   const {
-    params: { roomtype },
-    searchParams: { action },
+    params: { roomTypeId },
   } = props;
 
   const { isHydrated } = useHydration();
   if (!isHydrated) return null;
 
-  return <PaymentFeature roomtype={roomtype} action={action} />;
+  return <DetailsComponent roomTypeId={roomTypeId} />;
 }

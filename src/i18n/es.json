@@ -7,20 +7,38 @@
   "breakfast": "Desayuno",
   "button": {
     "accept": "Aceptar y continuar",
+    "add-date": {
+      "plural": "Agrega tus fechas",
+      "singular": "Agrega tu fecha"
+    },
+    "add-guest": {
+      "plural": "Agrega tus huéspedes",
+      "singular": "Agrega tu huésped"
+    },
     "all-amemnities": "Ver todos los servicios",
     "all-atractions": "Mostrar todos los sitios",
     "apple": "Continuar con Apple",
     "cancel": "Cancelar",
     "choose-room": "Escoger habitación",
+    "close": "Cerrar",
     "confirm-pay": "Confirmar y pagar",
     "continue": "Continuar",
+    "date": {
+      "plural": "Fechas",
+      "singular": "Fecha"
+    },
     "facebook": "Continuar con Facebook",
     "google": "Continuar con Google",
+    "guest": {
+      "plural": "Huéspedes",
+      "singular": "Huésped"
+    },
     "loading": "Cargando...",
     "login": "Ingresar",
     "pay": "Proceder al pago",
     "processing": "Procesando...",
     "reserve": "Reservar",
+    "search": "Buscar",
     "save": "Guardar",
     "send": "Enviar",
     "try-again": "Intenta de nuevo",
@@ -34,12 +52,14 @@
     "plural": "niños",
     "singular": "niño"
   },
+  "customer": "Cliente",
   "date": {
     "check-in": "Fecha de entrada",
     "check-out": "Fecha de salida",
     "plural": "Fechas",
     "singular": "Fecha"
   },
+  "description": "In consequat do et nisi. Tempor ad pariatur fugiat tempor quis exercitation laborum quis incididunt consectetur ullamco. Adipisicing officia labore cupidatat consequat labore.",
   "error": {
     "message": "Algo salió mal, por favor intenta de nuevo más tarde.",
     "not-connected": {
@@ -115,6 +135,7 @@
   "info": {
     "13years-or-more": "13 años o más",
     "2to12": "2 a 12 años",
+    "add-date": "Agrega tus fechas",
     "age": "Edad",
     "better-rate": "Mejor tarifa garantizada",
     "breakfast": "Desayuno incluido",
@@ -125,23 +146,45 @@
     "forgot_password": "Ingresa la dirección de correo electrónico asociada a tu cuenta y te enviaremos un enlace para restablecer tu contraseña.",
     "free-cancellation-before": "Cancelación gratuita antes de las 15:00",
     "guest": "Huéspedes",
+    "guest-room-max-allowed": "Esta habitación tiene una capacidad máxima de {{maxCapacity}} huéspedes.",
     "have_account": "¿Ya tienes una cuenta?",
+    "hello-customer": "Hola {{name}} {{lastname}}!",
     "no_account": "¿No tienes una cuenta?",
     "no_promo": "No quiero recibir mensajes promocionales de Paxer.",
     "non-refundable": "No reembolsable",
     "offers": "Paxer te enviará ofertas exclusivas, correos electrónicos comerciales y notificaciones push. Puedes optar por dejar de recibirlos en cualquier momento a través del apartado de configuración de tu cuenta o directamente desde alguna de las notificaciones que te llegue.",
     "offers-beneficts": "Ofertas y beneficios exclusivos",
     "other_options": "Otras opciones para ingresar",
+    "payment-booking-notification-email": "Recibirás un correo electrónico de confirmación de reserva a {{email}} una vez que se haya procesado el pago.",
+    "payment-cancellation-policy": "Se te cobrará {{amount}} en este momento de acuerdo a la política de cancelación escogida.",
+    "payment-cancelled": "Su pago ha sido cancelado.",
+    "payment-cancelled-description": "Su pago ha sido cancelado, por favor intente de nuevo.",
+    "payment-cancelled-title": "Pago cancelado",
+    "payment-confirm-notification-email": "Recibirás un correo electrónico de confirmación de pago a {{email}} una vez que se haya procesado.",
+    "payment-processing": "Tu pago se está procesando.",
+    "payment-succeeded": "Pago realizado con exito!",
+    "payment-taxes-description": "Le recordamos que deberá realizar el pagos de impuestos de {{amount}} al momento de su llegada al hotel.",
+    "payment-unexpected-error": "Un error inesperado ha ocurrido.",
+    "payment-unsuccessful": "Su pago no se pudo realizar, por favor intente de nuevo.",
     "refundable": "Reembolsable",
+    "select-date": "Selecciona la fecha",
+    "select-room": "Selecciona tu habitación",
+    "select-your-date": "Selecciona tus fechas de viaje",
     "show-more": "Mostrar más",
     "taxes": "Impuestos",
     "taxes-description": "Los impuestos deben ser pagados a tu llegada al hotel",
     "taxes-details": "Detalles de los impuestos",
     "termsandconditions": "Al seleccionar Aceptar y continuar, acepto los Términos de servicio y la Política de privacidad.",
-    "under-2": "menos de 2 años"
+    "under-2": "menos de 2 años",
+    "when-is-the-travel": "¿Cuándo es tu viaje?"
   },
   "link": {
-    "language": "Español"
+    "language": "Español",
+    "location": "Ubicación exacta",
+    "reviews": "Reseñas",
+    "rooms": "Habitaciones",
+    "summary": "Resumen",
+    "topsites": "Sitios de interés"
   },
   "login": "Ingresar",
   "night": {

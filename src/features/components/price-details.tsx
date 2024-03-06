@@ -12,8 +12,8 @@ import { Reservation } from '@/types';
 type Props = {
   room: { name: string };
   reservation: Reservation;
-  extra: string | void;
-  plan: string | void;
+  extra: string | null | undefined;
+  plan: string | number | null | undefined;
   checkin: dayjs.Dayjs;
   checkout: dayjs.Dayjs;
 };

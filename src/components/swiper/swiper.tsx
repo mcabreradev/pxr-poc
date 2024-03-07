@@ -28,7 +28,6 @@ export default function Swiper({
   children,
   withArrow = false,
   scroll = 200,
-  ref,
 }: Props) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +44,7 @@ export default function Swiper({
   }, [scroll]);
 
   return (
-    <div className='md:flex md:flex-row md:items-center' ref={ref}>
+    <div className='md:flex md:flex-row md:items-center'>
       {withArrow && (
         <Icon
           variant='angle-left'

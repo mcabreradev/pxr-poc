@@ -19,7 +19,7 @@ export default function StickyComponent({
 }: {
   children: React.ReactNode;
   className?: string;
-  show: boolean;
+  show?: boolean;
 }) {
   const variants = {
     hidden: { opacity: 0, y: '100%' },

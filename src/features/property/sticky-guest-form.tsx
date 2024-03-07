@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { getFormatedMontsDays } from '@/lib/time';
+import { formatStringToDate, getFormatedMontsDays } from '@/lib/time';
 
 import Button from '@/components/button';
 import Typography from '@/components/typography';
@@ -16,6 +16,8 @@ import {
   CHECKOUT_DEFAULT_FUTURE_DAYS,
   TOTAL_ADULTS_DEFAULT,
 } from '@/constants';
+import { useSearchParamOrStore } from '@/hooks';
+import { useState } from 'react';
 
 export default function MobileDatepickerComponent() {
   const {
@@ -23,16 +25,25 @@ export default function MobileDatepickerComponent() {
   } = useReservationQueryStore();
   const { openDatepickerDrawer } = useGlobalStore();
   const { t } = useTranslation();
+  const { getCheckin, getCheckout } = useSearchParamOrStore();
 
   const total =
     (adults ?? TOTAL_ADULTS_DEFAULT) + (childrens ?? 0) + (infants ?? 0);
 
   const today = dayjs();
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
+  const checkin = formatStringToDate(getCheckin());
+  const [startDate] = useState<Date>(
+    checkin ? new Date(checkin) : checkinDefault,
+  );
 
   const checkoutDefault = today
     .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
     .toDate();
+  const checkout = formatStringToDate(getCheckout());
+  const [endDate] = useState<Date>(
+    checkout ? new Date(checkout) : checkoutDefault,
+  );
 
   return (
     <div
@@ -50,8 +61,8 @@ export default function MobileDatepickerComponent() {
           onClick={openDatepickerDrawer}
         >
           {`${getFormatedMontsDays(
-            checkinDefault,
-            checkoutDefault,
+            startDate,
+            endDate,
           )} • ${total} ${t('person.plural')}`}
         </Typography>
       </div>

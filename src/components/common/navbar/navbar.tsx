@@ -69,7 +69,10 @@ export default function Navbar({ className }: Props) {
   if (!isHydrated) return null;
 
   return (
-    <div className='sticky top-0 z-50 bg-white md:border-b-[1px] md:border-solid md:border-white-200'>
+    <div
+      className='sticky top-0 z-50 bg-white md:border-b-[1px] md:border-solid md:border-white-200'
+      data-testid='test-element-navbar'
+    >
       <Nav className={cn(className)} data-testid='test-element'>
         <motion.div>
           {pathname === PROPERTYPATH && (

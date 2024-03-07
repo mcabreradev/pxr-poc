@@ -9,15 +9,16 @@ import { getFormatedMontsDays } from '@/lib/time';
 import Button from '@/components/button';
 import Typography from '@/components/typography';
 
-import { useGlobalStore, useReservationQueryStore } from '@/store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import {
   CHECKIN_DEFAULT_FUTURE_DAYS,
   CHECKOUT_DEFAULT_FUTURE_DAYS,
   TOTAL_ADULTS_DEFAULT,
 } from '@/constants';
+import useGlobalStore from '@/store/use-global.store';
 
-export default function MobileDatepickerComponent() {
+export default function HeaderDatepickerComponent() {
   const {
     reservation: { adults, childrens, infants },
   } = useReservationQueryStore();
@@ -36,7 +37,7 @@ export default function MobileDatepickerComponent() {
 
   return (
     <div
-      className='relative flex h-full w-full flex-row items-center justify-around bg-white px-2 py-5'
+      className='relative flex w-full flex-row items-center justify-around bg-white'
       data-testid='test-element'
     >
       <div className='flex flex-col'>

@@ -9,12 +9,34 @@ import {
 type State = {
   isOpenDatepickerDrawer?: boolean | undefined;
   isClearCalendar?: boolean | undefined;
+  gallery?: {
+    isIntersecting?: boolean;
+  };
+  guestForm?: {
+    isIntersecting?: boolean;
+  };
+};
+
+const innitalState = {
+  isOpenDatepickerDrawer: false,
+  isClearCalendar: false,
+  gallery: {
+    isIntersecting: false,
+  },
+  guestForm: {
+    isIntersecting: false,
+  },
+  roomSelection: {
+    isIntersecting: false,
+  },
 };
 
 type Actions = {
   openDatepickerDrawer: () => void;
   closeDatepickerDrawer: () => void;
   resetCalendar: () => void;
+  setGalleryIntersecting: (isIntersecting: boolean) => void;
+  setGuestFormIntersecting: (isIntersecting: boolean) => void;
 };
 
 type Persist = (
@@ -32,9 +54,8 @@ const middlewares = (f) =>
   );
 
 const useGlobalStore = create<State & Actions, []>(
-  (middlewares as Persist)((set): State & Actions => ({
-    isOpenDatepickerDrawer: false,
-    isClearCalendar: false,
+  (middlewares as Persist)((set, get): State & Actions => ({
+    ...innitalState,
 
     openDatepickerDrawer: () =>
       set(() => ({
@@ -50,6 +71,24 @@ const useGlobalStore = create<State & Actions, []>(
       set(() => ({
         isClearCalendar: true,
       })),
+
+    setGalleryIntersecting: (isIntersecting: boolean) => {
+      set(() => ({
+        gallery: {
+          ...get().gallery,
+          isIntersecting,
+        },
+      }));
+    },
+
+    setGuestFormIntersecting(isIntersecting: boolean) {
+      set(() => ({
+        guestForm: {
+          ...get().guestForm,
+          isIntersecting,
+        },
+      }));
+    },
   })),
 );
 

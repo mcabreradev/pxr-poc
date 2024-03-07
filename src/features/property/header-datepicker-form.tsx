@@ -9,7 +9,7 @@ import { formatStringToDate, getFormatedMontsDays } from '@/lib/time';
 import Button from '@/components/button';
 import Typography from '@/components/typography';
 
-import { useReservationQueryStore } from '@/store';
+import useReservationQueryStore from '@/store/use-reservation.store';
 
 import {
   CHECKIN_DEFAULT_FUTURE_DAYS,
@@ -17,13 +17,14 @@ import {
   TOTAL_ADULTS_DEFAULT,
 } from '@/constants';
 import { useSearchParamOrStore } from '@/hooks';
-import { useCallback, useState } from 'react';
+import useGlobalStore from '@/store/use-global.store';
+import { useState } from 'react';
 
-export default function MobileDatepickerComponent() {
+export default function HeaderDatepickerComponent() {
   const {
     reservation: { adults, childrens, infants },
   } = useReservationQueryStore();
-
+  const { openDatepickerDrawer } = useGlobalStore();
   const { t } = useTranslation();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
 
@@ -45,27 +46,20 @@ export default function MobileDatepickerComponent() {
     checkout ? new Date(checkout) : checkoutDefault,
   );
 
-  const handleClick = useCallback(() => {
-    const element = document.getElementById('rooms');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
-
   return (
     <div
-      className='relative flex h-full w-full flex-row items-center justify-around bg-white px-2 py-5'
+      className='relative flex w-full flex-row items-center justify-around gap-3 bg-white'
       data-testid='test-element'
     >
-      <div className='flex flex-col'>
-        <Typography variant='sm' weight='semibold'>
+      <div className='flex cursor-pointer flex-col'>
+        <Typography variant='sm2' weight='semibold'>
           {t('since')} $100.00 x {t('night.singular')}
         </Typography>
         <Typography
-          variant='sm'
+          variant='sm2'
           weight='normal'
           className='flex underline'
-          onClick={handleClick}
+          onClick={openDatepickerDrawer}
         >
           {`${getFormatedMontsDays(
             startDate,
@@ -74,7 +68,7 @@ export default function MobileDatepickerComponent() {
         </Typography>
       </div>
       <div>
-        <Button type='button' slim={true} onClick={handleClick}>
+        <Button type='button' slim={true} className='cursor-pointer'>
           {t('button.choose-room')}
         </Button>
       </div>

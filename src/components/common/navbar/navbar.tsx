@@ -3,19 +3,23 @@
 
 import { setCookie } from 'cookies-next';
 import { Dropdown } from 'flowbite-react';
+import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useHydration from '@/hooks/use-hydration';
+import { useHydration } from '@/hooks';
 import { cn } from '@/lib/utils';
 
+import { Icon, Typography } from '@/components';
 import SingleSignOn from '@/components/common/single-sign-on/sigle-sign-on';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+
+import HeaderDatepickerComponent from '@/features/property/header-datepicker-form';
 
 import { PROPERTYPATH } from '@/constants';
+import { useSubscribeToStore } from '@/hooks';
+import { useGlobalStore } from '@/store';
 
 interface Props {
   className?: string;
@@ -30,6 +34,7 @@ export default function Navbar({ className }: Props) {
   const pathname = usePathname();
   const { isHydrated } = useHydration();
   const [selectedLink, setLink] = useState(0);
+  const [intersected, setIntersected] = useState(true);
 
   const links = useMemo(
     () => [
@@ -57,12 +62,19 @@ export default function Navbar({ className }: Props) {
     setCookie('i18next', i18n.language);
   }, [i18n.language]);
 
+  useSubscribeToStore(useGlobalStore, ({ guestForm }) => {
+    setIntersected(guestForm?.isIntersecting);
+  });
+
   if (!isHydrated) return null;
 
   return (
-    <div className='md:border-b-[1px] md:border-solid md:border-white-200'>
+    <div
+      className='sticky top-0 z-50 bg-white md:border-b-[1px] md:border-solid md:border-white-200'
+      data-testid='test-element-navbar'
+    >
       <Nav className={cn(className)} data-testid='test-element'>
-        <div>
+        <motion.div>
           {pathname === PROPERTYPATH && (
             <ul className='flex space-x-6'>
               {links.map((link, index) => (
@@ -83,72 +95,98 @@ export default function Navbar({ className }: Props) {
               ))}
             </ul>
           )}
-        </div>
+        </motion.div>
+
         <div>
-          <ul className='flex space-x-6'>
-            <li className='cursor-pointer'>
-              <Dropdown
-                label={<Typography variant='sm'>$ USD</Typography>}
-                inline
-                size='lg'
-              >
-                <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
-                  <Typography variant='sm' className='w-32 text-left'>
-                    $ USD
-                  </Typography>
-                </Dropdown.Item>
-                <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
-                  <Typography variant='sm' className='w-32 text-left'>
-                    Euro
-                  </Typography>
-                </Dropdown.Item>
-                <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
-                  <Typography variant='sm' className='w-32 text-left'>
-                    CLP
-                  </Typography>
-                </Dropdown.Item>
-              </Dropdown>
-            </li>
-            <li className='cursor-pointer'>
-              <Dropdown
-                label={<Icon variant='web' color='#959595' />}
-                inline
-                size='lg'
-              >
-                <Dropdown.Item
-                  className='hover:bg-neutral-40 focus:bg-neutral-40'
+          {!!intersected && (
+            <motion.ul
+              initial='visible'
+              className='flex items-center justify-center'
+              animate={intersected ? 'visible' : 'hidden'}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              variants={{
+                hidden: { opacity: 0, y: '-100%' },
+                visible: { opacity: 1, y: '0%' },
+              }}
+            >
+              <motion.li className='cursor-pointer'>
+                <Dropdown
+                  label={<Typography variant='sm'>$ USD</Typography>}
+                  inline
                   size='lg'
-                  onClick={() => i18n.changeLanguage('es')}
                 >
-                  <Typography
-                    variant='sm'
-                    className={cn('w-32 text-left text-neutral-400', {
-                      'text-neutral-500': i18n.language === 'es',
-                    })}
-                  >
-                    Español
-                  </Typography>
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className='hover:bg-neutral-40 focus:bg-neutral-40'
+                  <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
+                    <Typography variant='sm' className='w-32 text-left'>
+                      $ USD
+                    </Typography>
+                  </Dropdown.Item>
+                  <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
+                    <Typography variant='sm' className='w-32 text-left'>
+                      Euro
+                    </Typography>
+                  </Dropdown.Item>
+                  <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
+                    <Typography variant='sm' className='w-32 text-left'>
+                      CLP
+                    </Typography>
+                  </Dropdown.Item>
+                </Dropdown>
+              </motion.li>
+              <motion.li className='cursor-pointer'>
+                <Dropdown
+                  label={<Icon variant='web' color='#959595' />}
+                  inline
                   size='lg'
-                  onClick={() => i18n.changeLanguage('en')}
                 >
-                  <Typography
-                    variant='sm'
-                    className={cn('w-32 text-left text-neutral-400', {
-                      'text-neutral-500': i18n.language === 'en',
-                    })}
+                  <Dropdown.Item
+                    className='hover:bg-neutral-40 focus:bg-neutral-40'
+                    size='lg'
+                    onClick={() => i18n.changeLanguage('es')}
                   >
-                    Ingles
-                  </Typography>
-                </Dropdown.Item>
-              </Dropdown>
-            </li>
-            <li className='cursor-pointer hover:underline'>
-              <SingleSignOn />
-            </li>
-          </ul>
+                    <Typography
+                      variant='sm'
+                      className={cn('w-32 text-left text-neutral-400', {
+                        'text-neutral-500': i18n.language === 'es',
+                      })}
+                    >
+                      Español
+                    </Typography>
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className='hover:bg-neutral-40 focus:bg-neutral-40'
+                    size='lg'
+                    onClick={() => i18n.changeLanguage('en')}
+                  >
+                    <Typography
+                      variant='sm'
+                      className={cn('w-32 text-left text-neutral-400', {
+                        'text-neutral-500': i18n.language === 'en',
+                      })}
+                    >
+                      Ingles
+                    </Typography>
+                  </Dropdown.Item>
+                </Dropdown>
+              </motion.li>
+              <motion.li className='cursor-pointer hover:underline'>
+                <SingleSignOn />
+              </motion.li>
+            </motion.ul>
+          )}
+
+          {!intersected && (
+            <motion.div
+              initial='hidden'
+              animate={intersected ? 'hidden' : 'visible'}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              variants={{
+                hidden: { opacity: 0, y: '-100%' },
+                visible: { opacity: 1, y: '0%' },
+              }}
+            >
+              <HeaderDatepickerComponent />
+            </motion.div>
+          )}
         </div>
       </Nav>
     </div>

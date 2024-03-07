@@ -1,66 +1,39 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import React from 'react';
 import tw from 'tailwind-styled-components';
 
-import { cn } from '@/lib/utils';
-
-const Container = tw.div`
+const Container = tw(motion.div)`
+  bottom-0
   z-20
   w-full
   border-t-[0.5px]
   border-solid
   border-neutral-100
+  fixed
 `;
 
 export default function StickyComponent({
   children,
   className,
-  scrollTop = false,
-  scrollBottom = false,
-  until = 0,
+  show = true,
 }: {
   children: React.ReactNode;
   className?: string;
-  scrollTop?: boolean;
-  scrollBottom?: boolean;
-  until?: number;
+  show?: boolean;
 }) {
-  const [stickyClass, setStickyClass] = useState('');
-  const ANIMATION_UP = 'fixed bottom-0 animate-fade-up animate-normal';
-  const ANIMATION_DOWN = 'animate-fade-up animate-reverse';
-
-  const handleScroll = useCallback(() => {
-    const scrollPosition =
-      window.pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop && scrollPosition <= until) {
-      setStickyClass(ANIMATION_DOWN);
-    } else if (scrollTop && scrollPosition > until) {
-      setStickyClass(ANIMATION_UP);
-    }
-
-    if (scrollBottom && scrollPosition <= until) {
-      setStickyClass(ANIMATION_UP);
-    } else if (scrollBottom && scrollPosition > until) {
-      setStickyClass(ANIMATION_DOWN);
-    }
-  }, [scrollTop, scrollBottom, until]);
-
-  useEffect(() => {
-    if (scrollBottom) {
-      setStickyClass(ANIMATION_UP);
-    }
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll, scrollBottom]);
+  const variants = {
+    hidden: { opacity: 0, y: '100%' },
+    visible: { opacity: 1, y: '0%' },
+  };
 
   return (
     <Container
       data-testid='test-sticky-element'
-      className={cn(stickyClass, className)}
+      className={className}
+      initial='visible'
+      animate={show ? 'visible' : 'hidden'}
+      transition={{ duration: 0.7, ease: 'easeInOut' }}
+      variants={variants}
     >
       {children}
     </Container>

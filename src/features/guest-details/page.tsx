@@ -10,9 +10,11 @@ import BackButton from '@/components/common/back-button';
 
 import { ACTION, QUERY } from '@/constants';
 
+import FormIdentificationComponent from '@/features/guest-details/form-identification';
 import MyTripDetails from '@/features/guest-details/my-trip-details';
-import { useSessionStore } from '@/store';
-import { redirect, useSearchParams } from 'next/navigation';
+import { useSessionStore, useUserStore } from '@/store';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
 import FormLoginComponent from './form-login';
@@ -34,8 +36,10 @@ export default function DetailsComponent({ roomTypeId }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
+  const { user } = useUserStore();
   const { session } = useSessionStore();
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get(ACTION)?.replace('?', '');
 
@@ -43,6 +47,15 @@ export default function DetailsComponent({ roomTypeId }: Props) {
   const actionLogin = action === QUERY.LOGIN;
   const actionRegister = action === QUERY.REGISTER;
   const actionForgot = action === QUERY.FORGOT;
+  const actionIdentification = action === QUERY.IDENTIFICATION;
+
+  useEffect(() => {
+    if (user && user.isAuth) {
+      router.push(
+        `/room-type/${roomTypeId}/payment?` + searchParams.toString(),
+      );
+    }
+  }, [user, router, searchParams, roomTypeId]);
 
   if (session) {
     redirect(window.location.pathname.replace('details', 'payment'));
@@ -79,6 +92,12 @@ export default function DetailsComponent({ roomTypeId }: Props) {
                 <FormRegisterComponent roomTypeId={roomTypeId} />
               )}
               {actionForgot && <FormForgotComponent roomTypeId={roomTypeId} />}
+              {actionIdentification && (
+                <FormIdentificationComponent
+                  roomTypeId={roomTypeId}
+                  email={searchParams.get('email')}
+                />
+              )}
             </section>
           </div>
         </div>

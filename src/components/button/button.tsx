@@ -38,7 +38,7 @@ interface ButtonProps {
   replace?: boolean;
   scroll?: boolean;
   loading?: boolean;
-  slim?: boolean;
+  slim?: boolean | undefined;
 }
 
 const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
@@ -46,7 +46,7 @@ const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
   shadow-none hover:shadow-none py-[10px] px-6 rounded
   text-[14px] font-medium font-poppins normal-case
   md:w-auto h-auto
-  ${({ slim }) => !!slim && 'px-2'}
+  ${({ slim }) => slim && 'px-2'}
   ${({ fullWidth }) => fullWidth && 'w-full'}
   ${({ disabled }) =>
     disabled
@@ -72,7 +72,7 @@ export default function Button({
   icon,
   replace = true,
   scroll = true,
-  slim,
+  slim = false,
   query,
   withSearchParams = false,
   loading,
@@ -119,7 +119,7 @@ export default function Button({
           onMouseLeave={onMouseLeave}
           onMouseEnter={onMouseEnter}
           loading={loading}
-          slim={slim}
+          slim={!!slim}
           {...props}
         >
           {icon && <span className='mr-2'>{icon}</span>}
@@ -147,7 +147,7 @@ export default function Button({
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}
       loading={loading}
-      slim={slim}
+      slim={!!slim}
       {...props}
     >
       {icon && <span className='mr-2'>{icon}</span>}

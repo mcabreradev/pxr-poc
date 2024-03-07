@@ -1,5 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
@@ -22,9 +23,11 @@ import Drawer from '@/components/drawer';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import useGlobalStore from '@/store/use-global.store';
-import useReservationQueryStore from '@/store/use-reservation.store';
-import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
+import {
+  useGlobalStore,
+  useReservationQueryStore,
+  useSelectedRoomtypeStore,
+} from '@/store';
 
 import {
   ADULTS,
@@ -45,6 +48,7 @@ import useWindowSize from '@/hooks/use-windowsize';
 export default function MobileDatepickerComponent() {
   const { locale } = useLocale();
   const { t } = useTranslation();
+  const router = useRouter();
   const { setReservation } = useReservationQueryStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { updateQueryString } = useQueryString();
@@ -152,14 +156,9 @@ export default function MobileDatepickerComponent() {
   );
 
   const {
+    selectedRoom,
     selectedRoom: { maxCapacity, childCapacity },
   } = useSelectedRoomtypeStore();
-
-  // useEffect(() => {
-  //   setAdults(getAdults() || minCapacity || TOTAL_ADULTS_DEFAULT);
-  //   setChildrens(getChildrens() || TOTAL_CHILDRENS_DEFAULT);
-  //   setInfants(getInfants() || TOTAL_INFANTS_DEFAULT);
-  // }, [getAdults, getChildrens, getInfants, minCapacity, selectedRoom]);
 
   const totalGuests = adults + childrens + infants;
   const isMaxCapacityReached = false; //totalGuests >= (maxCapacity ?? 0);
@@ -185,12 +184,17 @@ export default function MobileDatepickerComponent() {
         [CHILDRENS]: childrens,
         [INFANTS]: infants,
       });
+      router.push(`/room-type/${selectedRoom.id}`);
+      closeDatepickerDrawer();
     }, 300);
   }, [
     adults,
     childrens,
+    closeDatepickerDrawer,
     endDate,
     infants,
+    router,
+    selectedRoom.id,
     setReservation,
     startDate,
     updateQueryString,

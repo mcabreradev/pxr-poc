@@ -7,8 +7,10 @@ import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-import useQueryString from '@/hooks/use-querystring';
+import { useIntersectionObserver, useQueryString } from '@/hooks';
 import { cn, uuid } from '@/lib/utils';
+
+import { useGlobalStore } from '@/store';
 
 import Icon from '@/components/icon';
 import Image from '@/components/image';
@@ -42,6 +44,13 @@ export default function Gallery({
   const searchParams = useSearchParams();
   const { updateQueryString, removeQueryString } = useQueryString();
   const showDrawer = searchParams.get(GALERY);
+  const { setGalleryIntersecting } = useGlobalStore();
+
+  const { ref, entry } = useIntersectionObserver({
+    threshold: 1,
+    root: null,
+    rootMargin: '200px',
+  });
 
   const handleScrollTop = () => {
     if (containerRef.current) {
@@ -103,9 +112,15 @@ export default function Gallery({
     };
   }, [closeDrawer, showDrawer, index]);
 
+  useEffect(() => {
+    if (entry && 'isIntersecting' in entry) {
+      setGalleryIntersecting(entry.isIntersecting);
+    }
+  }, [entry, setGalleryIntersecting]);
+
   return (
     <>
-      <Grid className={cn(className)} data-testid='test-element'>
+      <Grid className={cn(className)} data-testid='test-element' ref={ref}>
         <div className=''>
           <Image
             alt='...'

@@ -11,6 +11,7 @@ interface Props {
   children: React.ReactNode;
   withArrow?: boolean;
   scroll?: number;
+  ref?: unknown;
 }
 
 const Container = tw.div`

@@ -17,14 +17,19 @@ import { Button, Icon, Typography } from '@/components';
 import { useReservationQueryStore, useSessionStore } from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
+import HotelRules from '@/features/components/hotel-rules';
 
 import data from './data.json';
+
+type Props = {
+  roomTypeId: number;
+};
 
 const HR = tw.div`
   hr border-t-[10px] border-neutral-60
 `;
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ roomTypeId }: Props) {
   const { t } = useTranslation();
 
   const stripe = useStripe();
@@ -85,7 +90,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: 'http://localhost:3000',
+        return_url: `http://localhost:3000/room-type/${roomTypeId}/summary${window.location.search}`,
       },
     });
 
@@ -174,25 +179,7 @@ export default function CheckoutForm() {
 
         <section className='px-4'>
           <div className='py-4 pb-7'>
-            <Typography variant='h2' weight='normal'>
-              {t('title.hotel-rules')}
-            </Typography>
-
-            <div className='my-4'>
-              {data.rules.map((rule, key) => (
-                <div
-                  key={`$rules-${key}`}
-                  className='flex justify-between py-2'
-                >
-                  <Typography>{rule.name}</Typography>
-                  <Typography weight='light'>{rule.description}</Typography>
-                </div>
-              ))}
-            </div>
-
-            <Typography weight='semibold' className='underline'>
-              {t('info.show-more')}
-            </Typography>
+            <HotelRules rules={data.rules} />
           </div>
         </section>
         <HR />

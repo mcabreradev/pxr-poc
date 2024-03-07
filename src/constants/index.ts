@@ -7,6 +7,12 @@ export const SIGNINMODAL = 'signinModal';
 export const SIGNOUT = 'signout';
 export const GET_SESSION = 'getsession';
 export const CHECKUSER = 'checkuser';
+export const PROVIDER_TAG = ':PROVIDER';
+//The following 3 constants are to be used ONLY for SSO links.
+//If you need to name any of these 3 tech giants elsewhere, I'd recommend another constant to avoid mistakes
+export const PROVIDER_GOOGLE = 'Google';
+export const PROVIDER_FACEBOOK = 'Facebook';
+export const PROVIDER_APPLE = 'SignInWithApple';
 
 // App
 export const PROPERTY_CURRENCY = 'CLP';
@@ -80,23 +86,27 @@ export const DIV = 'div';
 export const SPAN = 'span';
 export const INPUT = 'input';
 export const TEXTAREA = 'textarea';
+export const A = 'a';
 export const TAG = {
   DIV,
   SPAN,
   INPUT,
   LABEL,
   TEXTAREA,
+  A,
 };
 
 export const AUTH = 'auth';
 export const LOGIN = 'login';
 export const REGISTER = 'register';
 export const FORGOT = 'forgot';
+export const IDENTIFICATION = 'identification';
 export const QUERY = {
   AUTH,
   LOGIN,
   REGISTER,
   FORGOT,
+  IDENTIFICATION,
 };
 
 // i18n

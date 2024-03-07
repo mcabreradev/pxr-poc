@@ -1,16 +1,13 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
-
-import useQueryString from '@/hooks/use-querystring';
 
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
-import Sticky from '@/components/sticky';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
@@ -22,7 +19,11 @@ import {
   useRatesPlanQuery,
 } from '@/queries';
 
-import { useCheckinCheckoutHook } from '@/hooks';
+import {
+  useCheckinCheckoutHook,
+  useIntersectionObserver,
+  useQueryString,
+} from '@/hooks';
 import PropertyAmenities from './amenities';
 import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
@@ -31,6 +32,7 @@ import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';
 import PropertyTopSights from './topsights';
 
+import { Sticky } from '@/components';
 import data from './data.json';
 
 const Section = tw.div`
@@ -43,18 +45,16 @@ const Row = tw.div`
 `;
 
 const PropertyPage = memo(function HotelPage() {
+  const [showStickyGuestForm, setShowStickyGuestForm] = useState<boolean>(true);
   const { t, i18n } = useTranslation();
   const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
   const { resetReservation } = useReservationQueryStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
-  const roomSwipperRef = useRef(null);
-
   const { refetch: fetchAvailability } = useAvailabilityQuery({
     checkin,
     checkout,
   });
-
   const { refetch: fetchRatesPlan } = useRatesPlanQuery({
     checkin,
     checkout,
@@ -72,6 +72,18 @@ const PropertyPage = memo(function HotelPage() {
     resetReservation();
   }, [removeBlacklistParam, resetReservation]);
 
+  const { ref: roomSelectedRef, entry } = useIntersectionObserver({
+    threshold: 0.5,
+    root: null,
+    rootMargin: '100px 0px 0px 100px',
+  });
+
+  useEffect(() => {
+    if (entry && 'isIntersecting' in entry) {
+      setShowStickyGuestForm(!entry.isIntersecting);
+    }
+  }, [entry, setShowStickyGuestForm]);
+
   if (isLoading) {
     return <Skeleton />;
   }
@@ -83,7 +95,6 @@ const PropertyPage = memo(function HotelPage() {
   return (
     <main data-id-test='test-componet' className='layout'>
       <Gallery photos={data.images} />
-
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>
           <Section className='pt-3'>
@@ -163,7 +174,7 @@ const PropertyPage = memo(function HotelPage() {
           <hr />
 
           <Section
-            ref={roomSwipperRef}
+            ref={roomSelectedRef}
             className='p-4 pb-0 pr-0 pt-2 md:flex md:flex-col md:items-center'
             id='rooms'
           >
@@ -174,13 +185,11 @@ const PropertyPage = memo(function HotelPage() {
           </Section>
         </div>
 
-        <div className='mb-5 hidden md:flex md:w-4/12'>
+        <div className='hidden md:flex md:w-4/12'>
           <GuestForm />
         </div>
       </div>
-
       <hr />
-
       <Section className='p-4 pb-0 pr-0 pt-2' id='reviews'>
         <div className='flex flex-row items-center'>
           <Typography variant='h2' weight='normal'>
@@ -192,7 +201,6 @@ const PropertyPage = memo(function HotelPage() {
           </Typography>
         </div>
       </Section>
-
       <Section>
         <Swiper>
           {property.reviews.map((review) => (
@@ -231,9 +239,7 @@ const PropertyPage = memo(function HotelPage() {
           ))}
         </Swiper>
       </Section>
-
       <hr />
-
       <Section className='p-4 pb-0 pt-2' id='location'>
         <Typography variant='h2' weight='normal'>
           {t('title.exact-location')}
@@ -260,9 +266,7 @@ const PropertyPage = memo(function HotelPage() {
           ></iframe>
         </div>
       </Section>
-
       <hr />
-
       <Section className='p-4 pb-0 pt-2' id='topsites'>
         <Typography variant='h2' weight='normal'>
           {t('title.attractions')}
@@ -335,9 +339,7 @@ const PropertyPage = memo(function HotelPage() {
 
         <PropertyTopSights topSights={property?.topSights} className='pt-6' />
       </Section>
-
       <hr />
-
       <Section className='p-4 pb-6 pt-2'>
         <Typography variant='h2' weight='normal'>
           {t('title.hotel-rules')}
@@ -357,7 +359,7 @@ const PropertyPage = memo(function HotelPage() {
         </Typography>
       </Section>
 
-      <Sticky className='md:sticky md:hidden' scrollBottom={true} until={650}>
+      <Sticky className='md:sticky md:hidden' show={showStickyGuestForm}>
         <StickyGuestForm />
       </Sticky>
 

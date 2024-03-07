@@ -11,7 +11,7 @@ import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import { useSelectedRoomtypeStore } from '@/store';
+import { useGlobalStore, useSelectedRoomtypeStore } from '@/store';
 
 import { PROPERTY_CURRENCY } from '@/constants';
 import { formatCurrency } from '@/lib/number';
@@ -27,6 +27,7 @@ const RoomSelectionComponent = () => {
   const [selectedRoom, setSelectedRoom] = useState<SelectedRoomtype>();
   const { setSelectedRoomtype } = useSelectedRoomtypeStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
+  const { openDatepickerDrawer } = useGlobalStore();
 
   const {
     data: roomTypeWithRatesPlans,
@@ -52,8 +53,9 @@ const RoomSelectionComponent = () => {
     (room: SelectedRoomtype) => {
       setSelectedRoom(room);
       setSelectedRoomtype(room);
+      openDatepickerDrawer();
     },
-    [setSelectedRoomtype],
+    [openDatepickerDrawer, setSelectedRoomtype],
   );
 
   if (loading) {
@@ -105,9 +107,15 @@ const RoomSelectionComponent = () => {
                 {`Max ${maxCapacity} ${t('person.plural')}`}
               </Typography>
               <Typography className='pb-4'>{description}</Typography>
-              <Typography weight='medium' className='pb-6 underline'>
+
+              <Typography
+                weight='medium'
+                className='pb-6 underline'
+                onClick={() => handleRoomSelection(room)}
+              >
                 {standardCapacity} {t('person.plural')}
               </Typography>
+
               <Typography className='pb-5' variant='base'>
                 <>
                   {t('from')}{' '}

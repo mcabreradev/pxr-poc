@@ -9,7 +9,7 @@ import { formatStringToDate, getFormatedMontsDays } from '@/lib/time';
 import Button from '@/components/button';
 import Typography from '@/components/typography';
 
-import { useGlobalStore, useReservationQueryStore } from '@/store';
+import { useReservationQueryStore } from '@/store';
 
 import {
   CHECKIN_DEFAULT_FUTURE_DAYS,
@@ -17,13 +17,13 @@ import {
   TOTAL_ADULTS_DEFAULT,
 } from '@/constants';
 import { useSearchParamOrStore } from '@/hooks';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function MobileDatepickerComponent() {
   const {
     reservation: { adults, childrens, infants },
   } = useReservationQueryStore();
-  const { openDatepickerDrawer } = useGlobalStore();
+
   const { t } = useTranslation();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
 
@@ -45,6 +45,13 @@ export default function MobileDatepickerComponent() {
     checkout ? new Date(checkout) : checkoutDefault,
   );
 
+  const handleClick = useCallback(() => {
+    const element = document.getElementById('rooms');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+
   return (
     <div
       className='relative flex h-full w-full flex-row items-center justify-around bg-white px-2 py-5'
@@ -58,7 +65,7 @@ export default function MobileDatepickerComponent() {
           variant='sm'
           weight='normal'
           className='flex underline'
-          onClick={openDatepickerDrawer}
+          onClick={handleClick}
         >
           {`${getFormatedMontsDays(
             startDate,
@@ -67,7 +74,7 @@ export default function MobileDatepickerComponent() {
         </Typography>
       </div>
       <div>
-        <Button type='button' slim={true}>
+        <Button type='button' slim={true} onClick={handleClick}>
           {t('button.choose-room')}
         </Button>
       </div>

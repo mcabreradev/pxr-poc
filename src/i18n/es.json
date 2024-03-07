@@ -3,6 +3,7 @@
     "plural": "adultos",
     "singular": "adulto"
   },
+  "and": "y",
   "breakfast": "Desayuno",
   "button": {
     "accept": "Aceptar y continuar",
@@ -206,6 +207,33 @@
     "unexpected-error": "Un error inesperado ha ocurrido.",
     "wrong": "Algo salió mal."
   },
+  "summary": {
+    "address": "Dirección",
+    "cancel-reservation": "Anular reserva",
+    "contact": "Contacta al hotel",
+    "cost": "Costo total",
+    "directions": "Cómo llegar",
+    "fill-data": "Completar datos",
+    "guests": "Huéspedes",
+    "hotel-information": "Ver información del hotel",
+    "invoice": "Obtener recibo",
+    "no-payment": "Ningún pago ha sido realizado",
+    "no-reviews": "Todavía no hay reseñas",
+    "payment-title": "Pagos",
+    "reservation-code": "Código de reserva",
+    "stay": "Tu estadía en",
+    "taxes-reminder-1": "Le recordamos que deberá realizar el pago de impuestos de",
+    "taxes-reminder-2": "al momento de su llegada al hotel"
+  },
+  "terms": {
+    "part1": "Al seleccionar",
+    "part2": "confirmo que estoy de acuerdo con",
+    "service": "los términos del servicio",
+    "payment": "los términos de pago del servicio",
+    "nondiscrimination": "la política de no discriminación.",
+    "part3": "Además reconozco y acepto",
+    "privacy": "la política de privacidad"
+  },
   "title": {
     "activities": "Actividades",
     "attractions": "Sitios de interés cercanos",
@@ -230,6 +258,7 @@
     "room-details": "Detalle de la habitación",
     "search": "Busca tu hotel",
     "show-more": "Mostrar más",
+    "summary": "Reserva confirmada",
     "termsandconditions": "Terms and Conditions",
     "wanna-sleep": "¿Dónde quieres dormir?"
   },

@@ -3,6 +3,7 @@
     "plural": "adults",
     "singular": "adult"
   },
+  "and": "and",
   "breakfast": "Breakfast",
   "button": {
     "accept": "Accept and continue",
@@ -206,6 +207,33 @@
     "unexpected-error": "An unexpected error occurred.",
     "wrong": "Something went wrong."
   },
+  "summary": {
+    "address": "Address",
+    "cancel-reservation": "Cancel reservation",
+    "contact": "Contact hotel",
+    "cost": "Total cost",
+    "directions": "Directions",
+    "fill-data": "Fill data",
+    "guests": "Guests",
+    "hotel-information": "View hotel information",
+    "invoice": "Get invoice",
+    "no-payment": "No payment has been made",
+    "no-reviews": "No reviews yet",
+    "payment-title": "Payments",
+    "reservation-code": "Reservation code",
+    "stay": "Your stay at",
+    "taxes-reminder-1": "We remind you you must pay",
+    "taxes-reminder-2": "in taxes when you arrive at the hotel"
+  },
+  "terms": {
+    "part1": "By selecting",
+    "part2": "I agree to Paxer's",
+    "service": "Terms of service",
+    "payment": "Payments Terms of Service",
+    "nondiscrimination": "Nondiscrimination Policy",
+    "part3": "and acknowledge the",
+    "privacy": "Privacy Policy"
+  },
   "title": {
     "activities": "Activities",
     "attractions": "Nearby attractions",
@@ -230,6 +258,7 @@
     "room-details": "Room Details",
     "search": "Search",
     "show-more": "Show more",
+    "summary": "Reservation confirmed",
     "termsandconditions": "Terms and Conditions",
     "wanna-sleep": "Where do you wanna sleep?"
   },

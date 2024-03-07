@@ -8,13 +8,17 @@ import useStripePaymentIntentQuery from '@/queries/use-stripe.query';
 
 import CheckoutForm from '@/features/payment/checkout-form';
 
+type Props = {
+  roomTypeId: number;
+};
+
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
 );
 
 const idempotentKey = uuid();
 
-const StripePayment = memo(() => {
+const StripePayment = memo(({ roomTypeId }: Props) => {
   const {
     data: clientSecret,
     isLoading: isLoadingPaymentIntent,
@@ -52,7 +56,7 @@ const StripePayment = memo(() => {
     <div data-testid='test-element'>
       {stripePromise && clientSecret && (
         <Elements options={{ clientSecret }} stripe={stripePromise}>
-          <CheckoutForm />
+          <CheckoutForm roomTypeId={roomTypeId} />
         </Elements>
       )}
     </div>

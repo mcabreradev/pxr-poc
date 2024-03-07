@@ -70,3 +70,16 @@ export const selectRoomSchema = () => {
     })
     .required();
 };
+
+export const identificationSchema = (t) => {
+  return yup
+    .object({
+      email: yup
+        .string()
+        .email(t('form.email.invalid'))
+        .required(t('form.email.required')),
+      name: yup.string().required(t('form.name.required')),
+      lastname: yup.string().required(t('form.lastname.required')),
+    })
+    .required();
+};

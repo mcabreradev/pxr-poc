@@ -89,7 +89,7 @@ export type FontWeight =
   | 'extralight'
   | 'thin';
 
-type TagType = 'span' | 'div' | 'label' | string;
+type TagType = 'span' | 'div' | 'label' | 'a' | string;
 
 export type TextProps = {
   id?: string;
@@ -99,6 +99,7 @@ export type TextProps = {
   onClick?: () => void;
   className?: string;
   tag?: TagType;
+  href?: string;
 };
 
 const StyledSpan = tw.span<TextProps>`
@@ -122,6 +123,14 @@ const StyledLabel = tw.label<TextProps>`
   ${({ weight }) => getFontWeight(weight)}
 `;
 
+const StyledA = tw.a<TextProps>`
+  font-normal
+  leading-[160%]
+  text-blue underline hover:no-underline
+  ${({ variant }) => getVariant(variant)}
+  ${({ weight }) => getFontWeight(weight)}
+`;
+
 const Typography = ({
   id,
   className,
@@ -129,6 +138,7 @@ const Typography = ({
   weight = undefined,
   children,
   tag = TAG.DIV,
+  href,
   onClick,
   ...rest
 }: TextProps) => {
@@ -158,6 +168,21 @@ const Typography = ({
       >
         {children}
       </StyledLabel>
+    );
+  }
+
+  if (tag === TAG.A) {
+    return (
+      <StyledA
+        id={id}
+        variant={variant}
+        weight={weight}
+        className={className}
+        href={href}
+        {...rest}
+      >
+        {children}
+      </StyledA>
     );
   }
 

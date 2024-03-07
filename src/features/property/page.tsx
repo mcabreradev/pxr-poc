@@ -11,6 +11,7 @@ import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import HotelRules from '@/features/components/hotel-rules';
 import { useReservationQueryStore } from '@/store';
 
 import {
@@ -341,22 +342,7 @@ const PropertyPage = memo(function HotelPage() {
       </Section>
       <hr />
       <Section className='p-4 pb-6 pt-2'>
-        <Typography variant='h2' weight='normal'>
-          {t('title.hotel-rules')}
-        </Typography>
-
-        <div className='my-4 pr-16 md:w-1/3'>
-          {data.rules.map((rule, key) => (
-            <div key={`$rules-${key}`} className='flex justify-between py-2'>
-              <Typography>{rule.name}</Typography>
-              <Typography weight='light'>{rule.description}</Typography>
-            </div>
-          ))}
-        </div>
-
-        <Typography weight='semibold' className='underline'>
-          {t('title.show-more')}
-        </Typography>
+        <HotelRules rules={data.rules} classname='pr-16 md:w-1/3' />
       </Section>
 
       <Sticky className='md:sticky md:hidden' show={showStickyGuestForm}>

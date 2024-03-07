@@ -1,6 +1,7 @@
 'use client';
 
 import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -8,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 
-import { useSessionStore } from '@/store';
+import { useSessionStore, useUserStore } from '@/store';
 
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
@@ -34,11 +35,20 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
+  const { setLoginEnabled } = useUserStore();
   const { session } = useSessionStore();
 
   const actionPayment = !action;
   const actionSuccess = action === URL.SUCCESS;
   const actionError = action === URL.ERROR;
+
+  useEffect(() => {
+    setLoginEnabled(false);
+
+    return () => {
+      setLoginEnabled(true);
+    };
+  }, [setLoginEnabled]);
 
   if (!session) {
     redirect('/');
@@ -72,9 +82,9 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              {actionPayment && <StripePayment />}
-              {actionSuccess && <StripePayment />}
-              {actionError && <StripePayment />}
+              {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
+              {actionSuccess && <StripePayment roomTypeId={roomTypeId} />}
+              {actionError && <StripePayment roomTypeId={roomTypeId} />}
             </section>
           </div>
         </div>

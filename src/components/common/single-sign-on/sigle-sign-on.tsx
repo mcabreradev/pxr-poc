@@ -13,13 +13,16 @@ import useUserStore from '@/store/use-user.store';
 
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 
+import { EventData } from '@/types';
+
 export default function SingleSignOn() {
   const { t } = useTranslation();
   const [user, setUser] = useState(null);
+  const [lastMessage, setLastMessage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const { urlStatus, urlSignin } = useHostUrl();
-  const { getEventData, subscribe, publish } = useEventBus();
-  const { addUser } = useUserStore();
+  const { getEventData, publish } = useEventBus();
+  const { addUser, loginEnabled } = useUserStore();
   const { setSession, removeSession } = useSessionStore();
 
   const openModal = () => setModalOpen(true);
@@ -31,12 +34,16 @@ export default function SingleSignOn() {
 
       if (!eventType) return;
 
+      // Without this logout may behave unexpectedly at certain views (payment view for example)
+      if (eventType === lastMessage && data && !data.err) return;
+
+      setLastMessage(eventType);
       console.log('SSO', { eventType, data });
 
       if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
         closeModal();
         setUser(data);
-        addUser(data);
+        addUser({ ...data, isAuth: true });
         setSession(data);
       }
       if (eventType === SIGNOUT) {
@@ -45,24 +52,30 @@ export default function SingleSignOn() {
         removeSession();
       }
     },
-    [addUser, removeSession, setSession],
+    [addUser, removeSession, setSession, lastMessage],
   );
 
   const signOut = () => {
     publish({
       eventType: SIGNOUT,
-      data: user,
+      data: {},
     });
   };
 
   useEffect(() => {
-    subscribe(handlerEvent);
+    const messageListener = (event) => {
+      if (event.data) {
+        const eventData: EventData = event.data;
+        handlerEvent(eventData);
+      }
+    };
+    window.addEventListener('message', messageListener);
     getEventData(urlStatus);
-  }, [getEventData, handlerEvent, subscribe, urlStatus]);
+  }, [getEventData, handlerEvent, urlStatus]);
 
   if (user) {
     return (
-      <Typography variant='sm' onClick={signOut}>
+      <Typography variant='sm' onClick={loginEnabled ? signOut : () => {}}>
         {t('signout')}
       </Typography>
     );
@@ -70,7 +83,7 @@ export default function SingleSignOn() {
 
   return (
     <>
-      <Typography variant='sm' onClick={openModal}>
+      <Typography variant='sm' onClick={loginEnabled ? openModal : () => {}}>
         {t('signin')}
       </Typography>
       <Modal isOpen={modalOpen} onClose={closeModal}>

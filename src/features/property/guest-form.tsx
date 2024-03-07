@@ -1,6 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
 import { useTranslation } from 'react-i18next';
-import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
@@ -10,37 +9,48 @@ import DatepickerDesktop from './datepicker/desktop-datepicker';
 import Dropdown from './dropdown';
 
 import { PROPERTY_CURRENCY } from '@/constants';
+import { useIntersectionObserver, useSubscribeToStore } from '@/hooks';
 import { formatCurrency } from '@/lib/number';
-import { useSelectedRoomtypeStore } from '@/store';
+import { useGlobalStore, useSelectedRoomtypeStore } from '@/store';
 import { Ratesplan, SelectedRoomtype } from '@/types';
 import { useEffect, useState } from 'react';
 
-interface Props {
-  className?: string;
-}
-
-const Container = tw.div`
-sticky bottom-0 top-5 ml-5 mt-5 box-border flex h-min w-full flex-col rounded border-[1px] border-solid border-neutral-50 bg-white p-5 drop-shadow-lg`;
-
-export default function GuestFormComponent({ className }: Props) {
+export default function GuestFormComponent() {
   const { t } = useTranslation();
   const [room, setRoom] = useState<SelectedRoomtype>();
   const [ratesPlan, setRatesPlan] = useState<Ratesplan>();
+  const [isIntersected, setIntersected] = useState<boolean | undefined>(false);
+  const { setGuestFormIntersecting } = useGlobalStore();
+
+  const { ref, entry } = useIntersectionObserver({
+    threshold: 1,
+    root: null,
+    rootMargin: '160px',
+  });
+
+  useSubscribeToStore(useSelectedRoomtypeStore, ({ selectedRoom }) => {
+    setRoom(selectedRoom);
+    setRatesPlan(selectedRoom?.ratesPlan);
+  });
+
+  useSubscribeToStore(useGlobalStore, ({ gallery }) => {
+    setIntersected(gallery?.isIntersecting);
+  });
 
   useEffect(() => {
-    /**
-     * Subscribes to the selected room type store and updates the room and rates plan state.
-     * @returns {void}
-     */
-    const unsub = useSelectedRoomtypeStore.subscribe(({ selectedRoom }) => {
-      setRoom(selectedRoom);
-      setRatesPlan(selectedRoom?.ratesPlan);
-    });
-    return unsub;
-  }, []);
+    if (entry && 'isIntersecting' in entry) {
+      setGuestFormIntersecting(entry.isIntersecting);
+    }
+  }, [entry, setGuestFormIntersecting]);
 
   return (
-    <Container className={cn(className)}>
+    <div
+      className={cn(
+        'sticky bottom-0 top-28 ml-5 mt-5 box-border flex h-min w-full flex-col rounded border-[1px] border-solid border-neutral-50 bg-white p-5 drop-shadow-lg',
+      )}
+      ref={ref}
+    >
+      {isIntersected}
       <Typography variant='sm' weight='semibold' className='mb-4'>
         {`${t('checkin')} - ${t('checkout')}`}
       </Typography>
@@ -74,6 +84,6 @@ export default function GuestFormComponent({ className }: Props) {
       >
         {ratesPlan ? t('button.search') : t('button.choose-room')}
       </Button>
-    </Container>
+    </div>
   );
 }

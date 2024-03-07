@@ -11,11 +11,11 @@ import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
+import { useSelectedRoomtypeStore } from '@/store';
 
 import { PROPERTY_CURRENCY } from '@/constants';
 import { formatCurrency } from '@/lib/number';
-import { useRoomTypeWithRatesPlansQuery } from '@/queries/use-roomtypes.query';
+import { useRoomTypeWithRatesPlansQuery } from '@/queries';
 import { SelectedRoomtype } from '@/types';
 
 const Rooms = tw.div`
@@ -39,7 +39,7 @@ const RoomSelectionComponent = () => {
   });
   const [roomtypes, ratesPlan] = [
     roomTypeWithRatesPlans?.[0],
-    roomTypeWithRatesPlans?.[1],
+    roomTypeWithRatesPlans?.[1] ?? [],
   ];
   const roomtypesWithRatesPlan = roomtypes?.map((room) => {
     return {
@@ -79,8 +79,6 @@ const RoomSelectionComponent = () => {
           standardCapacity,
           ratesPlan,
         } = room;
-
-        // console.log('ratesPlan', ratesPlan);
 
         return (
           <Rooms

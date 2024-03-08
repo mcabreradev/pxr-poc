@@ -1,6 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
+import { motion } from 'framer-motion';
 import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -94,7 +95,13 @@ const PropertyPage = memo(function HotelPage() {
   }
 
   return (
-    <main data-id-test='test-componet' className='layout'>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      data-id-test='test-componet'
+      className='layout'
+    >
       <Gallery photos={data.images} />
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>
@@ -350,7 +357,7 @@ const PropertyPage = memo(function HotelPage() {
       </Sticky>
 
       <MobileDatepicker />
-    </main>
+    </motion.main>
   );
 });
 

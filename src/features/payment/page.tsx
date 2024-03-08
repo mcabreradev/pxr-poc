@@ -1,9 +1,9 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
@@ -23,9 +23,6 @@ type Props = {
   roomTypeId: number;
   action?: string;
 };
-
-const Container = tw.div`
-`;
 
 export default function PaymentFeature({ roomTypeId, action }: Props) {
   const { t } = useTranslation();
@@ -66,7 +63,10 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   }
 
   return (
-    <Container
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
@@ -89,6 +89,6 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
           </div>
         </div>
       </div>
-    </Container>
+    </motion.div>
   );
 }

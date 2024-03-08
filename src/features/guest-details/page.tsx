@@ -1,7 +1,8 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
+
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
@@ -24,9 +25,6 @@ import GuestSkeletonComponent from './guest-skeleton';
 type Props = {
   roomTypeId: number;
 };
-
-const Container = tw.div`
-`;
 
 export default function DetailsComponent({ roomTypeId }: Props) {
   const { t } = useTranslation();
@@ -70,7 +68,10 @@ export default function DetailsComponent({ roomTypeId }: Props) {
   }
 
   return (
-    <Container
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
@@ -102,6 +103,6 @@ export default function DetailsComponent({ roomTypeId }: Props) {
           </div>
         </div>
       </div>
-    </Container>
+    </motion.div>
   );
 }

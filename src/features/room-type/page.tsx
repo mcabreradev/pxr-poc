@@ -1,6 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
+import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -25,9 +26,6 @@ type Props = {
   roomTypeId: number;
   className?: string;
 };
-
-const Container = tw.div`
-`;
 
 const Section = tw.div`
 px-4 text-black md:px-0
@@ -58,7 +56,10 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   }
 
   return (
-    <Container
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
       className={cn('relative', className)}
       data-testid='test-element'
       datatype={room}
@@ -136,6 +137,6 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
           </div>
         </div>
       </div>
-    </Container>
+    </motion.main>
   );
 }

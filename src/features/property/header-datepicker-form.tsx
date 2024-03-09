@@ -9,7 +9,7 @@ import { formatStringToDate, getFormatedMontsDays } from '@/lib/time';
 import Button from '@/components/button';
 import Typography from '@/components/typography';
 
-import useReservationQueryStore from '@/store/use-reservation.store';
+import useReservationStore from '@/store/use-reservation.store';
 
 import {
   CHECKIN_DEFAULT_FUTURE_DAYS,
@@ -23,7 +23,7 @@ import { useState } from 'react';
 export default function HeaderDatepickerComponent() {
   const {
     reservation: { adults, childrens, infants },
-  } = useReservationQueryStore();
+  } = useReservationStore();
   const { openDatepickerDrawer } = useGlobalStore();
   const { t } = useTranslation();
   const { getCheckin, getCheckout } = useSearchParamOrStore();

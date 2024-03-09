@@ -16,7 +16,7 @@ import { cn, ps } from '@/lib/utils';
 
 import { Button, Toggle, Typography } from '@/components';
 
-import { useReservationQueryStore, useSelectedRoomtypeStore } from '@/store';
+import { useReservationStore, useSelectedRoomtypeStore } from '@/store';
 
 import {
   EXTRA,
@@ -51,7 +51,7 @@ px-4 text-black md:px-0
 
 export default function MyTrip({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
-  const { reservation, setReservation } = useReservationQueryStore();
+  const { reservation, setReservation } = useReservationStore();
   const { checkin, checkout, checkinDayjs, checkoutDayjs } =
     useCheckinCheckoutHook();
   const { selectedRoom } = useSelectedRoomtypeStore();

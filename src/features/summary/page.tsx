@@ -10,7 +10,7 @@ import BackButton from '@/components/common/back-button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { useReservationQueryStore } from '@/store';
+import { useReservationStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
 import PriceDetails from '@/features/components/price-details';
@@ -66,7 +66,7 @@ export default function SummaryFeature({ className, roomType }: Props) {
     data: room,
   } = useRoomTypeQuery(roomType);
   const { t, i18n } = useTranslation();
-  const { reservation } = useReservationQueryStore();
+  const { reservation } = useReservationStore();
 
   const checkin = dayjs(getCheckin());
   const checkout = dayjs(getCheckout());

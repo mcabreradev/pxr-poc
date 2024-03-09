@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 import { getCheckinDefault, getCheckoutDefault } from '@/lib/time';
 
-import useReservationQueryStore from '@/store/use-reservation.store';
+import useReservationStore from '@/store/use-reservation.store';
 
 import {
   ADULTS,
@@ -23,7 +23,7 @@ import { Reservation } from '@/types';
 
 const useSearchParamOrStore = () => {
   const searchParams = useSearchParams();
-  const { getReservationBy } = useReservationQueryStore();
+  const { getReservationBy } = useReservationStore();
 
   const getByQueryParamOrStoreItem = useCallback(
     (p: string, s: keyof Reservation) => {

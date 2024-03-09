@@ -14,7 +14,7 @@ import { formatCurrency } from '@/lib/number';
 
 import { Button, Icon, Typography } from '@/components';
 
-import { useReservationQueryStore, useSessionStore } from '@/store';
+import { useReservationStore, useSessionStore } from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
 import HotelRules from '@/features/components/hotel-rules';
@@ -35,7 +35,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const { session } = useSessionStore();
-  const { reservation } = useReservationQueryStore();
+  const { reservation } = useReservationStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);

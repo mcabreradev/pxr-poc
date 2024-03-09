@@ -25,7 +25,7 @@ import Typography from '@/components/typography';
 
 import {
   useGlobalStore,
-  useReservationQueryStore,
+  useReservationStore,
   useSelectedRoomtypeStore,
 } from '@/store';
 
@@ -49,7 +49,7 @@ export default function MobileDatepickerComponent() {
   const { locale } = useLocale();
   const { t } = useTranslation();
   const router = useRouter();
-  const { setReservation } = useReservationQueryStore();
+  const { setReservation } = useReservationStore();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { updateQueryString } = useQueryString();
   const { closeDatepickerDrawer } = useGlobalStore();

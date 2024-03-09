@@ -99,7 +99,7 @@ export default function FormAuthComponent({ className, roomTypeId }: Props) {
           </span>
         </div>
         <Button
-          className='mt-3 font-semibold md:w-full'
+          className='mt-3 w-full font-semibold'
           variant='primary'
           type='submit'
         >

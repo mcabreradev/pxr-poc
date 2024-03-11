@@ -13,7 +13,7 @@ import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
 import HotelRules from '@/features/components/hotel-rules';
-import { useReservationQueryStore } from '@/store';
+import { useReservationStore } from '@/store';
 
 import {
   useAvailabilityQuery,
@@ -51,7 +51,7 @@ const PropertyPage = memo(function HotelPage() {
   const { t, i18n } = useTranslation();
   const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
-  const { resetReservation } = useReservationQueryStore();
+  const { resetReservation } = useReservationStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
   const { refetch: fetchAvailability } = useAvailabilityQuery({
     checkin,

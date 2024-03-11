@@ -22,6 +22,7 @@ import Typography from '@/components/typography';
 import { useGlobalStore, useReservationStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
+
 import {
   useAvailabilityQuery,
   usePropertyQuery,
@@ -357,7 +358,7 @@ const PropertyPage = memo(function HotelPage() {
 
       <hr />
       <Section className='p-4 pb-6 pt-2'>
-        <HotelRules rules={data.rules} classname='pr-16 md:w-1/3' />
+        <HotelRules rules={data.rules} classname=' md:w-1/3' />
       </Section>
 
       <Sticky className='md:sticky md:hidden' show={isIntersected}>

@@ -27,16 +27,13 @@ import {
 } from '@/store';
 
 import {
-  ADULTS,
   CALENDAR,
   CHECKIN,
   CHECKOUT,
-  CHILDRENS,
   GUESTSINFO,
-  INFANTS,
-  TOTAL_ADULTS_DEFAULT,
-  TOTAL_CHILDRENS_DEFAULT,
-  TOTAL_INFANTS_DEFAULT,
+  TOTAL_ADULTS,
+  TOTAL_CHILDRENS,
+  TOTAL_INFANTS,
 } from '@/constants';
 
 export default function MobileDatepickerComponent() {
@@ -127,15 +124,19 @@ export default function MobileDatepickerComponent() {
 
   // Select Guests
   const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
-  const [adults, setAdults] = useState(
-    () => getAdults() || TOTAL_ADULTS_DEFAULT,
+
+  // eslint-disable-next-line no-console
+  console.log(
+    'getAdults',
+    getAdults(),
+    'getChildrens',
+    getChildrens(),
+    'getInfants',
+    getInfants(),
   );
-  const [childrens, setChildrens] = useState(
-    () => getChildrens() || TOTAL_CHILDRENS_DEFAULT,
-  );
-  const [infants, setInfants] = useState(
-    () => getInfants() || TOTAL_INFANTS_DEFAULT,
-  );
+  const [adults, setAdults] = useState(getAdults());
+  const [childrens, setChildrens] = useState(getChildrens());
+  const [infants, setInfants] = useState(getInfants());
 
   const {
     selectedRoom,
@@ -143,7 +144,7 @@ export default function MobileDatepickerComponent() {
   } = useSelectedRoomtypeStore();
 
   const totalGuests = adults + childrens + infants;
-  const isMaxCapacityReached = false; //totalGuests >= (maxCapacity ?? 0);
+  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
   const adultsBlockedCondition = isMaxCapacityReached;
   const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
   const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
@@ -162,9 +163,9 @@ export default function MobileDatepickerComponent() {
       const query = createQueryString({
         [CHECKIN]: formatDateToString(startDate),
         [CHECKOUT]: formatDateToString(endDate),
-        [ADULTS]: adults,
-        [CHILDRENS]: childrens,
-        [INFANTS]: infants,
+        [TOTAL_ADULTS]: adults,
+        [TOTAL_CHILDRENS]: childrens,
+        [TOTAL_INFANTS]: infants,
       });
 
       router.push(`/room-type/${selectedRoom.id}?${query}`);

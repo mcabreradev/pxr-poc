@@ -6,36 +6,36 @@ import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import {
+  useCheckinCheckoutHook,
+  useIntersectionObserver,
+  useQueryString,
+} from '@/hooks';
+
+import { Sticky } from '@/components';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import HotelRules from '@/features/components/hotel-rules';
 import { useReservationStore } from '@/store';
 
+import HotelRules from '@/features/components/hotel-rules';
 import {
   useAvailabilityQuery,
   usePropertyQuery,
   useRatesPlanQuery,
 } from '@/queries';
 
-import {
-  useCheckinCheckoutHook,
-  useIntersectionObserver,
-  useQueryString,
-} from '@/hooks';
 import PropertyAmenities from './amenities';
+import data from './data.json';
 import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
 import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';
 import PropertyTopSights from './topsights';
-
-import { Sticky } from '@/components';
-import data from './data.json';
 
 const Section = tw.div`
   px-4 text-black
@@ -57,11 +57,14 @@ const PropertyPage = memo(function HotelPage() {
     checkin,
     checkout,
   });
+
+  // Fetch rates plan
   const { refetch: fetchRatesPlan } = useRatesPlanQuery({
     checkin,
     checkout,
   });
 
+  // Fetch availability and rates plan when checkin and checkout are set
   useEffect(() => {
     if (checkin && checkout) {
       fetchAvailability();
@@ -69,6 +72,7 @@ const PropertyPage = memo(function HotelPage() {
     }
   }, [checkin, checkout, fetchAvailability, fetchRatesPlan]);
 
+  // Remove the action and extra query params
   useEffect(() => {
     removeBlacklistParam(['action', 'extra', 'plan']);
     resetReservation();
@@ -80,6 +84,7 @@ const PropertyPage = memo(function HotelPage() {
     rootMargin: '100px 0px 0px 100px',
   });
 
+  // Show sticky guest form when the room selection is not visible
   useEffect(() => {
     if (entry && 'isIntersecting' in entry) {
       setShowStickyGuestForm(!entry.isIntersecting);

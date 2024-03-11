@@ -11,11 +11,8 @@ import {
   useQueryString,
   useSearchParamOrStore,
 } from '@/hooks';
-import {
-  formatDateToString,
-  formatStringToDate,
-  getFormatedMontsDays,
-} from '@/lib/time';
+import useWindowSize from '@/hooks/use-windowsize';
+import { formatDateToString, getFormatedMontsDays } from '@/lib/time';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -33,9 +30,7 @@ import {
   ADULTS,
   CALENDAR,
   CHECKIN,
-  CHECKIN_DEFAULT_FUTURE_DAYS,
   CHECKOUT,
-  CHECKOUT_DEFAULT_FUTURE_DAYS,
   CHILDRENS,
   GUESTSINFO,
   INFANTS,
@@ -43,15 +38,14 @@ import {
   TOTAL_CHILDRENS_DEFAULT,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
-import useWindowSize from '@/hooks/use-windowsize';
 
 export default function MobileDatepickerComponent() {
   const { locale } = useLocale();
   const { t } = useTranslation();
   const router = useRouter();
   const { setReservation } = useReservationStore();
-  const { getCheckin, getCheckout } = useSearchParamOrStore();
-  const { updateQueryString } = useQueryString();
+  const { checkinDate, checkoutDate } = useSearchParamOrStore();
+  const { createQueryString } = useQueryString();
   const { closeDatepickerDrawer } = useGlobalStore();
   const { size } = useWindowSize();
   const refView = useClickAway(() => {
@@ -64,20 +58,8 @@ export default function MobileDatepickerComponent() {
 
   // Calendar
   const today = dayjs();
-  const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  const checkin = formatStringToDate(getCheckin());
-  const [startDate, setStartDate] = useState<Date | null>(
-    checkin ? new Date(checkin) : checkinDefault,
-  );
-
-  const checkoutDefault = today
-    .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
-    .toDate();
-  const checkout = formatStringToDate(getCheckout());
-  const [endDate, setEndDate] = useState<Date | null>(
-    checkout ? new Date(checkout) : checkoutDefault,
-  );
-
+  const [startDate, setStartDate] = useState<Date | null>(checkinDate);
+  const [endDate, setEndDate] = useState<Date | null>(checkoutDate);
   const [isOpenDatepickerDrawer, setOpenDatepickerDrawer] = useState(false);
 
   const onChange = useCallback((dates) => {
@@ -169,7 +151,7 @@ export default function MobileDatepickerComponent() {
   /// Search - final step
   const handleSearch = useCallback(() => {
     if (!startDate || !endDate) return;
-    setTimeout(() => {
+    try {
       setReservation({
         checkin: formatDateToString(startDate),
         checkout: formatDateToString(endDate),
@@ -177,27 +159,31 @@ export default function MobileDatepickerComponent() {
         childrens,
         infants,
       });
-      updateQueryString({
+      const query = createQueryString({
         [CHECKIN]: formatDateToString(startDate),
         [CHECKOUT]: formatDateToString(endDate),
         [ADULTS]: adults,
         [CHILDRENS]: childrens,
         [INFANTS]: infants,
       });
-      router.push(`/room-type/${selectedRoom.id}`);
+
+      router.push(`/room-type/${selectedRoom.id}?${query}`);
       closeDatepickerDrawer();
-    }, 300);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error on Datepicker handleSearch', error);
+    }
   }, [
     adults,
     childrens,
     closeDatepickerDrawer,
+    createQueryString,
     endDate,
     infants,
     router,
     selectedRoom.id,
     setReservation,
     startDate,
-    updateQueryString,
   ]);
 
   const DayPickerText = ({

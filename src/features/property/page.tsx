@@ -70,15 +70,15 @@ const PropertyPage = memo(function HotelPage() {
     if (checkin && checkout) {
       fetchAvailability();
       fetchRatesPlan();
-      resetGlobalStore();
     }
-  }, [checkin, checkout, fetchAvailability, fetchRatesPlan, resetGlobalStore]);
+  }, [checkin, checkout, fetchAvailability, fetchRatesPlan]);
 
   // Remove the action and extra query params
   useEffect(() => {
     removeBlacklistParam(['action', 'extra', 'plan']);
     resetReservation();
-  }, [removeBlacklistParam, resetReservation]);
+    resetGlobalStore();
+  }, [removeBlacklistParam, resetGlobalStore, resetReservation]);
 
   const { ref: roomSelectedRef, entry } = useIntersectionObserver({
     threshold: 0.5,

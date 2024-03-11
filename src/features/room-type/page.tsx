@@ -15,9 +15,12 @@ import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
+import { useGlobalStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
+
+import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
+
 import data from './data.json';
 import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';
@@ -35,6 +38,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam } = useQueryString();
+  const { resetGlobalStore } = useGlobalStore();
 
   const { checkin, checkout } = useSearchParamOrStore();
   const { data: ratesPlan } = useRatesPlanQuery({
@@ -43,9 +47,11 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
     roomTypeId,
   });
 
+  // Reset global store and remove blacklist params
   useEffect(() => {
     removeBlacklistParam(['']);
-  }, [removeBlacklistParam]);
+    resetGlobalStore();
+  }, [removeBlacklistParam, resetGlobalStore]);
 
   if (isLoading) {
     return <Skeleton />;

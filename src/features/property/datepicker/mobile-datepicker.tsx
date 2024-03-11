@@ -161,9 +161,9 @@ export default function MobileDatepickerComponent() {
         [TOTAL_CHILDRENS]: childrens,
         [TOTAL_INFANTS]: infants,
       });
-      closeDatepickerDrawer();
       router.push(`/room-type/${selectedRoom.id}?${query}`);
     } catch (error) {
+      closeDatepickerDrawer();
       // eslint-disable-next-line no-console
       console.error('Error on Datepicker handleSearch', error);
     }
@@ -414,10 +414,11 @@ export default function MobileDatepickerComponent() {
           </Button>
         )}
 
-        {show === GUESTSINFO && planDays && (
+        {show === GUESTSINFO && planDays > 0 && (
           <Button
             type='button'
             variant='primary'
+            disabled={!totalGuests}
             icon={
               <Icon variant='search' color='white' width={15} height={15} />
             }
@@ -431,7 +432,7 @@ export default function MobileDatepickerComponent() {
           <Button
             type='button'
             variant='primary'
-            disabled={!planDays}
+            disabled={!planDays || !totalGuests}
             icon={
               <Icon variant='search' color='white' width={15} height={15} />
             }

@@ -19,7 +19,7 @@ import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
-import { useReservationStore } from '@/store';
+import { useGlobalStore, useReservationStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
 import {
@@ -47,11 +47,12 @@ const Row = tw.div`
 `;
 
 const PropertyPage = memo(function HotelPage() {
-  const [showStickyGuestForm, setShowStickyGuestForm] = useState<boolean>(true);
+  const [isIntersected, setIntersected] = useState<boolean>(true);
   const { t, i18n } = useTranslation();
   const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
   const { resetReservation } = useReservationStore();
+  const { resetGlobalStore } = useGlobalStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
   const { refetch: fetchAvailability } = useAvailabilityQuery({
     checkin,
@@ -69,8 +70,9 @@ const PropertyPage = memo(function HotelPage() {
     if (checkin && checkout) {
       fetchAvailability();
       fetchRatesPlan();
+      resetGlobalStore();
     }
-  }, [checkin, checkout, fetchAvailability, fetchRatesPlan]);
+  }, [checkin, checkout, fetchAvailability, fetchRatesPlan, resetGlobalStore]);
 
   // Remove the action and extra query params
   useEffect(() => {
@@ -87,9 +89,9 @@ const PropertyPage = memo(function HotelPage() {
   // Show sticky guest form when the room selection is not visible
   useEffect(() => {
     if (entry && 'isIntersecting' in entry) {
-      setShowStickyGuestForm(!entry.isIntersecting);
+      setIntersected(!entry.isIntersecting);
     }
-  }, [entry, setShowStickyGuestForm]);
+  }, [entry, setIntersected]);
 
   if (isLoading) {
     return <Skeleton />;
@@ -199,7 +201,7 @@ const PropertyPage = memo(function HotelPage() {
         </div>
 
         <div className='hidden md:flex md:w-4/12'>
-          <GuestForm />
+          <GuestForm showButton={isIntersected} />
         </div>
       </div>
       <hr />
@@ -352,12 +354,13 @@ const PropertyPage = memo(function HotelPage() {
 
         <PropertyTopSights topSights={property?.topSights} className='pt-6' />
       </Section>
+
       <hr />
       <Section className='p-4 pb-6 pt-2'>
         <HotelRules rules={data.rules} classname='pr-16 md:w-1/3' />
       </Section>
 
-      <Sticky className='md:sticky md:hidden' show={showStickyGuestForm}>
+      <Sticky className='md:sticky md:hidden' show={isIntersected}>
         <StickyGuestForm />
       </Sticky>
 

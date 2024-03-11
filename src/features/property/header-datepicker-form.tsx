@@ -1,50 +1,28 @@
 /* eslint-disable simple-import-sort/imports */
-import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { formatStringToDate, getFormatedMontsDays } from '@/lib/time';
+import { getFormatedMontsDays } from '@/lib/time';
 
 import Button from '@/components/button';
 import Typography from '@/components/typography';
 
-import useReservationStore from '@/store/use-reservation.store';
-
-import {
-  CHECKIN_DEFAULT_FUTURE_DAYS,
-  CHECKOUT_DEFAULT_FUTURE_DAYS,
-  TOTAL_ADULTS_DEFAULT,
-} from '@/constants';
 import { useSearchParamOrStore } from '@/hooks';
 import useGlobalStore from '@/store/use-global.store';
 import { useState } from 'react';
 
 export default function HeaderDatepickerComponent() {
-  const {
-    reservation: { adults, childrens, infants },
-  } = useReservationStore();
   const { openDatepickerDrawer } = useGlobalStore();
   const { t } = useTranslation();
-  const { getCheckin, getCheckout } = useSearchParamOrStore();
 
-  const total =
-    (adults ?? TOTAL_ADULTS_DEFAULT) + (childrens ?? 0) + (infants ?? 0);
+  const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
+  const { checkinDate, checkoutDate } = useSearchParamOrStore();
 
-  const today = dayjs();
-  const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  const checkin = formatStringToDate(getCheckin());
-  const [startDate] = useState<Date>(
-    checkin ? new Date(checkin) : checkinDefault,
-  );
+  const [startDate] = useState<Date>(checkinDate);
+  const [endDate] = useState<Date>(checkoutDate);
 
-  const checkoutDefault = today
-    .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
-    .toDate();
-  const checkout = formatStringToDate(getCheckout());
-  const [endDate] = useState<Date>(
-    checkout ? new Date(checkout) : checkoutDefault,
-  );
+  const total = getAdults() + getChildrens() + getInfants();
 
   return (
     <div

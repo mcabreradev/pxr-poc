@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import {
   useClickAway,
   useLocale,
+  useMediaQuery,
   useQueryString,
   useSearchParamOrStore,
 } from '@/hooks';
@@ -31,6 +32,7 @@ import {
   CHECKIN,
   CHECKOUT,
   GUESTSINFO,
+  MOBILE_DEVICE_CSS_QUERY,
   TOTAL_ADULTS,
   TOTAL_CHILDRENS,
   TOTAL_INFANTS,
@@ -58,6 +60,7 @@ export default function MobileDatepickerComponent() {
   const [startDate, setStartDate] = useState<Date | null>(checkinDate);
   const [endDate, setEndDate] = useState<Date | null>(checkoutDate);
   const [isOpenDatepickerDrawer, setOpenDatepickerDrawer] = useState(false);
+  const isSmallDevice = useMediaQuery(MOBILE_DEVICE_CSS_QUERY);
 
   const onChange = useCallback((dates) => {
     const [start, end] = dates;
@@ -125,15 +128,6 @@ export default function MobileDatepickerComponent() {
   // Select Guests
   const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
 
-  // eslint-disable-next-line no-console
-  console.log(
-    'getAdults',
-    getAdults(),
-    'getChildrens',
-    getChildrens(),
-    'getInfants',
-    getInfants(),
-  );
   const [adults, setAdults] = useState(getAdults());
   const [childrens, setChildrens] = useState(getChildrens());
   const [infants, setInfants] = useState(getInfants());
@@ -167,9 +161,8 @@ export default function MobileDatepickerComponent() {
         [TOTAL_CHILDRENS]: childrens,
         [TOTAL_INFANTS]: infants,
       });
-
-      router.push(`/room-type/${selectedRoom.id}?${query}`);
       closeDatepickerDrawer();
+      router.push(`/room-type/${selectedRoom.id}?${query}`);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error on Datepicker handleSearch', error);
@@ -220,12 +213,12 @@ export default function MobileDatepickerComponent() {
       selectsStart
       startDate={startDate}
       endDate={endDate}
-      monthsShown={2}
+      monthsShown={isSmallDevice ? 2 : 3}
       customInput={<DayPickerText />}
       renderDayContents={DatePickerDay}
       dateFormat='MMM dd'
       minDate={today.toDate()}
-      calendarClassName='!flex flex-col md:flex-row gap-0 !font-sans'
+      calendarClassName='!flex flex-col md:flex-row gap-2 !font-sans md:justify-around'
       wrapperClassName='w-full'
       selectsRange
       selectsDisabledDaysInRange
@@ -364,7 +357,7 @@ export default function MobileDatepickerComponent() {
 
   const Buttons = () => (
     <div className='m-4 flex flex-none justify-between'>
-      <span>
+      <div>
         {show === CALENDAR && !!planDays && (
           <Button
             type='button'
@@ -398,7 +391,7 @@ export default function MobileDatepickerComponent() {
           </Button>
         )}
 
-        {!show && planDays && totalGuests > 0 && (
+        {!show && planDays > 0 && totalGuests > 0 && (
           <Button
             type='button'
             variant='text'
@@ -408,9 +401,9 @@ export default function MobileDatepickerComponent() {
             Borrar todo
           </Button>
         )}
-      </span>
+      </div>
 
-      <span>
+      <div>
         {show === CALENDAR && !!planDays && (
           <Button
             type='button'
@@ -447,7 +440,7 @@ export default function MobileDatepickerComponent() {
             Buscar
           </Button>
         )}
-      </span>
+      </div>
     </div>
   );
 
@@ -460,7 +453,7 @@ export default function MobileDatepickerComponent() {
       open={isOpenDatepickerDrawer}
       onClose={closeDatepickerDrawer}
     >
-      <div className='flex h-screen flex-col '>
+      <div className='md:layout flex h-screen flex-col'>
         <div className='flex-1 items-center justify-center'>
           {calendarCondition && (
             <Typography

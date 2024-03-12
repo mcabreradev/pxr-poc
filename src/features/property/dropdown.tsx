@@ -6,7 +6,7 @@ import tw from 'tailwind-styled-components';
 import { cn, ps } from '@/lib/utils';
 
 import { useClickAway, useQueryString, useSearchParamOrStore } from '@/hooks';
-import useReservationQueryStore from '@/store/use-reservation.store';
+import useReservationStore from '@/store/use-reservation.store';
 import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 import Button from '@/components/button';
@@ -34,7 +34,7 @@ flex items-center justify-center
 export default function DropdownComponent({ className }: Props) {
   const { t } = useTranslation();
   const { updateQueryString } = useQueryString();
-  const { setReservation } = useReservationQueryStore();
+  const { setReservation } = useReservationStore();
 
   const [selectedRoom, setRoom] = useState<SelectedRoomtype>();
   const [roomPrice, setRatesPlan] = useState<Ratesplan>();

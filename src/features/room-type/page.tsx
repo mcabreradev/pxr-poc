@@ -1,6 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
+import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -14,9 +15,12 @@ import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
+import { useGlobalStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
+
+import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
+
 import data from './data.json';
 import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';
@@ -26,9 +30,6 @@ type Props = {
   className?: string;
 };
 
-const Container = tw.div`
-`;
-
 const Section = tw.div`
 px-4 text-black md:px-0
 `;
@@ -37,6 +38,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam } = useQueryString();
+  const { resetGlobalStore } = useGlobalStore();
 
   const { checkin, checkout } = useSearchParamOrStore();
   const { data: ratesPlan } = useRatesPlanQuery({
@@ -45,9 +47,11 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
     roomTypeId,
   });
 
+  // Reset global store and remove blacklist params
   useEffect(() => {
     removeBlacklistParam(['']);
-  }, [removeBlacklistParam]);
+    resetGlobalStore();
+  }, [removeBlacklistParam, resetGlobalStore]);
 
   if (isLoading) {
     return <Skeleton />;
@@ -58,7 +62,10 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   }
 
   return (
-    <Container
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
       className={cn('relative', className)}
       data-testid='test-element'
       datatype={room}
@@ -136,6 +143,6 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
           </div>
         </div>
       </div>
-    </Container>
+    </motion.main>
   );
 }

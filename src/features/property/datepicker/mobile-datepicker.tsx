@@ -8,14 +8,12 @@ import { useTranslation } from 'react-i18next';
 import {
   useClickAway,
   useLocale,
+  useMediaQuery,
   useQueryString,
   useSearchParamOrStore,
 } from '@/hooks';
-import {
-  formatDateToString,
-  formatStringToDate,
-  getFormatedMontsDays,
-} from '@/lib/time';
+import useWindowSize from '@/hooks/use-windowsize';
+import { formatDateToString, getFormatedMontsDays } from '@/lib/time';
 import { cn, ps } from '@/lib/utils';
 
 import Button from '@/components/button';
@@ -25,33 +23,28 @@ import Typography from '@/components/typography';
 
 import {
   useGlobalStore,
-  useReservationQueryStore,
+  useReservationStore,
   useSelectedRoomtypeStore,
 } from '@/store';
 
 import {
-  ADULTS,
   CALENDAR,
   CHECKIN,
-  CHECKIN_DEFAULT_FUTURE_DAYS,
   CHECKOUT,
-  CHECKOUT_DEFAULT_FUTURE_DAYS,
-  CHILDRENS,
   GUESTSINFO,
-  INFANTS,
-  TOTAL_ADULTS_DEFAULT,
-  TOTAL_CHILDRENS_DEFAULT,
-  TOTAL_INFANTS_DEFAULT,
+  MOBILE_DEVICE_CSS_QUERY,
+  TOTAL_ADULTS,
+  TOTAL_CHILDRENS,
+  TOTAL_INFANTS,
 } from '@/constants';
-import useWindowSize from '@/hooks/use-windowsize';
 
 export default function MobileDatepickerComponent() {
   const { locale } = useLocale();
   const { t } = useTranslation();
   const router = useRouter();
-  const { setReservation } = useReservationQueryStore();
-  const { getCheckin, getCheckout } = useSearchParamOrStore();
-  const { updateQueryString } = useQueryString();
+  const { setReservation } = useReservationStore();
+  const { checkinDate, checkoutDate } = useSearchParamOrStore();
+  const { createQueryString } = useQueryString();
   const { closeDatepickerDrawer } = useGlobalStore();
   const { size } = useWindowSize();
   const refView = useClickAway(() => {
@@ -59,26 +52,16 @@ export default function MobileDatepickerComponent() {
   });
 
   const [show, setShow] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const setShowHandler = useCallback((view) => setShow(view), []);
 
   // Calendar
   const today = dayjs();
-  const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
-  const checkin = formatStringToDate(getCheckin());
-  const [startDate, setStartDate] = useState<Date | null>(
-    checkin ? new Date(checkin) : checkinDefault,
-  );
-
-  const checkoutDefault = today
-    .add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day')
-    .toDate();
-  const checkout = formatStringToDate(getCheckout());
-  const [endDate, setEndDate] = useState<Date | null>(
-    checkout ? new Date(checkout) : checkoutDefault,
-  );
-
+  const [startDate, setStartDate] = useState<Date | null>(checkinDate);
+  const [endDate, setEndDate] = useState<Date | null>(checkoutDate);
   const [isOpenDatepickerDrawer, setOpenDatepickerDrawer] = useState(false);
+  const isSmallDevice = useMediaQuery(MOBILE_DEVICE_CSS_QUERY);
 
   const onChange = useCallback((dates) => {
     const [start, end] = dates;
@@ -145,15 +128,10 @@ export default function MobileDatepickerComponent() {
 
   // Select Guests
   const { getAdults, getChildrens, getInfants } = useSearchParamOrStore();
-  const [adults, setAdults] = useState(
-    () => getAdults() || TOTAL_ADULTS_DEFAULT,
-  );
-  const [childrens, setChildrens] = useState(
-    () => getChildrens() || TOTAL_CHILDRENS_DEFAULT,
-  );
-  const [infants, setInfants] = useState(
-    () => getInfants() || TOTAL_INFANTS_DEFAULT,
-  );
+
+  const [adults, setAdults] = useState(getAdults());
+  const [childrens, setChildrens] = useState(getChildrens());
+  const [infants, setInfants] = useState(getInfants());
 
   const {
     selectedRoom,
@@ -161,7 +139,7 @@ export default function MobileDatepickerComponent() {
   } = useSelectedRoomtypeStore();
 
   const totalGuests = adults + childrens + infants;
-  const isMaxCapacityReached = false; //totalGuests >= (maxCapacity ?? 0);
+  const isMaxCapacityReached = totalGuests >= (maxCapacity ?? 0);
   const adultsBlockedCondition = isMaxCapacityReached;
   const childrensBlockedCondition = !childCapacity && isMaxCapacityReached;
   const infantsBlockedCondition = !childCapacity && isMaxCapacityReached;
@@ -169,7 +147,9 @@ export default function MobileDatepickerComponent() {
   /// Search - final step
   const handleSearch = useCallback(() => {
     if (!startDate || !endDate) return;
-    setTimeout(() => {
+    setLoading(true);
+
+    try {
       setReservation({
         checkin: formatDateToString(startDate),
         checkout: formatDateToString(endDate),
@@ -177,27 +157,30 @@ export default function MobileDatepickerComponent() {
         childrens,
         infants,
       });
-      updateQueryString({
+      const query = createQueryString({
         [CHECKIN]: formatDateToString(startDate),
         [CHECKOUT]: formatDateToString(endDate),
-        [ADULTS]: adults,
-        [CHILDRENS]: childrens,
-        [INFANTS]: infants,
+        [TOTAL_ADULTS]: adults,
+        [TOTAL_CHILDRENS]: childrens,
+        [TOTAL_INFANTS]: infants,
       });
-      router.push(`/room-type/${selectedRoom.id}`);
+      router.push(`/room-type/${selectedRoom.id}?${query}`);
+    } catch (error) {
       closeDatepickerDrawer();
-    }, 300);
+      // eslint-disable-next-line no-console
+      console.error('Error on Datepicker handleSearch', error);
+    }
   }, [
     adults,
     childrens,
     closeDatepickerDrawer,
+    createQueryString,
     endDate,
     infants,
     router,
     selectedRoom.id,
     setReservation,
     startDate,
-    updateQueryString,
   ]);
 
   const DayPickerText = ({
@@ -233,12 +216,12 @@ export default function MobileDatepickerComponent() {
       selectsStart
       startDate={startDate}
       endDate={endDate}
-      monthsShown={2}
+      monthsShown={isSmallDevice ? 2 : 3}
       customInput={<DayPickerText />}
       renderDayContents={DatePickerDay}
       dateFormat='MMM dd'
       minDate={today.toDate()}
-      calendarClassName='!flex flex-col md:flex-row gap-0 !font-sans'
+      calendarClassName='!flex flex-col md:flex-row gap-2 !font-sans md:justify-around'
       wrapperClassName='w-full'
       selectsRange
       selectsDisabledDaysInRange
@@ -377,7 +360,7 @@ export default function MobileDatepickerComponent() {
 
   const Buttons = () => (
     <div className='m-4 flex flex-none justify-between'>
-      <span>
+      <div>
         {show === CALENDAR && !!planDays && (
           <Button
             type='button'
@@ -411,7 +394,7 @@ export default function MobileDatepickerComponent() {
           </Button>
         )}
 
-        {!show && planDays && totalGuests > 0 && (
+        {!show && planDays > 0 && totalGuests > 0 && (
           <Button
             type='button'
             variant='text'
@@ -421,9 +404,9 @@ export default function MobileDatepickerComponent() {
             Borrar todo
           </Button>
         )}
-      </span>
+      </div>
 
-      <span>
+      <div>
         {show === CALENDAR && !!planDays && (
           <Button
             type='button'
@@ -434,10 +417,12 @@ export default function MobileDatepickerComponent() {
           </Button>
         )}
 
-        {show === GUESTSINFO && planDays && (
+        {show === GUESTSINFO && planDays > 0 && (
           <Button
             type='button'
             variant='primary'
+            disabled={!totalGuests}
+            loading={loading}
             icon={
               <Icon variant='search' color='white' width={15} height={15} />
             }
@@ -451,7 +436,8 @@ export default function MobileDatepickerComponent() {
           <Button
             type='button'
             variant='primary'
-            disabled={!planDays}
+            disabled={!planDays || !totalGuests}
+            loading={loading}
             icon={
               <Icon variant='search' color='white' width={15} height={15} />
             }
@@ -460,7 +446,7 @@ export default function MobileDatepickerComponent() {
             Buscar
           </Button>
         )}
-      </span>
+      </div>
     </div>
   );
 
@@ -473,7 +459,7 @@ export default function MobileDatepickerComponent() {
       open={isOpenDatepickerDrawer}
       onClose={closeDatepickerDrawer}
     >
-      <div className='flex h-screen flex-col '>
+      <div className='md:layout flex h-screen flex-col'>
         <div className='flex-1 items-center justify-center'>
           {calendarCondition && (
             <Typography

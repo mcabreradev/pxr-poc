@@ -32,6 +32,7 @@ const innitalState = {
 };
 
 type Actions = {
+  resetGlobalStore: () => void;
   openDatepickerDrawer: () => void;
   closeDatepickerDrawer: () => void;
   resetCalendar: () => void;
@@ -56,6 +57,11 @@ const middlewares = (f) =>
 const useGlobalStore = create<State & Actions, []>(
   (middlewares as Persist)((set, get): State & Actions => ({
     ...innitalState,
+
+    resetGlobalStore: () =>
+      set(() => ({
+        ...innitalState,
+      })),
 
     openDatepickerDrawer: () =>
       set(() => ({

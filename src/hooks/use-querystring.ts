@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 const useQueryString = () => {
   const router = useRouter();
@@ -106,4 +106,16 @@ const useQueryString = () => {
   };
 };
 
+const useResetBlacklistParams = (params: string[]) => {
+  const { removeBlacklistParam } = useQueryString();
+
+  const resetBlacklistParams = () => {};
+  useEffect(() => {
+    return () => removeBlacklistParam(params);
+  }, [params, removeBlacklistParam]);
+
+  return resetBlacklistParams;
+};
+
+export { useResetBlacklistParams };
 export default useQueryString;

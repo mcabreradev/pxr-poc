@@ -1,3 +1,7 @@
+/**
+ * Custom hook that provides the locale and language based on the current i18n language.
+ * @returns An object containing the locale and language.
+ */
 import { enUS, es, fr } from 'date-fns/locale';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,4 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
+import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/lib/utils';
@@ -8,29 +9,20 @@ import Typography from '@/components/typography';
 import DatepickerDesktop from './datepicker/desktop-datepicker';
 import Dropdown from './dropdown';
 
-import { PROPERTY_CURRENCY } from '@/constants';
 import { useIntersectionObserver, useSubscribeToStore } from '@/hooks';
-import { formatCurrency } from '@/lib/number';
-import { useGlobalStore, useSelectedRoomtypeStore } from '@/store';
-import { Ratesplan, SelectedRoomtype } from '@/types';
-import { useEffect, useState } from 'react';
+import { useGlobalStore } from '@/store';
+import { useCallback, useEffect, useState } from 'react';
 
-export default function GuestFormComponent() {
+export default function GuestFormComponent({ showButton }) {
   const { t } = useTranslation();
-  const [room, setRoom] = useState<SelectedRoomtype>();
-  const [ratesPlan, setRatesPlan] = useState<Ratesplan>();
-  const [isIntersected, setIntersected] = useState<boolean | undefined>(false);
   const { setGuestFormIntersecting } = useGlobalStore();
+
+  const [isIntersected, setIntersected] = useState<boolean | undefined>(false);
 
   const { ref, entry } = useIntersectionObserver({
     threshold: 1,
     root: null,
     rootMargin: '160px',
-  });
-
-  useSubscribeToStore(useSelectedRoomtypeStore, ({ selectedRoom }) => {
-    setRoom(selectedRoom);
-    setRatesPlan(selectedRoom?.ratesPlan);
   });
 
   useSubscribeToStore(useGlobalStore, ({ gallery }) => {
@@ -42,6 +34,17 @@ export default function GuestFormComponent() {
       setGuestFormIntersecting(entry.isIntersecting);
     }
   }, [entry, setGuestFormIntersecting]);
+
+  const handleClick = useCallback(() => {
+    const element = document.getElementById('rooms');
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest',
+      });
+    }
+  }, []);
 
   return (
     <div
@@ -63,8 +66,7 @@ export default function GuestFormComponent() {
 
       <Dropdown />
 
-      <hr />
-      {ratesPlan && (
+      {/* {ratesPlan && (
         <Typography variant='sm' weight='semibold' className='mb-4'>
           Desde{' '}
           {`${formatCurrency(
@@ -73,17 +75,27 @@ export default function GuestFormComponent() {
           )}`}{' '}
           x noche
         </Typography>
-      )}
-      <Button
-        type='link'
-        href={`/room-type/${room?.id}`}
-        scroll={true}
-        className='mb-4 md:mb-0 md:w-full'
-        disabled={!ratesPlan}
-        withSearchParams={true}
-      >
-        {ratesPlan ? t('button.search') : t('button.choose-room')}
-      </Button>
+      )} */}
+
+      <AnimatePresence>
+        {showButton && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            <hr />
+            <Button
+              type='button'
+              className='mb-4 md:mb-0 md:w-full'
+              onClick={handleClick}
+            >
+              {t('button.choose-room')}
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

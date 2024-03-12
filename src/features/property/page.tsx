@@ -1,18 +1,27 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 
+import { motion } from 'framer-motion';
 import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
+import {
+  useCheckinCheckoutHook,
+  useIntersectionObserver,
+  useQueryString,
+} from '@/hooks';
+
+import { Sticky } from '@/components';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 import Swiper from '@/components/swiper';
 import Typography from '@/components/typography';
 
+import { useGlobalStore, useReservationStore } from '@/store';
+
 import HotelRules from '@/features/components/hotel-rules';
-import { useReservationQueryStore } from '@/store';
 
 import {
   useAvailabilityQuery,
@@ -20,21 +29,14 @@ import {
   useRatesPlanQuery,
 } from '@/queries';
 
-import {
-  useCheckinCheckoutHook,
-  useIntersectionObserver,
-  useQueryString,
-} from '@/hooks';
 import PropertyAmenities from './amenities';
+import data from './data.json';
 import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
 import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';
 import PropertyTopSights from './topsights';
-
-import { Sticky } from '@/components';
-import data from './data.json';
 
 const Section = tw.div`
   px-4 text-black
@@ -46,21 +48,25 @@ const Row = tw.div`
 `;
 
 const PropertyPage = memo(function HotelPage() {
-  const [showStickyGuestForm, setShowStickyGuestForm] = useState<boolean>(true);
+  const [isIntersected, setIntersected] = useState<boolean>(true);
   const { t, i18n } = useTranslation();
   const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
-  const { resetReservation } = useReservationQueryStore();
+  const { resetReservation } = useReservationStore();
+  const { resetGlobalStore } = useGlobalStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
   const { refetch: fetchAvailability } = useAvailabilityQuery({
     checkin,
     checkout,
   });
+
+  // Fetch rates plan
   const { refetch: fetchRatesPlan } = useRatesPlanQuery({
     checkin,
     checkout,
   });
 
+  // Fetch availability and rates plan when checkin and checkout are set
   useEffect(() => {
     if (checkin && checkout) {
       fetchAvailability();
@@ -68,10 +74,12 @@ const PropertyPage = memo(function HotelPage() {
     }
   }, [checkin, checkout, fetchAvailability, fetchRatesPlan]);
 
+  // Remove the action and extra query params
   useEffect(() => {
     removeBlacklistParam(['action', 'extra', 'plan']);
     resetReservation();
-  }, [removeBlacklistParam, resetReservation]);
+    resetGlobalStore();
+  }, [removeBlacklistParam, resetGlobalStore, resetReservation]);
 
   const { ref: roomSelectedRef, entry } = useIntersectionObserver({
     threshold: 0.5,
@@ -79,11 +87,12 @@ const PropertyPage = memo(function HotelPage() {
     rootMargin: '100px 0px 0px 100px',
   });
 
+  // Show sticky guest form when the room selection is not visible
   useEffect(() => {
     if (entry && 'isIntersecting' in entry) {
-      setShowStickyGuestForm(!entry.isIntersecting);
+      setIntersected(!entry.isIntersecting);
     }
-  }, [entry, setShowStickyGuestForm]);
+  }, [entry, setIntersected]);
 
   if (isLoading) {
     return <Skeleton />;
@@ -94,7 +103,13 @@ const PropertyPage = memo(function HotelPage() {
   }
 
   return (
-    <main data-id-test='test-componet' className='layout'>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      data-id-test='test-componet'
+      className='layout'
+    >
       <Gallery photos={data.images} />
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>
@@ -187,7 +202,7 @@ const PropertyPage = memo(function HotelPage() {
         </div>
 
         <div className='hidden md:flex md:w-4/12'>
-          <GuestForm />
+          <GuestForm showButton={isIntersected} />
         </div>
       </div>
       <hr />
@@ -340,17 +355,18 @@ const PropertyPage = memo(function HotelPage() {
 
         <PropertyTopSights topSights={property?.topSights} className='pt-6' />
       </Section>
+
       <hr />
       <Section className='p-4 pb-6 pt-2'>
-        <HotelRules rules={data.rules} classname='pr-16 md:w-1/3' />
+        <HotelRules rules={data.rules} classname=' md:w-1/3' />
       </Section>
 
-      <Sticky className='md:sticky md:hidden' show={showStickyGuestForm}>
+      <Sticky className='md:sticky md:hidden' show={isIntersected}>
         <StickyGuestForm />
       </Sticky>
 
       <MobileDatepicker />
-    </main>
+    </motion.main>
   );
 });
 

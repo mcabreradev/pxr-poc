@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useEventBus from '@/hooks/use-event-bus';
-import useOauth from '@/hooks/use-oauth';
+import { useEventBus, useOauth } from '@/hooks';
 
-import Button from '@/components/button';
-import Icon from '@/components/icon';
+import { Button, Icon } from '@/components';
 
 import { GET_SESSION, QUERY, URL } from '@/constants';
 
@@ -51,7 +49,7 @@ export default function SocialSignOn({ roomTypeId }: Props) {
   return (
     <div className='flex flex-col gap-5 py-3 pb-10'>
       <Button
-        className='md:w-full'
+        className='w-full'
         variant='secondary'
         icon={<Icon variant='google' height='24' />}
         type='link'
@@ -63,7 +61,7 @@ export default function SocialSignOn({ roomTypeId }: Props) {
       </Button>
 
       <Button
-        className='md:w-full'
+        className='w-full'
         variant='secondary'
         icon={<Icon variant='facebook' height='24' />}
         type='link'
@@ -76,7 +74,7 @@ export default function SocialSignOn({ roomTypeId }: Props) {
       </Button>
 
       <Button
-        className='md:w-full'
+        className='w-full'
         variant='secondary'
         icon={<Icon variant='apple' height='24' />}
         type='link'

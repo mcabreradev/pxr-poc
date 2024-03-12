@@ -8,6 +8,8 @@ import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
+import Icon from '@/components/icon';
+
 import { ACTION } from '@/constants';
 
 interface ButtonProps {
@@ -75,7 +77,7 @@ export default function Button({
   slim = false,
   query,
   withSearchParams = false,
-  loading,
+  loading = false,
   ...props
 }: ButtonProps) {
   const styling = {
@@ -118,11 +120,22 @@ export default function Button({
           onChange={onChange}
           onMouseLeave={onMouseLeave}
           onMouseEnter={onMouseEnter}
-          loading={loading}
           slim={!!slim}
           {...props}
         >
-          {icon && <span className='mr-2'>{icon}</span>}
+          {!loading && icon && <span className='mr-2'>{icon}</span>}
+
+          {loading && (
+            <span className='mr-2'>
+              <Icon
+                variant='loading'
+                style={{ color: 'white' }}
+                width={24}
+                height={24}
+              />
+            </span>
+          )}
+
           <span className='flex-grow cursor-pointer text-center'>
             {children}
           </span>
@@ -146,11 +159,22 @@ export default function Button({
       onChange={onChange}
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}
-      loading={loading}
       slim={!!slim}
       {...props}
     >
-      {icon && <span className='mr-2'>{icon}</span>}
+      {!loading && icon && <span className='mr-2'>{icon}</span>}
+
+      {loading && (
+        <span className='mr-2'>
+          <Icon
+            variant='loading'
+            style={{ color: 'white' }}
+            width={24}
+            height={24}
+          />
+        </span>
+      )}
+
       <span className='flex-grow cursor-pointer text-center'>{children}</span>
     </ButtonComponent>
   );

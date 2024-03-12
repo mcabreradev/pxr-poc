@@ -32,6 +32,8 @@ const initialReservationState: Reservation = {
   hasBreakfast: null,
   selectedRoom: {},
   product: {},
+  currency: '',
+  roomTypeId: null,
 };
 
 type Actions = {
@@ -60,7 +62,7 @@ const middlewares = (f) =>
     ),
   );
 
-const useReservationQueryStore = create<State & Actions, []>(
+const useReservationStore = create<State & Actions, []>(
   (middlewares as Persist)((set, get): State & Actions => ({
     reservation: { ...initialReservationState },
 
@@ -92,4 +94,4 @@ const useReservationQueryStore = create<State & Actions, []>(
   })),
 );
 
-export default useReservationQueryStore;
+export default useReservationStore;

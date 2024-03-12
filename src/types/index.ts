@@ -1,3 +1,4 @@
+import { GuestPegaso } from './guest';
 import Ratesplan from './ratesplans';
 
 export type PropertyType = {
@@ -63,34 +64,34 @@ export type TopSight = {
 };
 
 export type Payment = {
-  propertyId: string | number;
-  reservationId: string;
-  amount: number;
-  clientId: number;
-  email: string;
-  currency: Currency;
-  description: string;
-  paymentGatewayId: string;
-  fees: number[];
-  propertyFees: string[] | number[];
-  idempotentKey?: string;
-  successUrl: string;
-  cancelUrl: string;
-  offSession: boolean;
+  propertyId?: unknown;
+  reservationId?: unknown;
+  amount?: unknown;
+  clientId?: unknown;
+  email?: unknown;
+  currency?: Currency;
+  description?: unknown;
+  paymentGatewayId?: unknown;
+  fees?: unknown[];
+  propertyFees?: unknown[];
+  idempotentKey?: unknown;
+  successUrl?: unknown;
+  cancelUrl?: unknown;
+  offSession?: unknown;
 };
 
 export type Currency = {
-  currencyId: number;
-  code: string;
+  currencyId?: number;
+  code?: string | null;
 };
 
 export type User = {
-  sub: string;
-  email: string;
+  sub?: string;
+  email?: string;
   family_name?: string;
   given_name?: string;
-  email_verified: boolean;
-  isAuth: boolean;
+  email_verified?: boolean;
+  isAuth?: boolean;
   err?: unknown;
 };
 
@@ -190,8 +191,10 @@ export type Reservation = {
   cancelationCost?: number | null;
   total?: number | null;
   hasBreakfast?: boolean | null;
-  selectedRoom?: { [key: string]: string | number | null | undefined } | null;
+  selectedRoom?: unknown | null;
   product?: { [key: string]: string | number | null | undefined } | null;
+  currency?: string | null;
+  roomTypeId?: number | null;
 };
 
 export type GeneralPassengerInfo = {
@@ -377,4 +380,4 @@ export type ReservationRequestResponse = {
   data: ReservationRequestResponseData | ReservationRequest | string | number;
 };
 
-export type { Ratesplan };
+export type { GuestPegaso, Ratesplan };

@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useLocale, useQueryString, useSearchParamOrStore } from '@/hooks';
 import { cn, formatDateToString, formatStringToDate } from '@/lib/utils';
 
-import { useReservationQueryStore } from '@/store';
+import { useReservationStore } from '@/store';
 
 import {
   CHECKIN,
@@ -19,7 +19,7 @@ import {
 
 export default function DatepickerComponent() {
   const { locale } = useLocale();
-  const { setReservation } = useReservationQueryStore();
+  const { setReservation } = useReservationStore();
   const { updateQueryString } = useQueryString();
   const { getCheckin, getCheckout } = useSearchParamOrStore();
 

@@ -1,10 +1,11 @@
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 
 /* eslint-disable simple-import-sort/imports */
+import { motion } from 'framer-motion';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
@@ -35,9 +36,6 @@ type Props = {
   action?: string;
 };
 
-const Container = tw.div`
-`;
-
 export default function PaymentFeature({ roomTypeId, action }: Props) {
   const { t } = useTranslation();
   const { error, isError, isLoading, data: property } = usePropertyQuery();
@@ -46,7 +44,6 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
-  const { setLoginEnabled } = useUserStore();
   const { setReservationRequest, setReservationRequestId } =
     useReservationRequestStore();
   const { session } = useSessionStore();
@@ -60,17 +57,20 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     isError: reservationRequestError,
   } = useReservationRequestMutation();
 
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const { setLoginEnabled, user } = useUserStore();
+
   const actionPayment = !action;
   const actionSuccess = action === URL.SUCCESS;
   const actionError = action === URL.ERROR;
 
-  useEffect(() => {
-    setLoginEnabled(false);
+  // useEffect(() => {
+  //   setLoginEnabled(false);
 
-    return () => {
-      setLoginEnabled(true);
-    };
-  }, [setLoginEnabled]);
+  //   return () => {
+  //     setLoginEnabled(true);
+  //   };
+  // }, [setLoginEnabled]);
 
   useEffect(() => {
     if (session && selectedRoom.ratesPlan) {
@@ -167,6 +167,9 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   if (!session) {
     redirect('/');
   }
+  // if (!user) {
+  //   redirect('/');
+  // }
 
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;
@@ -180,7 +183,10 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   }
 
   return (
-    <Container
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
@@ -196,13 +202,15 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
+              <StripePayment roomTypeId={roomTypeId} />
+
+              {/* {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
               {actionSuccess && <StripePayment roomTypeId={roomTypeId} />}
-              {actionError && <StripePayment roomTypeId={roomTypeId} />}
+              {actionError && <StripePayment roomTypeId={roomTypeId} />} */}
             </section>
           </div>
         </div>
       </div>
-    </Container>
+    </motion.div>
   );
 }

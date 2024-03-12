@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
@@ -6,17 +7,18 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useEventBus from '@/hooks/use-event-bus';
-import useHostUrl from '@/hooks/use-hosturl';
+import { GuestPegaso } from '@/types';
+
+import { useEventBus, useHostUrl } from '@/hooks';
 import { cn } from '@/lib/utils';
+import { useCheckGuestMutation } from '@/mutations';
+import { useUserStore } from '@/store';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import useUserStore from '@/store/use-user.store';
-
-import { FORM, SIGNIN, URL } from '@/constants';
+import { FORM, GET_SESSION, SIGNIN, URL } from '@/constants';
 import { loginSchema } from '@/schemas';
 
 type Props = {
@@ -28,7 +30,7 @@ interface IForm {
   email: string;
   password: string;
 }
-
+``;
 const Container = tw.div`
   pb-5
 `;
@@ -36,9 +38,11 @@ const Container = tw.div`
 export default function FormLoginComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
   const [type, setType] = useState(FORM.PASSWORD);
+  const [guestData, setGuestData] = useState<GuestPegaso>();
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
-  const { user } = useUserStore();
+  const checkGuestMutation = useCheckGuestMutation(guestData);
+  const { addUser } = useUserStore();
 
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
@@ -59,11 +63,50 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
     });
   };
 
+  const postGuestData = useCallback(
+    ({ family_name, given_name, sub, email, email_verified }) => {
+      setGuestData({
+        guestIAMId: sub,
+        displayName: `${given_name} ${family_name}`,
+        lastName: family_name,
+        firstName: given_name,
+        acceptedTerms: true,
+      });
+      addUser({
+        family_name,
+        given_name,
+        sub,
+        email,
+        email_verified,
+        isAuth: true,
+      });
+      const checkGuest = checkGuestMutation.mutate();
+      console.log('checkGuestMutation ', checkGuest);
+    },
+    [addUser, checkGuestMutation],
+  );
+
+  /**
+   * @TODO aqui se puede redirigir si existe la session a la pagina de checkout
+   *
+   */
   const handlerEvent = useCallback(
     (eventData) => {
       const { eventType, data } = eventData;
 
-      if (!eventType || eventType !== SIGNIN) return;
+      if (!eventType && !data) return;
+
+      console.log({ eventType, data });
+
+      // cuando el usuario se loguea
+      if (eventType === SIGNIN && data) {
+        postGuestData(data);
+      }
+
+      // cuando el usuario esta logueado
+      if (eventType === GET_SESSION && data) {
+        // push para payment page
+      }
 
       if (data.err) {
         setError('email', {
@@ -75,7 +118,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
         });
       }
     },
-    [setError, t],
+    [postGuestData, setError, t],
   );
 
   useEffect(() => {
@@ -83,9 +126,14 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
     getEventData(urlStatus);
   }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
-  useEffect(() => {
-    if (user) true;
-  }, [user]);
+  if (checkGuestMutation.isError) {
+    console.log('error', checkGuestMutation);
+    return 'error';
+  }
+
+  if (checkGuestMutation.isSuccess) {
+    console.log('success', checkGuestMutation);
+  }
 
   return (
     <Container className={cn(className)} data-testid='test-element'>
@@ -181,7 +229,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
         </div>
 
         <Button
-          className='mt-3 font-semibold md:w-full'
+          className='mt-3 w-full font-semibold'
           variant='primary'
           type='submit'
         >

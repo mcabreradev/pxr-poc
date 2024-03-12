@@ -1,12 +1,13 @@
-/* eslint-disable no-constant-condition */
+/* eslint-disable no-console */
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -15,8 +16,8 @@ import { formatCurrency } from '@/lib/number';
 import { Button, Icon, Typography } from '@/components';
 
 import {
-  useReservationQueryStore,
   useReservationRequestStore,
+  useReservationStore,
   useSessionStore,
 } from '@/store';
 
@@ -40,9 +41,9 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const { session } = useSessionStore();
-  const { reservation } = useReservationQueryStore();
   const { reservationRequest, setReservationData } =
     useReservationRequestStore();
+  const { reservation } = useReservationStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -50,9 +51,10 @@ export default function CheckoutForm({ roomTypeId }: Props) {
     useReservationRequestMutation();
 
   useEffect(() => {
-    if (!session) {
-      redirect('/');
-    }
+    // @TODO chekear esto
+    // if (!session) {
+    //   redirect('/');
+    // }
 
     if (!stripe) {
       return;
@@ -72,6 +74,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
       }
       switch ((paymentIntent as { status: string }).status) {
         case PAYMENT_STATUS.SUCCEEDED:
+          console.log('paymentIntent', paymentIntent);
           setMessage(t('status.payment-succeeded'));
           //
           break;
@@ -112,44 +115,50 @@ export default function CheckoutForm({ roomTypeId }: Props) {
     }
   }, [reservationRequestResponse, roomTypeId, setReservationData]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      // console.log("AM I REALLY HERE");
 
-    // console.log("AM I REALLY HERE");
-    if (!stripe || !elements) {
-      return;
-    }
+      if (!stripe || !elements) return;
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    /*completeReservationRequestData({
-      payment_id: 2073,
-      guest_preferred_language: 'es',
-      guest_email: session?.email,
-      guest_country_code: 'VEN',
-    })
-    console.log("ABOUT TO FORMALIZE REQUEST");
-    mutate(reservationRequest);*/
+      /*completeReservationRequestData({
+        payment_id: 2073,
+        guest_preferred_language: 'es',
+        guest_email: session?.email,
+        guest_country_code: 'VEN',
+      })
+      console.log("ABOUT TO FORMALIZE REQUEST");
+      mutate(reservationRequest);*/
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `http://localhost:3000/room-type/${roomTypeId}/summary${window.location.search}`,
-      },
-    });
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `http://localhost:3000/room-type/${roomTypeId}/summary${window.location.search}`,
+        },
+      });
 
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error?.message || t('status.unexpected-error'));
-    } else {
-      setMessage(t('status.unexpected-error'));
-    }
-    setIsLoading(false);
-  };
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        setMessage(error?.message || t('status.unexpected-error'));
+      } else {
+        setMessage(t('status.unexpected-error'));
+      }
+      setIsLoading(false);
+    },
+    [elements, roomTypeId, stripe, t],
+  );
 
   return (
     <>
       <form id='payment-form' onSubmit={handleSubmit}>
-        <section className='p-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className=''
+        >
           <Typography variant='h2' weight='normal'>
             {t('Tu información de pago')}
           </Typography>
@@ -186,11 +195,16 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             id='payment-element'
             options={{ layout: 'accordion' }}
           />
-        </section>
+        </motion.section>
 
         <HR />
 
-        <section className='px-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4'
+        >
           <Typography variant='h2' weight='normal'>
             {t('¿Alguna petición especial?')}
           </Typography>
@@ -206,28 +220,45 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             className='w-full'
             placeholder={t('form.textarea.placeholder')}
           />
-        </section>
+        </motion.section>
 
         <HR />
 
-        <section className='px-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4'
+        >
           <Typography variant='h2' weight='normal'>
             {t('Detalles de los impuestos')}
           </Typography>
           <Typography variant='sm' className='my-[20px] text-neutral-500'>
             Los impuestos deben ser pagados a tu llegada al hotel
           </Typography>
-        </section>
+        </motion.section>
 
         <HR />
 
-        <section className='px-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4'
+        >
           <div className='py-4 pb-7'>
             <HotelRules rules={data.rules} />
           </div>
-        </section>
+        </motion.section>
+
         <HR />
-        <section className='px-4 pb-8'>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4 pb-8'
+        >
           <Typography variant='sm' className='my-[20px] mb-10 text-neutral-500'>
             Al confirmar la reserva, acepto los{' '}
             <Link href='' className='underline'>
@@ -238,7 +269,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             disabled={false}
             id='submit'
             onClick={handleSubmit}
-            className='md:w-full'
+            className='w-full'
           >
             {isLoading ? (
               <span className='flex items-center justify-between'>
@@ -261,7 +292,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
               {message}
             </div>
           )}
-        </section>
+        </motion.section>
       </form>
     </>
   );

@@ -3,7 +3,7 @@
 import filter from '@mcabreradev/filter';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -50,7 +50,10 @@ px-4 text-black md:px-0
 `;
 
 export default function MyTrip({ className, roomTypeId }: Props) {
+  const [loading, setLoading] = useState(false);
+
   const { t, i18n } = useTranslation();
+  dayjs.locale(i18n.language);
   const { reservation, setReservation } = useReservationStore();
   const { checkin, checkout, checkinDayjs, checkoutDayjs } =
     useCheckinCheckoutHook();
@@ -58,7 +61,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   const searchParams = useSearchParams();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
-  dayjs.locale(i18n.language);
 
   const { data: ratesPlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
     roomTypeId,
@@ -76,14 +78,12 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     searchParams.get(PLAN) || reservation?.plan,
   );
   const [breakfast, setBreakfast] = useState(
-    searchParams.get(EXTRA) || reservation?.extra,
+    () => searchParams.get(EXTRA) || reservation?.extra,
   );
 
   const [product, setSelectedProduct] = useState<{
     [key: string]: string | number | null | undefined;
   } | null>(null);
-
-  const [ratesPlanIndex, setPlanCostIndex] = useState(0);
 
   const handleCancelationPlan = useCallback((value) => {
     setSelectedPlan(value);
@@ -99,13 +99,10 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setEditModal(value);
   }, []);
 
-  useEffect(() => {
-    if (breakfast === PLAN_BREAKFAST) {
-      setPlanCostIndex(0);
-    } else {
-      setPlanCostIndex(1);
-    }
-  }, [breakfast, selectedRoom]);
+  const ratesPlanIndex = useMemo(
+    () => (breakfast === PLAN_BREAKFAST ? 0 : 1),
+    [breakfast],
+  );
 
   const planCost = (
     selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
@@ -156,18 +153,22 @@ export default function MyTrip({ className, roomTypeId }: Props) {
 
   useEffect(() => {
     setReservation({
+      roomTypeId,
+      currency,
       planCost,
       totalCost,
       taxes,
       extraCost: extraCostTotal,
       cancelationCost,
       total,
-      hasBreakfast,
+      hasBreakfast: !!extraCostTotal,
       extra: breakfast,
       plan: planId,
       product,
+      selectedRoom,
     });
   }, [
+    roomTypeId,
     breakfast,
     cancelationCost,
     extraCostTotal,
@@ -180,6 +181,8 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     selectedPlan,
     product,
     planId,
+    currency,
+    selectedRoom,
   ]);
 
   const [animate, setAnimate] = useState(false);
@@ -369,6 +372,8 @@ export default function MyTrip({ className, roomTypeId }: Props) {
             href={`/room-type/${roomTypeId}/details`}
             withSearchParams={true}
             fullWidth
+            onClick={() => setLoading(true)}
+            loading={loading}
           >
             {t('button.pay')}
           </Button>

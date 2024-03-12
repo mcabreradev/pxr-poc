@@ -52,6 +52,7 @@ export default function MobileDatepickerComponent() {
   });
 
   const [show, setShow] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const setShowHandler = useCallback((view) => setShow(view), []);
 
@@ -146,6 +147,8 @@ export default function MobileDatepickerComponent() {
   /// Search - final step
   const handleSearch = useCallback(() => {
     if (!startDate || !endDate) return;
+    setLoading(true);
+
     try {
       setReservation({
         checkin: formatDateToString(startDate),
@@ -419,6 +422,7 @@ export default function MobileDatepickerComponent() {
             type='button'
             variant='primary'
             disabled={!totalGuests}
+            loading={loading}
             icon={
               <Icon variant='search' color='white' width={15} height={15} />
             }
@@ -433,6 +437,7 @@ export default function MobileDatepickerComponent() {
             type='button'
             variant='primary'
             disabled={!planDays || !totalGuests}
+            loading={loading}
             icon={
               <Icon variant='search' color='white' width={15} height={15} />
             }

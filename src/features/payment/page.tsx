@@ -1,15 +1,14 @@
+/* eslint-disable unused-imports/no-unused-vars */
 'use client';
 
 import { motion } from 'framer-motion';
-import { redirect } from 'next/navigation';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 
-import { useSessionStore, useUserStore } from '@/store';
+import { useUserStore } from '@/store';
 
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
@@ -32,24 +31,25 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
-  const { setLoginEnabled } = useUserStore();
-  const { session } = useSessionStore();
+
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const { setLoginEnabled, user } = useUserStore();
 
   const actionPayment = !action;
   const actionSuccess = action === URL.SUCCESS;
   const actionError = action === URL.ERROR;
 
-  useEffect(() => {
-    setLoginEnabled(false);
+  // useEffect(() => {
+  //   setLoginEnabled(false);
 
-    return () => {
-      setLoginEnabled(true);
-    };
-  }, [setLoginEnabled]);
+  //   return () => {
+  //     setLoginEnabled(true);
+  //   };
+  // }, [setLoginEnabled]);
 
-  if (!session) {
-    redirect('/');
-  }
+  // if (!user) {
+  //   redirect('/');
+  // }
 
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;
@@ -82,9 +82,11 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
+              <StripePayment roomTypeId={roomTypeId} />
+
+              {/* {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
               {actionSuccess && <StripePayment roomTypeId={roomTypeId} />}
-              {actionError && <StripePayment roomTypeId={roomTypeId} />}
+              {actionError && <StripePayment roomTypeId={roomTypeId} />} */}
             </section>
           </div>
         </div>

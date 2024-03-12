@@ -4,10 +4,18 @@ import { memo } from 'react';
 
 import { uuid } from '@/lib/utils';
 
-import { useStripePaymentIntentQuery } from '@/queries';
+import {
+  useReservationStore,
+  useSelectedRoomtypeStore,
+  useUserStore,
+} from '@/store';
+
+import { usePropertyQuery, useStripePaymentIntentQuery } from '@/queries';
 
 import CheckoutForm from './checkout-form';
 import PaymentSkeleton from './payment-skeleton';
+
+import { Payment } from '@/types';
 
 type Props = {
   roomTypeId: number;
@@ -20,22 +28,26 @@ const stripePromise = loadStripe(
 const idempotentKey = uuid();
 
 const StripePayment = memo(({ roomTypeId }: Props) => {
+  const { data: property } = usePropertyQuery();
   const {
-    data: clientSecret,
-    isLoading: isLoadingPaymentIntent,
-    isError: isErrorPaymentIntent,
-  } = useStripePaymentIntentQuery({
-    propertyId: '219',
-    amount: 100000,
+    reservation: { planCost, currency, checkin, checkout },
+  } = useReservationStore();
+  const {
+    selectedRoom: { propertyId },
+  } = useSelectedRoomtypeStore();
+  const { user } = useUserStore();
+
+  const intentData: Payment = {
+    propertyId,
+    amount: planCost,
     clientId: 2334,
-    email: 'hector@paxer.com',
+    email: user?.email,
     currency: {
       currencyId: 1,
-      code: 'USD',
+      code: currency,
     },
-    description:
-      'Estadia en Hotel Test2 Funnel P2.0 del 02 Jun 2023 al 03 Jun 2023. Observacion',
-    paymentGatewayId: '1',
+    description: `Estadia en ${property.name} del ${checkin} al ${checkout}.`,
+    paymentGatewayId: 1,
     fees: [1, 2],
     propertyFees: [],
     successUrl: '',
@@ -43,7 +55,13 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
     idempotentKey,
     offSession: true,
     reservationId: '',
-  });
+  };
+
+  const {
+    data: clientSecret,
+    isLoading: isLoadingPaymentIntent,
+    isError: isErrorPaymentIntent,
+  } = useStripePaymentIntentQuery(intentData);
 
   if (isLoadingPaymentIntent) {
     return <PaymentSkeleton />;

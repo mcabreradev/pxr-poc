@@ -80,7 +80,8 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
         email_verified,
         isAuth: true,
       });
-      checkGuestMutation.mutate();
+      const checkGuest = checkGuestMutation.mutate();
+      console.log('checkGuestMutation ', checkGuest);
     },
     [addUser, checkGuestMutation],
   );

@@ -1,5 +1,6 @@
 import { create, StateCreator } from 'zustand';
 import {
+  createJSONStorage,
   devtools,
   persist,
   PersistOptions,
@@ -29,6 +30,7 @@ const middlewares = (f) =>
     subscribeWithSelector(
       persist(f, {
         name: 'store-user',
+        storage: createJSONStorage(() => sessionStorage),
       }),
     ),
   );

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   PaymentElement,
   useElements,
@@ -5,8 +6,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -41,9 +41,10 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!session) {
-      redirect('/');
-    }
+    // @TODO chekear esto
+    // if (!session) {
+    //   redirect('/');
+    // }
 
     if (!stripe) {
       return;
@@ -63,6 +64,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
       }
       switch ((paymentIntent as { status: string }).status) {
         case PAYMENT_STATUS.SUCCEEDED:
+          console.log('paymentIntent', paymentIntent);
           setMessage(t('status.payment-succeeded'));
           break;
         case PAYMENT_STATUS.PROCESSING:
@@ -78,29 +80,30 @@ export default function CheckoutForm({ roomTypeId }: Props) {
     });
   }, [session, stripe, t]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    if (!stripe || !elements) {
-      return;
-    }
+      if (!stripe || !elements) return;
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `http://localhost:3000/room-type/${roomTypeId}/summary${window.location.search}`,
-      },
-    });
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `http://localhost:3000/room-type/${roomTypeId}/summary${window.location.search}`,
+        },
+      });
 
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error?.message || t('status.unexpected-error'));
-    } else {
-      setMessage(t('status.unexpected-error'));
-    }
-    setIsLoading(false);
-  };
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        setMessage(error?.message || t('status.unexpected-error'));
+      } else {
+        setMessage(t('status.unexpected-error'));
+      }
+      setIsLoading(false);
+    },
+    [elements, roomTypeId, stripe, t],
+  );
 
   return (
     <>
@@ -220,7 +223,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
           <Button
             disabled={isLoading || !stripe || !elements}
             id='submit'
-            className='md:w-full'
+            className='w-full'
           >
             {isLoading ? (
               <span className='flex items-center justify-between'>

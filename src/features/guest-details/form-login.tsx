@@ -42,7 +42,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
   const checkGuestMutation = useCheckGuestMutation(guestData);
-  const { addUser, setAuth } = useUserStore();
+  const { addUser } = useUserStore();
 
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);

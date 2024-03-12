@@ -1,3 +1,4 @@
+import { GuestPegaso } from './guest';
 import Ratesplan from './ratesplans';
 
 export type PropertyType = {
@@ -85,12 +86,12 @@ export type Currency = {
 };
 
 export type User = {
-  sub: string;
-  email: string;
+  sub?: string;
+  email?: string;
   family_name?: string;
   given_name?: string;
-  email_verified: boolean;
-  isAuth: boolean;
+  email_verified?: boolean;
+  isAuth?: boolean;
   err?: unknown;
 };
 
@@ -194,4 +195,4 @@ export type Reservation = {
   product?: { [key: string]: string | number | null | undefined } | null;
 };
 
-export type { Ratesplan };
+export type { GuestPegaso, Ratesplan };

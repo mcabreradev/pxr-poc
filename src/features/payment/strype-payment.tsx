@@ -1,12 +1,13 @@
-/* eslint-disable simple-import-sort/imports */
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { memo } from 'react';
 
 import { uuid } from '@/lib/utils';
-import useStripePaymentIntentQuery from '@/queries/use-stripe.query';
 
-import CheckoutForm from '@/features/payment/checkout-form';
+import { useStripePaymentIntentQuery } from '@/queries';
+
+import CheckoutForm from './checkout-form';
+import PaymentSkeleton from './payment-skeleton';
 
 type Props = {
   roomTypeId: number;
@@ -45,7 +46,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
   });
 
   if (isLoadingPaymentIntent) {
-    return <div className='animate-pulse p-4'>Loading...</div>;
+    return <PaymentSkeleton />;
   }
 
   if (isErrorPaymentIntent) {

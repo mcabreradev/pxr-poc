@@ -1,9 +1,9 @@
-/* eslint-disable no-constant-condition */
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -105,7 +105,12 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   return (
     <>
       <form id='payment-form' onSubmit={handleSubmit}>
-        <section className='p-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className=''
+        >
           <Typography variant='h2' weight='normal'>
             {t('Tu información de pago')}
           </Typography>
@@ -142,11 +147,16 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             id='payment-element'
             options={{ layout: 'accordion' }}
           />
-        </section>
+        </motion.section>
 
         <HR />
 
-        <section className='px-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4'
+        >
           <Typography variant='h2' weight='normal'>
             {t('¿Alguna petición especial?')}
           </Typography>
@@ -162,28 +172,45 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             className='w-full'
             placeholder={t('form.textarea.placeholder')}
           />
-        </section>
+        </motion.section>
 
         <HR />
 
-        <section className='px-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4'
+        >
           <Typography variant='h2' weight='normal'>
             {t('Detalles de los impuestos')}
           </Typography>
           <Typography variant='sm' className='my-[20px] text-neutral-500'>
             Los impuestos deben ser pagados a tu llegada al hotel
           </Typography>
-        </section>
+        </motion.section>
 
         <HR />
 
-        <section className='px-4'>
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4'
+        >
           <div className='py-4 pb-7'>
             <HotelRules rules={data.rules} />
           </div>
-        </section>
+        </motion.section>
+
         <HR />
-        <section className='px-4 pb-8'>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className='px-4 pb-8'
+        >
           <Typography variant='sm' className='my-[20px] mb-10 text-neutral-500'>
             Al confirmar la reserva, acepto los{' '}
             <Link href='' className='underline'>
@@ -216,7 +243,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
               {message}
             </div>
           )}
-        </section>
+        </motion.section>
       </form>
     </>
   );

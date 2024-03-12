@@ -41,7 +41,7 @@ export default function DetailsComponent({ roomTypeId }: Props) {
   const searchParams = useSearchParams();
   const action = searchParams.get(ACTION)?.replace('?', '');
 
-  const actionAuth = action === QUERY.AUTH || !action;
+  const actionAuth = action === QUERY.AUTH || !action; // default action
   const actionLogin = action === QUERY.LOGIN;
   const actionRegister = action === QUERY.REGISTER;
   const actionForgot = action === QUERY.FORGOT;

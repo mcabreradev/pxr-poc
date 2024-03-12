@@ -1,17 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { PROPERTY, RESERVATION } from '@/constants';
 
-const postReservationRequest = async (body) => {
-  const { data } = await axios.post(`/api/reservation-request`, body);
-  return data.clientSecret;
+import { ReservationRequest } from '@/types';
+
+const postReservationRequest = async (params) => {
+  const { data } = await axios.post(
+    `/api/reservation-request?params={"reservationRequest":${JSON.stringify(params)}}`,
+  );
+  return data;
 };
 
-export default function useReservationRequestMutation(body) {
-  return useQuery({
-    queryKey: [PROPERTY, RESERVATION],
-    queryFn: () => postReservationRequest(body),
+export default function useReservationRequestMutation() {
+  return useMutation({
+    mutationKey: [PROPERTY, RESERVATION],
+    mutationFn: (params: ReservationRequest) => postReservationRequest(params),
     retry: 3,
   });
 }

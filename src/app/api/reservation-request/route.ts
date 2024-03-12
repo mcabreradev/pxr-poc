@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   const queryParam = queryParams.get('params');
 
   const res = await api.post(
-    `/Reservation/d/HOT${propertyId}/method/createOrUpdateReservationRequest/?params=${queryParam}`,
+    `/service/rest/Reservation/d/HOT${propertyId}/method/createOrUpdateReservationRequest/?params=${queryParam}`,
   );
 
   return NextResponse.json({ res });

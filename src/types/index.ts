@@ -219,13 +219,13 @@ export type DetailedPassengerInfo = {
 };
 
 export type ReservedRoom = {
-  har_in: string;
-  har_out: string;
+  har_in: string | Date;
+  har_out: string | Date;
   har_hab_id?: number | null; // Physical id of the room, does not have to be sent
-  har_tha_id: number; //Room type id
+  har_tha_id: number | string | null | undefined; //Room type id
   har_res_id?: number | null;
-  har_pla_id: number; // Selected plan
-  har_cli_id: number;
+  har_pla_id: string | number | null | undefined; // Selected plan
+  har_cli_id?: number;
   har_hot_id: number;
   har_adults: number;
   har_seniors?: number | null;
@@ -236,7 +236,7 @@ export type ReservedRoom = {
   har_childrens_info: string;
   har_seniors_info?: string | null;
   har_infants_info: string | null;
-  har_cost: number;
+  har_cost: number | null | undefined;
   har_additional_field_1?: string | null;
   har_additional_field_2?: string | null;
   har_additional_field_3?: string | null;
@@ -268,25 +268,25 @@ export type Coupon = {
 export type ReservationRequest = {
   id?: number | null;
   property_id: number;
-  guest_id: string | undefined;
+  guest_id: number | undefined;
   sales_channel_type: string;
   process_state: string;
-  date_in: string; // Like this: 2024-03-07
-  date_out: string; // Same as above
+  date_in: string | Date;
+  date_out: string | Date;
   mon_id: number;
-  mon_iso: string;
-  total_cost: number;
+  mon_iso: string | number | null | undefined;
+  total_cost: number | null | undefined;
   room_types_cost: number;
-  guest_mon_iso: string;
+  guest_mon_iso: string | number | null | undefined;
   mon_commission_id: number;
-  commission_mon_iso: string;
+  commission_mon_iso: string | number | null | undefined;
   is_default_commission: number;
   reservation_status: string;
   room_types: ReservedRoom[];
   extras?: Extras[];
   coupons?: Coupon[];
   adults_amount: number;
-  additional_fields_values: string;
+  additional_field_values?: string[] | string;
   reg_status: string;
   sales_origin_type: string;
   send_confirmed_email: number;

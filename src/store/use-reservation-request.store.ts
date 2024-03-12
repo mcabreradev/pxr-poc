@@ -15,7 +15,7 @@ type State = {
 
 const initialReservationRequestState: ReservationRequest = {
   property_id: 0,
-  guest_id: '',
+  guest_id: 0,
   sales_channel_type: 'web',
   process_state: 'WAITING_FOR_PAYMENT',
   date_in: '',
@@ -33,7 +33,7 @@ const initialReservationRequestState: ReservationRequest = {
   extras: [],
   coupons: [],
   adults_amount: 0,
-  additional_fields_values: '',
+  additional_field_values: '',
   reg_status: 'active',
   sales_origin_type: 'DIRECT',
   send_confirmed_email: 1,
@@ -46,6 +46,7 @@ const initialReservationRequestState: ReservationRequest = {
 
 type Actions = {
   setReservationRequest: (u: ReservationRequest) => void;
+  setReservationRequestId: (id: number) => void;
 };
 
 type Persist = (
@@ -71,6 +72,13 @@ const useReservationRequestStore = create<State & Actions, []>(
         reservationRequest: {
           ...get().reservationRequest,
           ...reservationRequest,
+        },
+      })),
+    setReservationRequestId: (id: number) =>
+      set(() => ({
+        reservationRequest: {
+          ...get().reservationRequest,
+          id: id,
         },
       })),
   })),

@@ -26,7 +26,7 @@ const get = async (url: string) => {
   }
 };
 
-const post = async (url: string, body?) => {
+const post = async (url: string, body) => {
   const options = {
     method: 'POST',
     maxBodyLength: Infinity,

@@ -4,8 +4,7 @@ import api from '@/lib/api-cache';
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const params = JSON.stringify(body);
-  const res = await api.post(`/v1/dev/guest/check?params=${params}`);
+  const res = await api.post(`/v1/dev/guest/check`, body);
 
   return NextResponse.json({ res });
 }

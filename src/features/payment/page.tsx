@@ -13,11 +13,11 @@ import { useSessionStore, useUserStore } from '@/store';
 
 import NotConnected from '@/app/not-connected';
 import { ERRORS, URL } from '@/constants';
-import StripePayment from '@/features/payment/strype-payment';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import MyTripDetails from './my-trip-details';
 import SkeletonComponent from './skeleton';
+import StripePayment from './strype-payment';
 
 type Props = {
   roomTypeId: number;

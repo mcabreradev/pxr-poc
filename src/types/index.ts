@@ -299,6 +299,20 @@ export type ReservationRequest = {
   guest_email?: string;
   guest_country_code?: string;
   payment_id?: number;
+  id_public?: string;
+  reservation_id?: number;
+};
+
+export type RemainingReservationRequestData = {
+  payment_id: number;
+  guest_preferred_language: string;
+  guest_email: string | undefined;
+  guest_country_code: string;
+};
+
+export type ReservationData = {
+  id_public: string;
+  reservation_id: number;
 };
 
 // Names come like this directly from backend

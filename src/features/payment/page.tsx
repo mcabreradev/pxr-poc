@@ -85,6 +85,7 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         har_adults: getAdults(), // should change at some point
         har_children: getChildrens(),
         har_infants: getInfants(),
+        har_seniors: 0,
         har_pax_info: '',
         har_adults_info: '',
         har_childrens_info: '',
@@ -151,13 +152,14 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   ]);
 
   useEffect(() => {
+    // console.log("HERE IS THE RESPONSE");
+    // console.log(reservationRequestResponse);
     if (
-      (reservationRequestResponse != undefined ||
-        reservationRequestResponse != null) &&
-      reservationRequestResponse?.res.code == 0
+      reservationRequestResponse != undefined &&
+      reservationRequestResponse.res.code == 0
     ) {
       setReservationRequestId(
-        reservationRequestResponse?.res.data.reservation_request_id,
+        reservationRequestResponse.res.data.reservation_request_id,
       );
     }
   }, [reservationRequestResponse, setReservationRequestId]);

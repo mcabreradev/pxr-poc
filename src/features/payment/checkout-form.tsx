@@ -14,10 +14,15 @@ import { formatCurrency } from '@/lib/number';
 
 import { Button, Icon, Typography } from '@/components';
 
-import { useReservationQueryStore, useSessionStore } from '@/store';
+import {
+  useReservationQueryStore,
+  useReservationRequestStore,
+  useSessionStore,
+} from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
 import HotelRules from '@/features/components/hotel-rules';
+import { useReservationRequestMutation } from '@/mutations';
 
 import data from './data.json';
 
@@ -36,9 +41,13 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const elements = useElements();
   const { session } = useSessionStore();
   const { reservation } = useReservationQueryStore();
+  const { reservationRequest, setReservationData } =
+    useReservationRequestStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { mutate, data: reservationRequestResponse } =
+    useReservationRequestMutation();
 
   useEffect(() => {
     if (!session) {
@@ -64,6 +73,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
       switch ((paymentIntent as { status: string }).status) {
         case PAYMENT_STATUS.SUCCEEDED:
           setMessage(t('status.payment-succeeded'));
+          //
           break;
         case PAYMENT_STATUS.PROCESSING:
           setMessage(t('status.payment-processing'));
@@ -78,14 +88,48 @@ export default function CheckoutForm({ roomTypeId }: Props) {
     });
   }, [session, stripe, t]);
 
+  useEffect(() => {
+    if (reservationRequest.process_state == 'SUCCESS_PAYMENT') {
+      // console.log("BEFORE MUTATE");
+      // console.log(reservationRequest);
+      mutate(reservationRequest);
+    }
+  }, [reservationRequest, mutate]);
+
+  useEffect(() => {
+    // console.log("HERE IS THE SECOND RESPONSE");
+    // console.log(reservationRequestResponse);
+
+    if (
+      reservationRequestResponse != undefined &&
+      reservationRequestResponse.res.code == 0
+    ) {
+      setReservationData({
+        id_public: reservationRequestResponse.res.data.id_public,
+        reservation_id: reservationRequestResponse.res.data.reservation_id,
+      });
+      redirect(`/room-type/${roomTypeId}/summary${window.location.search}`);
+    }
+  }, [reservationRequestResponse, roomTypeId, setReservationData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // console.log("AM I REALLY HERE");
     if (!stripe || !elements) {
       return;
     }
 
     setIsLoading(true);
+
+    /*completeReservationRequestData({
+      payment_id: 2073,
+      guest_preferred_language: 'es',
+      guest_email: session?.email,
+      guest_country_code: 'VEN',
+    })
+    console.log("ABOUT TO FORMALIZE REQUEST");
+    mutate(reservationRequest);*/
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -191,8 +235,9 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             </Link>
           </Typography>
           <Button
-            disabled={isLoading || !stripe || !elements}
+            disabled={false}
             id='submit'
+            onClick={handleSubmit}
             className='md:w-full'
           >
             {isLoading ? (

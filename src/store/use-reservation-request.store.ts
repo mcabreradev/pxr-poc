@@ -7,7 +7,11 @@ import {
   subscribeWithSelector,
 } from 'zustand/middleware';
 
-import { ReservationRequest } from '@/types';
+import {
+  RemainingReservationRequestData,
+  ReservationData,
+  ReservationRequest,
+} from '@/types';
 
 type State = {
   reservationRequest: ReservationRequest;
@@ -47,6 +51,10 @@ const initialReservationRequestState: ReservationRequest = {
 type Actions = {
   setReservationRequest: (u: ReservationRequest) => void;
   setReservationRequestId: (id: number) => void;
+  completeReservationRequestData: (
+    data: RemainingReservationRequestData,
+  ) => void;
+  setReservationData: (data: ReservationData) => void;
 };
 
 type Persist = (
@@ -79,6 +87,26 @@ const useReservationRequestStore = create<State & Actions, []>(
         reservationRequest: {
           ...get().reservationRequest,
           id: id,
+        },
+      })),
+    completeReservationRequestData: (data: RemainingReservationRequestData) =>
+      set(() => ({
+        reservationRequest: {
+          ...get().reservationRequest,
+          confirmed_agreement: 1,
+          payment_id: data.payment_id,
+          guest_preferred_language: data.guest_preferred_language,
+          guest_email: data.guest_email,
+          guest_country_code: data.guest_country_code,
+          process_state: 'SUCCESS_PAYMENT',
+        },
+      })),
+    setReservationData: (data: ReservationData) =>
+      set(() => ({
+        reservationRequest: {
+          ...get().reservationRequest,
+          id_public: data.id_public,
+          reservation_id: data.reservation_id,
         },
       })),
   })),

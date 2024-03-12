@@ -7,7 +7,7 @@ type Props = {
   leftMainTag?: string;
   leftSecondaryText?: string | null;
   leftSecondaryTag?: string;
-  rightMainText: string;
+  rightMainText: string | undefined;
   rightMainTag?: string;
   rightSecondaryText?: string | null;
   rightSecondaryTag?: string;

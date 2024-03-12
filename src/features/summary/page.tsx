@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import { formatCurrency } from '@/lib/number';
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { useReservationQueryStore } from '@/store';
+import { useReservationQueryStore, useReservationRequestStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
 import PriceDetails from '@/features/components/price-details';
@@ -59,6 +60,7 @@ function formatTime(timestring: string) {
 
 export default function SummaryFeature({ className, roomType }: Props) {
   const { getCheckin, getCheckout } = useSearchParamOrStore();
+  const { reservationRequest } = useReservationRequestStore();
   const { error, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
@@ -164,12 +166,12 @@ export default function SummaryFeature({ className, roomType }: Props) {
               />
               <SummaryRow
                 leftMainText={t('summary.cost')}
-                rightMainText={`$ ${reservation.total}`}
+                rightMainText={`${formatCurrency((reservationRequest.total_cost ?? 0) + (reservation.taxes ?? 0))}`}
                 className='mb-6'
               />
               <SummaryRow
                 leftMainText={t('summary.reservation-code')}
-                rightMainText='SFFE3553'
+                rightMainText={reservationRequest.id_public}
                 className='mb-5'
               />
               <div className='mx-4 border-b'></div>
@@ -235,7 +237,7 @@ export default function SummaryFeature({ className, roomType }: Props) {
                 </Typography>
                 {payment.amount ? (
                   <SummaryRow
-                    leftMainText={`$ ${payment.amount} ${payment.currency}`}
+                    leftMainText={`${formatCurrency((reservationRequest.total_cost ?? 0) + (reservation.taxes ?? 0))}`}
                     rightMainText={t('summary.invoice')}
                     rightMainTag='a'
                     className='mb-5'
@@ -258,8 +260,9 @@ export default function SummaryFeature({ className, roomType }: Props) {
                   </Typography>
                   <div className='my-3' />
                   <Typography variant='sm' className='text-neutral-500'>
-                    {t('summary.taxes-reminder-1')} ${reservation.taxes}{' '}
-                    {payment.currency} {t('summary.taxes-reminder-2')}
+                    {t('summary.taxes-reminder-1')} $
+                    {formatCurrency(reservation.taxes ?? 0)}{' '}
+                    {t('summary.taxes-reminder-2')}
                   </Typography>
                 </div>
               </section>

@@ -83,7 +83,7 @@ export default function CancelationPoliceComponent({
                 'text-gray-500': !isNonRefundable,
               })}
             >
-              + {formatCurrency(0.0)}
+              + {formatCurrency(0.0, 'EUR')}
             </Typography>
           </div>
           <div className='flex flex-wrap justify-between py-1'>
@@ -101,7 +101,7 @@ export default function CancelationPoliceComponent({
                 'text-gray-500': !isRefundable,
               })}
             >
-              + {formatCurrency(cancelCost)}
+              + {formatCurrency(cancelCost, 'EUR')}
             </Typography>
           </div>{' '}
         </>

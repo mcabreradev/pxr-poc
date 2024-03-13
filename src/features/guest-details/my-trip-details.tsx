@@ -161,7 +161,7 @@ export default function MyTripDetails({ property, room }: Props) {
           </div>
 
           <Typography variant='sm' className='text-neutral-500'>
-            {formatCurrency(totalCost)}
+            {formatCurrency(totalCost, 'EUR')}
           </Typography>
         </div>
 
@@ -185,7 +185,7 @@ export default function MyTripDetails({ property, room }: Props) {
               </Typography>
 
               <Typography variant='sm' className='text-neutral-500'>
-                + {formatCurrency(extraCostTotal)}
+                + {formatCurrency(extraCostTotal, 'EUR')}
               </Typography>
             </div>
           </>
@@ -209,7 +209,7 @@ export default function MyTripDetails({ property, room }: Props) {
           </Typography>
 
           <Typography variant='sm' className='text-neutral-500'>
-            + {formatCurrency(taxes)}
+            + {formatCurrency(taxes, 'EUR')}
           </Typography>
         </div>
 
@@ -219,7 +219,7 @@ export default function MyTripDetails({ property, room }: Props) {
           </Typography>
 
           <Typography variant='sm' className='font-semibold text-neutral-500'>
-            {formatCurrency(total)}
+            {formatCurrency(total, 'EUR')}
           </Typography>
         </div>
       </section>

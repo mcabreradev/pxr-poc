@@ -14,7 +14,7 @@ import { formatCurrency } from '@/lib/number';
 
 import { Button, Icon, Typography } from '@/components';
 
-import { useReservationStore, useSessionStore } from '@/store';
+import { useReservationStore, useSessionStore, useUserStore } from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
 import HotelRules from '@/features/components/hotel-rules';
@@ -36,6 +36,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const elements = useElements();
   const { session } = useSessionStore();
   const { reservation } = useReservationStore();
+  const { user } = useUserStore();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -115,25 +116,25 @@ export default function CheckoutForm({ roomTypeId }: Props) {
           className=''
         >
           <Typography variant='h2' weight='normal'>
-            {t('Tu información de pago')}
+            {t('info.payment-details')}
           </Typography>
 
           <Typography className='py-4'>
             {t('info.hello-customer', {
-              name: session?.given_name || t('info.customer'),
-              lastname: session?.family_name || '',
+              name: user?.given_name || t('info.customer'),
+              lastname: user?.family_name || '',
             })}
           </Typography>
           <Typography className='pb-4'>
             {t('info.payment-booking-notification-email', {
-              email: session?.email,
+              email: user?.email,
             })}
           </Typography>
 
-          {reservation?.planCost && (
+          {reservation?.totalCost && (
             <Typography className='pb-4'>
               {t('info.payment-cancellation-policy', {
-                amount: formatCurrency(reservation?.planCost ?? 0),
+                amount: formatCurrency(reservation?.totalCost ?? 0, 'EUR'),
               })}
             </Typography>
           )}
@@ -141,7 +142,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
           {reservation?.taxes && (
             <Typography className='pb-4'>
               {t('info.payment-taxes-description', {
-                amount: formatCurrency(reservation?.taxes ?? 0),
+                amount: formatCurrency(reservation?.taxes ?? 0, 'EUR'),
               })}
             </Typography>
           )}
@@ -158,15 +159,13 @@ export default function CheckoutForm({ roomTypeId }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className='px-4'
+          className=''
         >
           <Typography variant='h2' weight='normal'>
-            {t('¿Alguna petición especial?')}
+            {t('info.payment-share')}
           </Typography>
           <Typography variant='sm' className='my-[20px] text-neutral-500'>
-            Comparte por qué estás viajando, tu hora de llegada, o solicitudes
-            especiales. La propiedad hará todo lo posible para satisfacer tus
-            necesidades.
+            {t('info.payment-comments')}
           </Typography>
           <textarea
             id='story'
@@ -183,13 +182,13 @@ export default function CheckoutForm({ roomTypeId }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className='px-4'
+          className=''
         >
           <Typography variant='h2' weight='normal'>
-            {t('Detalles de los impuestos')}
+            {t('info.taxes-details')}
           </Typography>
           <Typography variant='sm' className='my-[20px] text-neutral-500'>
-            Los impuestos deben ser pagados a tu llegada al hotel
+            {t('info.taxes-description')}
           </Typography>
         </motion.section>
 
@@ -199,7 +198,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className='px-4'
+          className=''
         >
           <div className='py-4 pb-7'>
             <HotelRules rules={data.rules} />
@@ -212,12 +211,12 @@ export default function CheckoutForm({ roomTypeId }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className='px-4 pb-8'
+          className='pb-8'
         >
           <Typography variant='sm' className='my-[20px] mb-10 text-neutral-500'>
-            Al confirmar la reserva, acepto los{' '}
+            {t('info.payment-termsandconditions-1')}{' '}
             <Link href='' className='underline'>
-              términos y condiciones de Paxer.
+              {t('info.payment-termsandconditions-2')}
             </Link>
           </Typography>
           <Button

@@ -22,7 +22,7 @@ export default function PriceDetails({
   room,
   reservation,
   extra,
-  plan,
+  // plan,
   checkin,
   checkout,
 }: Props) {
@@ -52,13 +52,13 @@ export default function PriceDetails({
           <Typography variant='sm' className='text-neutral-500'>
             {planDays} {t('night.plural')}
           </Typography>
-          <Typography variant='sm' className='text-neutral-500'>
+          {/* <Typography variant='sm' className='text-neutral-500'>
             {t(`info.${plan}`)}
-          </Typography>
+          </Typography> */}
         </div>
 
         <Typography variant='sm' className='text-neutral-500'>
-          {formatCurrency(totalCost)}
+          {formatCurrency(totalCost, 'EUR')}
         </Typography>
       </div>
 
@@ -82,7 +82,7 @@ export default function PriceDetails({
             </Typography>
 
             <Typography variant='sm' className='text-neutral-500'>
-              + {formatCurrency(extraCostTotal)}
+              + {formatCurrency(extraCostTotal, 'EUR')}
             </Typography>
           </div>
         </>
@@ -106,17 +106,17 @@ export default function PriceDetails({
         </Typography>
 
         <Typography variant='sm' className='text-neutral-500'>
-          + {formatCurrency(taxes)}
+          + {formatCurrency(taxes, 'EUR')}
         </Typography>
       </div>
 
       <div className='flex flex-wrap justify-between py-3'>
         <Typography variant='sm' className='font-semibold text-neutral-500'>
-          Total (USD)
+          Total (EUR)
         </Typography>
 
         <Typography variant='sm' className='font-semibold text-neutral-500'>
-          {formatCurrency(total)}
+          {formatCurrency(total, 'EUR')}
         </Typography>
       </div>
     </section>

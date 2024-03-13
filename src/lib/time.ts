@@ -48,9 +48,9 @@ export function getFormatedMontsDays(
 }
 
 export function getCheckinDefault() {
-  return today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toString();
+  return today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').format('YYYY-MM-DD');
 }
 
 export function getCheckoutDefault() {
-  return today.add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day').toString();
+  return today.add(CHECKOUT_DEFAULT_FUTURE_DAYS, 'day').format('YYYY-MM-DD');
 }

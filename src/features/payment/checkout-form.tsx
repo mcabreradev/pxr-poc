@@ -84,6 +84,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
+      console.log('stripe', stripe, elements);
 
       if (!stripe || !elements) return;
 
@@ -220,6 +221,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             </Link>
           </Typography>
           <Button
+            type='submit'
             disabled={isLoading || !stripe || !elements}
             id='submit'
             className='w-full'

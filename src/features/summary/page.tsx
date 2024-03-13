@@ -19,13 +19,14 @@ import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
+import { formatCurrency } from '@/lib/number';
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';
 require('dayjs/locale/es'); //This require is necessary to get the weekday name in the correct language
 
 type Props = {
   className?: string;
-  roomType: number;
+  roomTypeId: number;
 };
 
 const HR = tw.div`
@@ -57,14 +58,14 @@ function formatTime(timestring: string) {
   return `${hourStr}:${sections[1]} ${meridiem}`;
 }
 
-export default function SummaryFeature({ className, roomType }: Props) {
+export default function SummaryFeature({ className, roomTypeId }: Props) {
   const { getCheckin, getCheckout } = useSearchParamOrStore();
   const { error, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
-  } = useRoomTypeQuery(roomType);
+  } = useRoomTypeQuery(roomTypeId);
   const { t, i18n } = useTranslation();
   const { reservation } = useReservationStore();
 
@@ -76,7 +77,7 @@ export default function SummaryFeature({ className, roomType }: Props) {
     (reservation.infants ?? 0);
 
   //Temp
-  const payment = { amount: reservation.total ?? null, currency: 'USD' };
+  const payment = { amount: reservation.total ?? null, currency: 'EUR' };
 
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;
@@ -164,7 +165,7 @@ export default function SummaryFeature({ className, roomType }: Props) {
               />
               <SummaryRow
                 leftMainText={t('summary.cost')}
-                rightMainText={`$ ${reservation.total}`}
+                rightMainText={formatCurrency(reservation.total ?? 0, 'EUR')}
                 className='mb-6'
               />
               <SummaryRow
@@ -235,7 +236,7 @@ export default function SummaryFeature({ className, roomType }: Props) {
                 </Typography>
                 {payment.amount ? (
                   <SummaryRow
-                    leftMainText={`$ ${payment.amount} ${payment.currency}`}
+                    leftMainText={formatCurrency(payment.amount ?? 0, 'EUR')}
                     rightMainText={t('summary.invoice')}
                     rightMainTag='a'
                     className='mb-5'
@@ -258,8 +259,9 @@ export default function SummaryFeature({ className, roomType }: Props) {
                   </Typography>
                   <div className='my-3' />
                   <Typography variant='sm' className='text-neutral-500'>
-                    {t('summary.taxes-reminder-1')} ${reservation.taxes}{' '}
-                    {payment.currency} {t('summary.taxes-reminder-2')}
+                    {t('summary.taxes-reminder-1')}{' '}
+                    {formatCurrency(reservation.taxes ?? 0, 'EUR')}
+                    {t('summary.taxes-reminder-2')}
                   </Typography>
                 </div>
               </section>

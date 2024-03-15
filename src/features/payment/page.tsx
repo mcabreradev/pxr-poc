@@ -77,10 +77,10 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
       // For now, one reservation == one room. Let's avoid edge cases before wednesday
       // You would need some additional logic to split the reservation in multiple physical rooms
       const room_type: ReservedRoom = {
-        har_in: new Date(getCheckin()),
-        har_out: new Date(getCheckout()),
+        har_in: getCheckin(),
+        har_out: getCheckout(),
         har_tha_id: selectedRoom.id,
-        har_pla_id: selectedRoom.ratesPlan.ratePlanId,
+        har_pla_id: 330,
         har_hot_id: property.id,
         har_adults: getAdults(), // should change at some point
         har_children: getChildrens(),
@@ -91,7 +91,7 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         har_childrens_info: '',
         har_seniors_info: '',
         har_infants_info: '',
-        har_cost: selectedRoom.roomPrice?.rate,
+        har_cost: reservation.totalCost,
         har_additional_field_1: '',
         har_additional_field_2: '',
         har_additional_field_3: '',
@@ -152,8 +152,6 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   ]);
 
   useEffect(() => {
-    // console.log("HERE IS THE RESPONSE");
-    // console.log(reservationRequestResponse);
     if (
       reservationRequestResponse != undefined &&
       reservationRequestResponse.res.code == 0

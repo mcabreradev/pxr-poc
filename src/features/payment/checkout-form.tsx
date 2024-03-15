@@ -93,16 +93,11 @@ export default function CheckoutForm({ roomTypeId }: Props) {
 
   useEffect(() => {
     if (reservationRequest.process_state == 'SUCCESS_PAYMENT') {
-      // console.log("BEFORE MUTATE");
-      // console.log(reservationRequest);
       mutate(reservationRequest);
     }
   }, [reservationRequest, mutate]);
 
   useEffect(() => {
-    // console.log("HERE IS THE SECOND RESPONSE");
-    // console.log(reservationRequestResponse);
-
     if (
       reservationRequestResponse != undefined &&
       reservationRequestResponse.res.code == 0
@@ -118,20 +113,17 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      // console.log("AM I REALLY HERE");
 
       if (!stripe || !elements) return;
 
       setIsLoading(true);
 
       /*completeReservationRequestData({
-        payment_id: 2073,
+        payment_id: 2129,
         guest_preferred_language: 'es',
         guest_email: session?.email,
         guest_country_code: 'VEN',
-      })
-      console.log("ABOUT TO FORMALIZE REQUEST");
-      mutate(reservationRequest);*/
+      })*/
 
       const { error } = await stripe.confirmPayment({
         elements,

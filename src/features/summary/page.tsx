@@ -20,7 +20,6 @@ import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
-import { formatCurrency } from '@/lib/number';
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';
 require('dayjs/locale/es'); //This require is necessary to get the weekday name in the correct language

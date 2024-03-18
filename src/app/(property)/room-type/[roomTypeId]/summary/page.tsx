@@ -17,5 +17,4 @@ export default function Page(props: Props) {
   if (!isHydrated) return null;
 
   return <SummaryFeature roomTypeId={roomTypeId} />;
-
 }

@@ -15,7 +15,12 @@ import { formatCurrency } from '@/lib/number';
 
 import { Button, Icon, Typography } from '@/components';
 
-import { useReservationRequestStore, useReservationStore, useSessionStore, useUserStore } from '@/store';
+import {
+  useReservationRequestStore,
+  useReservationStore,
+  useSessionStore,
+  useUserStore,
+} from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
 import HotelRules from '@/features/components/hotel-rules';

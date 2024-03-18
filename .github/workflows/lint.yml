@@ -30,9 +30,6 @@ jobs:
         with:
           bun-version: latest
 
-      - name: 📦 Install dependencies
-        run: bun install --frozen-lockfile
-
       - name: 🔬 Lint
         run: bun run lint:strict
 

@@ -160,10 +160,15 @@
     "payment-cancelled": "Your payment has been cancelled.",
     "payment-cancelled-description": "Your payment has been cancelled, please try again.",
     "payment-cancelled-title": "Payment canceled",
+    "payment-comments": "Share why you're traveling, your arrival time, or special requests. The property will do everything possible to accommodate your needs.",
     "payment-confirm-notification-email": "You will receive a payment confirmation email to {{email}} once it has been processed.",
+    "payment-details": "Payment information",
     "payment-processing": "Your payment is being processed.",
+    "payment-share": "Any special request?",
     "payment-succeeded": "Payment made successfully!",
-    "payment-taxes-description": "We remind you that you must make the tax payment of {{amount}} upon arrival at the hotel..",
+    "payment-taxes-description": "We remind you that you must make the tax payment of {{amount}}.",
+    "payment-termsandconditions-1": "By confirming the reservation, I accept the",
+    "payment-termsandconditions-2": "Paxer terms and conditions.",
     "payment-unexpected-error": "An unexpected error has occurred.",
     "payment-unsuccessful": "Your payment could not be made, please try again.",
     "refundable": "Refundable",
@@ -226,13 +231,13 @@
     "taxes-reminder-2": "in taxes when you arrive at the hotel"
   },
   "terms": {
+    "nondiscrimination": "Nondiscrimination Policy",
     "part1": "By selecting",
     "part2": "I agree to Paxer's",
-    "service": "Terms of service",
-    "payment": "Payments Terms of Service",
-    "nondiscrimination": "Nondiscrimination Policy",
     "part3": "and acknowledge the",
-    "privacy": "Privacy Policy"
+    "payment": "Payments Terms of Service",
+    "privacy": "Privacy Policy",
+    "service": "Terms of service"
   },
   "title": {
     "activities": "Activities",

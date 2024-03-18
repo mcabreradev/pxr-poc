@@ -221,7 +221,7 @@ export default function MobileDatepickerComponent() {
       renderDayContents={DatePickerDay}
       dateFormat='MMM dd'
       minDate={today.toDate()}
-      calendarClassName='!flex flex-col md:flex-row gap-2 !font-sans md:justify-around'
+      calendarClassName='!flex flex-col md:flex-row gap-0 md:gap-2 !font-sans md:justify-around'
       wrapperClassName='w-full'
       selectsRange
       selectsDisabledDaysInRange

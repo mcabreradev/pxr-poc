@@ -30,7 +30,7 @@ const idempotentKey = uuid();
 const StripePayment = memo(({ roomTypeId }: Props) => {
   const { data: property } = usePropertyQuery();
   const {
-    reservation: { planCost, currency, checkin, checkout },
+    reservation: { total, currency, checkin, checkout },
   } = useReservationStore();
   const {
     selectedRoom: { propertyId },
@@ -39,7 +39,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
 
   const intentData: Payment = {
     propertyId,
-    amount: planCost,
+    amount: total,
     clientId: 2334,
     email: user?.email,
     currency: {

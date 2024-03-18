@@ -75,7 +75,7 @@ export default function Footer() {
               {t('link.language')}
             </div>
           </Item>
-          <span className='w-full'>$ USD</span>
+          <span className='w-full'>€ EUR</span>
         </Item>
         <Item>
           <Icon variant='open-in-new' width='18px' />

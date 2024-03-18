@@ -16,5 +16,6 @@ export default function Page(props: Props) {
   const { isHydrated } = useHydration();
   if (!isHydrated) return null;
 
-  return <SummaryFeature roomType={roomTypeId} />;
+  return <SummaryFeature roomTypeId={roomTypeId} />;
+
 }

@@ -13,7 +13,7 @@ export default function PaymentSkeletonComponent() {
       <div className='flex flex-row justify-between'>
         <Typography
           variant='sm'
-          className='mb-2 h-2 w-[80%] rounded-full bg-gray-300'
+          className='mb-2 h-2 w-[95%] rounded-full bg-gray-300'
         >
           &nbsp;
         </Typography>
@@ -22,7 +22,7 @@ export default function PaymentSkeletonComponent() {
       <div className='flex flex-row justify-between pb-5'>
         <Typography
           variant='sm'
-          className='mb-2 h-2 w-[80%] rounded-full bg-gray-300'
+          className='mb-2 h-2 w-[95%] rounded-full bg-gray-300'
         >
           &nbsp;
         </Typography>
@@ -31,7 +31,7 @@ export default function PaymentSkeletonComponent() {
       <div className='flex flex-row justify-between'>
         <Typography
           variant='sm'
-          className='mb-2 h-2 w-[80%] rounded-full bg-gray-300'
+          className='mb-2 h-2 w-[95%] rounded-full bg-gray-300'
         >
           &nbsp;
         </Typography>
@@ -40,7 +40,7 @@ export default function PaymentSkeletonComponent() {
       <div className='flex flex-row justify-between'>
         <Typography
           variant='sm'
-          className='mb-2 h-2 w-[80%] rounded-full bg-gray-300'
+          className='mb-2 h-2 w-[95%] rounded-full bg-gray-300'
         >
           &nbsp;
         </Typography>
@@ -48,7 +48,7 @@ export default function PaymentSkeletonComponent() {
       <div className='flex flex-row justify-between pb-5'>
         <Typography
           variant='sm'
-          className='mb-2 h-2 w-[80%] rounded-full bg-gray-300'
+          className='mb-2 h-2 w-[95%] rounded-full bg-gray-300'
         >
           &nbsp;
         </Typography>
@@ -56,7 +56,7 @@ export default function PaymentSkeletonComponent() {
       <div className='flex flex-row justify-between'>
         <Typography
           variant='sm'
-          className='mb-2 h-2 w-[80%] rounded-full bg-gray-300'
+          className='mb-2 h-2 w-[95%] rounded-full bg-gray-300'
         >
           &nbsp;
         </Typography>

@@ -66,7 +66,7 @@ const middlewares = (f) =>
   devtools(
     subscribeWithSelector(
       persist(f, {
-        name: 'reservation-request-reservation',
+        name: 'store-reservation-request',
         storage: createJSONStorage(() => localStorage),
       }),
     ),

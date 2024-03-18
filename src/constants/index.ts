@@ -15,7 +15,7 @@ export const PROVIDER_FACEBOOK = 'Facebook';
 export const PROVIDER_APPLE = 'SignInWithApple';
 
 // App
-export const PROPERTY_CURRENCY = 'CLP';
+export const PROPERTY_CURRENCY = 'EUR';
 export const PROPERTY_CURRENCY_OTA = 'EUR';
 export const PROPERTY = 'property';
 export const PROPERTYPATH = '/';

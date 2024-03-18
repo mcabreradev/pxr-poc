@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import { formatCurrency } from '@/lib/number';
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { useReservationStore } from '@/store';
+import { useReservationRequestStore, useReservationStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
 import PriceDetails from '@/features/components/price-details';
@@ -19,7 +20,6 @@ import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
-import { formatCurrency } from '@/lib/number';
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';
 require('dayjs/locale/es'); //This require is necessary to get the weekday name in the correct language
@@ -60,6 +60,7 @@ function formatTime(timestring: string) {
 
 export default function SummaryFeature({ className, roomTypeId }: Props) {
   const { getCheckin, getCheckout } = useSearchParamOrStore();
+  const { reservationRequest } = useReservationRequestStore();
   const { error, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
@@ -170,7 +171,7 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
               />
               <SummaryRow
                 leftMainText={t('summary.reservation-code')}
-                rightMainText='SFFE3553'
+                rightMainText={reservationRequest.id_public}
                 className='mb-5'
               />
               <div className='mx-4 border-b'></div>

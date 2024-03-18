@@ -2,7 +2,6 @@
 import useAvailabilityQuery from './use-availabity.query';
 import usePropertyQuery from './use-property.query';
 import useRatesPlanQuery from './use-rates-plan.query';
-import useReservationQuery from './use-reservation.query';
 import useRoomTypeQuery from './use-roomtype.query';
 import useRoomTypesQuery, {
   useRoomTypeWithRatesPlansQuery,
@@ -13,7 +12,6 @@ export {
   useAvailabilityQuery,
   usePropertyQuery,
   useRatesPlanQuery,
-  useReservationQuery,
   useRoomTypeQuery,
   useRoomTypeWithRatesPlansQuery,
   useRoomTypesQuery,

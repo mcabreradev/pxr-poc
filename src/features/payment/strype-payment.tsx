@@ -15,7 +15,7 @@ import { usePropertyQuery, useStripePaymentIntentQuery } from '@/queries';
 import CheckoutForm from './checkout-form';
 import PaymentSkeleton from './payment-skeleton';
 
-import { Payment } from '@/types';
+import { CurrencyCode, Payment } from '@/types';
 
 type Props = {
   roomTypeId: number;
@@ -44,7 +44,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
     email: user?.email,
     currency: {
       currencyId: 1,
-      code: currency,
+      code: currency as CurrencyCode,
     },
     description: `Estadia en ${property.name} del ${checkin} al ${checkout}.`,
     paymentGatewayId: 1,

@@ -106,83 +106,82 @@ export default function Navbar({ className }: Props) {
 
         <div>
           <AnimatePresence>
-            {pathname === PROPERTYPATH ||
-              (!!intersected && (
-                <motion.ul
-                  initial='hidden'
-                  className='flex items-center justify-center'
-                  animate={intersected ? 'visible' : 'hidden'}
-                  transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  exit={{ opacity: 0 }}
-                  variants={{
-                    hidden: { opacity: 0, y: '-100%' },
-                    visible: { opacity: 1, y: '0%' },
-                  }}
+            {/* {!!intersected && ( */}
+            <motion.ul
+              initial='hidden'
+              className='flex items-center justify-center'
+              animate={intersected ? 'visible' : 'hidden'}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              exit={{ opacity: 0 }}
+              variants={{
+                hidden: { opacity: 0, y: '-100%' },
+                visible: { opacity: 1, y: '0%' },
+              }}
+            >
+              <motion.li className='cursor-pointer'>
+                <Dropdown
+                  label={<Typography variant='sm'>$ USD</Typography>}
+                  inline
+                  size='lg'
                 >
-                  <motion.li className='cursor-pointer'>
-                    <Dropdown
-                      label={<Typography variant='sm'>$ USD</Typography>}
-                      inline
-                      size='lg'
+                  <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
+                    <Typography variant='sm' className='w-32 text-left'>
+                      $ USD
+                    </Typography>
+                  </Dropdown.Item>
+                  <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
+                    <Typography variant='sm' className='w-32 text-left'>
+                      Euro
+                    </Typography>
+                  </Dropdown.Item>
+                  <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
+                    <Typography variant='sm' className='w-32 text-left'>
+                      CLP
+                    </Typography>
+                  </Dropdown.Item>
+                </Dropdown>
+              </motion.li>
+              <motion.li className='cursor-pointer'>
+                <Dropdown
+                  label={<Icon variant='web' color='#959595' />}
+                  inline
+                  size='lg'
+                >
+                  <Dropdown.Item
+                    className='hover:bg-neutral-40 focus:bg-neutral-40'
+                    size='lg'
+                    onClick={() => i18n.changeLanguage('es')}
+                  >
+                    <Typography
+                      variant='sm'
+                      className={cn('w-32 text-left text-neutral-400', {
+                        'text-neutral-500': i18n.language === 'es',
+                      })}
                     >
-                      <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
-                        <Typography variant='sm' className='w-32 text-left'>
-                          $ USD
-                        </Typography>
-                      </Dropdown.Item>
-                      <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
-                        <Typography variant='sm' className='w-32 text-left'>
-                          Euro
-                        </Typography>
-                      </Dropdown.Item>
-                      <Dropdown.Item className='hover:bg-neutral-40 focus:bg-neutral-40'>
-                        <Typography variant='sm' className='w-32 text-left'>
-                          CLP
-                        </Typography>
-                      </Dropdown.Item>
-                    </Dropdown>
-                  </motion.li>
-                  <motion.li className='cursor-pointer'>
-                    <Dropdown
-                      label={<Icon variant='web' color='#959595' />}
-                      inline
-                      size='lg'
+                      Español
+                    </Typography>
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className='hover:bg-neutral-40 focus:bg-neutral-40'
+                    size='lg'
+                    onClick={() => i18n.changeLanguage('en')}
+                  >
+                    <Typography
+                      variant='sm'
+                      className={cn('w-32 text-left text-neutral-400', {
+                        'text-neutral-500': i18n.language === 'en',
+                      })}
                     >
-                      <Dropdown.Item
-                        className='hover:bg-neutral-40 focus:bg-neutral-40'
-                        size='lg'
-                        onClick={() => i18n.changeLanguage('es')}
-                      >
-                        <Typography
-                          variant='sm'
-                          className={cn('w-32 text-left text-neutral-400', {
-                            'text-neutral-500': i18n.language === 'es',
-                          })}
-                        >
-                          Español
-                        </Typography>
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className='hover:bg-neutral-40 focus:bg-neutral-40'
-                        size='lg'
-                        onClick={() => i18n.changeLanguage('en')}
-                      >
-                        <Typography
-                          variant='sm'
-                          className={cn('w-32 text-left text-neutral-400', {
-                            'text-neutral-500': i18n.language === 'en',
-                          })}
-                        >
-                          Ingles
-                        </Typography>
-                      </Dropdown.Item>
-                    </Dropdown>
-                  </motion.li>
-                  <motion.li className='cursor-pointer hover:underline'>
-                    <SingleSignOn />
-                  </motion.li>
-                </motion.ul>
-              ))}
+                      Ingles
+                    </Typography>
+                  </Dropdown.Item>
+                </Dropdown>
+              </motion.li>
+              <motion.li className='cursor-pointer hover:underline'>
+                <SingleSignOn />
+              </motion.li>
+            </motion.ul>
+            {/* )} */}
 
             {!intersected && pathname === PROPERTYPATH && (
               <motion.div

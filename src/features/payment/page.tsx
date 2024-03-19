@@ -73,14 +73,19 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   // }, [setLoginEnabled]);
 
   useEffect(() => {
-    // console.log("USE EFFECT");
-    if (session && selectedRoom.ratesPlan) {
-      // console.log("SETTING UP THIS REQUEST");
+    // console.log('USE EFFECT');
+    if (
+      session &&
+      selectedRoom.ratesPlan &&
+      reservation.checkin &&
+      reservation.checkout
+    ) {
+      // console.log('SETTING UP THIS REQUEST');
       // For now, one reservation == one room. Let's avoid edge cases before wednesday
       // You would need some additional logic to split the reservation in multiple physical rooms
       const room_type: ReservedRoom = {
-        har_in: getCheckin(),
-        har_out: getCheckout(),
+        har_in: reservation.checkin,
+        har_out: reservation.checkout,
         har_tha_id: selectedRoom.id,
         har_pla_id: 330,
         har_hot_id: property.id,
@@ -103,11 +108,11 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         guest_id: 123,
         sales_channel_type: 'web',
         process_state: 'WAITING_FOR_PAYMENT',
-        date_in: new Date(getCheckin())
+        date_in: new Date(reservation.checkout)
           .toISOString()
           .slice(0, 19)
           .replace('T', ' '),
-        date_out: new Date(getCheckout())
+        date_out: new Date(reservation.checkout)
           .toISOString()
           .slice(0, 19)
           .replace('T', ' '),
@@ -135,7 +140,7 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         confirmed_agreement: 0,
         guest_preferred_language: 'es',
         guest_email: session?.email,
-        guest_country_code: 'VEN',
+        guest_country_code: property.countryISO, // For now, later use country detected in IP
       };
       setReservationRequest(reservationRequest);
       mutate(reservationRequest);
@@ -148,6 +153,8 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     getInfants,
     mutate,
     property,
+    reservation.checkin,
+    reservation.checkout,
     reservation.totalCost,
     selectedRoom.id,
     selectedRoom.ratesPlan,
@@ -157,17 +164,30 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   ]);
 
   useEffect(() => {
-    if (
-      reservationRequestResponse != undefined &&
-      reservationRequestResponse.res.code == 0
-    ) {
-      setReservationRequestId(
-        reservationRequestResponse.res.data.reservation_request_id,
-      );
-      // console.log("HERE IS THE FIRST RESPONSE");
-      // console.log(reservationRequestResponse);
+    // console.log('HERE IS THE FIRST RESPONSE');
+    // console.log(reservationRequestResponse);
+    if (reservationRequestResponse != undefined) {
+      if (reservationRequestResponse.res.code == 0) {
+        setReservationRequestId(
+          reservationRequestResponse.res.data.reservation_request_id,
+        );
+      } else {
+        // Tomorrow: Add modal for unavailable room in the room-type
+        redirect(
+          `/room-type/${selectedRoom.id}?checkin=${reservation.checkin}&checkout=${reservation.checkout}&totalAdults=${getAdults()}&totalChildren=${getChildrens()}&totalInfants=${getInfants}&unavailable=true`,
+        );
+      }
     }
-  }, [reservationRequestResponse, setReservationRequestId]);
+  }, [
+    getAdults,
+    getChildrens,
+    getInfants,
+    reservation.checkin,
+    reservation.checkout,
+    reservationRequestResponse,
+    selectedRoom.id,
+    setReservationRequestId,
+  ]);
 
   if (!session) {
     redirect('/');

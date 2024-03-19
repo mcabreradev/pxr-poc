@@ -37,7 +37,6 @@ export type ReservationRequest = {
 };
 
 export type RemainingReservationRequestData = {
-  payment_id: number;
   guest_preferred_language: string;
   guest_email: string | undefined;
   guest_country_code: string;

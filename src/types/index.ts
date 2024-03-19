@@ -29,6 +29,5 @@ export type {
   ReservationRequest,
   ReservedRoom,
   SelectedRoomtype,
-  User
+  User,
 };
-

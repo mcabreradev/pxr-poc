@@ -43,7 +43,7 @@ export default function MyTripDetails({ property, room }: Props) {
     >
       <section className='flex h-auto w-full flex-row items-center p-4 '>
         <Image
-          src='/images/hotel/room-1.webp'
+          src={property.photos[0].url ?? ''}
           className='relative h-[75px] w-auto rounded'
           width={1}
           height={1}

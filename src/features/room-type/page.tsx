@@ -73,7 +73,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
       <BackButton href='/'>{t('title.room-details')}</BackButton>
 
       <div className='layout'>
-        <Gallery photos={data.images} />
+        <Gallery photos={room?.photos} />
 
         <div className='relative flex'>
           <div className='w-full md:w-8/12'>

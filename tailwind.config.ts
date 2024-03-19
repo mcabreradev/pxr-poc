@@ -18,6 +18,12 @@ export default withMT({
   ],
   theme: {
     extend: {
+      textShadow: {
+        default: '0 2px 5px rgba(0, 0, 0, 0.5)',
+      },
+      textStroke: {
+        black: '10px black',
+      },
       fontFamily: {
         primary: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
@@ -187,5 +193,6 @@ export default withMT({
     require('tailwindcss-animate'),
     require('flowbite/plugin'),
     require('tailwindcss-animated'),
+    require('tailwindcss-textshadow'),
   ],
 } satisfies Config);

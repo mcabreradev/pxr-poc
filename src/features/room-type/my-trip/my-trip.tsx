@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable simple-import-sort/imports */
 'use client';
 import dayjs from 'dayjs';
@@ -97,7 +96,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setEditModal(value);
   }, []);
 
-  console.log('---', breakfast, PLAN_BREAKFAST);
   const ratesPlanIndex = breakfast === PLAN_BREAKFAST ? 1 : 0;
 
   const planCost = (
@@ -125,9 +123,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   )?.productId;
 
   const product = selectedRoom.ratesPlan?.[ratesPlanIndex];
-
-  console.log('=== ', ratesPlanIndex, selectedRoom.ratesPlan?.[ratesPlanIndex]);
-
   const planDays = checkoutDayjs.diff(checkinDayjs, 'days');
   const totalCost = planCost * planDays;
   const totalCostWithTaxes = planCostWithTaxes * planDays;

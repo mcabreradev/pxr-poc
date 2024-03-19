@@ -32,6 +32,7 @@ const nextConfig = {
       'https://maps.gstatic.com',
       'lh3.googleusercontent.com',
       'https://lh3.googleusercontent.com',
+      'https://staticphp8.paxer.com',
     ],
   },
 

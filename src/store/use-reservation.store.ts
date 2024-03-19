@@ -30,8 +30,8 @@ const initialReservationState: Reservation = {
   cancelationCost: null,
   total: null,
   hasBreakfast: null,
-  selectedRoom: {},
-  product: {},
+  selectedRoom: null,
+  product: null,
   currency: '',
   roomTypeId: null,
 };

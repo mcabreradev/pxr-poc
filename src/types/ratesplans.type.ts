@@ -87,5 +87,3 @@ export type NoShowPolicy = {
 export type ProductDates = {
   [key: string]: { [key: string]: string | number | null | unknown };
 };
-
-export default Ratesplan;

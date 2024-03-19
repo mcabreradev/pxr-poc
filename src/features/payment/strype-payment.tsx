@@ -1,10 +1,11 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import { uuid } from '@/lib/utils';
 
 import {
+  useReservationRequestStore,
   useReservationStore,
   useSelectedRoomtypeStore,
   useUserStore,
@@ -29,6 +30,7 @@ const idempotentKey = uuid();
 
 const StripePayment = memo(({ roomTypeId }: Props) => {
   const { data: property } = usePropertyQuery();
+  const { setPaymentId } = useReservationRequestStore();
   const {
     reservation: { total, currency, checkin, checkout },
   } = useReservationStore();
@@ -40,7 +42,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
   const intentData: Payment = {
     propertyId,
     amount: total,
-    clientId: 2334,
+    clientId: 123,
     email: user?.email,
     currency: {
       currencyId: 1,
@@ -58,10 +60,16 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
   };
 
   const {
-    data: clientSecret,
+    data,
     isLoading: isLoadingPaymentIntent,
     isError: isErrorPaymentIntent,
   } = useStripePaymentIntentQuery(intentData);
+
+  useEffect(() => {
+    if (data != null) {
+      setPaymentId(data.pagId);
+    }
+  }, [data, setPaymentId]);
 
   if (isLoadingPaymentIntent) {
     return <PaymentSkeleton />;
@@ -73,8 +81,11 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
 
   return (
     <div data-testid='test-element'>
-      {stripePromise && clientSecret && (
-        <Elements options={{ clientSecret }} stripe={stripePromise}>
+      {stripePromise && data.clientSecret && (
+        <Elements
+          options={{ clientSecret: data.clientSecret }}
+          stripe={stripePromise}
+        >
           <CheckoutForm roomTypeId={roomTypeId} />
         </Elements>
       )}

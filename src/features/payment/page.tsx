@@ -73,7 +73,9 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   // }, [setLoginEnabled]);
 
   useEffect(() => {
+    // console.log("USE EFFECT");
     if (session && selectedRoom.ratesPlan) {
+      // console.log("SETTING UP THIS REQUEST");
       // For now, one reservation == one room. Let's avoid edge cases before wednesday
       // You would need some additional logic to split the reservation in multiple physical rooms
       const room_type: ReservedRoom = {
@@ -131,6 +133,9 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         send_payment_email: 1,
         new_booking_email_send_to_hotel: 1,
         confirmed_agreement: 0,
+        guest_preferred_language: 'es',
+        guest_email: session?.email,
+        guest_country_code: 'VEN',
       };
       setReservationRequest(reservationRequest);
       mutate(reservationRequest);
@@ -159,6 +164,8 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
       setReservationRequestId(
         reservationRequestResponse.res.data.reservation_request_id,
       );
+      // console.log("HERE IS THE FIRST RESPONSE");
+      // console.log(reservationRequestResponse);
     }
   }, [reservationRequestResponse, setReservationRequestId]);
 

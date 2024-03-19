@@ -26,7 +26,10 @@ export function useRoomTypeWithRatesPlansQuery({ checkin, checkout }) {
 
   return useQueries({
     queries: [
-      { queryKey: [ROOMTYPES, propertyId], queryFn: () => fetchRoomTypes() },
+      {
+        queryKey: [ROOMTYPES, propertyId],
+        queryFn: () => fetchRoomTypes(),
+      },
       {
         queryKey: [PROPERTY, propertyId, RATES],
         queryFn: () => fetchRatesPlan({ checkin, checkout }),

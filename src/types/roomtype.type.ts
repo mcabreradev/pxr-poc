@@ -1,5 +1,5 @@
 import { Amenity } from './amenity.type';
-import { Photo } from './photo.type';
+import { PhotoType } from './photo.type';
 
 export type SelectedRoomtype = {
   id?: number | null;
@@ -15,7 +15,7 @@ export type SelectedRoomtype = {
   rooms?: Room[];
   availability?: unknown[];
   amenities?: Amenity[];
-  photos?: Photo[];
+  photos?: PhotoType[];
   bedTypes?: BedType[];
   viewTypes?: unknown[];
   accessibilityFeatures?: unknown[];

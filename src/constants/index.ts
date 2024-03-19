@@ -28,7 +28,15 @@ export const ERROR = 'error';
 export const AMENITIES = 'amenities';
 export const TOPSIGHT = 'topsight';
 export const GALERY = 'galery';
-export const IMAGE = 'img';
+export const IMG = 'img';
+export const IMAGES = 'images';
+export const LANDSCAPE = 'landscape';
+export const PORTRAIT = 'portrait';
+export const SQUARE = 'square';
+export const ORIENTATION = 'orientation';
+export const URLS = 'urls';
+export const PHOTOS = 'photos';
+export const PHOTO = 'photo';
 export const RESERVATION = 'reservation';
 export const PLURAL = 'plural';
 export const SINGULAR = 'singular';
@@ -154,7 +162,7 @@ export const PAYMENT_STATUS = {
   REQUIER_INTENT_CLIENT_SECRET: 'payment_intent_client_secret',
 };
 
-export const breakpoints = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];
+export const BREAKPOINTS = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48];
 
 export const LOCALES = {
   us: { format: 'en-US', currency: 'USD', currencyDisplay: 'symbol' },
@@ -214,6 +222,10 @@ export const CURRENCIES = [
 
 // keyboard keys
 export const ESCAPE = 'Escape';
+
+// defaults
+export const DEFAULT_WIDTH = 980;
+export const DEFAULT_HEIGHT = 551;
 
 // hardcoded values
 export const PLAN_COST = 100;

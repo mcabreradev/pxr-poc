@@ -268,5 +268,9 @@
     "wanna-sleep": "¿Dónde quieres dormir?"
   },
   "to": "a",
+  "unavailable-modal": {
+    "header": "No hay cupos disponibles",
+    "body": "Lo sentimos, no quedan cupos para este tipo de habitación en la fecha seleccionada"
+  },
   "until": "hasta"
 }

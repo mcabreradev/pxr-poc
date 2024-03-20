@@ -2,7 +2,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -13,6 +14,7 @@ import Button from '@/components/button';
 import BackButton from '@/components/common/back-button';
 import Gallery from '@/components/gallery';
 import Icon from '@/components/icon';
+import Modal from '@/components/modal';
 import Typography from '@/components/typography';
 
 import { useGlobalStore } from '@/store';
@@ -37,8 +39,13 @@ px-4 text-black md:px-0
 export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { t, i18n } = useTranslation();
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
-  const { removeBlacklistParam } = useQueryString();
+  const { removeBlacklistParam, removeQueryStringParamAndUpdate } =
+    useQueryString();
   const { resetGlobalStore } = useGlobalStore();
+  const searchParams = useSearchParams();
+  const [isModalOpen, setIsModalOpen] = useState(
+    !!searchParams.get('unavailable'),
+  );
 
   const { checkin, checkout } = useSearchParamOrStore();
   const { data: ratesPlan } = useRatesPlanQuery({
@@ -46,6 +53,11 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
     checkout,
     roomTypeId,
   });
+
+  const closeModalHandler = () => {
+    setIsModalOpen(false);
+    removeQueryStringParamAndUpdate('unavailable');
+  };
 
   // Reset global store and remove blacklist params
   useEffect(() => {
@@ -71,6 +83,22 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
       datatype={room}
     >
       <BackButton href='/'>{t('title.room-details')}</BackButton>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModalHandler}
+        size='md'
+        footerClassName='p-2'
+        headerClassName='p-6'
+        header={
+          <Typography variant='h2' weight='normal' className=''>
+            {t('unavailable-modal.header')}
+          </Typography>
+        }
+      >
+        <Typography variant='base' weight='normal' className=''>
+          {t('unavailable-modal.body')}
+        </Typography>
+      </Modal>
 
       <div className='layout'>
         <Gallery photos={data.images} />

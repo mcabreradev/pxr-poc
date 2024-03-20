@@ -268,5 +268,9 @@
     "wanna-sleep": "Where do you wanna sleep?"
   },
   "to": "to",
+  "unavailable-modal": {
+    "header": "Room unavailable",
+    "body": "Sorry, there are no rooms of this type available on the selected date"
+  },
   "until": "until"
 }

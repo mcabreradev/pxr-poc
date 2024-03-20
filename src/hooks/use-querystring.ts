@@ -51,6 +51,18 @@ const useQueryString = () => {
     [createQueryString, pathname, router],
   );
 
+  const removeQueryStringParamAndUpdate = useCallback(
+    (name: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.delete(name);
+
+      router.push(`${pathname}?${params.toString()}`, {
+        scroll: false,
+      });
+    },
+    [pathname, router, searchParams],
+  );
+
   const pushQueryString = useCallback(
     (string: string) => {
       router.push(`${pathname}?${string}`, {
@@ -103,6 +115,7 @@ const useQueryString = () => {
     updateQueryStringAsync,
     createQueryString,
     removeQueryStringParam,
+    removeQueryStringParamAndUpdate,
   };
 };
 

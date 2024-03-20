@@ -14,6 +14,7 @@ import Typography from '@/components/typography';
 import { useGlobalStore, useSelectedRoomtypeStore } from '@/store';
 
 import { PROPERTY_CURRENCY } from '@/constants';
+import { paxerImage } from '@/lib/images';
 import { formatCurrency } from '@/lib/number';
 import { useRoomTypeWithRatesPlansQuery } from '@/queries';
 import { SelectedRoomtype } from '@/types';
@@ -93,11 +94,10 @@ const RoomSelectionComponent = () => {
           >
             <Image
               alt={name}
-              src={`/images/hotel/room${index + 1}.webp`}
+              src={paxerImage(room.photos[0].url)}
               width={271}
               height={235}
               className='w-full object-cover'
-              title={t('title.room')}
             />
             <div className='p-4'>
               <Typography variant='h3' weight='medium' className='pb-4'>

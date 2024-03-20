@@ -11,6 +11,7 @@ const nextConfig = {
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_SITE_HOST_URL_AUTH: process.env.NEXT_PUBLIC_SITE_HOST_URL_AUTH,
+    NEXT_PUBLIC_SITE_IMAGE_URL: process.env.NEXT_PUBLIC_SITE_IMAGE_URL,
   },
 
   eslint: {
@@ -32,6 +33,7 @@ const nextConfig = {
       'https://maps.gstatic.com',
       'lh3.googleusercontent.com',
       'https://lh3.googleusercontent.com',
+      'https://staticphp8.paxer.com',
     ],
   },
 

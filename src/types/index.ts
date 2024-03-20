@@ -1,4 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
+import { PhotoType } from '@/types/photo.type';
 import { CurrencyCode } from './currency.type';
 import { EventData } from './event-data.type';
 import { GuestPegaso } from './guest.type';
@@ -20,6 +21,7 @@ export type {
   EventData,
   GuestPegaso,
   Payment,
+  PhotoType,
   Product,
   PropertyType,
   Ratesplan,

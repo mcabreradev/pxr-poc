@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { processImages } from '@/lib/images';
+
 import { ROOMTYPE } from '@/constants';
 import { propertyId } from '@/constants/env';
 
@@ -15,5 +17,6 @@ export default function useRoomTypeQuery(roomTypeId: number | number | null) {
   return useQuery({
     queryKey: [ROOMTYPE, roomTypeId],
     queryFn: () => fetchRoomType(roomTypeId),
+    select: processImages,
   });
 }

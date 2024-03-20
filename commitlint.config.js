@@ -11,6 +11,7 @@ module.exports = {
         'chore',
         'style',
         'refactor',
+        'ref',
         'ci',
         'test',
         'perf',

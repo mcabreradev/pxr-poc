@@ -6,12 +6,12 @@ export type ReservationRequest = {
   process_state: string;
   date_in: string | Date;
   date_out: string | Date;
-  mon_id: number;
+  mon_id?: number;
   mon_iso: string | number | null | undefined;
   total_cost: number | null | undefined;
   room_types_cost: number;
   guest_mon_iso: string | number | null | undefined;
-  mon_commission_id: number;
+  mon_commission_id?: number;
   commission_mon_iso: string | number | null | undefined;
   is_default_commission: number;
   reservation_status: string;

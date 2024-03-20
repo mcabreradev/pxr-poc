@@ -212,6 +212,23 @@ export const CURRENCIES = [
   { format: 'es-VE', currency: 'VES', currencyDisplay: 'symbol' },
 ];
 
+// Reservations
+export const RESERVATION_PROCESS_STATE = {
+  SUCCESS_PAYMENT: 'SUCCESS_PAYMENT',
+  WAITING_FOR_PAYMENT: 'WAITING_FOR_PAYMENT',
+};
+
+export const RESERVATION_REG_STATUS = 'active';
+
+export const RESERVATION_SALES_CHANNEL_TYPE = 'web';
+
+export const RESERVATION_SALES_ORIGIN_TYPE = 'DIRECT';
+
+export const RESERVATION_STATUS = {
+  PAID: 'PAID',
+  WO_PAYMENT: 'WO_PAYMENT',
+};
+
 // keyboard keys
 export const ESCAPE = 'Escape';
 

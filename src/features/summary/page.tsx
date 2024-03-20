@@ -21,6 +21,7 @@ import SummaryRow from '@/features/summary/summaryRow';
 import { useReservationRequestMutation } from '@/mutations';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
+import { RESERVATION_PROCESS_STATE } from '@/constants';
 import { useEffect } from 'react';
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';
@@ -94,7 +95,10 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
   }, [completeReservationRequestData]);
 
   useEffect(() => {
-    if (reservationRequest.process_state === 'SUCCESS_PAYMENT') {
+    if (
+      reservationRequest.process_state ===
+      RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT
+    ) {
       mutate(reservationRequest);
     }
   }, [reservationRequest, mutate]);

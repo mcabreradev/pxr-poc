@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useLocale } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
@@ -19,7 +20,15 @@ import {
 import useReservationRequestStore from '@/store/use-reservation-request.store';
 
 import NotConnected from '@/app/not-connected';
-import { ERRORS, URL } from '@/constants';
+import {
+  ERRORS,
+  RESERVATION_PROCESS_STATE,
+  RESERVATION_REG_STATUS,
+  RESERVATION_SALES_CHANNEL_TYPE,
+  RESERVATION_SALES_ORIGIN_TYPE,
+  RESERVATION_STATUS,
+  URL,
+} from '@/constants';
 import StripePayment from '@/features/payment/strype-payment';
 import { useReservationRequestMutation } from '@/mutations';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
@@ -51,6 +60,7 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   const { selectedRoom } = useSelectedRoomtypeStore();
   const { getAdults, getCheckin, getCheckout, getChildrens, getInfants } =
     useSearchParamOrStore();
+  const { language } = useLocale();
   const {
     mutate,
     data: reservationRequestResponse,
@@ -106,8 +116,8 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
       const reservationRequest: ReservationRequest = {
         property_id: property.id,
         guest_id: 123,
-        sales_channel_type: 'web',
-        process_state: 'WAITING_FOR_PAYMENT',
+        sales_channel_type: RESERVATION_SALES_CHANNEL_TYPE,
+        process_state: RESERVATION_PROCESS_STATE.WAITING_FOR_PAYMENT,
         date_in: new Date(reservation.checkout)
           .toISOString()
           .slice(0, 19)
@@ -116,29 +126,27 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
           .toISOString()
           .slice(0, 19)
           .replace('T', ' '),
-        mon_id: 5,
         mon_iso: 'EUR',
         total_cost: reservation.totalCost,
         room_types_cost: 0,
         guest_mon_iso: 'EUR',
-        mon_commission_id: 5,
         commission_mon_iso: 'EUR',
         is_default_commission: 0,
-        reservation_status: 'WO_PAYMENT',
+        reservation_status: RESERVATION_STATUS.WO_PAYMENT,
         room_types: [room_type],
         extras: [],
         coupons: [],
         adults_amount: getAdults(),
         additional_field_values: [],
-        reg_status: 'active',
-        sales_origin_type: 'DIRECT',
+        reg_status: RESERVATION_REG_STATUS,
+        sales_origin_type: RESERVATION_SALES_ORIGIN_TYPE,
         send_confirmed_email: 1,
         confirmed_email_active: 1,
         thank_you_email_to_pax_active: 1,
         send_payment_email: 1,
         new_booking_email_send_to_hotel: 1,
         confirmed_agreement: 0,
-        guest_preferred_language: 'es',
+        guest_preferred_language: language.toLowerCase(),
         guest_email: session?.email,
         guest_country_code: property.countryISO, // For now, later use country detected in IP
       };
@@ -151,6 +159,7 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     getCheckout,
     getChildrens,
     getInfants,
+    language,
     mutate,
     property,
     reservation.checkin,
@@ -172,7 +181,6 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
           reservationRequestResponse.res.data.reservation_request_id,
         );
       } else {
-        // Tomorrow: Add modal for unavailable room in the room-type
         redirect(
           `/room-type/${selectedRoom.id}?checkin=${reservation.checkin}&checkout=${reservation.checkout}&totalAdults=${getAdults()}&totalChildren=${getChildrens()}&totalInfants=${getInfants}&unavailable=true`,
         );

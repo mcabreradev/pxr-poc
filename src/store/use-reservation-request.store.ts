@@ -7,6 +7,14 @@ import {
   subscribeWithSelector,
 } from 'zustand/middleware';
 
+import {
+  RESERVATION_PROCESS_STATE,
+  RESERVATION_REG_STATUS,
+  RESERVATION_SALES_CHANNEL_TYPE,
+  RESERVATION_SALES_ORIGIN_TYPE,
+  RESERVATION_STATUS,
+} from '@/constants';
+
 import { ReservationData, ReservationRequest } from '@/types';
 
 type State = {
@@ -16,26 +24,24 @@ type State = {
 const initialReservationRequestState: ReservationRequest = {
   property_id: 0,
   guest_id: 0,
-  sales_channel_type: 'web',
-  process_state: 'WAITING_FOR_PAYMENT',
+  sales_channel_type: RESERVATION_SALES_CHANNEL_TYPE,
+  process_state: RESERVATION_PROCESS_STATE.WAITING_FOR_PAYMENT,
   date_in: '',
   date_out: '',
-  mon_id: 0,
   mon_iso: '',
   total_cost: 0,
   room_types_cost: 0,
   guest_mon_iso: '',
-  mon_commission_id: 0,
   commission_mon_iso: '',
   is_default_commission: 0,
-  reservation_status: 'WO_PAYMENT',
+  reservation_status: RESERVATION_STATUS.WO_PAYMENT,
   room_types: [],
   extras: [],
   coupons: [],
   adults_amount: 0,
   additional_field_values: '',
-  reg_status: 'active',
-  sales_origin_type: 'DIRECT',
+  reg_status: RESERVATION_REG_STATUS,
+  sales_origin_type: RESERVATION_SALES_ORIGIN_TYPE,
   send_confirmed_email: 1,
   confirmed_email_active: 1,
   thank_you_email_to_pax_active: 1,
@@ -96,7 +102,8 @@ const useReservationRequestStore = create<State & Actions, []>(
         reservationRequest: {
           ...get().reservationRequest,
           confirmed_agreement: 1,
-          process_state: 'SUCCESS_PAYMENT',
+          reservation_status: RESERVATION_STATUS.PAID,
+          process_state: RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT,
         },
       })),
     setReservationData: (data: ReservationData) =>

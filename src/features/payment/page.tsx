@@ -3,7 +3,7 @@
 
 /* eslint-disable simple-import-sort/imports */
 import { motion } from 'framer-motion';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -27,7 +27,6 @@ import {
   RESERVATION_SALES_CHANNEL_TYPE,
   RESERVATION_SALES_ORIGIN_TYPE,
   RESERVATION_STATUS,
-  URL,
 } from '@/constants';
 import StripePayment from '@/features/payment/strype-payment';
 import { useReservationRequestMutation } from '@/mutations';
@@ -47,14 +46,19 @@ type Props = {
 
 export default function PaymentFeature({ roomTypeId, action }: Props) {
   const { t } = useTranslation();
+  const router = useRouter();
   const { error, isError, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
-  const { setReservationRequest, setReservationRequestId } =
-    useReservationRequestStore();
+  const {
+    setReservationRequest,
+    setReservationRequestId,
+    resetStore,
+    reservationRequest,
+  } = useReservationRequestStore();
   const { session } = useSessionStore();
   const { reservation } = useReservationStore();
   const { selectedRoom } = useSelectedRoomtypeStore();
@@ -70,9 +74,15 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   // eslint-disable-next-line unused-imports/no-unused-vars
   const { setLoginEnabled, user } = useUserStore();
 
-  const actionPayment = !action;
-  const actionSuccess = action === URL.SUCCESS;
-  const actionError = action === URL.ERROR;
+  const abandonReservationAndGoBack = async (event) => {
+    event.preventDefault();
+    mutate({
+      ...reservationRequest,
+      process_state: RESERVATION_PROCESS_STATE.ABANDONED,
+    });
+    resetStore();
+    router.push(`/room-type/${roomTypeId}${window.location.search}`);
+  };
 
   // useEffect(() => {
   //   setLoginEnabled(false);
@@ -223,7 +233,10 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
-      <BackButton href={`/room-type/${roomTypeId}`}>
+      <BackButton
+        href={`/room-type/${roomTypeId}`}
+        onClick={abandonReservationAndGoBack}
+      >
         {t('title.room-confirm-reserve')}
       </BackButton>
 

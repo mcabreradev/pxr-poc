@@ -56,6 +56,7 @@ type Actions = {
   setPaymentId: (id: number) => void;
   completeReservationRequestData: () => void;
   setReservationData: (data: ReservationData) => void;
+  resetStore: () => void;
 };
 
 type Persist = (
@@ -112,6 +113,12 @@ const useReservationRequestStore = create<State & Actions, []>(
           ...get().reservationRequest,
           id_public: data.id_public,
           reservation_id: data.reservation_id,
+        },
+      })),
+    resetStore: () =>
+      set(() => ({
+        reservationRequest: {
+          ...initialReservationRequestState,
         },
       })),
   })),

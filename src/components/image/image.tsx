@@ -11,7 +11,7 @@ type Props = {
     image?: string;
     blur?: string;
   };
-  alt: string;
+  alt?: string | null;
   fill?: boolean;
   width: number;
   height: number;
@@ -58,7 +58,7 @@ export default function Image({
         src={src ?? ''}
         width={width ?? DEFAULT_WIDTH}
         height={height ?? DEFAULT_HEIGHT}
-        alt={alt}
+        alt={alt ?? ''}
         onLoadingComplete={() => setStatus('complete')}
         fill={fill}
         {...rest}

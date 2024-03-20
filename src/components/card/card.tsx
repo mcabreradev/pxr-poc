@@ -40,6 +40,7 @@ export default function CardComponent({
         className,
       )}
       data-testid='test-card-element'
+      data-id={id}
     >
       <div className='h-[180px] w-full overflow-hidden'>
         <Image
@@ -53,7 +54,7 @@ export default function CardComponent({
 
       <div className='p-4'>
         <Typography variant='h3' weight='medium' className='pb-4'>
-          {name ?? t('title.room')} {id}
+          {name ?? t('title.room')}
         </Typography>
         <Typography className='pb-1'>
           {`Max ${maxCapacity} ${t('person.plural')}`}
@@ -74,7 +75,7 @@ export default function CardComponent({
           </>
         </Typography>
 
-        <Button type='button' className='mb-4 md:w-full' onClick={onClick}>
+        <Button type='button' className='mb-4 w-full' onClick={onClick}>
           {t('button.reserve')}
         </Button>
       </div>

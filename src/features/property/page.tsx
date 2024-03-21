@@ -16,7 +16,7 @@ import { Gallery, Icon, Image, Sticky, Swiper, Typography } from '@/components';
 
 import { useGlobalStore, useReservationStore } from '@/store';
 
-import HotelRules from '@/features/components/hotel-rules';
+import HotelRules from '@/features/common/hotel-rules';
 
 import {
   useAvailabilityQuery,
@@ -24,10 +24,10 @@ import {
   useRatesPlanQuery,
 } from '@/queries';
 
+import GuestsDatepickerDrawer from '@/features/common/guests-datepicker-drawer';
 import PropertyAmenities from './amenities';
 import data from './data.json';
 import GuestForm from './guest-form';
-import GuestsDatepickerDrawer from './guests-datepicker-drawer';
 import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';

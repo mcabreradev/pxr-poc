@@ -13,8 +13,8 @@ import Typography from '@/components/typography';
 
 import { useReservationRequestStore, useReservationStore } from '@/store';
 
-import HotelRules from '@/features/components/hotel-rules';
-import PriceDetails from '@/features/components/price-details';
+import HotelRules from '@/features/common/hotel-rules';
+import PriceDetails from '@/features/common/price-details';
 import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';

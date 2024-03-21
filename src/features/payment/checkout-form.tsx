@@ -23,7 +23,7 @@ import {
 } from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
-import HotelRules from '@/features/components/hotel-rules';
+import HotelRules from '@/features/common/hotel-rules';
 import { useReservationRequestMutation } from '@/mutations';
 
 import data from './data.json';

@@ -17,11 +17,11 @@ import Typography from '@/components/typography';
 
 import { useGlobalStore } from '@/store';
 
-import HotelRules from '@/features/components/hotel-rules';
+import HotelRules from '@/features/common/hotel-rules';
 
 import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
-import GuestsDatepickerDrawer from '@/features/property/guests-datepicker-drawer';
+import GuestsDatepickerDrawer from '@/features/common/guests-datepicker-drawer';
 import data from './data.json';
 import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';

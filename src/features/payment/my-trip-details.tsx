@@ -10,7 +10,7 @@ import useReservationQuery from '@/store/use-reservation.store';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import PriceDetails from '@/features/components/price-details';
+import PriceDetails from '@/features/common/price-details';
 
 import type { PropertyType } from '@/types';
 

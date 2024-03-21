@@ -7,7 +7,7 @@ import { useCheckinCheckoutHook } from '@/hooks';
 import Card from '@/components/card';
 import Swiper from '@/components/swiper';
 
-import { useGlobalStore, useSelectedRoomtypeStore } from '@/store';
+import { useDatepickerStore, useSelectedRoomtypeStore } from '@/store';
 
 import { paxerImage } from '@/lib/images';
 import { cn } from '@/lib/utils';
@@ -19,7 +19,7 @@ const RoomSelectionComponent = () => {
   const [selectedRoom, setSelectedRoom] = useState<SelectedRoomtype>();
   const { setSelectedRoomtype } = useSelectedRoomtypeStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
-  const { openDatepickerDrawer } = useGlobalStore();
+  const { openDatepickerDrawer } = useDatepickerStore();
 
   const {
     data: roomTypeWithRatesPlans,

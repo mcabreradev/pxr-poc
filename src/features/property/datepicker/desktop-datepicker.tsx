@@ -6,7 +6,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { useLocale, useQueryString, useSearchParamOrStore } from '@/hooks';
-import { cn, formatDateToString, formatStringToDate } from '@/lib/utils';
+import { formatDateToString, formatStringToDate } from '@/lib/time';
+import { cn } from '@/lib/utils';
 
 import { useReservationStore } from '@/store';
 

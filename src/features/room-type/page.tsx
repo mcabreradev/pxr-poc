@@ -21,6 +21,7 @@ import HotelRules from '@/features/components/hotel-rules';
 
 import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
+import GuestsDatepickerDrawer from '@/features/property/guests-datepicker-drawer';
 import data from './data.json';
 import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';
@@ -105,6 +106,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
             </Section>
             <hr />
             <MyTrip roomTypeId={roomTypeId} className='md:hidden' />
+            <GuestsDatepickerDrawer disableSubmit />
             <hr className='md:hidden' />
             <Section>
               <div className='py-2'>

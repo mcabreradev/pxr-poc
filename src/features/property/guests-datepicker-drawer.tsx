@@ -22,7 +22,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import {
-  useGlobalStore,
+  useDatepickerStore,
   useReservationStore,
   useSelectedRoomtypeStore,
 } from '@/store';
@@ -38,14 +38,18 @@ import {
   TOTAL_INFANTS,
 } from '@/constants';
 
-export default function MobileDatepickerComponent() {
+export default function GuestsDatepickerDrawer({
+  disableSubmit = false,
+}: {
+  disableSubmit?: boolean;
+}) {
   const { locale } = useLocale();
   const { t } = useTranslation();
   const router = useRouter();
   const { setReservation } = useReservationStore();
   const { checkinDate, checkoutDate } = useSearchParamOrStore();
-  const { createQueryString } = useQueryString();
-  const { closeDatepickerDrawer } = useGlobalStore();
+  const { createQueryString, updateQueryString } = useQueryString();
+  const { closeDatepickerDrawer } = useDatepickerStore();
   const { size } = useWindowSize();
   const refView = useClickAway(() => {
     setShowHandler(null);
@@ -60,7 +64,7 @@ export default function MobileDatepickerComponent() {
   const today = dayjs();
   const [startDate, setStartDate] = useState<Date | null>(checkinDate);
   const [endDate, setEndDate] = useState<Date | null>(checkoutDate);
-  const [isOpenDatepickerDrawer, setOpenDatepickerDrawer] = useState(false);
+  const [isDatepickerOpen, setOpenDatepickerDrawer] = useState(false);
   const isSmallDevice = useMediaQuery(MOBILE_DEVICE_CSS_QUERY);
 
   const onChange = useCallback((dates) => {
@@ -104,14 +108,26 @@ export default function MobileDatepickerComponent() {
   };
 
   useEffect(() => {
-    const unsub = useGlobalStore.subscribe(({ isOpenDatepickerDrawer }) => {
-      if (isOpenDatepickerDrawer) {
-        setOpenDatepickerDrawer(isOpenDatepickerDrawer);
-        setShowHandler(null);
-        return;
-      }
-      setOpenDatepickerDrawer(false);
-    });
+    const unsub = useDatepickerStore.subscribe(
+      ({ isDatepickerOpen, isCalendarOpen, isGuestFormOpen }) => {
+        if (isDatepickerOpen && !isCalendarOpen && !isGuestFormOpen) {
+          setOpenDatepickerDrawer(isDatepickerOpen);
+          setShowHandler(null);
+          return;
+        }
+        if (isCalendarOpen) {
+          setShowHandler(CALENDAR);
+          setOpenDatepickerDrawer(true);
+          return;
+        }
+        if (isGuestFormOpen) {
+          setShowHandler(GUESTSINFO);
+          setOpenDatepickerDrawer(true);
+          return;
+        }
+        setOpenDatepickerDrawer(false);
+      },
+    );
 
     return unsub;
   }, [setShowHandler]);
@@ -147,15 +163,21 @@ export default function MobileDatepickerComponent() {
   /// Search - final step
   const handleSearch = useCallback(() => {
     if (!startDate || !endDate) return;
-    setLoading(true);
-
     try {
+      setLoading(true);
       setReservation({
         checkin: formatDateToString(startDate),
         checkout: formatDateToString(endDate),
         adults,
         childrens,
         infants,
+      });
+      updateQueryString({
+        [CHECKIN]: formatDateToString(startDate),
+        [CHECKOUT]: formatDateToString(endDate),
+        [TOTAL_ADULTS]: adults,
+        [TOTAL_CHILDRENS]: childrens,
+        [TOTAL_INFANTS]: infants,
       });
       const query = createQueryString({
         [CHECKIN]: formatDateToString(startDate),
@@ -164,23 +186,31 @@ export default function MobileDatepickerComponent() {
         [TOTAL_CHILDRENS]: childrens,
         [TOTAL_INFANTS]: infants,
       });
-      router.push(`/room-type/${selectedRoom.id}?${query}`);
+
+      if (!disableSubmit) {
+        router.push(`/room-type/${selectedRoom.id}?${query}`);
+      }
+      closeDatepickerDrawer();
+      setLoading(false);
     } catch (error) {
       closeDatepickerDrawer();
+      setLoading(false);
       // eslint-disable-next-line no-console
       console.error('Error on Datepicker handleSearch', error);
     }
   }, [
+    startDate,
+    endDate,
+    setReservation,
     adults,
     childrens,
-    closeDatepickerDrawer,
-    createQueryString,
-    endDate,
     infants,
+    updateQueryString,
+    createQueryString,
+    disableSubmit,
+    closeDatepickerDrawer,
     router,
     selectedRoom.id,
-    setReservation,
-    startDate,
   ]);
 
   const DayPickerText = ({
@@ -456,7 +486,7 @@ export default function MobileDatepickerComponent() {
   return (
     <Drawer
       icon='cancel'
-      open={isOpenDatepickerDrawer}
+      open={isDatepickerOpen}
       onClose={closeDatepickerDrawer}
       footer={<Buttons />}
     >

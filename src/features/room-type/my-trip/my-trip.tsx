@@ -16,7 +16,11 @@ import { cn, ps } from '@/lib/utils';
 
 import { Button, Toggle, Typography } from '@/components';
 
-import { useReservationStore, useSelectedRoomtypeStore } from '@/store';
+import {
+  useDatepickerStore,
+  useReservationStore,
+  useSelectedRoomtypeStore,
+} from '@/store';
 
 import { Product, Ratesplan } from '@/types';
 
@@ -35,7 +39,6 @@ import {
 import { useRatesPlanQuery } from '@/queries';
 
 import CancelationPolice from './cancelation-police';
-import EditTripComponent from './edit-my-trip';
 import RatesPlansSkeleton from './rates-plan-skeleton';
 
 type Props = {
@@ -55,6 +58,9 @@ export default function MyTrip({ className, roomTypeId }: Props) {
 
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
+
+  const { openCalendarDrawer, openGuestFormDrawer } = useDatepickerStore();
+
   const { reservation, setReservation } = useReservationStore();
   const { checkin, checkout, checkinDayjs, checkoutDayjs } =
     useCheckinCheckoutHook();
@@ -89,11 +95,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   const handleBreakfast = useCallback((event) => {
     const { checked } = event.target;
     setBreakfast(checked ? PLAN_BREAKFAST : PLAN_NONBREAKFAST);
-  }, []);
-
-  const [openEditModal, setEditModal] = useState(false);
-  const handleEditModal = useCallback((value = true) => {
-    setEditModal(value);
   }, []);
 
   const ratesPlanIndex = breakfast === PLAN_BREAKFAST ? 1 : 0;
@@ -211,7 +212,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
           <Typography
             variant='sm'
             className='cursor-pointer text-neutral-500 underline'
-            onClick={handleEditModal}
+            onClick={openCalendarDrawer}
           >
             {t('title.edit')}
           </Typography>
@@ -248,16 +249,11 @@ export default function MyTrip({ className, roomTypeId }: Props) {
           <Typography
             variant='sm'
             className='cursor-pointer text-neutral-500 underline'
-            onClick={handleEditModal}
+            onClick={openGuestFormDrawer}
           >
             {t('title.edit')}
           </Typography>
         </div>
-
-        <EditTripComponent
-          isOpen={openEditModal}
-          onClose={() => handleEditModal(false)}
-        />
       </Section>
 
       <hr />

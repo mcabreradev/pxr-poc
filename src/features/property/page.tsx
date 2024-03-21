@@ -12,12 +12,7 @@ import {
   useQueryString,
 } from '@/hooks';
 
-import { Sticky } from '@/components';
-import Gallery from '@/components/gallery';
-import Icon from '@/components/icon';
-import Image from '@/components/image';
-import Swiper from '@/components/swiper';
-import Typography from '@/components/typography';
+import { Gallery, Icon, Image, Sticky, Swiper, Typography } from '@/components';
 
 import { useGlobalStore, useReservationStore } from '@/store';
 
@@ -31,8 +26,8 @@ import {
 
 import PropertyAmenities from './amenities';
 import data from './data.json';
-import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
+import GuestsDatepickerDrawer from './guests-datepicker-drawer';
 import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';
@@ -368,7 +363,7 @@ const PropertyPage = memo(function HotelPage() {
         <StickyGuestForm />
       </Sticky>
 
-      <MobileDatepicker />
+      <GuestsDatepickerDrawer />
     </motion.main>
   );
 });

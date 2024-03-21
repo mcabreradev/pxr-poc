@@ -1,6 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +7,8 @@ import { DateRangePicker } from 'react-next-dates';
 import tw from 'tailwind-styled-components';
 
 import useLocale from '@/hooks/use-locale';
-import { cn, formatDateToString, formatStringToDate } from '@/lib/utils';
+import { formatDateToString, formatStringToDate } from '@/lib/time';
+import { cn } from '@/lib/utils';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
@@ -17,6 +17,7 @@ import useQueryString from '@/hooks/use-querystring';
 import useReservationStore from '@/store/use-reservation.store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
+import { useSearchParamOrStore } from '@/hooks';
 import useHydration from '@/hooks/use-hydration';
 import { selectRoomSchema } from '@/schemas';
 
@@ -33,18 +34,18 @@ const Container = tw.div`
 sticky bottom-0 box-border flex h-min w-full flex-col bg-white`;
 
 export default function EditGuestsComponent({ className }: Props) {
-  const searchParams = useSearchParams();
   const { t } = useTranslation();
   const { locale } = useLocale();
   const { setReservation } = useReservationStore();
   const { updateQueryString } = useQueryString();
+  const { getCheckin, getCheckout } = useSearchParamOrStore();
 
-  const checkin = formatStringToDate(searchParams.get(CHECKIN));
+  const checkin = formatStringToDate(getCheckin());
   const [startDate, setStartDate] = useState<Date | null>(
     checkin ? new Date(checkin) : new Date(),
   );
 
-  const checkout = formatStringToDate(searchParams.get(CHECKOUT));
+  const checkout = formatStringToDate(getCheckout());
   const [endDate, setEndDate] = useState<Date | null>(
     checkout ? new Date(checkout) : null,
   );
@@ -65,19 +66,19 @@ export default function EditGuestsComponent({ className }: Props) {
   useEffect(() => {
     if (!startDate) return;
     updateQueryString({
-      [CHECKIN]: formatDateToString(startDate?.toString()) || '',
+      [CHECKIN]: formatDateToString(startDate),
     });
     setReservation({
-      checkin: formatDateToString(startDate?.toString()) || '',
+      checkin: formatDateToString(startDate),
     });
   }, [setReservation, startDate, updateQueryString]);
 
   useEffect(() => {
     if (!endDate) return;
     updateQueryString({
-      [CHECKOUT]: formatDateToString(endDate?.toString()) || '',
+      [CHECKOUT]: formatDateToString(endDate),
     });
-    setReservation({ checkout: formatDateToString(endDate?.toString()) || '' });
+    setReservation({ checkout: formatDateToString(endDate) });
   }, [endDate, setReservation, updateQueryString]);
 
   const { isHydrated } = useHydration();

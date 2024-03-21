@@ -1,15 +1,13 @@
 /* eslint-disable simple-import-sort/imports */
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
+import { useSearchParamOrStore } from '@/hooks';
 import { getFormatedMontsDays } from '@/lib/time';
 
-import Button from '@/components/button';
-import Typography from '@/components/typography';
-
-import { useSearchParamOrStore } from '@/hooks';
-import { useCallback, useState } from 'react';
+import { Button, Typography } from '@/components';
 
 export default function MobileDatepickerComponent() {
   const { t } = useTranslation();

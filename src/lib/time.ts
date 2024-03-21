@@ -7,7 +7,7 @@ import {
 
 const today = dayjs();
 
-export function formatStringToDate(date) {
+export function formatStringToDate(date: string) {
   if (!date) return '';
 
   const d = date.split('-');
@@ -17,16 +17,17 @@ export function formatStringToDate(date) {
   return [day, month, year].join('-');
 }
 
-export function formatDateToString(date: Date | string) {
-  const d = new Date(date?.toString());
-  let month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate();
+export function formatDateToString(date: Date) {
+  let d = new Date(date);
+  if (isNaN(d.getTime())) {
+    d = new Date();
+  }
+
+  const month = (d.getMonth() + 1).toString().padStart(2, '0');
+  const day = d.getDate().toString().padStart(2, '0');
   const year = d.getFullYear();
 
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-
-  return [year, month, day].join('-');
+  return `${year}-${month}-${day}`;
 }
 
 export function getMonthDayFormat(

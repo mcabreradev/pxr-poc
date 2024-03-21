@@ -8,7 +8,6 @@
 /* eslint-disable simple-import-sort/imports */
 
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
 
 import { useSearchParamOrStore } from '@/hooks';
 import { formatDateToString, formatStringToDate } from '@/lib/time';
@@ -26,12 +25,8 @@ export default function useCheckinCheckoutHook() {
   const checkinDefault = today.add(CHECKIN_DEFAULT_FUTURE_DAYS, 'day').toDate();
   const checkinParamOrStore = formatStringToDate(getCheckin());
 
-  const checkin = useMemo(
-    () =>
-      formatDateToString(
-        checkinParamOrStore ? new Date(checkinParamOrStore) : checkinDefault,
-      ),
-    [checkinDefault, checkinParamOrStore],
+  const checkin = formatDateToString(
+    checkinParamOrStore ? new Date(checkinParamOrStore) : checkinDefault,
   );
 
   const checkoutDefault = today
@@ -39,12 +34,8 @@ export default function useCheckinCheckoutHook() {
     .toDate();
   const checkoutParamOrStore = formatStringToDate(getCheckout());
 
-  const checkout = useMemo(
-    () =>
-      formatDateToString(
-        checkoutParamOrStore ? new Date(checkoutParamOrStore) : checkoutDefault,
-      ),
-    [checkoutDefault, checkoutParamOrStore],
+  const checkout = formatDateToString(
+    checkoutParamOrStore ? new Date(checkoutParamOrStore) : checkoutDefault,
   );
 
   return {

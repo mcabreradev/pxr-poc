@@ -11,15 +11,12 @@ import {
   useMediaQuery,
   useQueryString,
   useSearchParamOrStore,
+  useWindowSize,
 } from '@/hooks';
-import useWindowSize from '@/hooks/use-windowsize';
 import { formatDateToString, getFormatedMontsDays } from '@/lib/time';
 import { cn, ps } from '@/lib/utils';
 
-import Button from '@/components/button';
-import Drawer from '@/components/drawer';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { Button, Drawer, Icon, Typography } from '@/components';
 
 import {
   useDatepickerStore,
@@ -189,6 +186,7 @@ export default function GuestsDatepickerDrawer({
 
       if (!disableSubmit) {
         router.push(`/room-type/${selectedRoom.id}?${query}`);
+        return;
       }
       closeDatepickerDrawer();
       setLoading(false);

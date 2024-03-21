@@ -1,5 +1,7 @@
-import { Drawer } from '@material-tailwind/react';
 import { useCallback } from 'react';
+import Drawer from 'react-modern-drawer';
+
+import 'react-modern-drawer/dist/index.css';
 
 import { cn } from '@/lib/utils';
 
@@ -36,11 +38,11 @@ export default function DrawerComponent({
   return (
     <Drawer
       size={size || window.innerHeight}
-      placement={placement}
+      direction={placement}
       open={open}
       onClose={closeDrawer}
       className={cn('bg-white-100 p-0', className)}
-      transition={{ duration: 0.5 }}
+      duration={350}
     >
       <div
         className='absolute-container flex flex-col px-4'

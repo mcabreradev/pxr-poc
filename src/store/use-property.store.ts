@@ -3,11 +3,11 @@ import { create } from 'zustand';
 import { propertyId } from '@/constants/env';
 
 type Type = {
-  propertyId: string;
+  propertyId: number;
 };
 
 const usePropertyStore = create<Type>(() => ({
-  propertyId: propertyId ?? '',
+  propertyId: propertyId,
 }));
 
 export default usePropertyStore;

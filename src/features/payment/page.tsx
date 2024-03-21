@@ -1,30 +1,29 @@
+/* eslint-disable no-console */
 /* eslint-disable unused-imports/no-unused-vars */
 'use client';
 
 /* eslint-disable simple-import-sort/imports */
 import { motion } from 'framer-motion';
 import { redirect } from 'next/navigation';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 
-import {
-  useSelectedRoomtypeStore,
-  useSessionStore,
-  useUserStore,
-} from '@/store';
+import { useSessionStore } from '@/store';
 import useReservationRequestStore from '@/store/use-reservation-request.store';
 
 import NotConnected from '@/app/not-connected';
-import { ERRORS, URL } from '@/constants';
+import { ERRORS } from '@/constants';
 import StripePayment from '@/features/payment/strype-payment';
-import { useReservationRequestMutation } from '@/mutations';
+import {
+  useCheckGuestMutation,
+  useReservationRequestMutation,
+} from '@/mutations';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
-import useSearchParamOrStore from '../../hooks/use-search-param-or-store';
 import MyTripDetails from './my-trip-details';
 import SkeletonComponent from './skeleton';
 
@@ -48,80 +47,62 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     useReservationRequestStore();
   const { session } = useSessionStore();
   const { reservation } = useReservationStore();
-  const { selectedRoom } = useSelectedRoomtypeStore();
-  const { getAdults, getCheckin, getCheckout, getChildrens, getInfants } =
-    useSearchParamOrStore();
   const {
     mutate,
     data: reservationRequestResponse,
     isError: reservationRequestError,
   } = useReservationRequestMutation();
 
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const { setLoginEnabled, user } = useUserStore();
+  const reservationRequestMutation = useReservationRequestMutation();
+  const checkGuestMutation = useCheckGuestMutation();
 
-  const actionPayment = !action;
-  const actionSuccess = action === URL.SUCCESS;
-  const actionError = action === URL.ERROR;
+  if (!session) {
+    redirect('/');
+  }
 
-  // useEffect(() => {
-  //   setLoginEnabled(false);
-
-  //   return () => {
-  //     setLoginEnabled(true);
-  //   };
-  // }, [setLoginEnabled]);
-
-  useEffect(() => {
-    if (session && selectedRoom.ratesPlan) {
-      // For now, one reservation == one room. Let's avoid edge cases before wednesday
-      // You would need some additional logic to split the reservation in multiple physical rooms
+  const reservationRequestData = useCallback(
+    (guest_id: number): ReservationRequest => {
       const room_type: ReservedRoom = {
-        har_in: getCheckin(),
-        har_out: getCheckout(),
-        har_tha_id: selectedRoom.id,
-        har_pla_id: 330,
-        har_hot_id: property.id,
-        har_adults: getAdults(), // should change at some point
-        har_children: getChildrens(),
-        har_infants: getInfants(),
+        har_in: reservation.checkin as string,
+        har_out: reservation.checkout as string,
+        har_tha_id: reservation.roomTypeId as number,
+        har_pla_id: reservation.plan,
+        har_hot_id: reservation.propertyId as number,
+        har_adults: reservation.adults as number,
+        har_children: reservation.childrens as number,
+        har_infants: reservation.infants as number,
         har_seniors: 0,
         har_pax_info: '',
         har_adults_info: '',
         har_childrens_info: '',
         har_seniors_info: '',
         har_infants_info: '',
-        har_cost: reservation.totalCost,
+        har_cost: reservation.total, // totalCost + taxes
         har_additional_field_1: '',
         har_additional_field_2: '',
         har_additional_field_3: '',
       };
-      const reservationRequest: ReservationRequest = {
-        property_id: property.id,
-        guest_id: 123,
+
+      return {
+        property_id: reservation.propertyId as number,
+        guest_id,
         sales_channel_type: 'web',
         process_state: 'WAITING_FOR_PAYMENT',
-        date_in: new Date(getCheckin())
-          .toISOString()
-          .slice(0, 19)
-          .replace('T', ' '),
-        date_out: new Date(getCheckout())
-          .toISOString()
-          .slice(0, 19)
-          .replace('T', ' '),
+        date_in: reservation.checkin as string,
+        date_out: reservation.checkout as string,
         mon_id: 5,
-        mon_iso: 'EUR',
+        mon_iso: reservation.currency,
         total_cost: reservation.totalCost,
         room_types_cost: 0,
-        guest_mon_iso: 'EUR',
+        guest_mon_iso: reservation.currency,
         mon_commission_id: 5,
-        commission_mon_iso: 'EUR',
+        commission_mon_iso: reservation.currency,
         is_default_commission: 0,
         reservation_status: 'WO_PAYMENT',
         room_types: [room_type],
         extras: [],
         coupons: [],
-        adults_amount: getAdults(),
+        adults_amount: reservation.adults as number,
         additional_field_values: [],
         reg_status: 'active',
         sales_origin_type: 'DIRECT',
@@ -132,48 +113,64 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         new_booking_email_send_to_hotel: 1,
         confirmed_agreement: 0,
       };
-      setReservationRequest(reservationRequest);
-      mutate(reservationRequest);
-    }
-  }, [
-    getAdults,
-    getCheckin,
-    getCheckout,
-    getChildrens,
-    getInfants,
-    mutate,
-    property,
-    reservation.totalCost,
-    selectedRoom.id,
-    selectedRoom.ratesPlan,
-    selectedRoom.roomPrice?.rate,
-    session,
-    setReservationRequest,
-  ]);
+    },
+    [
+      reservation.propertyId,
+      reservation.checkin,
+      reservation.checkout,
+      reservation.roomTypeId,
+      reservation.plan,
+      reservation.adults,
+      reservation.childrens,
+      reservation.infants,
+      reservation.total,
+      reservation.currency,
+      reservation.totalCost,
+    ],
+  );
 
   useEffect(() => {
-    if (
-      reservationRequestResponse != undefined &&
-      reservationRequestResponse.res.code == 0
-    ) {
-      setReservationRequestId(
-        reservationRequestResponse.res.data.reservation_request_id,
-      );
-    }
-  }, [reservationRequestResponse, setReservationRequestId]);
+    const handleMutations = async () => {
+      try {
+        // Wait for the first mutation to complete
+        const { data: guestPaxerId } = await checkGuestMutation.mutateAsync({
+          guestIAMId: '',
+          displayName: ``,
+          lastName: '',
+          firstName: '',
+          acceptedTerms: true,
+        });
+        console.log('Guest Paxer Id:', guestPaxerId);
 
-  if (!session) {
-    redirect('/');
-  }
-  // if (!user) {
-  //   redirect('/');
-  // }
+        // Then use the result to handle the second mutation
+        const res = await reservationRequestMutation.mutateAsync(
+          reservationRequestData(guestPaxerId), // Cast guestPaxerId to number
+        );
+        // Set the reservation request id
+        setReservationRequestId(res.data.reservation_request_id);
+        console.log('Reservation Request Executed', res);
+      } catch (error) {
+        console.error('Error handling mutations:', error);
+      }
+    };
+
+    // here is where the magic happens
+    setTimeout(() => {
+      handleMutations();
+    });
+  }, [
+    checkGuestMutation,
+    reservationRequestData,
+    reservationRequestMutation,
+    session,
+    setReservationRequestId,
+  ]);
 
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;
   }
 
-  if (isError || roomError || reservationRequestError) {
+  if (isError || roomError) {
     if ((error as unknown as { code: string }).code === ERRORS.ERR_NETWORK) {
       return <NotConnected />;
     }

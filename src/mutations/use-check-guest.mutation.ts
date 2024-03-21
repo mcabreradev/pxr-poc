@@ -5,14 +5,14 @@ import { GUEST } from '@/constants';
 
 import { GuestPegaso } from '@/types';
 
-const checkGuest = async (body) => {
+const postCheckGuest = async (body: GuestPegaso) => {
   const { data } = await axios.post(`/api/check-guest`, body);
   return data;
 };
 
-export default function useCheckGuestMutation(body?: GuestPegaso) {
+export default function useCheckGuestMutation() {
   return useMutation({
     mutationKey: [GUEST],
-    mutationFn: () => checkGuest(body),
+    mutationFn: postCheckGuest,
   });
 }

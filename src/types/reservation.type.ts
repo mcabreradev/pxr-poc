@@ -16,6 +16,7 @@ export type Reservation = {
   selectedRoom?: unknown | null;
   product?: Product | unknown | null;
   currency?: string | null;
+  propertyId?: number;
   roomTypeId?: number | null;
 };
 

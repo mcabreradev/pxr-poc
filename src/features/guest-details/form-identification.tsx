@@ -44,7 +44,7 @@ export default function FormIdentificationComponent({
   const { getEventData, subscribe, publish } = useEventBus();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { user, addUser } = useUserStore();
+  const { user, addUserToStore } = useUserStore();
 
   const {
     register,
@@ -74,7 +74,7 @@ export default function FormIdentificationComponent({
         });
       } else {
         const userData = data.data;
-        addUser({ ...userData, isAuth: false });
+        addUserToStore({ ...userData, isAuth: false });
         const filteredSearchParams: string[] = [];
         searchParams.forEach((key, value) => {
           if (key === 'email' || key === 'action') {
@@ -88,7 +88,7 @@ export default function FormIdentificationComponent({
         );
       }
     },
-    [setError, roomTypeId, router, searchParams, addUser],
+    [setError, roomTypeId, router, searchParams, addUserToStore],
   );
 
   useEffect(() => {

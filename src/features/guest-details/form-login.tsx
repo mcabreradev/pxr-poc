@@ -7,11 +7,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { GuestPegaso } from '@/types';
-
 import { useEventBus, useHostUrl } from '@/hooks';
 import { cn } from '@/lib/utils';
-import { useCheckGuestMutation } from '@/mutations';
 import { useUserStore } from '@/store';
 
 import Button from '@/components/button';
@@ -38,11 +35,9 @@ const Container = tw.div`
 export default function FormLoginComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
   const [type, setType] = useState(FORM.PASSWORD);
-  const [guestData, setGuestData] = useState<GuestPegaso>();
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
-  const checkGuestMutation = useCheckGuestMutation(guestData);
-  const { addUser } = useUserStore();
+  const { addUserToStore } = useUserStore();
 
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
@@ -65,14 +60,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
 
   const postGuestData = useCallback(
     ({ family_name, given_name, sub, email, email_verified }) => {
-      setGuestData({
-        guestIAMId: sub,
-        displayName: `${given_name} ${family_name}`,
-        lastName: family_name,
-        firstName: given_name,
-        acceptedTerms: true,
-      });
-      addUser({
+      addUserToStore({
         family_name,
         given_name,
         sub,
@@ -80,10 +68,8 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
         email_verified,
         isAuth: true,
       });
-      const checkGuest = checkGuestMutation.mutate();
-      console.log('checkGuestMutation ', checkGuest);
     },
-    [addUser, checkGuestMutation],
+    [addUserToStore],
   );
 
   /**
@@ -105,7 +91,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
 
       // cuando el usuario esta logueado
       if (eventType === GET_SESSION && data) {
-        // push para payment page
+        // redirect para payment page @TODO
       }
 
       if (data.err) {
@@ -125,15 +111,6 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
     subscribe(handlerEvent);
     getEventData(urlStatus);
   }, [getEventData, handlerEvent, subscribe, urlStatus]);
-
-  if (checkGuestMutation.isError) {
-    console.log('error', checkGuestMutation);
-    return 'error';
-  }
-
-  if (checkGuestMutation.isSuccess) {
-    console.log('success', checkGuestMutation);
-  }
 
   return (
     <Container className={cn(className)} data-testid='test-element'>

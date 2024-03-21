@@ -5,7 +5,7 @@ import { PROPERTY, RESERVATION } from '@/constants';
 
 import { ReservationRequest } from '@/types';
 
-const postReservationRequest = async (params) => {
+const postReservationRequest = async (params: ReservationRequest) => {
   const { data } = await axios.post(
     `/api/reservation-request?params={"reservationRequest":${JSON.stringify(params)}}`,
   );
@@ -15,7 +15,7 @@ const postReservationRequest = async (params) => {
 export default function useReservationRequestMutation() {
   return useMutation({
     mutationKey: [PROPERTY, RESERVATION],
-    mutationFn: (params: ReservationRequest) => postReservationRequest(params),
+    mutationFn: postReservationRequest,
     retry: 3,
   });
 }

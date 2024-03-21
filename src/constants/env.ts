@@ -5,7 +5,7 @@ export const showLogger = isLocal
   ? true
   : process.env.NEXT_PUBLIC_SHOW_LOGGER === 'true' ?? false;
 
-export const propertyId = process.env.NEXT_PUBLIC_PROPERTY_ID;
+export const propertyId = Number(process.env.NEXT_PUBLIC_PROPERTY_ID);
 
 export const adultsDefault = process.env.HOTEL_ADULTS_DEFAULT;
 

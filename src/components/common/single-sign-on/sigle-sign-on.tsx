@@ -22,7 +22,7 @@ export default function SingleSignOn() {
   const [modalOpen, setModalOpen] = useState(false);
   const { urlStatus, urlSignin } = useHostUrl();
   const { getEventData, publish } = useEventBus();
-  const { addUser, loginEnabled } = useUserStore();
+  const { addUserToStore, loginEnabled } = useUserStore();
   const { setSession, removeSession } = useSessionStore();
 
   const openModal = () => setModalOpen(true);
@@ -43,16 +43,16 @@ export default function SingleSignOn() {
       if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
         closeModal();
         setUser(data);
-        addUser({ ...data, isAuth: true });
+        addUserToStore({ ...data, isAuth: true });
         setSession(data);
       }
       if (eventType === SIGNOUT) {
         setUser(null);
-        addUser(null);
+        addUserToStore(null);
         removeSession();
       }
     },
-    [addUser, removeSession, setSession, lastMessage],
+    [addUserToStore, removeSession, setSession, lastMessage],
   );
 
   const signOut = () => {

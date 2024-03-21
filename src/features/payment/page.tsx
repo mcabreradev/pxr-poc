@@ -4,7 +4,7 @@
 /* eslint-disable simple-import-sort/imports */
 import { motion } from 'framer-motion';
 import { redirect, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useLocale } from '@/hooks';
@@ -45,6 +45,8 @@ type Props = {
 };
 
 export default function PaymentFeature({ roomTypeId, action }: Props) {
+  const [requestSetupError, setRequestSetupError] = useState(false);
+  const [forbidFurtherCalls, setForbidFurtherCalls] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
   const { error, isError, isLoading, data: property } = usePropertyQuery();
@@ -84,25 +86,19 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     router.push(`/room-type/${roomTypeId}${window.location.search}`);
   };
 
-  // useEffect(() => {
-  //   setLoginEnabled(false);
+  // console.log("ONE RELOAD");
+  // console.log(Math.random());
 
-  //   return () => {
-  //     setLoginEnabled(true);
-  //   };
-  // }, [setLoginEnabled]);
-
-  useEffect(() => {
-    // console.log('USE EFFECT');
+  const sendReservationRequest = useCallback(() => {
+    // console.log('SETTING UP THIS REQUEST');
+    // For now, one reservation == one room. Let's avoid edge cases before wednesday
+    // You would need some additional logic to split the reservation in multiple physical rooms
     if (
       session &&
       selectedRoom.ratesPlan &&
       reservation.checkin &&
       reservation.checkout
     ) {
-      // console.log('SETTING UP THIS REQUEST');
-      // For now, one reservation == one room. Let's avoid edge cases before wednesday
-      // You would need some additional logic to split the reservation in multiple physical rooms
       const room_type: ReservedRoom = {
         har_in: reservation.checkin,
         har_out: reservation.checkout,
@@ -128,7 +124,7 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         guest_id: 123,
         sales_channel_type: RESERVATION_SALES_CHANNEL_TYPE,
         process_state: RESERVATION_PROCESS_STATE.WAITING_FOR_PAYMENT,
-        date_in: new Date(reservation.checkout)
+        date_in: new Date(reservation.checkin)
           .toISOString()
           .slice(0, 19)
           .replace('T', ' '),
@@ -162,30 +158,46 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
       };
       setReservationRequest(reservationRequest);
       mutate(reservationRequest);
+    } else {
+      setRequestSetupError(true);
     }
   }, [
     getAdults,
-    getCheckin,
-    getCheckout,
     getChildrens,
     getInfants,
     language,
     mutate,
-    property,
+    property.countryISO,
+    property.id,
     reservation.checkin,
     reservation.checkout,
     reservation.totalCost,
     selectedRoom.id,
     selectedRoom.ratesPlan,
-    selectedRoom.roomPrice?.rate,
     session,
     setReservationRequest,
   ]);
 
+  // useEffect(() => {
+  //   setLoginEnabled(false);
+
+  //   return () => {
+  //     setLoginEnabled(true);
+  //   };
+  // }, [setLoginEnabled]);
+
+  useEffect(() => {
+    // console.log('USE EFFECT');
+    if (!forbidFurtherCalls) {
+      sendReservationRequest();
+      setForbidFurtherCalls(true);
+    }
+  }, [sendReservationRequest, forbidFurtherCalls]);
+
   useEffect(() => {
     // console.log('HERE IS THE FIRST RESPONSE');
     // console.log(reservationRequestResponse);
-    if (reservationRequestResponse != undefined) {
+    if (reservationRequestResponse != undefined && !requestSetupError) {
       if (reservationRequestResponse.res.code == 0) {
         setReservationRequestId(
           reservationRequestResponse.res.data.reservation_request_id,
@@ -203,6 +215,7 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     reservation.checkin,
     reservation.checkout,
     reservationRequestResponse,
+    requestSetupError,
     selectedRoom.id,
     setReservationRequestId,
   ]);

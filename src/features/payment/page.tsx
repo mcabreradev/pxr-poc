@@ -55,12 +55,8 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
-  const {
-    setReservationRequest,
-    setReservationRequestId,
-    resetStore,
-    reservationRequest,
-  } = useReservationRequestStore();
+  const { setReservationRequest, setReservationRequestId, reservationRequest } =
+    useReservationRequestStore();
   const { session } = useSessionStore();
   const { reservation } = useReservationStore();
   const { selectedRoom } = useSelectedRoomtypeStore();
@@ -82,15 +78,10 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
       ...reservationRequest,
       process_state: RESERVATION_PROCESS_STATE.ABANDONED,
     });
-    resetStore();
     router.push(`/room-type/${roomTypeId}${window.location.search}`);
   };
 
-  // console.log("ONE RELOAD");
-  // console.log(Math.random());
-
-  const sendReservationRequest = useCallback(() => {
-    // console.log('SETTING UP THIS REQUEST');
+  const prepareReservationRequest = useCallback(() => {
     // For now, one reservation == one room. Let's avoid edge cases before wednesday
     // You would need some additional logic to split the reservation in multiple physical rooms
     if (
@@ -157,7 +148,6 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
         guest_country_code: property.countryISO, // For now, later use country detected in IP
       };
       setReservationRequest(reservationRequest);
-      mutate(reservationRequest);
     } else {
       setRequestSetupError(true);
     }
@@ -166,7 +156,6 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
     getChildrens,
     getInfants,
     language,
-    mutate,
     property.countryISO,
     property.id,
     reservation.checkin,
@@ -187,12 +176,26 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   // }, [setLoginEnabled]);
 
   useEffect(() => {
+    // console.log("VERIFY")
+    // console.log(reservationRequest.property_id == 0)
+    if (reservationRequest.property_id == 0) {
+      prepareReservationRequest();
+    }
+  }, [prepareReservationRequest, reservationRequest.property_id]);
+
+  useEffect(() => {
     // console.log('USE EFFECT');
-    if (!forbidFurtherCalls) {
-      sendReservationRequest();
+    if (
+      !reservationRequest.id &&
+      !forbidFurtherCalls &&
+      reservationRequest.property_id != 0
+    ) {
+      // console.log("PLEASE DONT PRINT THIS TWICE")
+      // console.log(reservationRequest)
+      mutate({ ...reservationRequest, payment_id: undefined });
       setForbidFurtherCalls(true);
     }
-  }, [sendReservationRequest, forbidFurtherCalls]);
+  }, [reservationRequest, mutate, forbidFurtherCalls]);
 
   useEffect(() => {
     // console.log('HERE IS THE FIRST RESPONSE');

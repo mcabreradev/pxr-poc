@@ -17,7 +17,7 @@ import Icon from '@/components/icon';
 import Modal from '@/components/modal';
 import Typography from '@/components/typography';
 
-import { useGlobalStore } from '@/store';
+import { useGlobalStore, useReservationRequestStore } from '@/store';
 
 import HotelRules from '@/features/components/hotel-rules';
 
@@ -41,6 +41,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam, removeQueryStringParamAndUpdate } =
     useQueryString();
+  const { resetStore } = useReservationRequestStore();
   const { resetGlobalStore } = useGlobalStore();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(
@@ -62,8 +63,9 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   // Reset global store and remove blacklist params
   useEffect(() => {
     removeBlacklistParam(['']);
+    resetStore();
     resetGlobalStore();
-  }, [removeBlacklistParam, resetGlobalStore]);
+  }, [removeBlacklistParam, resetGlobalStore, resetStore]);
 
   if (isLoading) {
     return <Skeleton />;

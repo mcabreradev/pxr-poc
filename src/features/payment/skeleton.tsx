@@ -6,7 +6,7 @@ export default function SkeletonComponent() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
-      className='flex h-full animate-pulse flex-col items-center justify-center'
+      className='layout flex h-full animate-pulse flex-col items-center justify-center'
     >
       <div className='h-64 w-full bg-gray-300' />
       <div className='mx-auto w-full p-4'>

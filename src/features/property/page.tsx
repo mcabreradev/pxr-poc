@@ -12,16 +12,11 @@ import {
   useQueryString,
 } from '@/hooks';
 
-import { Sticky } from '@/components';
-import Gallery from '@/components/gallery';
-import Icon from '@/components/icon';
-import Image from '@/components/image';
-import Swiper from '@/components/swiper';
-import Typography from '@/components/typography';
+import { Gallery, Icon, Image, Sticky, Swiper, Typography } from '@/components';
 
 import { useGlobalStore, useReservationStore } from '@/store';
 
-import HotelRules from '@/features/components/hotel-rules';
+import HotelRules from '@/features/common/hotel-rules';
 
 import {
   useAvailabilityQuery,
@@ -29,9 +24,9 @@ import {
   useRatesPlanQuery,
 } from '@/queries';
 
+import GuestsDatepickerDrawer from '@/features/common/guests-datepicker-drawer';
 import PropertyAmenities from './amenities';
 import data from './data.json';
-import MobileDatepicker from './datepicker/mobile-datepicker';
 import GuestForm from './guest-form';
 import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
@@ -102,6 +97,8 @@ const PropertyPage = memo(function HotelPage() {
     return <span>Error</span>;
   }
 
+  // console.log(property);
+
   return (
     <motion.main
       initial={{ opacity: 0 }}
@@ -110,20 +107,21 @@ const PropertyPage = memo(function HotelPage() {
       data-id-test='test-componet'
       className='layout'
     >
-      <Gallery photos={data.images} />
+      <Gallery photos={property?.photos} />
+
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>
           <Section className='pt-3'>
-            <Typography variant='h1'>{property.name}</Typography>
+            <Typography variant='h1'>{property?.name}</Typography>
             <div className='flex flex-row items-center text-[14px]'>
               <Icon variant='star' width='16px' />
-              <p className='p-1'>{property.reviewRatingScore}</p>•
+              <p className='p-1'>{property?.reviewRatingScore}</p>•
               <p className='pl-1 underline hover:cursor-pointer'>{`${
-                property.reviewRatingCount
-              } ${property.reviewRatingCount > 1 ? 'reseñas' : 'reseña'}`}</p>
+                property?.reviewRatingCount
+              } ${property?.reviewRatingCount > 1 ? 'reseñas' : 'reseña'}`}</p>
             </div>
 
-            <div className='py-1 underline'>{`${property.street}, ${property.state}, ${property.countryName}`}</div>
+            <div className='py-1 underline'>{`${property?.street}, ${property?.state}, ${property?.countryName}`}</div>
 
             <div className='flex flex-row items-center py-2 underline'>
               <span className='pr-1'>{t('title.contact')}</span>
@@ -141,8 +139,8 @@ const PropertyPage = memo(function HotelPage() {
           <hr />
           <Section id='summary'>
             <p className='my-2 text-2sm'>
-              {property.description
-                ? property.description[i18n.language]
+              {property?.description
+                ? property?.description[i18n.language]
                 : t('description')}
             </p>
           </Section>
@@ -213,13 +211,13 @@ const PropertyPage = memo(function HotelPage() {
           </Typography>
           <Icon variant='star' width='22px' className='ml-2' />
           <Typography className='p-1' variant='h2' weight='medium'>
-            {property.reviewRatingScore}
+            {property?.reviewRatingScore}
           </Typography>
         </div>
       </Section>
       <Section>
         <Swiper>
-          {property.reviews.map((review) => (
+          {property?.reviews.map((review) => (
             <div
               key={`reviews-${review.reviewId}-box`}
               className='box-border flex h-auto w-[271px] flex-col space-y-4 border-[1px] border-solid border-gray-50 bg-white p-3'
@@ -263,7 +261,7 @@ const PropertyPage = memo(function HotelPage() {
         <div className='flex justify-start space-x-2 pt-3'>
           <Icon variant='marker' className='mt-1' />
           <Typography variant='sm' weight='light'>
-            {`${property.street}, ${property.state}, ${property.countryName}`}
+            {`${property?.street}, ${property?.state}, ${property?.countryName}`}
           </Typography>
         </div>
 
@@ -297,7 +295,7 @@ const PropertyPage = memo(function HotelPage() {
               </Typography>
             </div>
 
-            {property.topSights.slice(0, 4).map((activity, i) => (
+            {property?.topSights.slice(0, 4).map((activity, i) => (
               <div
                 key={`$attractions-${activity.googlePlaceId}`}
                 className='flex justify-between py-2'
@@ -318,7 +316,7 @@ const PropertyPage = memo(function HotelPage() {
               </Typography>
             </div>
 
-            {property.topSights.slice(0, 4).map((activity, i) => (
+            {property?.topSights.slice(0, 4).map((activity, i) => (
               <div
                 key={`$attractions-${activity.googlePlaceId}`}
                 className='flex justify-between py-2'
@@ -339,7 +337,7 @@ const PropertyPage = memo(function HotelPage() {
               </Typography>
             </div>
 
-            {property.topSights.slice(0, 4).map((activity, i) => (
+            {property?.topSights.slice(0, 4).map((activity, i) => (
               <div
                 key={`$attractions-${activity.googlePlaceId}`}
                 className='flex justify-between py-2'
@@ -365,7 +363,7 @@ const PropertyPage = memo(function HotelPage() {
         <StickyGuestForm />
       </Sticky>
 
-      <MobileDatepicker />
+      <GuestsDatepickerDrawer />
     </motion.main>
   );
 });

@@ -1,5 +1,5 @@
 import { Amenity } from './amenity.type';
-import { Photo } from './photo.type';
+import { PhotoType } from './photo.type';
 import { Review } from './review.type';
 import { TopSight } from './topsight.type';
 
@@ -26,7 +26,7 @@ export type PropertyType = {
   ratePlans: number[];
   products: number[];
   amenities: Amenity[];
-  photos: Photo[];
+  photos: PhotoType[];
   reviews: Review[];
   topSights: TopSight[];
 };

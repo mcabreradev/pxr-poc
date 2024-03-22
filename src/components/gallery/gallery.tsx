@@ -8,20 +8,21 @@ import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 
 import { useIntersectionObserver, useQueryString } from '@/hooks';
+import { getSlides } from '@/lib/images';
 import { cn, uuid } from '@/lib/utils';
-
-import { useGlobalStore } from '@/store';
 
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 
-import { ESCAPE, GALERY, IMAGE } from '@/constants';
+import { useGlobalStore } from '@/store';
 
-type Photo = {
-  src: string;
-  width: number;
-  height: number;
-};
+import {
+  DEFAULT_HEIGHT,
+  DEFAULT_WIDTH,
+  ESCAPE,
+  GALERY,
+  IMG,
+} from '@/constants';
 
 const Grid = tw.div`
   gap-3 md:grid md:grid-cols-2
@@ -36,7 +37,7 @@ export default function Gallery({
   photos,
 }: {
   className?: string;
-  photos: Photo[];
+  photos;
 }) {
   const [index, setIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -66,7 +67,7 @@ export default function Gallery({
 
   const openLightbox = useCallback(
     (index) => {
-      updateQueryString({ [IMAGE]: index });
+      updateQueryString({ [IMG]: index });
       setIndex(index);
     },
     [updateQueryString],
@@ -80,7 +81,7 @@ export default function Gallery({
   const closeLightbox = useCallback(() => {
     setIndex(-1);
     updateQueryString({ [GALERY]: -1 });
-    removeQueryString(IMAGE);
+    removeQueryString(IMG);
   }, [removeQueryString, updateQueryString]);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ export default function Gallery({
 
   useEffect(() => {
     if (index >= 0) {
-      updateQueryString({ [IMAGE]: index });
+      updateQueryString({ [IMG]: index });
     }
   }, [index, updateQueryString]);
 
@@ -118,28 +119,30 @@ export default function Gallery({
     }
   }, [entry, setGalleryIntersecting]);
 
+  // console.log('photos', photos);
+
   return (
     <>
       <Grid className={cn(className)} data-testid='test-element' ref={ref}>
         <div className=''>
           <Image
             alt='...'
-            src={photos[0].src}
-            width={980}
-            height={551}
+            src={photos[0].url}
+            width={photos[0].width ?? DEFAULT_WIDTH}
+            height={photos[0].height ?? DEFAULT_HEIGHT}
             className='opacity-effect h-full w-full cursor-pointer object-cover'
             onClick={openDrawer}
           />
         </div>
 
         <Grid className='hidden'>
-          {photos.slice(1, 5).map((image, i) => (
+          {photos.slice(1, photos.lenght).map((image, i) => (
             <Image
               key={`header-image-${i}`}
               alt='...'
-              src={image.src}
-              width={image.width}
-              height={image.height}
+              src={image.url ?? ''}
+              width={image.width ?? DEFAULT_WIDTH}
+              height={image.height ?? DEFAULT_HEIGHT}
               className='opacity-effect h-full w-full cursor-pointer object-cover'
               onClick={() => openDrawer()}
             />
@@ -179,9 +182,9 @@ export default function Gallery({
                   <Image
                     key={`galery-image-${i}`}
                     alt='...'
-                    src={image.src}
-                    width={image.width}
-                    height={image.height}
+                    src={image.url}
+                    width={image.width ?? DEFAULT_WIDTH}
+                    height={image.height ?? DEFAULT_HEIGHT}
                     className=' h-full w-full cursor-pointer object-cover'
                     onClick={() => openLightbox(i)}
                   />
@@ -190,7 +193,7 @@ export default function Gallery({
             </div>
           </div>
           <Lightbox
-            slides={photos}
+            slides={getSlides(photos)}
             open={index >= 0}
             index={index}
             close={closeLightbox}

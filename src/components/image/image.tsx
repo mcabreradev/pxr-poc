@@ -1,7 +1,9 @@
-import NextImage, { ImageProps } from 'next/image';
+import NextImage from 'next/image';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/constants';
 
 type Props = {
   useSkeleton?: boolean;
@@ -9,13 +11,14 @@ type Props = {
     image?: string;
     blur?: string;
   };
-  alt: string;
+  alt?: string | null;
+  fill?: boolean;
+  width: number;
+  height: number;
+  src?: string | null;
+  className?: string;
   onClick?: () => void;
-} & (
-  | { width: string | number; height: string | number }
-  | { fill: boolean; width?: string | number; height?: string | number }
-) &
-  ImageProps;
+};
 
 /**
  *
@@ -52,10 +55,10 @@ export default function Image({
           classNames?.image,
           status === 'loading' && cn('animate-pulse', classNames?.blur),
         )}
-        src={src}
-        width={width}
-        height={height}
-        alt={alt}
+        src={src ?? ''}
+        width={width ?? DEFAULT_WIDTH}
+        height={height ?? DEFAULT_HEIGHT}
+        alt={alt ?? ''}
         onLoadingComplete={() => setStatus('complete')}
         fill={fill}
         {...rest}

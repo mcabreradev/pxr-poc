@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable simple-import-sort/imports */
 'use client';
 import dayjs from 'dayjs';
@@ -17,7 +16,11 @@ import { cn, ps } from '@/lib/utils';
 
 import { Button, Toggle, Typography } from '@/components';
 
-import { useReservationStore, useSelectedRoomtypeStore } from '@/store';
+import {
+  useDatepickerStore,
+  useReservationStore,
+  useSelectedRoomtypeStore,
+} from '@/store';
 
 import { Product, Ratesplan } from '@/types';
 
@@ -36,7 +39,6 @@ import {
 import { useRatesPlanQuery } from '@/queries';
 
 import CancelationPolice from './cancelation-police';
-import EditTripComponent from './edit-my-trip';
 import RatesPlansSkeleton from './rates-plan-skeleton';
 
 type Props = {
@@ -56,6 +58,9 @@ export default function MyTrip({ className, roomTypeId }: Props) {
 
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
+
+  const { openCalendarDrawer, openGuestFormDrawer } = useDatepickerStore();
+
   const { reservation, setReservation } = useReservationStore();
   const { checkin, checkout, checkinDayjs, checkoutDayjs } =
     useCheckinCheckoutHook();
@@ -92,12 +97,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setBreakfast(checked ? PLAN_BREAKFAST : PLAN_NONBREAKFAST);
   }, []);
 
-  const [openEditModal, setEditModal] = useState(false);
-  const handleEditModal = useCallback((value = true) => {
-    setEditModal(value);
-  }, []);
-
-  console.log('---', breakfast, PLAN_BREAKFAST);
   const ratesPlanIndex = breakfast === PLAN_BREAKFAST ? 1 : 0;
 
   const planCost = (
@@ -125,9 +124,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   )?.productId;
 
   const product = selectedRoom.ratesPlan?.[ratesPlanIndex];
-
-  console.log('=== ', ratesPlanIndex, selectedRoom.ratesPlan?.[ratesPlanIndex]);
-
   const planDays = checkoutDayjs.diff(checkinDayjs, 'days');
   const totalCost = planCost * planDays;
   const totalCostWithTaxes = planCostWithTaxes * planDays;
@@ -216,7 +212,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
           <Typography
             variant='sm'
             className='cursor-pointer text-neutral-500 underline'
-            onClick={handleEditModal}
+            onClick={openCalendarDrawer}
           >
             {t('title.edit')}
           </Typography>
@@ -253,16 +249,11 @@ export default function MyTrip({ className, roomTypeId }: Props) {
           <Typography
             variant='sm'
             className='cursor-pointer text-neutral-500 underline'
-            onClick={handleEditModal}
+            onClick={openGuestFormDrawer}
           >
             {t('title.edit')}
           </Typography>
         </div>
-
-        <EditTripComponent
-          isOpen={openEditModal}
-          onClose={() => handleEditModal(false)}
-        />
       </Section>
 
       <hr />

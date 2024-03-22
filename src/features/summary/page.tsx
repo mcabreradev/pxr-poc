@@ -13,8 +13,8 @@ import Typography from '@/components/typography';
 
 import { useReservationRequestStore, useReservationStore } from '@/store';
 
-import HotelRules from '@/features/components/hotel-rules';
-import PriceDetails from '@/features/components/price-details';
+import HotelRules from '@/features/common/hotel-rules';
+import PriceDetails from '@/features/common/price-details';
 import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
@@ -124,11 +124,14 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
       <BackButton href='/'>{t('title.summary')}</BackButton>
       <div className='mb-1'>
         <div className='layout'>
-          <div className='mb-2 h-[200px] w-full bg-[url("/images/hotel/image318.png")] bg-cover md:h-[250px]'>
+          <div
+            className='mb-2 h-[200px] w-full bg-cover brightness-90 md:h-[250px] '
+            style={{ backgroundImage: `url("${property.photos[0].url}")` }}
+          >
             <Typography
               variant='h1'
               weight='medium'
-              className='mx-4 my-2 pt-3 text-white'
+              className='text-stroke-black mx-4 my-2 pt-3 text-white text-shadow'
             >
               {t('summary.stay')} {property.name}
             </Typography>

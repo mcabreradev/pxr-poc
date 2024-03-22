@@ -8,3 +8,5 @@ export const showLogger = isLocal
 export const propertyId = process.env.NEXT_PUBLIC_PROPERTY_ID;
 
 export const adultsDefault = process.env.HOTEL_ADULTS_DEFAULT;
+
+export const SITE_IMAGE_URL = process.env.NEXT_PUBLIC_SITE_IMAGE_URL;

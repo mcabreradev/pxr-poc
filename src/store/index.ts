@@ -1,4 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
+import useDatepickerStore from './use-datepicker.store';
 import useGlobalStore from './use-global.store';
 import usePropertyStore from './use-property.store';
 import useReservationRequestStore from './use-reservation-request.store';
@@ -9,6 +10,7 @@ import useSessionStore from './use-session.store';
 import useUserStore from './use-user.store';
 
 export {
+  useDatepickerStore,
   useGlobalStore,
   usePropertyStore,
   useReservationRequestStore,

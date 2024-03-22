@@ -19,10 +19,11 @@ import Typography from '@/components/typography';
 
 import { useGlobalStore, useReservationRequestStore } from '@/store';
 
-import HotelRules from '@/features/components/hotel-rules';
+import HotelRules from '@/features/common/hotel-rules';
 
 import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
+import GuestsDatepickerDrawer from '@/features/common/guests-datepicker-drawer';
 import data from './data.json';
 import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';
@@ -103,7 +104,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
       </Modal>
 
       <div className='layout'>
-        <Gallery photos={data.images} />
+        <Gallery photos={room?.photos} />
 
         <div className='relative flex'>
           <div className='w-full md:w-8/12'>
@@ -135,6 +136,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
             </Section>
             <hr />
             <MyTrip roomTypeId={roomTypeId} className='md:hidden' />
+            <GuestsDatepickerDrawer disableSubmit />
             <hr className='md:hidden' />
             <Section>
               <div className='py-2'>

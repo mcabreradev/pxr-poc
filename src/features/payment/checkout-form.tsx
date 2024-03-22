@@ -17,7 +17,7 @@ import { Button, Icon, Typography } from '@/components';
 import { useReservationStore, useSessionStore, useUserStore } from '@/store';
 
 import { PAYMENT_STATUS } from '@/constants';
-import HotelRules from '@/features/components/hotel-rules';
+import HotelRules from '@/features/common/hotel-rules';
 
 import data from './data.json';
 

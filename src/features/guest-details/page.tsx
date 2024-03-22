@@ -20,7 +20,7 @@ import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
 import FormLoginComponent from './form-login';
 import FormRegisterComponent from './form-register';
-import GuestSkeletonComponent from './guest-skeleton';
+import GuestSkeletonComponent from './skeleton';
 
 type Props = {
   roomTypeId: number;

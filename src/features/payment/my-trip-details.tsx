@@ -10,7 +10,7 @@ import useReservationQuery from '@/store/use-reservation.store';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import PriceDetails from '@/features/components/price-details';
+import PriceDetails from '@/features/common/price-details';
 
 import type { PropertyType } from '@/types';
 
@@ -43,7 +43,7 @@ export default function MyTripDetails({ property, room }: Props) {
     >
       <section className='flex h-auto w-full flex-row items-center p-4 '>
         <Image
-          src='/images/hotel/room-1.webp'
+          src={property.photos[0].url ?? ''}
           className='relative h-[75px] w-auto rounded'
           width={1}
           height={1}

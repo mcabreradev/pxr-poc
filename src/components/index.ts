@@ -4,6 +4,7 @@ import Checkbox from './checkbox';
 import Drawer from './drawer';
 import Gallery from './gallery';
 import Icon from './icon';
+import Image from './image';
 import Layout from './layout';
 import Loading from './loading';
 import Modal from './modal';
@@ -21,6 +22,7 @@ export {
   Drawer,
   Gallery,
   Icon,
+  Image,
   Layout,
   Loading,
   Modal,

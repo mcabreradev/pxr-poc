@@ -69,25 +69,3 @@ export function plural(word: string, count: number, plural?: string) {
 export function ps(count: number) {
   return count > 1 ? PLURAL : SINGULAR;
 }
-
-export function formatStringToDate(date) {
-  if (!date) return '';
-
-  const d = date.split('-');
-  const day = d[1];
-  const month = d[2];
-  const year = d[0];
-  return [day, month, year].join('-');
-}
-
-export function formatDateToString(date: Date | string) {
-  const d = new Date(date?.toString());
-  let month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate();
-  const year = d.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-
-  return [year, month, day].join('-');
-}

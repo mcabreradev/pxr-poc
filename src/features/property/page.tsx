@@ -14,7 +14,11 @@ import {
 
 import { Gallery, Icon, Image, Sticky, Swiper, Typography } from '@/components';
 
-import { useGlobalStore, useReservationStore } from '@/store';
+import {
+  useGlobalStore,
+  useReservationRequestStore,
+  useReservationStore,
+} from '@/store';
 
 import HotelRules from '@/features/common/hotel-rules';
 
@@ -48,6 +52,7 @@ const PropertyPage = memo(function HotelPage() {
   const { isLoading, isError, data: property } = usePropertyQuery();
   const { removeBlacklistParam } = useQueryString();
   const { resetReservation } = useReservationStore();
+  const { resetReservationRequest } = useReservationRequestStore();
   const { resetGlobalStore } = useGlobalStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
   const { refetch: fetchAvailability } = useAvailabilityQuery({
@@ -74,7 +79,13 @@ const PropertyPage = memo(function HotelPage() {
     removeBlacklistParam(['action', 'extra', 'plan']);
     resetReservation();
     resetGlobalStore();
-  }, [removeBlacklistParam, resetGlobalStore, resetReservation]);
+    resetReservationRequest();
+  }, [
+    removeBlacklistParam,
+    resetGlobalStore,
+    resetReservation,
+    resetReservationRequest,
+  ]);
 
   const { ref: roomSelectedRef, entry } = useIntersectionObserver({
     threshold: 0.5,

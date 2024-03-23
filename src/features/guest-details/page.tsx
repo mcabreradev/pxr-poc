@@ -1,26 +1,26 @@
-/* eslint-disable simple-import-sort/imports */
 'use client';
 
 import { motion } from 'framer-motion';
+import { redirect, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/lib/utils';
-import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import BackButton from '@/components/common/back-button';
 
-import { ACTION, QUERY } from '@/constants';
+import { useSessionStore } from '@/store';
 
-import FormIdentificationComponent from '@/features/guest-details/form-identification';
-import MyTripDetails from '@/features/guest-details/my-trip-details';
-import { useSessionStore, useUserStore } from '@/store';
-import { redirect, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { ACTION, QUERY } from '@/constants';
+import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
+
 import FormAuthComponent from './form-auth';
 import FormForgotComponent from './form-forgot';
+import FormIdentificationComponent from './form-identification';
 import FormLoginComponent from './form-login';
 import FormRegisterComponent from './form-register';
-import GuestSkeletonComponent from './skeleton';
+import MyTripDetails from './my-trip-details';
+import Skeleton from './skeleton';
 
 type Props = {
   roomTypeId: number;
@@ -34,10 +34,7 @@ export default function DetailsComponent({ roomTypeId }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
-  const { user } = useUserStore();
   const { session } = useSessionStore();
-
-  const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get(ACTION)?.replace('?', '');
 
@@ -47,20 +44,17 @@ export default function DetailsComponent({ roomTypeId }: Props) {
   const actionForgot = action === QUERY.FORGOT;
   const actionIdentification = action === QUERY.IDENTIFICATION;
 
+  // Redirect to payment page if session is available
   useEffect(() => {
-    if (user && user.isAuth) {
-      router.push(
-        `/room-type/${roomTypeId}/payment?` + searchParams.toString(),
-      );
+    if (session) {
+      setTimeout(() => {
+        redirect(window.location.pathname.replace('details', 'payment'));
+      }, 100);
     }
-  }, [user, router, searchParams, roomTypeId]);
-
-  if (session) {
-    redirect(window.location.pathname.replace('details', 'payment'));
-  }
+  }, [session]);
 
   if (isLoading || roomLoading) {
-    return <GuestSkeletonComponent />;
+    return <Skeleton />;
   }
 
   if (isError || roomError) {
@@ -87,8 +81,8 @@ export default function DetailsComponent({ roomTypeId }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              {actionLogin && <FormLoginComponent roomTypeId={roomTypeId} />}
               {actionAuth && <FormAuthComponent roomTypeId={roomTypeId} />}
+              {actionLogin && <FormLoginComponent roomTypeId={roomTypeId} />}
               {actionRegister && (
                 <FormRegisterComponent roomTypeId={roomTypeId} />
               )}

@@ -1,6 +1,6 @@
 export type ReservationRequest = {
   id?: number | null;
-  property_id: number;
+  property_id: number | null;
   guest_id: number | undefined;
   sales_channel_type: string;
   process_state: string;

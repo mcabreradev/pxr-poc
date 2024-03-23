@@ -15,7 +15,7 @@ type State = {
 };
 
 type Actions = {
-  addUser: (u: User | null) => void;
+  addUserToStore: (u: User | null) => void;
   setLoginEnabled: (value: boolean) => void;
   setAuth: (isAuth: boolean) => void;
 };
@@ -41,7 +41,7 @@ const useUserStore = create<State & Actions, []>(
 
     loginEnabled: true,
 
-    addUser: (u: User | null) => set(() => ({ user: u })),
+    addUserToStore: (u: User | null) => set(() => ({ user: u })),
 
     setLoginEnabled: (value: boolean) => set(() => ({ loginEnabled: value })),
 

@@ -8,6 +8,13 @@ import {
 } from 'zustand/middleware';
 
 import {
+  ACTIVE,
+  PROCECESS_STATE,
+  RESERVATION_STATUS,
+  SALES_ORIGIN_TYPE,
+} from '@/constants';
+
+import {
   RemainingReservationRequestData,
   ReservationData,
   ReservationRequest,
@@ -20,8 +27,8 @@ type State = {
 const initialReservationRequestState: ReservationRequest = {
   property_id: 0,
   guest_id: 0,
-  sales_channel_type: 'web',
-  process_state: 'WAITING_FOR_PAYMENT',
+  sales_channel_type: SALES_ORIGIN_TYPE.WEB,
+  process_state: PROCECESS_STATE.WAITING_FOR_PAYMNET,
   date_in: '',
   date_out: '',
   mon_id: 0,
@@ -32,14 +39,14 @@ const initialReservationRequestState: ReservationRequest = {
   mon_commission_id: 0,
   commission_mon_iso: '',
   is_default_commission: 0,
-  reservation_status: 'WO_PAYMENT',
+  reservation_status: RESERVATION_STATUS.WO_PAYMENT,
   room_types: [],
   extras: [],
   coupons: [],
   adults_amount: 0,
   additional_field_values: '',
-  reg_status: 'active',
-  sales_origin_type: 'DIRECT',
+  reg_status: ACTIVE,
+  sales_origin_type: SALES_ORIGIN_TYPE.DIRECT,
   send_confirmed_email: 1,
   confirmed_email_active: 1,
   thank_you_email_to_pax_active: 1,
@@ -55,6 +62,7 @@ type Actions = {
     data: RemainingReservationRequestData,
   ) => void;
   setReservationData: (data: ReservationData) => void;
+  resetReservationRequest: () => void;
 };
 
 type Persist = (
@@ -75,6 +83,12 @@ const middlewares = (f) =>
 const useReservationRequestStore = create<State & Actions, []>(
   (middlewares as Persist)((set, get): State & Actions => ({
     reservationRequest: { ...initialReservationRequestState },
+
+    resetReservationRequest: () =>
+      set(() => ({
+        reservationRequest: { ...initialReservationRequestState },
+      })),
+
     setReservationRequest: (reservationRequest: ReservationRequest) =>
       set(() => ({
         reservationRequest: {
@@ -82,6 +96,7 @@ const useReservationRequestStore = create<State & Actions, []>(
           ...reservationRequest,
         },
       })),
+
     setReservationRequestId: (id: number) =>
       set(() => ({
         reservationRequest: {
@@ -89,6 +104,7 @@ const useReservationRequestStore = create<State & Actions, []>(
           id: id,
         },
       })),
+
     completeReservationRequestData: (data: RemainingReservationRequestData) =>
       set(() => ({
         reservationRequest: {
@@ -98,9 +114,10 @@ const useReservationRequestStore = create<State & Actions, []>(
           guest_preferred_language: data.guest_preferred_language,
           guest_email: data.guest_email,
           guest_country_code: data.guest_country_code,
-          process_state: 'SUCCESS_PAYMENT',
+          process_state: PROCECESS_STATE.SUCCESS_PAYMENT,
         },
       })),
+
     setReservationData: (data: ReservationData) =>
       set(() => ({
         reservationRequest: {

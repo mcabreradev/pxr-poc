@@ -36,7 +36,7 @@ export default function PropertyTopSights({ className, topSights }: Props) {
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
-    router.replace(
+    router.push(
       `${pathname}?${createQueryString(searchParams, { [TOPSIGHT]: 1 })}`,
       { scroll: false },
     );
@@ -44,7 +44,7 @@ export default function PropertyTopSights({ className, topSights }: Props) {
 
   const closeDrawer = useCallback(() => {
     setOpen(false);
-    router.replace(
+    router.push(
       `${pathname}?${removeQueryStringParam(searchParams, TOPSIGHT)}`,
       { scroll: false },
     );

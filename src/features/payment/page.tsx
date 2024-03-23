@@ -1,17 +1,20 @@
 /* eslint-disable no-console */
 'use client';
 
-/* eslint-disable simple-import-sort/imports */
 import { motion } from 'framer-motion';
 import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
 
-import { useSessionStore } from '@/store';
-import useReservationRequestStore from '@/store/use-reservation-request.store';
+import {
+  useReservationRequestStore,
+  useReservationStore,
+  useSessionStore,
+} from '@/store';
 
 import NotConnected from '@/app/not-connected';
 import {
@@ -20,16 +23,14 @@ import {
   RESERVATION_STATUS,
   SALES_ORIGIN_TYPE,
 } from '@/constants';
-import StripePayment from '@/features/payment/strype-payment';
 import { useReservationRequestMutation } from '@/mutations';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import MyTripDetails from './my-trip-details';
 import SkeletonComponent from './skeleton';
+import StripePayment from './strype-payment';
 
-import useReservationStore from '@/store/use-reservation.store';
 import { ReservationRequest, ReservedRoom } from '@/types';
-import { useEffect } from 'react';
 
 type Props = {
   roomTypeId: number;

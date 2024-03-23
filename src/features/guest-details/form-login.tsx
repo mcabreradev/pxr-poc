@@ -116,6 +116,8 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
       // cuando el usuario se loguea
       if (eventType === SIGNIN && data) {
         postGuestData(data);
+
+        // verificar si el usuario es un guest
         checkGuest(data);
 
         // redirigir a la pagina de checkout
@@ -145,6 +147,9 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
     getEventData(urlStatus);
   }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
+  /**
+   * If the user is already logged in, check if the user is a guest and redirect to the checkout page
+   */
   useEffect(() => {
     if (user && user.isAuth) {
       checkGuest({

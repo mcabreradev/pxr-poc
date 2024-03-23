@@ -11,7 +11,6 @@ import useOauth from './use-oauth';
 import useQueryString, { useResetBlacklistParams } from './use-querystring';
 import useResetStores from './use-reset-stores';
 import useSearchParamOrStore from './use-search-param-or-store';
-import useStore from './use-store';
 import useSubscribeToStore from './use-subscribe-to-store';
 import useWindowSize from './use-windowsize';
 
@@ -30,7 +29,6 @@ export {
   useResetBlacklistParams,
   useResetStores,
   useSearchParamOrStore,
-  useStore,
   useSubscribeToStore,
   useWindowSize,
 };

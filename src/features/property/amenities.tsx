@@ -36,7 +36,7 @@ export default function PropertyAmenities({ className, amenities }: Props) {
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
-    router.replace(
+    router.push(
       `${pathname}?${createQueryString(searchParams, { [AMENITIES]: 1 })}`,
       { scroll: false },
     );
@@ -44,7 +44,7 @@ export default function PropertyAmenities({ className, amenities }: Props) {
 
   const closeDrawer = useCallback(() => {
     setOpen(false);
-    router.replace(
+    router.push(
       `${pathname}?${removeQueryStringParam(searchParams, AMENITIES)}`,
       { scroll: false },
     );

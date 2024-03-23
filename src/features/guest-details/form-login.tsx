@@ -2,20 +2,23 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { useEventBus, useHostUrl } from '@/hooks';
+import { useEventBus, useHostUrl, useQueryString } from '@/hooks';
 import { cn } from '@/lib/utils';
-import { useUserStore } from '@/store';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { useReservationStore, useUserStore } from '@/store';
+
 import { FORM, GET_SESSION, SIGNIN, URL } from '@/constants';
+import { useCheckGuestMutation } from '@/mutations';
 import { loginSchema } from '@/schemas';
 
 type Props = {
@@ -34,10 +37,14 @@ const Container = tw.div`
 
 export default function FormLoginComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
+  const router = useRouter();
+  const { removeQueryStringParam } = useQueryString();
   const [type, setType] = useState(FORM.PASSWORD);
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
-  const { addUserToStore } = useUserStore();
+  const { addUserToStore, user } = useUserStore();
+  const { setReservation } = useReservationStore();
+  const checkGuestMutation = useCheckGuestMutation();
 
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
@@ -72,6 +79,28 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
     [addUserToStore],
   );
 
+  const reditectToCheckout = useCallback(() => {
+    const params = removeQueryStringParam(URL.ACTION);
+    router.push(`/room-type/${roomTypeId}/payment?${params.toString()}`);
+  }, [removeQueryStringParam, roomTypeId, router]);
+
+  const checkGuest = useCallback(
+    async ({ sub, given_name, family_name }) => {
+      const { guestPaxerId } = await checkGuestMutation.mutateAsync({
+        guestIAMId: sub,
+        displayName: given_name,
+        lastName: family_name,
+        firstName: given_name,
+        acceptedTerms: true,
+      });
+
+      setReservation({
+        guestPaxerId,
+      });
+    },
+    [checkGuestMutation, setReservation],
+  );
+
   /**
    * @TODO aqui se puede redirigir si existe la session a la pagina de checkout
    *
@@ -87,11 +116,15 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
       // cuando el usuario se loguea
       if (eventType === SIGNIN && data) {
         postGuestData(data);
+        checkGuest(data);
+
+        // redirigir a la pagina de checkout
+        reditectToCheckout();
       }
 
       // cuando el usuario esta logueado
       if (eventType === GET_SESSION && data) {
-        // redirect para payment page @TODO
+        // @TODO aqui se puede redirigir si existe la session a la pagina de checkout, not so sure
       }
 
       if (data.err) {
@@ -104,13 +137,25 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
         });
       }
     },
-    [postGuestData, setError, t],
+    [checkGuest, postGuestData, reditectToCheckout, setError, t],
   );
 
   useEffect(() => {
     subscribe(handlerEvent);
     getEventData(urlStatus);
   }, [getEventData, handlerEvent, subscribe, urlStatus]);
+
+  useEffect(() => {
+    if (user && user.isAuth) {
+      checkGuest({
+        sub: user.sub,
+        given_name: user.given_name,
+        family_name: user.family_name,
+      });
+      // redirigir a la pagina de checkout
+      reditectToCheckout();
+    }
+  }, [checkGuest, reditectToCheckout, user]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>

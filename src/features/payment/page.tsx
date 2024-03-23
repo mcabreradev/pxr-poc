@@ -56,53 +56,70 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
   const reservationRequestMutation = useReservationRequestMutation();
   const checkGuestMutation = useCheckGuestMutation();
 
+  /**
+   * Redirect to home if there is no session
+   */
   if (!session) {
     redirect('/');
   }
 
+  const {
+    checkin,
+    checkout,
+    roomTypeId: roomType,
+    propertyId,
+    adults,
+    childrens,
+    infants,
+    plan,
+    currency,
+    totalCost,
+    total,
+  } = reservation;
+
   const reservationRequestData = useCallback(
     (guest_id: number): ReservationRequest => {
       const room_type: ReservedRoom = {
-        har_in: reservation.checkin as string,
-        har_out: reservation.checkout as string,
-        har_tha_id: reservation.roomTypeId as number,
-        har_pla_id: reservation.plan,
-        har_hot_id: reservation.propertyId as number,
-        har_adults: reservation.adults as number,
-        har_children: reservation.childrens as number,
-        har_infants: reservation.infants as number,
+        har_in: checkin as string,
+        har_out: checkout as string,
+        har_tha_id: roomType as number,
+        har_pla_id: plan,
+        har_hot_id: propertyId as number,
+        har_adults: adults as number,
+        har_children: childrens as number,
+        har_infants: infants as number,
         har_seniors: 0,
         har_pax_info: '',
         har_adults_info: '',
         har_childrens_info: '',
         har_seniors_info: '',
         har_infants_info: '',
-        har_cost: reservation.total, // totalCost + taxes
+        har_cost: total, // totalCost + taxes
         har_additional_field_1: '',
         har_additional_field_2: '',
         har_additional_field_3: '',
       };
 
       return {
-        property_id: reservation.propertyId as number,
+        property_id: propertyId as number,
         guest_id,
         sales_channel_type: 'web',
         process_state: 'WAITING_FOR_PAYMENT',
-        date_in: reservation.checkin as string,
-        date_out: reservation.checkout as string,
+        date_in: checkin as string,
+        date_out: checkout as string,
         mon_id: 5,
-        mon_iso: reservation.currency,
-        total_cost: reservation.totalCost,
+        mon_iso: currency,
+        total_cost: totalCost,
         room_types_cost: 0,
-        guest_mon_iso: reservation.currency,
+        guest_mon_iso: currency,
         mon_commission_id: 5,
-        commission_mon_iso: reservation.currency,
+        commission_mon_iso: currency,
         is_default_commission: 0,
         reservation_status: 'WO_PAYMENT',
         room_types: [room_type],
         extras: [],
         coupons: [],
-        adults_amount: reservation.adults as number,
+        adults_amount: adults as number,
         additional_field_values: [],
         reg_status: 'active',
         sales_origin_type: 'DIRECT',
@@ -115,17 +132,17 @@ export default function PaymentFeature({ roomTypeId, action }: Props) {
       };
     },
     [
-      reservation.propertyId,
-      reservation.checkin,
-      reservation.checkout,
-      reservation.roomTypeId,
-      reservation.plan,
-      reservation.adults,
-      reservation.childrens,
-      reservation.infants,
-      reservation.total,
-      reservation.currency,
-      reservation.totalCost,
+      checkin,
+      checkout,
+      roomType,
+      plan,
+      propertyId,
+      adults,
+      childrens,
+      infants,
+      total,
+      currency,
+      totalCost,
     ],
   );
 

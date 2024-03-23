@@ -1,12 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useSearchParams } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
+
+import { useSessionStore } from '@/store';
 
 import { ACTION, QUERY } from '@/constants';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
@@ -31,10 +34,7 @@ export default function DetailsComponent({ roomTypeId }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
-  // const { user } = useUserStore();
-  // const { session } = useSessionStore();
-  // const router = useRouter();
-
+  const { session } = useSessionStore();
   const searchParams = useSearchParams();
   const action = searchParams.get(ACTION)?.replace('?', '');
 
@@ -44,17 +44,14 @@ export default function DetailsComponent({ roomTypeId }: Props) {
   const actionForgot = action === QUERY.FORGOT;
   const actionIdentification = action === QUERY.IDENTIFICATION;
 
-  // useEffect(() => {
-  //   if (user && user.isAuth) {
-  //     router.push(
-  //       `/room-type/${roomTypeId}/payment?` + searchParams.toString(),
-  //     );
-  //   }
-  // }, [user, router, searchParams, roomTypeId]);
-
-  // if (session) {
-  //   redirect(window.location.pathname.replace('details', 'payment'));
-  // }
+  // Redirect to payment page if session is available
+  useEffect(() => {
+    if (session) {
+      setTimeout(() => {
+        redirect(window.location.pathname.replace('details', 'payment'));
+      }, 100);
+    }
+  }, [session]);
 
   if (isLoading || roomLoading) {
     return <Skeleton />;

@@ -18,6 +18,7 @@ export type Reservation = {
   currency?: string | null;
   propertyId?: number;
   roomTypeId?: number | null;
+  guestPaxerId?: number | null;
 };
 
 export type Product = {

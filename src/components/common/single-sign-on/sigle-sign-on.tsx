@@ -46,6 +46,7 @@ export default function SingleSignOn() {
         addUserToStore({ ...data, isAuth: true });
         setSession(data);
       }
+
       if (eventType === SIGNOUT) {
         setUser(null);
         addUserToStore(null);

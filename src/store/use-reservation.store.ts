@@ -36,6 +36,7 @@ const initialReservationState: Reservation = {
   currency: '',
   roomTypeId: null,
   propertyId: Number(propertyId),
+  guestPaxerId: null,
 };
 
 type Actions = {

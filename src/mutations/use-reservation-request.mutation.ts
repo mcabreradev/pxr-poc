@@ -5,10 +5,8 @@ import { PROPERTY, RESERVATION } from '@/constants';
 
 import { ReservationRequest } from '@/types';
 
-const postReservationRequest = async (params: ReservationRequest) => {
-  const { data } = await axios.post(
-    `/api/reservation-request?params={"reservationRequest":${JSON.stringify(params)}}`,
-  );
+const postReservationRequest = async (body: ReservationRequest) => {
+  const { data } = await axios.post(`/api/reservation-request`, body);
   return data;
 };
 

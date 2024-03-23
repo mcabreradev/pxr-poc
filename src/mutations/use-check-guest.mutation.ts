@@ -14,5 +14,6 @@ export default function useCheckGuestMutation() {
   return useMutation({
     mutationKey: [GUEST],
     mutationFn: postCheckGuest,
+    retry: 1,
   });
 }

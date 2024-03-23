@@ -22,7 +22,7 @@ import {
   useUserStore,
 } from '@/store';
 
-import { PAYMENT_STATUS } from '@/constants';
+import { PAYMENT_STATUS, PROCECESS_STATE } from '@/constants';
 import HotelRules from '@/features/common/hotel-rules';
 import { useReservationRequestMutation } from '@/mutations';
 
@@ -53,10 +53,9 @@ export default function CheckoutForm({ roomTypeId }: Props) {
     useReservationRequestMutation();
 
   useEffect(() => {
-    // @TODO chekear esto
-    // if (!session) {
-    //   redirect('/');
-    // }
+    if (!session) {
+      redirect('/');
+    }
 
     if (!stripe) {
       return;
@@ -94,7 +93,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   }, [session, stripe, t]);
 
   useEffect(() => {
-    if (reservationRequest.process_state == 'SUCCESS_PAYMENT') {
+    if (reservationRequest.process_state == PROCECESS_STATE.SUCCESS_PAYMENT) {
       mutate(reservationRequest);
     }
   }, [reservationRequest, mutate]);

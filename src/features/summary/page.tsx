@@ -103,7 +103,7 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
             <Typography
               variant='h1'
               weight='medium'
-              className='text-stroke-black mx-4 my-2 pt-3 text-white text-shadow'
+              className='mx-4 my-2 pt-3 text-white'
             >
               {t('summary.stay')} {property.name}
             </Typography>

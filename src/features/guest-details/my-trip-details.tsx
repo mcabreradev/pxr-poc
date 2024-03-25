@@ -4,15 +4,17 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import { useSearchParamOrStore } from '@/hooks';
+import { formatCurrency } from '@/lib/number';
 import { ps } from '@/lib/utils';
-import useReservationQuery from '@/store/use-reservation.store';
 
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { useReservationStore } from '@/store';
+
 import { PLAN_BREAKFAST } from '@/constants';
-import { formatCurrency } from '@/lib/number';
+
 import type { PropertyType } from '@/types';
 
 type Props = {
@@ -37,7 +39,7 @@ export default function MyTripDetails({ property, room }: Props) {
     extra,
     plan,
   } = useSearchParamOrStore();
-  const { reservation } = useReservationQuery();
+  const { reservation } = useReservationStore();
 
   const checkin = dayjs(getCheckin());
   const checkout = dayjs(getCheckout());

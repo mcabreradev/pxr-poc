@@ -5,27 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 
-import {
-  useClickAway,
-  useLocale,
-  useMediaQuery,
-  useQueryString,
-  useSearchParamOrStore,
-} from '@/hooks';
-import useWindowSize from '@/hooks/use-windowsize';
-import { formatDateToString, getFormatedMontsDays } from '@/lib/time';
-import { cn, ps } from '@/lib/utils';
-
-import Button from '@/components/button';
-import Drawer from '@/components/drawer';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
-
-import {
-  useGlobalStore,
-  useReservationStore,
-  useSelectedRoomtypeStore,
-} from '@/store';
+import { Button, Drawer, Icon, Typography } from '@/components';
 
 import {
   CALENDAR,
@@ -37,6 +17,23 @@ import {
   TOTAL_CHILDRENS,
   TOTAL_INFANTS,
 } from '@/constants';
+
+import {
+  useClickAway,
+  useLocale,
+  useMediaQuery,
+  useQueryString,
+  useSearchParamOrStore,
+  useWindowSize,
+} from '@/hooks';
+import {
+  useGlobalStore,
+  useReservationStore,
+  useSelectedRoomtypeStore,
+} from '@/store';
+
+import { formatDateToString, getFormatedMontsDays } from '@/lib/time';
+import { cn, ps } from '@/lib/utils';
 
 export default function MobileDatepickerComponent() {
   const { locale } = useLocale();

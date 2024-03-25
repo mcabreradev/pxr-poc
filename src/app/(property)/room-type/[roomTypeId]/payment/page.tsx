@@ -1,6 +1,6 @@
 'use client';
 
-import useHydration from '@/hooks/use-hydration';
+import useHydration from '@/hooks/use-hydration.hook';
 
 import PaymentFeature from '@/features/payment/page';
 

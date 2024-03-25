@@ -2,14 +2,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useEventBus from '@/hooks/use-event-bus';
-import useHostUrl from '@/hooks/use-hosturl';
+import { useEventBus, useHostUrl } from '@/hooks';
 
-import Modal from '@/components/modal';
-import Typography from '@/components/typography';
+import { Modal, Typography } from '@/components';
 
-import useSessionStore from '@/store/use-session.store';
-import useUserStore from '@/store/use-user.store';
+import { useSessionStore, useUserStore } from '@/store';
 
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 

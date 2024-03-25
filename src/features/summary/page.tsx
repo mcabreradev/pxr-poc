@@ -3,14 +3,14 @@ import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import { useSearchParamOrStore } from '@/hooks';
 import { formatCurrency } from '@/lib/number';
 import { cn } from '@/lib/utils';
 
+import { Icon, Typography } from '@/components';
 import BackButton from '@/components/common/back-button';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
 
+import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 import { useReservationRequestStore, useReservationStore } from '@/store';
 
 import HotelRules from '@/features/common/hotel-rules';
@@ -18,7 +18,6 @@ import PriceDetails from '@/features/common/price-details';
 import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
-import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';

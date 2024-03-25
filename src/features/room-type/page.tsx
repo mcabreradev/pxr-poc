@@ -21,7 +21,7 @@ import HotelRules from '@/features/common/hotel-rules';
 
 import { useRatesPlanQuery, useRoomTypeQuery } from '@/queries';
 
-import GuestsDatepickerDrawer from '@/features/common/guests-datepicker-drawer';
+import GuestsDatepickerDrawer from '@/features/common/guest-datepicker';
 import data from './data.json';
 import MyTrip from './my-trip/my-trip';
 import Skeleton from './skeleton';

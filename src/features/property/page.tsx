@@ -28,7 +28,7 @@ import {
   useRatesPlanQuery,
 } from '@/queries';
 
-import GuestsDatepickerDrawer from '@/features/common/guests-datepicker-drawer';
+import GuestsDatepickerDrawer from '@/features/common/guest-datepicker';
 import PropertyAmenities from './amenities';
 import data from './data.json';
 import GuestForm from './guest-form';

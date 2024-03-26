@@ -1,23 +1,35 @@
 /* eslint-disable simple-import-sort/imports */
 import { AnimatePresence, motion } from 'framer-motion';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import {
+  useIntersectionObserver,
+  useSearchParamOrStore,
+  useSubscribeToStore,
+} from '@/hooks';
+import { getFormatedMontsDays } from '@/lib/time';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Typography from '@/components/typography';
-import DatepickerDesktop from './datepicker/desktop-datepicker';
-import Dropdown from './dropdown';
 
-import { useIntersectionObserver, useSubscribeToStore } from '@/hooks';
-import { useGlobalStore } from '@/store';
-import { useCallback, useEffect, useState } from 'react';
+import { useDatepickerStore, useGlobalStore } from '@/store';
+
+import Dropdown from './dropdown';
 
 export default function GuestFormComponent({ showButton }) {
   const { t } = useTranslation();
   const { setGuestFormIntersecting } = useGlobalStore();
-
+  const { checkinDate, checkoutDate } = useSearchParamOrStore();
   const [isIntersected, setIntersected] = useState<boolean | undefined>(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const { openDatepickerDrawer } = useDatepickerStore();
+
+  const formatedDate = useMemo(
+    () => getFormatedMontsDays(checkinDate, checkoutDate),
+    [checkinDate, checkoutDate],
+  );
 
   const { ref, entry } = useIntersectionObserver({
     threshold: 1,
@@ -58,7 +70,18 @@ export default function GuestFormComponent({ showButton }) {
         {`${t('checkin')} - ${t('checkout')}`}
       </Typography>
 
-      <DatepickerDesktop />
+      <input
+        type='text'
+        name='datepicker'
+        value={formatedDate}
+        onClick={openDatepickerDrawer}
+        readOnly
+        ref={inputRef}
+        placeholder='dd/mm/yyyy'
+        className={cn(
+          'form-input block w-full appearance-none rounded border-[0.5px] border-neutral-60 px-4 py-2 text-sm lowercase leading-normal placeholder:text-sm placeholder:text-neutral-300 focus:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-neutral-200',
+        )}
+      />
 
       <Typography variant='sm' weight='semibold' className='my-4'>
         {t('info.guest')}

@@ -1,10 +1,16 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/es';
 
 import {
   CHECKIN_DEFAULT_FUTURE_DAYS,
   CHECKOUT_DEFAULT_FUTURE_DAYS,
+  DEFAULT_LANG,
+  NEXT_LOCALE,
 } from '@/constants';
 
+const locale = localStorage.getItem(NEXT_LOCALE) || DEFAULT_LANG;
+dayjs.locale(locale);
 const today = dayjs();
 
 export function formatStringToDate(date: string) {

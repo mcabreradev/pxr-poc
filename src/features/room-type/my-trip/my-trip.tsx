@@ -1,6 +1,8 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/es';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';

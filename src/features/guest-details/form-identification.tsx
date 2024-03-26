@@ -1,7 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 
 import { Button, Icon, Typography } from '@/components';
 
-import { useReservationStore, useUserStore } from '@/store';
+import { useReservationStore, useSessionStore } from '@/store';
 
 import { CHECKUSER } from '@/constants';
 import { useCheckGuestMutation } from '@/mutations';
@@ -37,12 +37,13 @@ export default function FormIdentificationComponent({
   email,
   roomTypeId,
 }: Props) {
+  const [lastMessage, setLastMessage] = useState('');
   const { t } = useTranslation();
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { user, addUserToStore } = useUserStore();
+  const { session, setSession } = useSessionStore();
   const { setReservation } = useReservationStore();
   const checkGuestMutation = useCheckGuestMutation();
 
@@ -55,9 +56,14 @@ export default function FormIdentificationComponent({
     resolver: yupResolver(identificationSchema(t)),
     defaultValues: {
       email: email ? email : undefined,
-      name: email && user && email === user.email ? user.given_name : undefined,
+      name:
+        email && session && email === session.email
+          ? session.given_name
+          : undefined,
       lastname:
-        email && user && email === user.email ? user.family_name : undefined,
+        email && session && email === session.email
+          ? session.family_name
+          : undefined,
     },
   });
 
@@ -82,6 +88,23 @@ export default function FormIdentificationComponent({
     (eventData) => {
       const { eventType, data } = eventData;
 
+      //console.log(eventType)
+      //console.log(lastMessage)
+      if (lastMessage && eventType && lastMessage === eventType) {
+        const filteredSearchParams: string[] = [];
+        searchParams.forEach((key, value) => {
+          if (key === 'email' || key === 'action') {
+            return;
+          } else {
+            filteredSearchParams.push(`${key}=${value}`);
+          }
+        });
+        router.push(
+          `/room-type/${roomTypeId}/payment?` + filteredSearchParams.join('&'),
+        );
+        return;
+      }
+
       if (!eventType || eventType !== CHECKUSER) return;
 
       if (data.err) {
@@ -91,7 +114,7 @@ export default function FormIdentificationComponent({
         });
       } else {
         const userData = data.data;
-        addUserToStore({ ...userData, isAuth: false });
+        setSession({ ...userData, isAuth: false });
         const filteredSearchParams: string[] = [];
         searchParams.forEach((key, value) => {
           if (key === 'email' || key === 'action') {
@@ -101,18 +124,32 @@ export default function FormIdentificationComponent({
           }
         });
 
+        // console.log("WO WO WO")
+
         checkGuest({
           sub: userData.sub,
           given_name: userData.given_name,
           family_name: userData.family_name,
         });
 
+        setLastMessage(eventType);
+
+        // console.log("PASSED HOOK")
+
         router.push(
           `/room-type/${roomTypeId}/payment?` + filteredSearchParams.join('&'),
         );
       }
     },
-    [setError, addUserToStore, searchParams, checkGuest, router, roomTypeId],
+    [
+      setError,
+      setSession,
+      searchParams,
+      checkGuest,
+      router,
+      roomTypeId,
+      lastMessage,
+    ],
   );
 
   useEffect(() => {

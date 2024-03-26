@@ -12,6 +12,7 @@ type Session = {
   family_name?: string;
   given_name?: string;
   sub?: string;
+  isAuth?: boolean;
 };
 
 type State = {

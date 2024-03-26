@@ -15,4 +15,5 @@ export type Payment = {
   successUrl?: unknown;
   cancelUrl?: unknown;
   offSession?: unknown;
+  reservationRequestId?: unknown;
 };

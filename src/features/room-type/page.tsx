@@ -42,7 +42,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { isError, isLoading, data: room } = useRoomTypeQuery(roomTypeId);
   const { removeBlacklistParam, removeQueryStringParamAndUpdate } =
     useQueryString();
-  const { resetStore } = useReservationRequestStore();
+  const { resetReservationRequest } = useReservationRequestStore();
   const { resetGlobalStore } = useGlobalStore();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(
@@ -71,9 +71,9 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   // Reset global store and remove blacklist params
   useEffect(() => {
     removeBlacklistParam(['']);
-    resetStore();
+    resetReservationRequest();
     resetGlobalStore();
-  }, [removeBlacklistParam, resetGlobalStore, resetStore]);
+  }, [removeBlacklistParam, resetGlobalStore, resetReservationRequest]);
 
   if (isLoading) {
     return <Skeleton />;

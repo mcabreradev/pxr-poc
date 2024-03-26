@@ -87,7 +87,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
         har_in: reservation.checkin as string,
         har_out: reservation.checkout as string,
         har_tha_id: reservation.roomTypeId as number,
-        har_pla_id: 330,
+        har_pla_id: reservation.plan,
         har_hot_id: reservation.propertyId as number,
         har_adults: reservation.adults as number,
         har_children: reservation.childrens as number,
@@ -184,7 +184,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
 
   useEffect(() => {
     // console.log('HERE IS THE FIRST RESPONSE');
-    // console.log(reservationRequestResponse);
+    console.log(reservationRequestResponse);
     if (reservationRequestResponse != undefined && !requestSetupError) {
       if (reservationRequestResponse.res.code == 0) {
         setReservationRequestId(
@@ -241,7 +241,9 @@ export default function PaymentFeature({ roomTypeId }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              <StripePayment roomTypeId={roomTypeId} />
+              {reservationRequest.id ? (
+                <StripePayment roomTypeId={roomTypeId} />
+              ) : null}
 
               {/* {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
               {actionSuccess && <StripePayment roomTypeId={roomTypeId} />}

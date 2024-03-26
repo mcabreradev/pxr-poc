@@ -68,6 +68,10 @@
     },
     "title": "¡Ups!"
   },
+  "error-modal": {
+    "header": "Ha ocurrido un error",
+    "body": "Por favor intente de nuevo en unos minutos"
+  },
   "form": {
     "date_of_birth": {
       "invalid": "La fecha de nacimiento es inválida",

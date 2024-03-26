@@ -190,9 +190,13 @@ export default function PaymentFeature({ roomTypeId }: Props) {
         setReservationRequestId(
           reservationRequestResponse.res.data.reservation_request_id,
         );
-      } else {
+      } else if (reservationRequestResponse.res.code == 2017) {
         redirect(
           `/room-type/${reservation.roomTypeId}?checkin=${reservation.checkin}&checkout=${reservation.checkout}&totalAdults=${reservation.adults}&totalChildren=${reservation.childrens}&totalInfants=${reservation.infants}&unavailable=true`,
+        );
+      } else {
+        redirect(
+          `/room-type/${reservation.roomTypeId}?checkin=${reservation.checkin}&checkout=${reservation.checkout}&totalAdults=${reservation.adults}&totalChildren=${reservation.childrens}&totalInfants=${reservation.infants}&unexpectedError=true`,
         );
       }
     }

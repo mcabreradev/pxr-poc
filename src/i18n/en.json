@@ -68,6 +68,10 @@
     },
     "title": "¡Ups!"
   },
+  "error-modal": {
+    "header": "An Error has occurred",
+    "body": "Please, try again in a few minutes"
+  },
   "form": {
     "date_of_birth": {
       "invalid": "Date of birth is invalid",

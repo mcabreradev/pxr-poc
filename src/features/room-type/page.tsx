@@ -46,7 +46,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
   const { resetGlobalStore } = useGlobalStore();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(
-    !!searchParams.get('unavailable'),
+    !!searchParams.get('unavailable') || !!searchParams.get('unexpectedError'),
   );
 
   const { checkin, checkout } = useSearchParamOrStore();
@@ -58,7 +58,14 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
 
   const closeModalHandler = () => {
     setIsModalOpen(false);
-    removeQueryStringParamAndUpdate('unavailable');
+
+    if (searchParams.get('unavailable')) {
+      removeQueryStringParamAndUpdate('unavailable');
+    }
+
+    if (searchParams.get('unexpectedError')) {
+      removeQueryStringParamAndUpdate('unexpectedError');
+    }
   };
 
   // Reset global store and remove blacklist params
@@ -94,12 +101,16 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
         headerClassName='p-6'
         header={
           <Typography variant='h2' weight='normal' className=''>
-            {t('unavailable-modal.header')}
+            {searchParams.get('unexpectedError')
+              ? t('error-modal.header')
+              : t('unavailable-modal.header')}
           </Typography>
         }
       >
         <Typography variant='base' weight='normal' className=''>
-          {t('unavailable-modal.body')}
+          {searchParams.get('unexpectedError')
+            ? t('error-modal.body')
+            : t('unavailable-modal.body')}
         </Typography>
       </Modal>
 

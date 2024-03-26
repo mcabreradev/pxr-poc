@@ -2,14 +2,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useEventBus from '@/hooks/use-event-bus';
-import useHostUrl from '@/hooks/use-hosturl';
+import { useEventBus, useHostUrl } from '@/hooks';
 
-import Modal from '@/components/modal';
-import Typography from '@/components/typography';
+import { Modal, Typography } from '@/components';
 
-import useSessionStore from '@/store/use-session.store';
-import useUserStore from '@/store/use-user.store';
+import { useSessionStore, useUserStore } from '@/store';
 
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 
@@ -22,7 +19,7 @@ export default function SingleSignOn() {
   const [modalOpen, setModalOpen] = useState(false);
   const { urlStatus, urlSignin } = useHostUrl();
   const { getEventData, publish } = useEventBus();
-  const { addUser, loginEnabled } = useUserStore();
+  const { addUserToStore, loginEnabled } = useUserStore();
   const { setSession, removeSession } = useSessionStore();
 
   const openModal = () => setModalOpen(true);
@@ -43,16 +40,17 @@ export default function SingleSignOn() {
       if ((eventType === SIGNIN || eventType === GET_SESSION) && data) {
         closeModal();
         setUser(data);
-        addUser({ ...data, isAuth: true });
+        addUserToStore({ ...data, isAuth: true });
         setSession(data);
       }
+
       if (eventType === SIGNOUT) {
         setUser(null);
-        addUser(null);
+        addUserToStore(null);
         removeSession();
       }
     },
-    [addUser, removeSession, setSession, lastMessage],
+    [addUserToStore, removeSession, setSession, lastMessage],
   );
 
   const signOut = () => {

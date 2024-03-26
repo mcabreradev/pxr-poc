@@ -1,7 +1,7 @@
 export type GuestPegaso = {
-  guestIAMId: string;
-  displayName: string;
-  lastName: string;
-  firstName: string;
-  acceptedTerms: boolean;
+  guestIAMId: string | undefined;
+  displayName: string | undefined;
+  lastName: string | undefined;
+  firstName: string | undefined;
+  acceptedTerms: boolean | undefined;
 };

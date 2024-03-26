@@ -6,6 +6,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -42,10 +43,9 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // @TODO chekear esto
-    // if (!session) {
-    //   redirect('/');
-    // }
+    if (!session) {
+      redirect('/');
+    }
 
     if (!stripe) {
       return;

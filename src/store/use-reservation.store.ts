@@ -8,6 +8,7 @@ import {
 } from 'zustand/middleware';
 
 import { TOTAL_ADULTS_DEFAULT } from '@/constants';
+import { propertyId } from '@/constants/env';
 
 import { Reservation } from '@/types';
 
@@ -34,6 +35,8 @@ const initialReservationState: Reservation = {
   product: null,
   currency: '',
   roomTypeId: null,
+  propertyId: Number(propertyId),
+  guestPaxerId: null,
 };
 
 type Actions = {

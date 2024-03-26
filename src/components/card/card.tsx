@@ -48,7 +48,7 @@ export default function CardComponent({
           src={image}
           width={269}
           height={180}
-          className='h-full w-full object-cover'
+          className='h-auto w-full object-cover'
         />
       </div>
 

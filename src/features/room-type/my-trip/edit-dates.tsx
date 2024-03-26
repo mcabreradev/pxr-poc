@@ -6,19 +6,22 @@ import { useTranslation } from 'react-i18next';
 import { DateRangePicker } from 'react-next-dates';
 import tw from 'tailwind-styled-components';
 
-import useLocale from '@/hooks/use-locale';
+import {
+  useHydration,
+  useLocale,
+  useQueryString,
+  useSearchParamOrStore,
+} from '@/hooks';
 import { formatDateToString, formatStringToDate } from '@/lib/time';
 import { cn } from '@/lib/utils';
+useHydration;
 
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { Icon, Typography } from '@/components';
 
-import useQueryString from '@/hooks/use-querystring';
-import useReservationStore from '@/store/use-reservation.store';
+import { useReservationStore } from '@/store';
 
 import { CHECKIN, CHECKOUT } from '@/constants';
-import { useSearchParamOrStore } from '@/hooks';
-import useHydration from '@/hooks/use-hydration';
+import {} from '@/hooks';
 import { selectRoomSchema } from '@/schemas';
 
 interface Props {

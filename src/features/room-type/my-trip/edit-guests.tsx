@@ -3,13 +3,12 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useQueryString from '@/hooks/use-querystring';
+import { useQueryString, useSearchParamOrStore } from '@/hooks';
 import { cn, ps } from '@/lib/utils';
 
-import useReservationStore from '@/store/use-reservation.store';
+import { useReservationStore, useSelectedRoomtypeStore } from '@/store';
 
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { Icon, Typography } from '@/components';
 
 import Button from '@/components/button';
 import {
@@ -20,8 +19,6 @@ import {
   TOTAL_INFANTS,
   TOTAL_INFANTS_DEFAULT,
 } from '@/constants';
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
-import useSelectedRoomtypeStore from '@/store/use-selected-roomtype.store';
 
 interface Props {
   className?: string;

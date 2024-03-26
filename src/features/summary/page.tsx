@@ -3,14 +3,14 @@ import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import useSearchParamOrStore from '@/hooks/use-search-param-or-store';
+import { useSearchParamOrStore } from '@/hooks';
 import { formatCurrency } from '@/lib/number';
 import { cn } from '@/lib/utils';
 
+import { Icon, Typography } from '@/components';
 import BackButton from '@/components/common/back-button';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
 
+import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 import { useReservationRequestStore, useReservationStore } from '@/store';
 
 import HotelRules from '@/features/common/hotel-rules';
@@ -19,7 +19,6 @@ import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
 import { useReservationRequestMutation } from '@/mutations';
-import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import { RESERVATION_PROCESS_STATE } from '@/constants';
 import { useEffect } from 'react';
@@ -99,14 +98,15 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
       reservationRequest.process_state ===
       RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT
     ) {
+      // console.log(reservationRequest);
       mutate(reservationRequest);
     }
   }, [reservationRequest, mutate]);
 
-  /* useEffect(() => {
-    console.log("SECOND RESPONSE");
+  /*useEffect(() => {
+    console.log('SECOND RESPONSE');
     console.log(reservationRequestResponse);
-  }, [reservationRequestResponse]); */
+  }, [reservationRequestResponse]);*/
 
   if (isLoading || roomLoading || isPending) {
     return <SkeletonComponent />;
@@ -131,7 +131,7 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
             <Typography
               variant='h1'
               weight='medium'
-              className='text-stroke-black mx-4 my-2 pt-3 text-white text-shadow'
+              className='mx-4 my-2 pt-3 text-white'
             >
               {t('summary.stay')} {property.name}
             </Typography>

@@ -1,7 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 import dayjs from 'dayjs';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
@@ -20,6 +20,7 @@ import {
   useDatepickerStore,
   useReservationStore,
   useSelectedRoomtypeStore,
+  useUserStore,
 } from '@/store';
 
 import { Product, Ratesplan } from '@/types';
@@ -38,6 +39,7 @@ import {
 } from '@/constants';
 import { useRatesPlanQuery } from '@/queries';
 
+import { useCheckGuestMutation } from '@/mutations';
 import CancelationPolice from './cancelation-police';
 import RatesPlansSkeleton from './rates-plan-skeleton';
 
@@ -54,26 +56,27 @@ px-4 text-black md:px-0
 `;
 
 export default function MyTrip({ className, roomTypeId }: Props) {
-  const [loading, setLoading] = useState(false);
-
   const { t, i18n } = useTranslation();
   dayjs.locale(i18n.language);
-
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { user } = useUserStore();
   const { openCalendarDrawer, openGuestFormDrawer } = useDatepickerStore();
-
   const { reservation, setReservation } = useReservationStore();
   const { checkin, checkout, checkinDayjs, checkoutDayjs } =
     useCheckinCheckoutHook();
   const { selectedRoom } = useSelectedRoomtypeStore();
-  const searchParams = useSearchParams();
+  const checkGuestMutation = useCheckGuestMutation();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
-
   const { data: ratesPlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
     roomTypeId,
     checkin,
     checkout,
   });
+
+  const [loading, setLoading] = useState(false);
 
   const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
   const childrens =
@@ -187,6 +190,44 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     const timer = setTimeout(() => setAnimate(false), 200);
     return () => clearTimeout(timer);
   }, [total]);
+
+  const checkGuest = useCallback(
+    async ({ sub, given_name, family_name }) => {
+      const { guestPaxerId } = await checkGuestMutation.mutateAsync({
+        guestIAMId: sub,
+        displayName: given_name,
+        lastName: family_name,
+        firstName: given_name,
+        acceptedTerms: true,
+      });
+
+      setReservation({
+        guestPaxerId,
+      });
+    },
+    [checkGuestMutation, setReservation],
+  );
+
+  /**
+   * Handle payment submit
+   */
+  const handlePaymentSubmit = useCallback(() => {
+    setLoading(true);
+    const params = new URLSearchParams(searchParams);
+
+    if (user && user.isAuth) {
+      checkGuest({
+        sub: user.sub,
+        given_name: user.given_name,
+        family_name: user.family_name,
+      });
+      // redirigir a la pagina de checkout
+      router.push(`${pathname}/payment?${params.toString()}`);
+      return;
+    }
+
+    router.push(`${pathname}/details?action=login&${params.toString()}`);
+  }, [checkGuest, pathname, router, searchParams, user]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>
@@ -358,11 +399,9 @@ export default function MyTrip({ className, roomTypeId }: Props) {
           <Button
             className='font-semibold md:w-full'
             variant='primary'
-            type='link'
-            href={`/room-type/${roomTypeId}/details`}
-            withSearchParams={true}
+            type='button'
             fullWidth
-            onClick={() => setLoading(true)}
+            onClick={handlePaymentSubmit}
             loading={loading}
           >
             {t('button.pay')}

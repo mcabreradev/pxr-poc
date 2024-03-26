@@ -57,6 +57,7 @@ type Actions = {
   completeReservationRequestData: () => void;
   setReservationData: (data: ReservationData) => void;
   resetStore: () => void;
+  resetReservationRequest: () => void;
 };
 
 type Persist = (
@@ -77,6 +78,12 @@ const middlewares = (f) =>
 const useReservationRequestStore = create<State & Actions, []>(
   (middlewares as Persist)((set, get): State & Actions => ({
     reservationRequest: { ...initialReservationRequestState },
+
+    resetReservationRequest: () =>
+      set(() => ({
+        reservationRequest: { ...initialReservationRequestState },
+      })),
+
     setReservationRequest: (reservationRequest: ReservationRequest) =>
       set(() => ({
         reservationRequest: {
@@ -84,6 +91,7 @@ const useReservationRequestStore = create<State & Actions, []>(
           ...reservationRequest,
         },
       })),
+
     setReservationRequestId: (id: number) =>
       set(() => ({
         reservationRequest: {
@@ -107,6 +115,7 @@ const useReservationRequestStore = create<State & Actions, []>(
           process_state: RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT,
         },
       })),
+
     setReservationData: (data: ReservationData) =>
       set(() => ({
         reservationRequest: {

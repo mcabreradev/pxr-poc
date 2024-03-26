@@ -6,5 +6,5 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const res = await api.post(`/v1/dev/guest/check`, body);
 
-  return NextResponse.json({ res });
+  return NextResponse.json({ ...res });
 }

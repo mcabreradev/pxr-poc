@@ -2,23 +2,23 @@
 /* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { GuestPegaso } from '@/types';
-
-import { useEventBus, useHostUrl } from '@/hooks';
+import { useEventBus, useHostUrl, useQueryString } from '@/hooks';
 import { cn } from '@/lib/utils';
-import { useCheckGuestMutation } from '@/mutations';
-import { useUserStore } from '@/store';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
+import { useReservationStore, useUserStore } from '@/store';
+
 import { FORM, GET_SESSION, SIGNIN, URL } from '@/constants';
+import { useCheckGuestMutation } from '@/mutations';
 import { loginSchema } from '@/schemas';
 
 type Props = {
@@ -37,12 +37,14 @@ const Container = tw.div`
 
 export default function FormLoginComponent({ className, roomTypeId }: Props) {
   const { t } = useTranslation();
+  const router = useRouter();
+  const { removeQueryStringParam } = useQueryString();
   const [type, setType] = useState(FORM.PASSWORD);
-  const [guestData, setGuestData] = useState<GuestPegaso>();
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
-  const checkGuestMutation = useCheckGuestMutation(guestData);
-  const { addUser } = useUserStore();
+  const { addUserToStore, user } = useUserStore();
+  const { setReservation } = useReservationStore();
+  const checkGuestMutation = useCheckGuestMutation();
 
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
@@ -65,14 +67,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
 
   const postGuestData = useCallback(
     ({ family_name, given_name, sub, email, email_verified }) => {
-      setGuestData({
-        guestIAMId: sub,
-        displayName: `${given_name} ${family_name}`,
-        lastName: family_name,
-        firstName: given_name,
-        acceptedTerms: true,
-      });
-      addUser({
+      addUserToStore({
         family_name,
         given_name,
         sub,
@@ -80,10 +75,30 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
         email_verified,
         isAuth: true,
       });
-      const checkGuest = checkGuestMutation.mutate();
-      console.log('checkGuestMutation ', checkGuest);
     },
-    [addUser, checkGuestMutation],
+    [addUserToStore],
+  );
+
+  const reditectToCheckout = useCallback(() => {
+    const params = removeQueryStringParam(URL.ACTION);
+    router.push(`/room-type/${roomTypeId}/payment?${params.toString()}`);
+  }, [removeQueryStringParam, roomTypeId, router]);
+
+  const checkGuest = useCallback(
+    async ({ sub, given_name, family_name }) => {
+      const { guestPaxerId } = await checkGuestMutation.mutateAsync({
+        guestIAMId: sub,
+        displayName: given_name,
+        lastName: family_name,
+        firstName: given_name,
+        acceptedTerms: true,
+      });
+
+      setReservation({
+        guestPaxerId,
+      });
+    },
+    [checkGuestMutation, setReservation],
   );
 
   /**
@@ -101,11 +116,17 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
       // cuando el usuario se loguea
       if (eventType === SIGNIN && data) {
         postGuestData(data);
+
+        // verificar si el usuario es un guest
+        checkGuest(data);
+
+        // redirigir a la pagina de checkout
+        reditectToCheckout();
       }
 
       // cuando el usuario esta logueado
       if (eventType === GET_SESSION && data) {
-        // push para payment page
+        // @TODO aqui se puede redirigir si existe la session a la pagina de checkout, not so sure
       }
 
       if (data.err) {
@@ -118,7 +139,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
         });
       }
     },
-    [postGuestData, setError, t],
+    [checkGuest, postGuestData, reditectToCheckout, setError, t],
   );
 
   useEffect(() => {
@@ -126,14 +147,20 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
     getEventData(urlStatus);
   }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
-  if (checkGuestMutation.isError) {
-    console.log('error', checkGuestMutation);
-    return 'error';
-  }
-
-  if (checkGuestMutation.isSuccess) {
-    console.log('success', checkGuestMutation);
-  }
+  /**
+   * If the user is already logged in, check if the user is a guest and redirect to the checkout page
+   */
+  useEffect(() => {
+    if (user && user.isAuth) {
+      checkGuest({
+        sub: user.sub,
+        given_name: user.given_name,
+        family_name: user.family_name,
+      });
+      // redirigir a la pagina de checkout
+      reditectToCheckout();
+    }
+  }, [checkGuest, reditectToCheckout, user]);
 
   return (
     <Container className={cn(className)} data-testid='test-element'>

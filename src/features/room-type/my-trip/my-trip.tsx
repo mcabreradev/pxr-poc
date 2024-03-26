@@ -2,7 +2,7 @@
 'use client';
 import dayjs from 'dayjs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
@@ -78,11 +78,20 @@ export default function MyTrip({ className, roomTypeId }: Props) {
 
   const [loading, setLoading] = useState(false);
 
-  const adults = Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults;
-  const childrens =
-    Number(searchParams.get(TOTAL_CHILDRENS)) || reservation?.childrens;
-  const infants =
-    Number(searchParams.get(TOTAL_INFANTS)) || reservation?.infants;
+  const adults = useMemo(
+    () => Number(searchParams.get(TOTAL_ADULTS)) || reservation?.adults,
+    [reservation?.adults, searchParams],
+  );
+
+  const childrens = useMemo(
+    () => Number(searchParams.get(TOTAL_CHILDRENS)) || reservation?.childrens,
+    [reservation?.childrens, searchParams],
+  );
+
+  const infants = useMemo(
+    () => Number(searchParams.get(TOTAL_INFANTS)) || reservation?.infants,
+    [reservation?.infants, searchParams],
+  );
 
   const [selectedPlan, setSelectedPlan] = useState(
     searchParams.get(PLAN) || reservation?.plan,
@@ -100,53 +109,95 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     setBreakfast(checked ? PLAN_BREAKFAST : PLAN_NONBREAKFAST);
   }, []);
 
-  const ratesPlanIndex = breakfast === PLAN_BREAKFAST ? 1 : 0;
+  const ratesPlanIndex = useMemo(
+    () => (breakfast === PLAN_BREAKFAST ? 1 : 0),
+    [breakfast],
+  );
 
-  const planCost = (
-    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
-      amountBeforeTax: number;
-    }
-  )?.amountBeforeTax;
+  const planCost = useMemo(
+    () =>
+      (
+        selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+          amountBeforeTax: number;
+        }
+      )?.amountBeforeTax,
+    [ratesPlanIndex, selectedRoom.ratesPlan],
+  );
 
-  const currency = (
-    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
-      currency: string;
-    }
-  )?.currency;
+  const currency = useMemo(
+    () =>
+      (
+        selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+          currency: string;
+        }
+      )?.currency,
+    [ratesPlanIndex, selectedRoom.ratesPlan],
+  );
 
-  const planCostWithTaxes = (
-    selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
-      rate: number;
-    }
-  )?.rate;
+  const planCostWithTaxes = useMemo(
+    () =>
+      (
+        selectedRoom.ratesPlan?.[ratesPlanIndex] as unknown as {
+          rate: number;
+        }
+      )?.rate,
+    [ratesPlanIndex, selectedRoom.ratesPlan],
+  );
 
-  const planId = (
-    selectedRoom.ratesPlan?.[ratesPlanIndex] as Ratesplan as {
-      productId: number;
-    }
-  )?.productId;
+  const planId = useMemo(
+    () =>
+      (
+        selectedRoom.ratesPlan?.[ratesPlanIndex] as Ratesplan as {
+          ratePlanId: number;
+        }
+      )?.ratePlanId,
+    [ratesPlanIndex, selectedRoom.ratesPlan],
+  );
 
-  const product = selectedRoom.ratesPlan?.[ratesPlanIndex];
-  const planDays = checkoutDayjs.diff(checkinDayjs, 'days');
-  const totalCost = planCost * planDays;
-  const totalCostWithTaxes = planCostWithTaxes * planDays;
+  const product = useMemo(
+    () => selectedRoom.ratesPlan?.[ratesPlanIndex],
+    [ratesPlanIndex, selectedRoom.ratesPlan],
+  );
+
+  const planDays = useMemo(
+    () => checkoutDayjs.diff(checkinDayjs, 'days'),
+    [checkinDayjs, checkoutDayjs],
+  );
+  const totalCost = useMemo(() => planCost * planDays, [planCost, planDays]);
+
+  const totalCostWithTaxes = useMemo(
+    () => planCostWithTaxes * planDays,
+    [planCostWithTaxes, planDays],
+  );
+
   const extraCost = PLAN_BREAKFAST_COST;
-  const extraCostTotal = extra === PLAN_BREAKFAST ? extraCost : 0;
-  const cancelCost = totalCost * PLAN_REFUNDABLE_PERCENT;
-  const cancelationCost = selectedPlan === PLAN_REFUNDABLE ? cancelCost : 0;
-  const taxes = totalCostWithTaxes - totalCost;
-  // const total = totalCost + extraCostTotal + cancelationCost + taxes;
+
+  const extraCostTotal = useMemo(
+    () => (extra === PLAN_BREAKFAST ? extraCost : 0),
+    [extra, extraCost],
+  );
+
+  const cancelCost = useMemo(
+    () => totalCost * PLAN_REFUNDABLE_PERCENT,
+    [totalCost],
+  );
+
+  const cancelationCost = useMemo(
+    () => (selectedPlan === PLAN_REFUNDABLE ? cancelCost : 0),
+    [selectedPlan, cancelCost],
+  );
+
+  const taxes = useMemo(
+    () => totalCostWithTaxes - totalCost,
+    [totalCostWithTaxes, totalCost],
+  );
+  // const total = useMemo(() => totalCost + extraCostTotal + cancelationCost + taxes, [totalCost, extraCostTotal, cancelationCost, taxes]) ;
   const total = totalCostWithTaxes;
-  const hasBreakfast = breakfast === PLAN_BREAKFAST;
+  const hasBreakfast = useMemo(() => breakfast === PLAN_BREAKFAST, [breakfast]);
 
   useEffect(() => {
     if (!breakfast) return;
     updateQueryString({ [EXTRA]: breakfast });
-    // const plan = filter(ratesPlan, ({ mealPlans }) =>
-    //   hasBreakfast ? mealPlans.length > 0 : mealPlans.length === 0,
-    // )[0] as { [key: string]: string };
-
-    // setSelectedProduct(plan);
   }, [breakfast, hasBreakfast, ratesPlan, updateQueryString]);
 
   useEffect(() => {
@@ -226,7 +277,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
       return;
     }
 
-    router.push(`${pathname}/details?action=login&${params.toString()}`);
+    router.push(`${pathname}/details?action=auth&${params.toString()}`);
   }, [checkGuest, pathname, router, searchParams, user]);
 
   return (

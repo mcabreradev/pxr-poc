@@ -5,6 +5,8 @@ import { PROPERTY, RATES, ROOMTYPES } from '@/constants';
 import { propertyId } from '@/constants/env';
 import { fetchRatesPlan } from '@/queries/use-rates-plan.query';
 
+import { Ratesplan } from '@/types';
+
 const fetchRoomTypes = async () => {
   const { data } = await axios.get(`/api/room-types?propertyId=${propertyId}`);
   return data;
@@ -22,8 +24,6 @@ export function useRoomTypeWithRatesPlansQuery({ checkin, checkout }) {
   // const predicade = ({ currency, reservationPolicies }) =>
   //   currency === PROPERTY_CURRENCY && reservationPolicies;
 
-  const predicade = ({ reservationPolicies }) => reservationPolicies;
-
   return useQueries({
     queries: [
       {
@@ -33,13 +33,13 @@ export function useRoomTypeWithRatesPlansQuery({ checkin, checkout }) {
       {
         queryKey: [PROPERTY, propertyId, RATES],
         queryFn: () => fetchRatesPlan({ checkin, checkout }),
-        select: (data) =>
-          data.filter(predicade).map((plan) => {
-            const productDates = Object.keys(plan.productDates).map(
-              (date) => plan?.productDates[date],
+        select: (data: Ratesplan[]) =>
+          data.map((plan) => {
+            const productDates = Object.keys(plan.productDates ?? {}).map(
+              (date) => (plan.productDates ? plan.productDates[date] : null),
             );
             return {
-              ...productDates[0].rates[1],
+              ...(productDates[0]?.rates && productDates[0]?.rates[1]),
               ...plan,
             };
           }),

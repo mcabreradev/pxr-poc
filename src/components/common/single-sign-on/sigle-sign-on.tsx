@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useEventBus, useHostUrl } from '@/hooks';
+import { useCheckGuestHook, useEventBus, useHostUrl } from '@/hooks';
 
 import { Modal, Typography } from '@/components';
 
@@ -11,6 +11,12 @@ import { useSessionStore, useUserStore } from '@/store';
 import { GET_SESSION, SIGNIN, SIGNOUT } from '@/constants';
 
 import { EventData } from '@/types';
+
+const iframeStyles = {
+  minHeight: '60vh',
+  height: 'auto',
+  width: '100%',
+};
 
 export default function SingleSignOn() {
   const { t } = useTranslation();
@@ -21,6 +27,7 @@ export default function SingleSignOn() {
   const { getEventData, publish } = useEventBus();
   const { addUserToStore, loginEnabled } = useUserStore();
   const { setSession, removeSession } = useSessionStore();
+  const checkGuest = useCheckGuestHook();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -42,6 +49,7 @@ export default function SingleSignOn() {
         setUser(data);
         addUserToStore({ ...data, isAuth: true });
         setSession(data);
+        checkGuest(data);
       }
 
       if (eventType === SIGNOUT) {
@@ -50,7 +58,7 @@ export default function SingleSignOn() {
         removeSession();
       }
     },
-    [addUserToStore, removeSession, setSession, lastMessage],
+    [lastMessage, addUserToStore, setSession, checkGuest, removeSession],
   );
 
   const signOut = () => {
@@ -73,7 +81,7 @@ export default function SingleSignOn() {
 
   if (user) {
     return (
-      <Typography variant='sm' onClick={loginEnabled ? signOut : () => {}}>
+      <Typography variant='sm' onClick={loginEnabled ? signOut : () => null}>
         {t('signout')}
       </Typography>
     );
@@ -81,18 +89,11 @@ export default function SingleSignOn() {
 
   return (
     <>
-      <Typography variant='sm' onClick={loginEnabled ? openModal : () => {}}>
+      <Typography variant='sm' onClick={loginEnabled ? openModal : () => null}>
         {t('signin')}
       </Typography>
       <Modal isOpen={modalOpen} onClose={closeModal}>
-        <iframe
-          src={urlSignin}
-          style={{
-            minHeight: '60vh',
-            height: 'auto',
-            width: '100%',
-          }}
-        ></iframe>
+        <iframe src={urlSignin} style={iframeStyles}></iframe>
       </Modal>
     </>
   );

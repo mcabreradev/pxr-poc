@@ -12,6 +12,11 @@ const Container = tw.div`
   absolute-container
 `;
 
+const Section = tw.div`
+  p-4 text-black
+  md:px-0
+`;
+
 type Rule = {
   name: string;
   description: string;
@@ -39,7 +44,7 @@ export default function HotelRules({ rules, classname }: Props) {
   }, []);
 
   return (
-    <div>
+    <Section>
       <Typography variant='h2' weight='normal'>
         {t('title.hotel-rules')}
       </Typography>
@@ -53,7 +58,11 @@ export default function HotelRules({ rules, classname }: Props) {
         ))}
       </div>
 
-      <Typography weight='semibold' className='underline' onClick={openDrawer}>
+      <Typography
+        weight='semibold'
+        className='cursor-pointer underline'
+        onClick={openDrawer}
+      >
         {t('info.show-more')}
       </Typography>
 
@@ -96,6 +105,6 @@ export default function HotelRules({ rules, classname }: Props) {
           </div>
         </Container>
       </Drawer>
-    </div>
+    </Section>
   );
 }

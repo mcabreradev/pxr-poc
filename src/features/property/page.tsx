@@ -32,6 +32,7 @@ import GuestsDatepickerDrawer from '@/features/common/guest-datepicker';
 import PropertyAmenities from './amenities';
 import data from './data.json';
 import GuestForm from './guest-form';
+import MapComponent from './map';
 import RoomSelection from './room-selection';
 import Skeleton from './skeleton';
 import StickyGuestForm from './sticky-guest-form';
@@ -265,32 +266,9 @@ const PropertyPage = memo(function HotelPage() {
         </Swiper>
       </Section>
       <hr />
-      <Section className='p-4 pb-0 pt-2' id='location'>
-        <Typography variant='h2' weight='normal'>
-          {t('title.exact-location')}
-        </Typography>
-        <div className='flex justify-start space-x-2 pt-3'>
-          <Icon variant='marker' className='mt-1' />
-          <Typography variant='sm' weight='light'>
-            {`${property?.street}, ${property?.state}, ${property?.countryName}`}
-          </Typography>
-        </div>
 
-        <div>
-          <iframe
-            title={t('title.exact-location')}
-            loading='lazy'
-            className='mt-3 h-[300px] w-full'
-            src={data.map.url}
-            width='100%'
-            height='300'
-            style={{ border: '0' }}
-            allowFullScreen
-            aria-hidden='false'
-            tabIndex={0}
-          ></iframe>
-        </div>
-      </Section>
+      <MapComponent property={property} url={data.map.url} id='location' />
+
       <hr />
       <Section className='p-4 pb-0 pt-2' id='topsites'>
         <Typography variant='h2' weight='normal'>
@@ -366,9 +344,8 @@ const PropertyPage = memo(function HotelPage() {
       </Section>
 
       <hr />
-      <Section className='p-4 pb-6 pt-2'>
-        <HotelRules rules={data.rules} classname=' md:w-1/3' />
-      </Section>
+
+      <HotelRules rules={data.rules} classname=' md:w-1/3' />
 
       <Sticky className='md:sticky md:hidden' show={isIntersected}>
         <StickyGuestForm />

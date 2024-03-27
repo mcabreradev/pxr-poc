@@ -1,6 +1,7 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { memo, useEffect } from 'react';
+import Stripe from 'stripe';
 
 import { uuid } from '@/lib/utils';
 
@@ -22,7 +23,7 @@ type Props = {
   roomTypeId: number;
 };
 
-const stripePromise = loadStripe(
+const stripePromise: Promise<Stripe | null> = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
 );
 
@@ -30,7 +31,8 @@ const idempotentKey = uuid();
 
 const StripePayment = memo(({ roomTypeId }: Props) => {
   const { data: property } = usePropertyQuery();
-  const { setPaymentId } = useReservationRequestStore();
+  const { reservation } = useReservationStore();
+  const { setPaymentId, reservationRequest } = useReservationRequestStore();
   const {
     reservation: { total, currency, checkin, checkout },
   } = useReservationStore();
@@ -42,7 +44,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
   const intentData: Payment = {
     propertyId,
     amount: total,
-    clientId: 123,
+    clientId: reservation.guestPaxerId,
     email: user?.email,
     currency: {
       currencyId: 1,
@@ -57,6 +59,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
     idempotentKey,
     offSession: true,
     reservationId: '',
+    reservationRequestId: reservationRequest.id,
   };
 
   const {

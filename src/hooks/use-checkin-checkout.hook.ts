@@ -8,6 +8,8 @@
 /* eslint-disable simple-import-sort/imports */
 
 import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/es';
 
 import { useSearchParamOrStore } from '@/hooks';
 import { formatDateToString, formatStringToDate } from '@/lib/time';

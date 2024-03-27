@@ -1,3 +1,4 @@
+import useCheckGuestHook from './use-check-guest.hook';
 import useCheckinCheckoutHook from './use-checkin-checkout.hook';
 import useClickAway from './use-clickaway.hook';
 import useDeviceDetect from './use-devicedetect.hook';
@@ -17,6 +18,7 @@ import useSubscribeToStore from './use-subscribe-to-store.hook';
 import useWindowSize from './use-windowsize.hook';
 
 export {
+  useCheckGuestHook,
   useCheckinCheckoutHook,
   useClickAway,
   useDeviceDetect,

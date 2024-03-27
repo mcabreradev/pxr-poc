@@ -1,12 +1,15 @@
 /* eslint-disable simple-import-sort/imports */
 'use client';
 import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/es';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import {
+  useCheckGuestHook,
   useCheckinCheckoutHook,
   useQueryString,
   useSearchParamOrStore,
@@ -39,7 +42,6 @@ import {
 } from '@/constants';
 import { useRatesPlanQuery } from '@/queries';
 
-import { useCheckGuestMutation } from '@/mutations';
 import CancelationPolice from './cancelation-police';
 import RatesPlansSkeleton from './rates-plan-skeleton';
 
@@ -66,8 +68,8 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   const { reservation, setReservation } = useReservationStore();
   const { checkin, checkout, checkinDayjs, checkoutDayjs } =
     useCheckinCheckoutHook();
+  const checkGuest = useCheckGuestHook();
   const { selectedRoom } = useSelectedRoomtypeStore();
-  const checkGuestMutation = useCheckGuestMutation();
   const { updateQueryString } = useQueryString();
   const { extra } = useSearchParamOrStore();
   const { data: ratesPlan, isLoading: loadingRatePlan } = useRatesPlanQuery({
@@ -191,8 +193,8 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     () => totalCostWithTaxes - totalCost,
     [totalCostWithTaxes, totalCost],
   );
-  // const total = useMemo(() => totalCost + extraCostTotal + cancelationCost + taxes, [totalCost, extraCostTotal, cancelationCost, taxes]) ;
   const total = totalCostWithTaxes;
+
   const hasBreakfast = useMemo(() => breakfast === PLAN_BREAKFAST, [breakfast]);
 
   useEffect(() => {
@@ -201,7 +203,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
   }, [breakfast, hasBreakfast, ratesPlan, updateQueryString]);
 
   useEffect(() => {
-    setReservation({
+    const reservation = {
       roomTypeId,
       currency,
       planCost,
@@ -215,7 +217,8 @@ export default function MyTrip({ className, roomTypeId }: Props) {
       plan: planId,
       product: product as Product,
       selectedRoom,
-    });
+    };
+    setReservation(reservation);
   }, [
     roomTypeId,
     breakfast,
@@ -242,23 +245,6 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     return () => clearTimeout(timer);
   }, [total]);
 
-  const checkGuest = useCallback(
-    async ({ sub, given_name, family_name }) => {
-      const { guestPaxerId } = await checkGuestMutation.mutateAsync({
-        guestIAMId: sub,
-        displayName: given_name,
-        lastName: family_name,
-        firstName: given_name,
-        acceptedTerms: true,
-      });
-
-      setReservation({
-        guestPaxerId,
-      });
-    },
-    [checkGuestMutation, setReservation],
-  );
-
   /**
    * Handle payment submit
    */
@@ -267,11 +253,8 @@ export default function MyTrip({ className, roomTypeId }: Props) {
     const params = new URLSearchParams(searchParams);
 
     if (user && user.isAuth) {
-      checkGuest({
-        sub: user.sub,
-        given_name: user.given_name,
-        family_name: user.family_name,
-      });
+      checkGuest(user);
+
       // redirigir a la pagina de checkout
       router.push(`${pathname}/payment?${params.toString()}`);
       return;

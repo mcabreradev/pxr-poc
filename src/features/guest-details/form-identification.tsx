@@ -6,15 +6,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { useEventBus, useHostUrl } from '@/hooks';
+import { useCheckGuestHook, useEventBus, useHostUrl } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import { Button, Icon, Typography } from '@/components';
 
-import { useReservationStore, useSessionStore } from '@/store';
+import { useSessionStore } from '@/store';
 
 import { CHECKUSER } from '@/constants';
-import { useCheckGuestMutation } from '@/mutations';
 import { identificationSchema } from '@/schemas';
 
 type Props = {
@@ -44,8 +43,8 @@ export default function FormIdentificationComponent({
   const router = useRouter();
   const searchParams = useSearchParams();
   const { session, setSession } = useSessionStore();
-  const { setReservation } = useReservationStore();
-  const checkGuestMutation = useCheckGuestMutation();
+  // const { user, addUserToStore } = useUserStore();
+  const checkGuest = useCheckGuestHook();
 
   const {
     register,
@@ -66,23 +65,6 @@ export default function FormIdentificationComponent({
           : undefined,
     },
   });
-
-  const checkGuest = useCallback(
-    async ({ sub, given_name, family_name }) => {
-      const { guestPaxerId } = await checkGuestMutation.mutateAsync({
-        guestIAMId: sub,
-        displayName: given_name,
-        lastName: family_name,
-        firstName: given_name,
-        acceptedTerms: true,
-      });
-
-      setReservation({
-        guestPaxerId,
-      });
-    },
-    [checkGuestMutation, setReservation],
-  );
 
   const handlerEvent = useCallback(
     (eventData) => {
@@ -125,12 +107,7 @@ export default function FormIdentificationComponent({
         });
 
         // console.log("WO WO WO")
-
-        checkGuest({
-          sub: userData.sub,
-          given_name: userData.given_name,
-          family_name: userData.family_name,
-        });
+        checkGuest(userData);
 
         setLastMessage(eventType);
 

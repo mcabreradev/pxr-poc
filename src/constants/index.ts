@@ -135,6 +135,7 @@ export const LANG = {
 };
 export const DEFAULT_LANG = ES;
 export const LOOKUP_QUERYSTRING_LANG = 'userLang';
+export const NEXT_LOCALE = 'i18nextLng';
 
 // url params
 export const ACTION = 'action';

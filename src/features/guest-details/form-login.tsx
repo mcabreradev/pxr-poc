@@ -8,17 +8,21 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
-import { useEventBus, useHostUrl, useQueryString } from '@/hooks';
+import {
+  useCheckGuestHook,
+  useEventBus,
+  useHostUrl,
+  useQueryString,
+} from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
-import { useReservationStore, useUserStore } from '@/store';
+import { useUserStore } from '@/store';
 
 import { FORM, GET_SESSION, SIGNIN, URL } from '@/constants';
-import { useCheckGuestMutation } from '@/mutations';
 import { loginSchema } from '@/schemas';
 
 type Props = {
@@ -43,8 +47,7 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
   const { urlStatus } = useHostUrl();
   const { getEventData, subscribe, publish } = useEventBus();
   const { addUserToStore, user } = useUserStore();
-  const { setReservation } = useReservationStore();
-  const checkGuestMutation = useCheckGuestMutation();
+  const checkGuest = useCheckGuestHook();
 
   const handleType = useCallback(() => {
     setType(type === FORM.PASSWORD ? FORM.TEXT : FORM.PASSWORD);
@@ -83,23 +86,6 @@ export default function FormLoginComponent({ className, roomTypeId }: Props) {
     const params = removeQueryStringParam(URL.ACTION);
     router.push(`/room-type/${roomTypeId}/payment?${params.toString()}`);
   }, [removeQueryStringParam, roomTypeId, router]);
-
-  const checkGuest = useCallback(
-    async ({ sub, given_name, family_name }) => {
-      const { guestPaxerId } = await checkGuestMutation.mutateAsync({
-        guestIAMId: sub,
-        displayName: given_name,
-        lastName: family_name,
-        firstName: given_name,
-        acceptedTerms: true,
-      });
-
-      setReservation({
-        guestPaxerId,
-      });
-    },
-    [checkGuestMutation, setReservation],
-  );
 
   /**
    * @TODO aqui se puede redirigir si existe la session a la pagina de checkout

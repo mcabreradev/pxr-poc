@@ -13,6 +13,7 @@ import Icon from '@/components/icon';
 import Typography from '@/components/typography';
 
 import { QUERY, URL } from '@/constants';
+import filterParams from '@/features/guest-details/filter-params';
 import SocialSignOn from '@/features/guest-details/social-sign-on';
 import { authSchema } from '@/schemas';
 import useUserStore from '@/store/use-user.store';
@@ -47,9 +48,10 @@ export default function FormAuthComponent({ className, roomTypeId }: Props) {
     },
   });
   const onSubmit: SubmitHandler<IForm> = (data) => {
+    const filteredSearchParams: string[] = filterParams(searchParams);
     router.push(
       `/room-type/${roomTypeId}/details?${URL.ACTION}=${QUERY.IDENTIFICATION}&` +
-        searchParams.toString() +
+        filteredSearchParams.join('&') +
         `&email=${data.email}`,
     );
   };

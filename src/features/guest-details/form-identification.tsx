@@ -14,7 +14,9 @@ import { Button, Icon, Typography } from '@/components';
 import { useSessionStore } from '@/store';
 
 import { CHECKUSER } from '@/constants';
+import filterParams from '@/features/guest-details/filter-params';
 import { identificationSchema } from '@/schemas';
+import { EventData } from '@/types';
 
 type Props = {
   className?: string;
@@ -73,14 +75,7 @@ export default function FormIdentificationComponent({
       //console.log(eventType)
       //console.log(lastMessage)
       if (lastMessage && eventType && lastMessage === eventType) {
-        const filteredSearchParams: string[] = [];
-        searchParams.forEach((key, value) => {
-          if (key === 'email' || key === 'action') {
-            return;
-          } else {
-            filteredSearchParams.push(`${key}=${value}`);
-          }
-        });
+        const filteredSearchParams: string[] = filterParams(searchParams);
         router.push(
           `/room-type/${roomTypeId}/payment?` + filteredSearchParams.join('&'),
         );
@@ -97,21 +92,11 @@ export default function FormIdentificationComponent({
       } else {
         const userData = data.data;
         setSession({ ...userData, isAuth: false });
-        const filteredSearchParams: string[] = [];
-        searchParams.forEach((key, value) => {
-          if (key === 'email' || key === 'action') {
-            return;
-          } else {
-            filteredSearchParams.push(`${key}=${value}`);
-          }
-        });
+        const filteredSearchParams: string[] = filterParams(searchParams);
 
-        // console.log("WO WO WO")
         checkGuest(userData);
 
         setLastMessage(eventType);
-
-        // console.log("PASSED HOOK")
 
         router.push(
           `/room-type/${roomTypeId}/payment?` + filteredSearchParams.join('&'),
@@ -130,8 +115,15 @@ export default function FormIdentificationComponent({
   );
 
   useEffect(() => {
-    subscribe(handlerEvent);
+    const messageListener = (event) => {
+      if (event.data) {
+        const eventData: EventData = event.data;
+        handlerEvent(eventData);
+      }
+    };
+    window.addEventListener('message', messageListener);
     getEventData(urlStatus);
+    return () => window.removeEventListener('message', messageListener);
   }, [getEventData, handlerEvent, subscribe, urlStatus]);
 
   const onSubmit: SubmitHandler<IForm> = (data) => {

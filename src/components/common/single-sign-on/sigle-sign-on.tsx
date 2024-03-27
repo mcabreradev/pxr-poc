@@ -48,7 +48,7 @@ export default function SingleSignOn() {
         closeModal();
         setUser(data);
         addUserToStore({ ...data, isAuth: true });
-        setSession(data);
+        setSession({ ...data, isAuth: true });
         checkGuest(data);
       }
 
@@ -58,7 +58,7 @@ export default function SingleSignOn() {
         removeSession();
       }
     },
-    [lastMessage, addUserToStore, setSession, checkGuest, removeSession],
+    [addUserToStore, setSession, checkGuest, removeSession, lastMessage],
   );
 
   const signOut = () => {
@@ -77,6 +77,7 @@ export default function SingleSignOn() {
     };
     window.addEventListener('message', messageListener);
     getEventData(urlStatus);
+    return () => window.removeEventListener('message', messageListener);
   }, [getEventData, handlerEvent, urlStatus]);
 
   if (user) {

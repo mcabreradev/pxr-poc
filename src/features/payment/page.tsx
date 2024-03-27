@@ -82,7 +82,12 @@ export default function PaymentFeature({ roomTypeId }: Props) {
   const prepareReservationRequest = useCallback(() => {
     // For now, one reservation == one room. Let's avoid edge cases before wednesday
     // You would need some additional logic to split the reservation in multiple physical rooms
-    if (session && reservation.checkin && reservation.checkout) {
+    if (
+      session &&
+      reservation.checkin &&
+      reservation.checkout &&
+      reservation.guestPaxerId
+    ) {
       const room_type: ReservedRoom = {
         har_in: reservation.checkin as string,
         har_out: reservation.checkout as string,
@@ -141,6 +146,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
         guest_country_code: property.countryISO, // For now, later use country detected in IP
       };
       setReservationRequest(reservationRequest);
+      setRequestSetupError(false);
     } else {
       setRequestSetupError(true);
     }
@@ -166,7 +172,11 @@ export default function PaymentFeature({ roomTypeId }: Props) {
     if (reservationRequest.property_id == 0) {
       prepareReservationRequest();
     }
-  }, [prepareReservationRequest, reservationRequest.property_id]);
+  }, [
+    prepareReservationRequest,
+    reservationRequest.property_id,
+    reservationRequest.guest_id,
+  ]);
 
   useEffect(() => {
     // console.log('USE EFFECT');
@@ -176,7 +186,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
       reservationRequest.property_id != 0
     ) {
       // console.log("PLEASE DONT PRINT THIS TWICE")
-      // console.log(reservationRequest);
+      console.log(reservationRequest);
       mutate({ ...reservationRequest, payment_id: undefined });
       setForbidFurtherCalls(true);
     }
@@ -187,6 +197,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
     console.log(reservationRequestResponse);
     if (reservationRequestResponse != undefined && !requestSetupError) {
       if (reservationRequestResponse.res.code == 0) {
+        // console.log("HERE I AM");
         setReservationRequestId(
           reservationRequestResponse.res.data.reservation_request_id,
         );

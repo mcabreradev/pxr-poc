@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { redirect, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -36,6 +36,7 @@ export default function DetailsComponent({ roomTypeId }: Props) {
   } = useRoomTypeQuery(roomTypeId);
   const { session } = useSessionStore();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const action = searchParams.get(ACTION)?.replace('?', '');
 
   const actionAuth = action === QUERY.AUTH || !action; // default action
@@ -46,12 +47,16 @@ export default function DetailsComponent({ roomTypeId }: Props) {
 
   // Redirect to payment page if session is available
   useEffect(() => {
-    if (session) {
+    if (session && session.isAuth) {
+      /*  I May be able to go back to this version after all the fixes in other places   
       setTimeout(() => {
         redirect(window.location.pathname.replace('details', 'payment'));
-      }, 100);
+      }, 100); */
+      router.push(
+        `/room-type/${roomTypeId}/payment?` + searchParams.toString(),
+      );
     }
-  }, [session]);
+  }, [session, router, roomTypeId, searchParams]);
 
   if (isLoading || roomLoading) {
     return <Skeleton />;

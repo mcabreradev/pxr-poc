@@ -9,8 +9,11 @@ import {
   NEXT_LOCALE,
 } from '@/constants';
 
-const locale = localStorage.getItem(NEXT_LOCALE) || DEFAULT_LANG;
-dayjs.locale(locale);
+let lang = DEFAULT_LANG;
+if (typeof window !== 'undefined' && window.localStorage) {
+  lang = window.localStorage.getItem(NEXT_LOCALE) || DEFAULT_LANG;
+}
+dayjs.locale(lang);
 const today = dayjs();
 
 export function formatStringToDate(date: string) {

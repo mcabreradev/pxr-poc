@@ -1,20 +1,22 @@
 /* eslint-disable simple-import-sort/imports */
 import { Drawer } from '@material-tailwind/react';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
 import { useIntersectionObserver, useQueryString } from '@/hooks';
-import { getSlides } from '@/lib/images';
+import { getSlides, processImagesWip } from '@/lib/images';
 import { cn, uuid } from '@/lib/utils';
 
 import Icon from '@/components/icon';
 import Image from '@/components/image';
 
 import { useGlobalStore } from '@/store';
+
+import { PhotoType } from '@/types';
 
 import {
   DEFAULT_HEIGHT,
@@ -39,6 +41,7 @@ export default function Gallery({
   className?: string;
   photos;
 }) {
+  const [images, setImages] = useState<PhotoType[]>([]);
   const [index, setIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -53,17 +56,17 @@ export default function Gallery({
     rootMargin: '200px',
   });
 
-  const handleScrollTop = () => {
+  const handleScrollTop = useCallback(() => {
     if (containerRef.current) {
       (containerRef.current as HTMLDivElement).scrollTop = 0;
     }
-  };
+  }, []);
 
   const openDrawer = useCallback(() => {
     setOpen(true);
     handleScrollTop();
     updateQueryString({ [GALERY]: true });
-  }, [updateQueryString]);
+  }, [handleScrollTop, updateQueryString]);
 
   const openLightbox = useCallback(
     (index) => {
@@ -119,7 +122,18 @@ export default function Gallery({
     }
   }, [entry, setGalleryIntersecting]);
 
-  // console.log('photos', photos);
+  useEffect(() => {
+    processImagesWip(photos).then((processedImages) => {
+      setImages(processedImages);
+    });
+  }, [photos]);
+
+  const imageHeader = useMemo(
+    () => images.find(({ place }) => place === 'header') ?? images[0],
+    [images],
+  );
+
+  if (images.length === 0) return null;
 
   return (
     <>
@@ -127,23 +141,25 @@ export default function Gallery({
         <div className=''>
           <Image
             alt='...'
-            src={photos[0].url}
-            width={photos[0].width ?? DEFAULT_WIDTH}
-            height={photos[0].height ?? DEFAULT_HEIGHT}
-            className='opacity-effect h-full w-full cursor-pointer object-cover'
+            src={imageHeader.url ?? ''}
+            width={Number(imageHeader.width) ?? DEFAULT_WIDTH}
+            height={Number(imageHeader.height) ?? DEFAULT_HEIGHT}
+            className='opacity-effect w-full cursor-pointer'
+            classNames={{ image: 'object-cover' }}
             onClick={openDrawer}
           />
         </div>
 
         <Grid className='hidden'>
-          {photos.slice(1, photos.lenght).map((image, i) => (
+          {images.slice(1, images.length).map((image, i) => (
             <Image
               key={`header-image-${i}`}
               alt='...'
               src={image.url ?? ''}
-              width={image.width ?? DEFAULT_WIDTH}
-              height={image.height ?? DEFAULT_HEIGHT}
+              width={Number(image.width) ?? DEFAULT_WIDTH}
+              height={Number(image.height) ?? DEFAULT_HEIGHT}
               className='opacity-effect h-full w-full cursor-pointer object-cover'
+              classNames={{ image: 'object-fill' }}
               onClick={() => openDrawer()}
             />
           ))}
@@ -171,7 +187,7 @@ export default function Gallery({
 
           <div className=' overflow-auto pb-14' ref={containerRef} id={uuid()}>
             <div className='md:layout2 mx-auto grid grid-cols-2 gap-2 md:gap-3'>
-              {photos.map((image, i) => (
+              {images.map((image, i) => (
                 <div
                   key={i}
                   className={cn(
@@ -183,8 +199,8 @@ export default function Gallery({
                     key={`galery-image-${i}`}
                     alt='...'
                     src={image.url}
-                    width={image.width ?? DEFAULT_WIDTH}
-                    height={image.height ?? DEFAULT_HEIGHT}
+                    width={Number(image.width) ?? DEFAULT_WIDTH}
+                    height={Number(image.height) ?? DEFAULT_HEIGHT}
                     className=' h-full w-full cursor-pointer object-cover'
                     onClick={() => openLightbox(i)}
                   />
@@ -193,7 +209,7 @@ export default function Gallery({
             </div>
           </div>
           <Lightbox
-            slides={getSlides(photos)}
+            slides={getSlides(images)}
             open={index >= 0}
             index={index}
             close={closeLightbox}

@@ -28,8 +28,6 @@ export const ERROR = 'error';
 export const AMENITIES = 'amenities';
 export const TOPSIGHT = 'topsight';
 export const GALERY = 'galery';
-export const IMG = 'img';
-export const IMAGES = 'images';
 export const LANDSCAPE = 'landscape';
 export const PORTRAIT = 'portrait';
 export const SQUARE = 'square';
@@ -226,7 +224,7 @@ export const ESCAPE = 'Escape';
 
 // defaults
 export const DEFAULT_WIDTH = 980;
-export const DEFAULT_HEIGHT = 551;
+export const DEFAULT_HEIGHT = 147;
 
 // payment and reservation
 export const PAYMENT_METHODS = {
@@ -305,3 +303,8 @@ export const PLAN_BREAKFAST_COST = 10;
 export const PLAN_REFUNDABLE_PERCENT = 0.03;
 export const PLAN_TAXES = 0.15;
 export const PLAN_COSTS = [100, 150, 200, 250, 300, 350, 400, 450, 500];
+
+// Images
+export const IMG = 'img';
+export const IMAGES = 'images';
+export const HEADER = 'header';

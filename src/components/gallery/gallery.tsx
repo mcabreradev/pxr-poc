@@ -1,5 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { Drawer } from '@material-tailwind/react';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
@@ -8,15 +9,12 @@ import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 
 import { useIntersectionObserver, useQueryString } from '@/hooks';
-import { getSlides, processImagesWip } from '@/lib/images';
+import { getSlides } from '@/lib/images';
 import { cn, uuid } from '@/lib/utils';
 
 import Icon from '@/components/icon';
-import Image from '@/components/image';
 
 import { useGlobalStore } from '@/store';
-
-import { PhotoType } from '@/types';
 
 import {
   DEFAULT_HEIGHT,
@@ -25,10 +23,6 @@ import {
   GALERY,
   IMG,
 } from '@/constants';
-
-const Grid = tw.div`
-  gap-3 md:grid md:grid-cols-2
-`;
 
 const Container = tw.div`
   absolute-container
@@ -41,7 +35,6 @@ export default function Gallery({
   className?: string;
   photos;
 }) {
-  const [images, setImages] = useState<PhotoType[]>([]);
   const [index, setIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -122,49 +115,38 @@ export default function Gallery({
     }
   }, [entry, setGalleryIntersecting]);
 
-  useEffect(() => {
-    processImagesWip(photos).then((processedImages) => {
-      setImages(processedImages);
-    });
-  }, [photos]);
-
-  const imageHeader = useMemo(
-    () => images.find(({ place }) => place === 'header') ?? images[0],
-    [images],
-  );
-
-  if (images.length === 0) return null;
+  const memoizedSlides = useMemo(() => getSlides(photos), [photos]);
 
   return (
-    <>
-      <Grid className={cn(className)} data-testid='test-element' ref={ref}>
-        <div className=''>
-          <Image
-            alt='...'
-            src={imageHeader.url ?? ''}
-            width={Number(imageHeader.width) ?? DEFAULT_WIDTH}
-            height={Number(imageHeader.height) ?? DEFAULT_HEIGHT}
-            className='opacity-effect w-full cursor-pointer'
-            classNames={{ image: 'object-cover' }}
-            onClick={openDrawer}
-          />
-        </div>
+    <div>
+      <div
+        className={cn('h-[295px] gap-3 md:grid md:grid-cols-2', className)}
+        data-testid='test-calendar-element'
+        ref={ref}
+      >
+        <Image
+          alt='...'
+          src={photos[0].url ?? ''}
+          width={Number(photos[0].width) ?? DEFAULT_WIDTH}
+          height={Number(photos[0].height) ?? DEFAULT_HEIGHT}
+          className='opacity-effect h-full w-full cursor-pointer object-cover'
+          onClick={openDrawer}
+        />
 
-        <Grid className='hidden'>
-          {images.slice(1, images.length).map((image, i) => (
+        <div className='hidden gap-3 md:grid md:grid-cols-2'>
+          {photos.slice(1, photos.length).map((photo, i) => (
             <Image
-              key={`header-image-${i}`}
+              key={`header-photo-${i}`}
               alt='...'
-              src={image.url ?? ''}
-              width={Number(image.width) ?? DEFAULT_WIDTH}
-              height={Number(image.height) ?? DEFAULT_HEIGHT}
-              className='opacity-effect h-full w-full cursor-pointer object-cover'
-              classNames={{ image: 'object-fill' }}
-              onClick={() => openDrawer()}
+              src={photo.url ?? ''}
+              width={DEFAULT_WIDTH}
+              height={DEFAULT_HEIGHT}
+              className='opacity-effect d-block mx-auto h-[147px] w-full cursor-pointer object-cover'
+              onClick={openDrawer}
             />
           ))}
-        </Grid>
-      </Grid>
+        </div>
+      </div>
 
       <Drawer
         size={9000}
@@ -187,16 +169,15 @@ export default function Gallery({
 
           <div className=' overflow-auto pb-14' ref={containerRef} id={uuid()}>
             <div className='md:layout2 mx-auto grid grid-cols-2 gap-2 md:gap-3'>
-              {images.map((image, i) => (
+              {photos.map((image, i) => (
                 <div
-                  key={i}
+                  key={`galery-image-${i}`}
                   className={cn(
                     i % 3 === 0 ? 'col-span-2' : '',
                     'opacity-effect',
                   )}
                 >
                   <Image
-                    key={`galery-image-${i}`}
                     alt='...'
                     src={image.url}
                     width={Number(image.width) ?? DEFAULT_WIDTH}
@@ -209,7 +190,7 @@ export default function Gallery({
             </div>
           </div>
           <Lightbox
-            slides={getSlides(images)}
+            slides={memoizedSlides}
             open={index >= 0}
             index={index}
             close={closeLightbox}
@@ -219,6 +200,6 @@ export default function Gallery({
           />
         </Container>
       </Drawer>
-    </>
+    </div>
   );
 }

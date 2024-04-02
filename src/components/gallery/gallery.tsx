@@ -118,9 +118,9 @@ export default function Gallery({
   const memoizedSlides = useMemo(() => getSlides(photos), [photos]);
 
   return (
-    <div>
+    <>
       <div
-        className={cn('h-[295px] gap-3 md:grid md:grid-cols-2', className)}
+        className={cn('mb-5 h-[295px] gap-3 md:grid md:grid-cols-2', className)}
         data-testid='test-calendar-element'
         ref={ref}
       >
@@ -128,8 +128,8 @@ export default function Gallery({
           alt='...'
           src={photos[0].url ?? ''}
           width={Number(photos[0].width) ?? DEFAULT_WIDTH}
-          height={Number(photos[0].height) ?? DEFAULT_HEIGHT}
-          className='opacity-effect h-full w-full cursor-pointer object-cover'
+          height={(295 || Number(photos[0].height)) ?? DEFAULT_HEIGHT}
+          className='opacity-effect h-[306px] w-full cursor-pointer object-cover'
           onClick={openDrawer}
         />
 
@@ -200,6 +200,6 @@ export default function Gallery({
           />
         </Container>
       </Drawer>
-    </div>
+    </>
   );
 }

@@ -123,7 +123,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
           .replace('T', ' '),
         mon_iso: reservation.currency,
         total_cost: reservation.totalCost,
-        room_types_cost: 0,
+        room_types_cost: reservation.totalCost,
         guest_mon_iso: reservation.currency,
         commission_mon_iso: reservation.currency,
         is_default_commission: 0,

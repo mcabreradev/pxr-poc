@@ -9,7 +9,7 @@ export type ReservationRequest = {
   mon_id?: number;
   mon_iso: string | number | null | undefined;
   total_cost: number | null | undefined;
-  room_types_cost: number;
+  room_types_cost: number | null | undefined;
   guest_mon_iso: string | number | null | undefined;
   mon_commission_id?: number;
   commission_mon_iso: string | number | null | undefined;
@@ -141,10 +141,10 @@ export type CMAValue = {
 
 export type Extras = {
   ext_id: number;
-  mon_id: number;
-  quantity: number;
-  cost: number;
-  cma_values: CMAValue[];
+  mon_id?: number;
+  exr_quantity?: number;
+  exr_cost: number | null | undefined;
+  exr_cma_values?: CMAValue[];
 };
 
 export type Coupon = {

@@ -45,7 +45,7 @@ export default function Image({
   return (
     <figure
       style={!widthIsSet ? { width: `${width}px` } : undefined}
-      className={cn('w-full', className)}
+      className={cn('h-full w-full', className)}
       data-testid='test-element'
       onClick={onClick}
     >

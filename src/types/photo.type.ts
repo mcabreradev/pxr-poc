@@ -1,5 +1,5 @@
 export type PhotoType = {
-  id: number | null;
+  id?: number | null;
   src?: string | null;
   url?: string | null; // -> this is from paxer api image
   caption?: unknown;
@@ -10,4 +10,10 @@ export type PhotoType = {
   height?: number | `${number}` | null;
   orientation?: string | null;
   srcSet?: unknown;
+};
+
+export type PhotoInformation = {
+  width: number;
+  height: number;
+  orientation: string;
 };

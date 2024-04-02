@@ -18,10 +18,7 @@ import PriceDetails from '@/features/common/price-details';
 import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
-import { useReservationRequestMutation } from '@/mutations';
 
-import { RESERVATION_PROCESS_STATE } from '@/constants';
-import { useEffect } from 'react';
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';
 require('dayjs/locale/es'); //This require is necessary to get the weekday name in the correct language
@@ -62,14 +59,7 @@ function formatTime(timestring: string) {
 
 export default function SummaryFeature({ className, roomTypeId }: Props) {
   const { getCheckin, getCheckout } = useSearchParamOrStore();
-  const { completeReservationRequestData, reservationRequest } =
-    useReservationRequestStore();
-  const {
-    mutate,
-    data: reservationRequestResponse,
-    isError: reservationRequestError,
-    isPending,
-  } = useReservationRequestMutation();
+  const { reservationRequest } = useReservationRequestStore();
   const { error, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
@@ -89,30 +79,11 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
   //Temp
   const payment = { amount: reservation.total ?? null, currency: 'EUR' };
 
-  useEffect(() => {
-    completeReservationRequestData();
-  }, [completeReservationRequestData]);
-
-  useEffect(() => {
-    if (
-      reservationRequest.process_state ===
-      RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT
-    ) {
-      // console.log(reservationRequest);
-      mutate(reservationRequest);
-    }
-  }, [reservationRequest, mutate]);
-
-  /*useEffect(() => {
-    console.log('SECOND RESPONSE');
-    console.log(reservationRequestResponse);
-  }, [reservationRequestResponse]);*/
-
-  if (isLoading || roomLoading || isPending) {
+  if (isLoading || roomLoading) {
     return <SkeletonComponent />;
   }
 
-  if (error || roomError || reservationRequestError) {
+  if (error || roomError) {
     return <span>Error</span>;
   }
 
@@ -202,7 +173,7 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
               />
               <SummaryRow
                 leftMainText={t('summary.reservation-code')}
-                rightMainText={reservationRequestResponse?.res?.data?.id_public}
+                rightMainText={reservationRequest.id_public}
                 className='mb-5'
               />
               <div className='mx-4 border-b'></div>

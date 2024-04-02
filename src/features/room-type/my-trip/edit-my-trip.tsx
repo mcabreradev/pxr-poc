@@ -6,8 +6,7 @@ import { cn } from '@/lib/utils';
 import Modal from '@/components/modal';
 import Typography from '@/components/typography';
 
-import DatepickerComponent from '@/features/property/datepicker/desktop-datepicker';
-
+// import DatepickerComponent from '@/features/property/datepicker/desktop-datepicker';
 import EditGuestsComponent from './edit-guests';
 
 type Props = {
@@ -40,7 +39,7 @@ export default function EditTripComponent({
         }
       >
         {/* <EditDatesComponent /> */}
-        <DatepickerComponent />
+        {/* <DatepickerComponent /> */}
         <EditGuestsComponent onClose={onClose} />
       </Modal>
     </Container>

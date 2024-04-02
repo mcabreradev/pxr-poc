@@ -8,7 +8,7 @@ import {
 } from '@/constants';
 import { SITE_IMAGE_URL } from '@/constants/env';
 
-import { PhotoType } from '@/types';
+import { PhotoInformation, PhotoType } from '@/types';
 
 export const processImages = (data) => {
   const photos = data.photos.map((photo) => ({
@@ -60,40 +60,60 @@ export const getSlides = (photos: PhotoType[]) => {
   });
 };
 
+export const processImagesPaxer = async (photos) => {
+  const promises = photos.map((photo) => {
+    const photoData = {
+      ...photo,
+      url: paxerImage(photo.url),
+      srcSet: generateSrcSet(photo),
+    };
+
+    return getImageInformation(paxerImage(photo.url)).then(
+      (orientation: unknown) => {
+        const photoOrientation = orientation as PhotoInformation;
+        return {
+          ...photoData,
+          width: photoOrientation.width,
+          height: photoOrientation.height,
+          orientation: photoOrientation.orientation,
+        };
+      },
+    );
+  });
+
+  return await Promise.all(promises).then((photos) => {
+    return [...photos];
+  });
+};
+
 export const processImagesWip = async (photos) => {
   const promises = photos.map((photo) => {
     const photoData = {
-      url: paxerImage(photo.url),
+      ...photo,
+      url: photo.url,
       srcSet: generateSrcSet(photo),
-      orientation: SQUARE as string,
     };
 
-    return getImageInformation(paxerImage(photo.url)).then((orientation) => {
-      photoData.orientation = orientation as string;
-      return photoData;
+    return getImageInformation(photo.url).then((orientation: unknown) => {
+      const photoOrientation = orientation as PhotoInformation;
+      return {
+        ...photoData,
+        width: photoOrientation.width,
+        height: photoOrientation.height,
+        orientation: photoOrientation.orientation,
+      };
     });
   });
 
   return await Promise.all(promises).then((photos) => {
-    return {
-      ...photos,
-    };
+    // return [...photos];
+    return photos.sort((a, b) => {
+      return a.orientation === LANDSCAPE && b.orientation !== LANDSCAPE
+        ? -1
+        : 1;
+    });
   });
 };
-
-export function getImageOrientation(url, callback) {
-  const img = new Image();
-  img.onload = function () {
-    if (img.naturalWidth > img.naturalHeight) {
-      callback('landscape');
-    } else if (img.naturalWidth < img.naturalHeight) {
-      callback('portrait');
-    } else {
-      callback('square');
-    }
-  };
-  img.src = url;
-}
 
 export function getImageInformation(url: string) {
   return new Promise((resolve, reject) => {

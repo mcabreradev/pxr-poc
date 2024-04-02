@@ -72,7 +72,10 @@ export default function Navbar({ className }: Props) {
     <div
       className={cn(
         'top-0 z-50 bg-white md:border-b-[1px] md:border-solid md:border-white-200',
-        { sticky: pathname === PROPERTYPATH },
+        {
+          sticky: pathname === PROPERTYPATH,
+          hidden: pathname !== PROPERTYPATH,
+        },
       )}
       data-testid='test-element-navbar'
     >

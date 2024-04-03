@@ -50,6 +50,7 @@ export const LARGE_DEVICE_CSS_QUERY =
   'only screen and (min-width : 769px) and (max-width : 1200px)';
 export const EXTRA_LARGE_DEVICE_CSS_QUERY =
   'only screen and (min-width : 1201px)';
+export const DATE_FORMAT = 'YYYY-MM-DD';
 
 // RATE PLANS
 export const PLAN_REFUNDABLE = 'refundable';

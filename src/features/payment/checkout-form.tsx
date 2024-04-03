@@ -107,7 +107,9 @@ export default function CheckoutForm({ roomTypeId }: Props) {
 
       const response = await stripe.confirmPayment({
         elements,
-        confirmParams: {},
+        confirmParams: {
+          return_url: `${window.location.protocol}//${window.location.host}/room-type/${roomTypeId}/summary${window.location.search}`,
+        },
         redirect: 'if_required',
       });
 
@@ -125,7 +127,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
       }
       setIsLoading(false);
     },
-    [elements, stripe, t, completeReservationRequestData],
+    [elements, stripe, t, completeReservationRequestData, roomTypeId],
   );
 
   useEffect(() => {
@@ -134,19 +136,22 @@ export default function CheckoutForm({ roomTypeId }: Props) {
         RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT &&
       reservationRequest.reservation_id == undefined
     ) {
+      console.log(reservationRequest);
       mutate(reservationRequest);
     }
   }, [mutate, reservationRequest]);
 
   useEffect(() => {
-    if (
-      reservationRequestResponse?.res?.data?.id_public != undefined &&
-      reservationRequestResponse?.res?.data?.reservation_id != undefined
-    ) {
-      setReservationData({
-        id_public: reservationRequestResponse.res.data.id_public,
-        reservation_id: reservationRequestResponse.res.data.reservation_id,
-      });
+    if (reservationRequestResponse) {
+      if (
+        reservationRequestResponse.res?.data?.id_public != undefined &&
+        reservationRequestResponse.res?.data?.reservation_id != undefined
+      ) {
+        setReservationData({
+          id_public: reservationRequestResponse.res.data.id_public,
+          reservation_id: reservationRequestResponse.res.data.reservation_id,
+        });
+      }
       redirect(`/room-type/${roomTypeId}/summary${window.location.search}`);
     }
   }, [reservationRequestResponse, setReservationData, roomTypeId]);

@@ -253,6 +253,11 @@ export const RESERVATION_STATUS = {
   CONFIRMED_WO_PAY: 'CONFIRMED_WO_PAY',
 };
 
+export const RESERVATION_ERRORS = {
+  INVALID_PAYMENT: 'invalid_payment',
+  NOT_CREATED: 'not_created',
+};
+
 // keyboard keys
 export const ESCAPE = 'Escape';
 

@@ -17,5 +17,6 @@ export default function useStripePaymentIntentQuery(body: Payment) {
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    gcTime: 0,
   });
 }

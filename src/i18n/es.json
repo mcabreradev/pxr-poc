@@ -226,6 +226,11 @@
     "guests": "Huéspedes",
     "hotel-information": "Ver información del hotel",
     "invoice": "Obtener recibo",
+    "modal-body": {
+      "not-created": "Tu pago fue exitoso. Te enviaremos un email cuando tu reserva sea confirmada. Este proceso solo tomará unos minutos",
+      "invalid-payment": "Ocurrió un error validando el pago"
+    },
+    "modal-header": "Importante",
     "no-payment": "Ningún pago ha sido realizado",
     "no-reviews": "Todavía no hay reseñas",
     "payment-title": "Pagos",

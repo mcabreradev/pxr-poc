@@ -22,7 +22,7 @@ import {
   useUserStore,
 } from '@/store';
 
-import { PAYMENT_STATUS, PROCECESS_STATE } from '@/constants';
+import { PAYMENT_STATUS, RESERVATION_PROCESS_STATE } from '@/constants';
 import HotelRules from '@/features/common/hotel-rules';
 import { useReservationRequestMutation } from '@/mutations';
 
@@ -42,15 +42,18 @@ export default function CheckoutForm({ roomTypeId }: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const { session } = useSessionStore();
-  const { reservationRequest, setReservationData } =
-    useReservationRequestStore();
   const { reservation } = useReservationStore();
+  const {
+    completeReservationRequestData,
+    reservationRequest,
+    setReservationData,
+  } = useReservationRequestStore();
   const { user } = useUserStore();
+  const { mutate, data: reservationRequestResponse } =
+    useReservationRequestMutation();
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { mutate, data: reservationRequestResponse } =
-    useReservationRequestMutation();
 
   useEffect(() => {
     if (!session) {
@@ -73,6 +76,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
       if (!paymentIntent) {
         return setMessage('');
       }
+
       switch ((paymentIntent as { status: string }).status) {
         case PAYMENT_STATUS.SUCCEEDED:
           console.log('paymentIntent', paymentIntent);
@@ -92,25 +96,6 @@ export default function CheckoutForm({ roomTypeId }: Props) {
     });
   }, [session, stripe, t]);
 
-  useEffect(() => {
-    if (reservationRequest.process_state == PROCECESS_STATE.SUCCESS_PAYMENT) {
-      mutate(reservationRequest);
-    }
-  }, [reservationRequest, mutate]);
-
-  useEffect(() => {
-    if (
-      reservationRequestResponse != undefined &&
-      reservationRequestResponse.res.code == 0
-    ) {
-      setReservationData({
-        id_public: reservationRequestResponse.res.data.id_public,
-        reservation_id: reservationRequestResponse.res.data.reservation_id,
-      });
-      redirect(`/room-type/${roomTypeId}/summary${window.location.search}`);
-    }
-  }, [reservationRequestResponse, roomTypeId, setReservationData]);
-
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -120,29 +105,56 @@ export default function CheckoutForm({ roomTypeId }: Props) {
 
       setIsLoading(true);
 
-      /*completeReservationRequestData({
-        payment_id: 2129,
-        guest_preferred_language: 'es',
-        guest_email: session?.email,
-        guest_country_code: 'VEN',
-      })*/
-
-      const { error } = await stripe.confirmPayment({
+      const response = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `http://localhost:3000/room-type/${roomTypeId}/summary${window.location.search}`,
+          return_url: `${window.location.protocol}//${window.location.host}/room-type/${roomTypeId}/summary${window.location.search}`,
         },
+        redirect: 'if_required',
       });
 
-      if (error.type === 'card_error' || error.type === 'validation_error') {
-        setMessage(error?.message || t('status.unexpected-error'));
+      if (response.error) {
+        if (
+          response.error.type === 'card_error' ||
+          response.error.type === 'validation_error'
+        ) {
+          setMessage(response.error?.message || t('status.unexpected-error'));
+        } else {
+          setMessage(t('status.unexpected-error'));
+        }
       } else {
-        setMessage(t('status.unexpected-error'));
+        completeReservationRequestData();
       }
       setIsLoading(false);
     },
-    [elements, roomTypeId, stripe, t],
+    [elements, stripe, t, completeReservationRequestData, roomTypeId],
   );
+
+  useEffect(() => {
+    if (
+      reservationRequest.process_state ===
+        RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT &&
+      reservationRequest.reservation_id == undefined
+    ) {
+      console.log(reservationRequest);
+      mutate(reservationRequest);
+    }
+  }, [mutate, reservationRequest]);
+
+  useEffect(() => {
+    if (reservationRequestResponse) {
+      if (
+        reservationRequestResponse.res?.data?.id_public != undefined &&
+        reservationRequestResponse.res?.data?.reservation_id != undefined
+      ) {
+        setReservationData({
+          id_public: reservationRequestResponse.res.data.id_public,
+          reservation_id: reservationRequestResponse.res.data.reservation_id,
+        });
+      }
+      redirect(`/room-type/${roomTypeId}/summary${window.location.search}`);
+    }
+  }, [reservationRequestResponse, setReservationData, roomTypeId]);
 
   return (
     <>
@@ -159,8 +171,9 @@ export default function CheckoutForm({ roomTypeId }: Props) {
 
           <Typography className='py-4'>
             {t('info.hello-customer', {
-              name: user?.given_name || t('info.customer'),
-              lastname: user?.family_name || '',
+              name:
+                user?.given_name || session?.given_name || t('info.customer'),
+              lastname: user?.family_name || session?.family_name || '',
             })}
           </Typography>
           <Typography className='pb-4'>

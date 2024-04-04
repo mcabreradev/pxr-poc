@@ -8,17 +8,14 @@ import {
 } from 'zustand/middleware';
 
 import {
-  ACTIVE,
-  PROCECESS_STATE,
+  RESERVATION_PROCESS_STATE,
+  RESERVATION_REG_STATUS,
+  RESERVATION_SALES_CHANNEL_TYPE,
+  RESERVATION_SALES_ORIGIN_TYPE,
   RESERVATION_STATUS,
-  SALES_ORIGIN_TYPE,
 } from '@/constants';
 
-import {
-  RemainingReservationRequestData,
-  ReservationData,
-  ReservationRequest,
-} from '@/types';
+import { ReservationData, ReservationRequest } from '@/types';
 
 type State = {
   reservationRequest: ReservationRequest;
@@ -27,16 +24,14 @@ type State = {
 const initialReservationRequestState: ReservationRequest = {
   property_id: 0,
   guest_id: 0,
-  sales_channel_type: SALES_ORIGIN_TYPE.WEB,
-  process_state: PROCECESS_STATE.WAITING_FOR_PAYMNET,
+  sales_channel_type: RESERVATION_SALES_CHANNEL_TYPE,
+  process_state: RESERVATION_PROCESS_STATE.WAITING_FOR_PAYMENT,
   date_in: '',
   date_out: '',
-  mon_id: 0,
   mon_iso: '',
   total_cost: 0,
   room_types_cost: 0,
   guest_mon_iso: '',
-  mon_commission_id: 0,
   commission_mon_iso: '',
   is_default_commission: 0,
   reservation_status: RESERVATION_STATUS.WO_PAYMENT,
@@ -45,8 +40,8 @@ const initialReservationRequestState: ReservationRequest = {
   coupons: [],
   adults_amount: 0,
   additional_field_values: '',
-  reg_status: ACTIVE,
-  sales_origin_type: SALES_ORIGIN_TYPE.DIRECT,
+  reg_status: RESERVATION_REG_STATUS,
+  sales_origin_type: RESERVATION_SALES_ORIGIN_TYPE,
   send_confirmed_email: 1,
   confirmed_email_active: 1,
   thank_you_email_to_pax_active: 1,
@@ -58,9 +53,8 @@ const initialReservationRequestState: ReservationRequest = {
 type Actions = {
   setReservationRequest: (u: ReservationRequest) => void;
   setReservationRequestId: (id: number) => void;
-  completeReservationRequestData: (
-    data: RemainingReservationRequestData,
-  ) => void;
+  setPaymentId: (id: number) => void;
+  completeReservationRequestData: () => void;
   setReservationData: (data: ReservationData) => void;
   resetReservationRequest: () => void;
 };
@@ -104,17 +98,20 @@ const useReservationRequestStore = create<State & Actions, []>(
           id: id,
         },
       })),
-
-    completeReservationRequestData: (data: RemainingReservationRequestData) =>
+    setPaymentId: (id: number) =>
+      set(() => ({
+        reservationRequest: {
+          ...get().reservationRequest,
+          payment_id: id,
+        },
+      })),
+    completeReservationRequestData: () =>
       set(() => ({
         reservationRequest: {
           ...get().reservationRequest,
           confirmed_agreement: 1,
-          payment_id: data.payment_id,
-          guest_preferred_language: data.guest_preferred_language,
-          guest_email: data.guest_email,
-          guest_country_code: data.guest_country_code,
-          process_state: PROCECESS_STATE.SUCCESS_PAYMENT,
+          reservation_status: RESERVATION_STATUS.PAID,
+          process_state: RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT,
         },
       })),
 

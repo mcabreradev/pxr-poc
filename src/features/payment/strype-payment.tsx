@@ -1,10 +1,11 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { memo } from 'react';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { memo, useEffect } from 'react';
 
 import { uuid } from '@/lib/utils';
 
 import {
+  useReservationRequestStore,
   useReservationStore,
   useSelectedRoomtypeStore,
   useUserStore,
@@ -21,7 +22,7 @@ type Props = {
   roomTypeId: number;
 };
 
-const stripePromise = loadStripe(
+const stripePromise: Promise<Stripe | null> = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
 );
 
@@ -29,6 +30,8 @@ const idempotentKey = uuid();
 
 const StripePayment = memo(({ roomTypeId }: Props) => {
   const { data: property } = usePropertyQuery();
+  const { reservation } = useReservationStore();
+  const { setPaymentId, reservationRequest } = useReservationRequestStore();
   const {
     reservation: { total, currency, checkin, checkout },
   } = useReservationStore();
@@ -40,7 +43,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
   const intentData: Payment = {
     propertyId,
     amount: total,
-    clientId: 2334,
+    clientId: reservation.guestPaxerId,
     email: user?.email,
     currency: {
       currencyId: 1,
@@ -55,13 +58,20 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
     idempotentKey,
     offSession: true,
     reservationId: '',
+    reservationRequestId: reservationRequest.id,
   };
 
   const {
-    data: clientSecret,
+    data,
     isLoading: isLoadingPaymentIntent,
     isError: isErrorPaymentIntent,
   } = useStripePaymentIntentQuery(intentData);
+
+  useEffect(() => {
+    if (data != null) {
+      setPaymentId(data.pagId);
+    }
+  }, [data, setPaymentId]);
 
   if (isLoadingPaymentIntent) {
     return <PaymentSkeleton />;
@@ -73,8 +83,11 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
 
   return (
     <div data-testid='test-element'>
-      {stripePromise && clientSecret && (
-        <Elements options={{ clientSecret }} stripe={stripePromise}>
+      {stripePromise && data.clientSecret && (
+        <Elements
+          options={{ clientSecret: data.clientSecret }}
+          stripe={stripePromise}
+        >
           <CheckoutForm roomTypeId={roomTypeId} />
         </Elements>
       )}

@@ -10,6 +10,7 @@ interface Props {
   href?: string;
   withSearchParams?: boolean;
   children: React.ReactNode;
+  onClick?: (any) => Promise<void>;
 }
 
 export default function BackButtonComponent({
@@ -17,6 +18,7 @@ export default function BackButtonComponent({
   children,
   className = 'layout',
   withSearchParams = true,
+  onClick,
 }: Props) {
   return (
     <>
@@ -25,6 +27,7 @@ export default function BackButtonComponent({
         data-testid='test-element'
         scroll={true}
         replace={true}
+        onClick={onClick ? onClick : undefined}
       >
         <div
           className={cn(

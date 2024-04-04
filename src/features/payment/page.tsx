@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
+/* eslint-disable simple-import-sort/imports */
 'use client';
 
 import { motion } from 'framer-motion';
-import { redirect } from 'next/navigation';
-import { useEffect } from 'react';
+import { redirect, useRouter } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useLocale } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import BackButton from '@/components/common/back-button';
@@ -18,17 +20,19 @@ import {
 
 import NotConnected from '@/app/not-connected';
 import {
-  ACTIVE,
   ERRORS,
+  RESERVATION_PROCESS_STATE,
+  RESERVATION_REG_STATUS,
+  RESERVATION_SALES_CHANNEL_TYPE,
+  RESERVATION_SALES_ORIGIN_TYPE,
   RESERVATION_STATUS,
-  SALES_ORIGIN_TYPE,
 } from '@/constants';
+import StripePayment from '@/features/payment/strype-payment';
 import { useReservationRequestMutation } from '@/mutations';
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 
 import MyTripDetails from './my-trip-details';
 import SkeletonComponent from './skeleton';
-import StripePayment from './strype-payment';
 
 import { ReservationRequest, ReservedRoom } from '@/types';
 
@@ -38,17 +42,21 @@ type Props = {
 };
 
 export default function PaymentFeature({ roomTypeId }: Props) {
+  const [requestSetupError, setRequestSetupError] = useState(false);
+  const [forbidFurtherCalls, setForbidFurtherCalls] = useState(false);
   const { t } = useTranslation();
+  const router = useRouter();
   const { error, isError, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
-  const { setReservationRequest, setReservationRequestId } =
+  const { setReservationRequest, setReservationRequestId, reservationRequest } =
     useReservationRequestStore();
   const { session } = useSessionStore();
   const { reservation } = useReservationStore();
+  const { language } = useLocale();
   const {
     mutate,
     data: reservationRequestResponse,
@@ -62,72 +70,153 @@ export default function PaymentFeature({ roomTypeId }: Props) {
     redirect('/');
   }
 
-  useEffect(() => {
-    const room_type: ReservedRoom = {
-      har_in: reservation.checkin as string,
-      har_out: reservation.checkout as string,
-      har_tha_id: reservation.roomTypeId as number,
-      har_pla_id: reservation.plan,
-      har_hot_id: reservation.propertyId as number,
-      har_adults: reservation.adults as number,
-      har_children: reservation.childrens as number,
-      har_infants: reservation.infants as number,
-      har_seniors: 0,
-      har_pax_info: '',
-      har_adults_info: '',
-      har_childrens_info: '',
-      har_seniors_info: '',
-      har_infants_info: '',
-      har_cost: reservation.total, // totalCost + taxes
-      har_additional_field_1: '',
-      har_additional_field_2: '',
-      har_additional_field_3: '',
-    };
+  const abandonReservationAndGoBack = async (event) => {
+    event.preventDefault();
+    mutate({
+      ...reservationRequest,
+      process_state: RESERVATION_PROCESS_STATE.ABANDONED,
+    });
+    router.push(`/room-type/${roomTypeId}${window.location.search}`);
+  };
 
-    const reservationRequestData: ReservationRequest = {
-      property_id: reservation.propertyId as number,
-      guest_id: reservation.guestPaxerId as number,
-      sales_channel_type: SALES_ORIGIN_TYPE.WEB,
-      process_state: RESERVATION_STATUS.WAITING_FOR_PAYMENT,
-      date_in: reservation.checkin as string,
-      date_out: reservation.checkout as string,
-      mon_id: 5,
-      mon_iso: reservation.currency,
-      total_cost: reservation.totalCost,
-      room_types_cost: 0,
-      guest_mon_iso: reservation.currency,
-      mon_commission_id: 5,
-      commission_mon_iso: reservation.currency,
-      is_default_commission: 0,
-      reservation_status: RESERVATION_STATUS.WO_PAYMENT,
-      room_types: [room_type],
-      extras: [],
-      coupons: [],
-      adults_amount: reservation.adults as number,
-      additional_field_values: [],
-      reg_status: ACTIVE,
-      sales_origin_type: SALES_ORIGIN_TYPE.DIRECT,
-      send_confirmed_email: 1,
-      confirmed_email_active: 1,
-      thank_you_email_to_pax_active: 1,
-      send_payment_email: 1,
-      new_booking_email_send_to_hotel: 1,
-      confirmed_agreement: 0,
-    };
-    setReservationRequest(reservationRequestData);
-    mutate(reservationRequestData);
-  }, [mutate, reservation, setReservationRequest]);
-
-  useEffect(() => {
+  const prepareReservationRequest = useCallback(() => {
+    // For now, one reservation == one room. Let's avoid edge cases before wednesday
+    // You would need some additional logic to split the reservation in multiple physical rooms
     if (
-      reservationRequestResponse != undefined &&
-      reservationRequestResponse.res.code == 0
+      session &&
+      reservation.checkin &&
+      reservation.checkout &&
+      reservation.guestPaxerId
     ) {
-      setReservationRequestId(
-        reservationRequestResponse.res.data.reservation_request_id,
-      );
+      const room_type: ReservedRoom = {
+        har_in: reservation.checkin as string,
+        har_out: reservation.checkout as string,
+        har_tha_id: reservation.roomTypeId as number,
+        har_pla_id: reservation.plan,
+        har_hot_id: reservation.propertyId as number,
+        har_adults: reservation.adults as number,
+        har_children: reservation.childrens as number,
+        har_infants: reservation.infants as number,
+        har_seniors: 0,
+        har_pax_info: '',
+        har_adults_info: '',
+        har_childrens_info: '',
+        har_seniors_info: '',
+        har_infants_info: '',
+        har_cost: reservation.totalCost,
+        har_additional_field_1: '',
+        har_additional_field_2: '',
+        har_additional_field_3: '',
+      };
+      const reservationRequest: ReservationRequest = {
+        property_id: reservation.propertyId as number,
+        guest_id: reservation.guestPaxerId as number,
+        sales_channel_type: RESERVATION_SALES_CHANNEL_TYPE,
+        process_state: RESERVATION_PROCESS_STATE.WAITING_FOR_PAYMENT,
+        date_in: new Date(reservation.checkin)
+          .toISOString()
+          .slice(0, 19)
+          .replace('T', ' '),
+        date_out: new Date(reservation.checkout)
+          .toISOString()
+          .slice(0, 19)
+          .replace('T', ' '),
+        mon_iso: reservation.currency,
+        total_cost: reservation.totalCost,
+        room_types_cost: reservation.totalCost,
+        guest_mon_iso: reservation.currency,
+        commission_mon_iso: reservation.currency,
+        is_default_commission: 0,
+        reservation_status: RESERVATION_STATUS.WO_PAYMENT,
+        room_types: [room_type],
+        extras: [],
+        coupons: [],
+        adults_amount: reservation.adults as number,
+        additional_field_values: [],
+        reg_status: RESERVATION_REG_STATUS,
+        sales_origin_type: RESERVATION_SALES_ORIGIN_TYPE,
+        send_confirmed_email: 1,
+        confirmed_email_active: 1,
+        thank_you_email_to_pax_active: 1,
+        send_payment_email: 1,
+        new_booking_email_send_to_hotel: 1,
+        confirmed_agreement: 0,
+        guest_preferred_language: language.toLowerCase(),
+        guest_email: session?.email,
+        guest_country_code: property.countryISO, // For now, later use country detected in IP
+      };
+      setReservationRequest(reservationRequest);
+      setRequestSetupError(false);
+    } else {
+      setRequestSetupError(true);
     }
-  }, [reservationRequestResponse, setReservationRequestId]);
+  }, [
+    language,
+    property.countryISO,
+    reservation,
+    session,
+    setReservationRequest,
+  ]);
+
+  // useEffect(() => {
+  //   setLoginEnabled(false);
+
+  //   return () => {
+  //     setLoginEnabled(true);
+  //   };
+  // }, [setLoginEnabled]);
+
+  useEffect(() => {
+    // console.log("VERIFY")
+    // console.log(reservationRequest.property_id == 0)
+    if (reservationRequest.property_id == 0) {
+      prepareReservationRequest();
+    }
+  }, [
+    prepareReservationRequest,
+    reservationRequest.property_id,
+    reservationRequest.guest_id,
+  ]);
+
+  useEffect(() => {
+    // console.log('USE EFFECT');
+    if (
+      !reservationRequest.id &&
+      !forbidFurtherCalls &&
+      reservationRequest.property_id != 0
+    ) {
+      // console.log("PLEASE DONT PRINT THIS TWICE")
+      console.log(reservationRequest);
+      mutate({ ...reservationRequest, payment_id: undefined });
+      setForbidFurtherCalls(true);
+    }
+  }, [reservationRequest, mutate, forbidFurtherCalls]);
+
+  useEffect(() => {
+    // console.log('HERE IS THE FIRST RESPONSE');
+    console.log(reservationRequestResponse);
+    if (reservationRequestResponse != undefined && !requestSetupError) {
+      if (reservationRequestResponse.res.code == 0) {
+        // console.log("HERE I AM");
+        setReservationRequestId(
+          reservationRequestResponse.res.data.reservation_request_id,
+        );
+      } else if (reservationRequestResponse.res.code == 2017) {
+        redirect(
+          `/room-type/${reservation.roomTypeId}?checkin=${reservation.checkin}&checkout=${reservation.checkout}&totalAdults=${reservation.adults}&totalChildren=${reservation.childrens}&totalInfants=${reservation.infants}&unavailable=true`,
+        );
+      } else {
+        redirect(
+          `/room-type/${reservation.roomTypeId}?checkin=${reservation.checkin}&checkout=${reservation.checkout}&totalAdults=${reservation.adults}&totalChildren=${reservation.childrens}&totalInfants=${reservation.infants}&unexpectedError=true`,
+        );
+      }
+    }
+  }, [
+    requestSetupError,
+    reservation,
+    reservationRequestResponse,
+    setReservationRequestId,
+  ]);
 
   if (isLoading || roomLoading) {
     return <SkeletonComponent />;
@@ -148,7 +237,10 @@ export default function PaymentFeature({ roomTypeId }: Props) {
       data-testid='test-element'
       className={cn('sm:absolute-container md:relative')}
     >
-      <BackButton href={`/room-type/${roomTypeId}`}>
+      <BackButton
+        href={`/room-type/${roomTypeId}`}
+        onClick={abandonReservationAndGoBack}
+      >
         {t('title.room-confirm-reserve')}
       </BackButton>
 
@@ -160,7 +252,9 @@ export default function PaymentFeature({ roomTypeId }: Props) {
 
           <div className='w-full md:w-8/12'>
             <section className='p-4 md:min-w-[400px] md:max-w-[560px]'>
-              <StripePayment roomTypeId={roomTypeId} />
+              {reservationRequest.id ? (
+                <StripePayment roomTypeId={roomTypeId} />
+              ) : null}
 
               {/* {actionPayment && <StripePayment roomTypeId={roomTypeId} />}
               {actionSuccess && <StripePayment roomTypeId={roomTypeId} />}

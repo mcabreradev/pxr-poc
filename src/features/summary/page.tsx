@@ -10,6 +10,8 @@ import { cn } from '@/lib/utils';
 import { Icon, Typography } from '@/components';
 import BackButton from '@/components/common/back-button';
 
+import { RESERVATION_ERRORS } from '@/constants';
+
 import { usePropertyQuery, useRoomTypeQuery } from '@/queries';
 import { useReservationRequestStore, useReservationStore } from '@/store';
 
@@ -18,7 +20,11 @@ import PriceDetails from '@/features/common/price-details';
 import SkeletonComponent from '@/features/payment/skeleton';
 import Cancellation from '@/features/summary/cancellation';
 import SummaryRow from '@/features/summary/summaryRow';
+import { useReservationRequestMutation } from '@/mutations';
 
+import Modal from '@/components/modal';
+import { RESERVATION_PROCESS_STATE } from '@/constants';
+import { useEffect, useState } from 'react';
 import data from '../payment/data.json';
 import additionalData from '../property/data.json';
 require('dayjs/locale/es'); //This require is necessary to get the weekday name in the correct language
@@ -59,7 +65,17 @@ function formatTime(timestring: string) {
 
 export default function SummaryFeature({ className, roomTypeId }: Props) {
   const { getCheckin, getCheckout } = useSearchParamOrStore();
-  const { reservationRequest } = useReservationRequestStore();
+  const {
+    completeReservationRequestData,
+    setReservationData,
+    reservationRequest,
+  } = useReservationRequestStore();
+  const {
+    mutate,
+    data: reservationRequestResponse,
+    isError: reservationRequestError,
+    isPending,
+  } = useReservationRequestMutation();
   const { error, isLoading, data: property } = usePropertyQuery();
   const {
     isError: roomError,
@@ -68,6 +84,7 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
   } = useRoomTypeQuery(roomTypeId);
   const { t, i18n } = useTranslation();
   const { reservation } = useReservationStore();
+  const [modalData, setModalData] = useState({ open: false, errorType: '' });
 
   const checkin = dayjs(getCheckin());
   const checkout = dayjs(getCheckout());
@@ -76,14 +93,67 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
     (reservation.childrens ?? 0) +
     (reservation.infants ?? 0);
 
-  //Temp
-  const payment = { amount: reservation.total ?? null, currency: 'EUR' };
+  const closeModalHandler = (errorType: string) => {
+    if (errorType === RESERVATION_ERRORS.INVALID_PAYMENT) {
+      window.location.replace(
+        `${window.location.protocol}//${window.location.host}`,
+      );
+    }
+    setModalData({ open: false, errorType: '' });
+  };
 
-  if (isLoading || roomLoading) {
+  //Temp
+  const payment = {
+    amount: reservation.total ?? null,
+    currency: reservationRequest.mon_iso,
+  };
+
+  useEffect(() => {
+    if (!reservationRequest.reservation_id) {
+      completeReservationRequestData();
+    }
+  }, [completeReservationRequestData, reservationRequest.reservation_id]);
+
+  useEffect(() => {
+    if (
+      reservationRequest.process_state ===
+        RESERVATION_PROCESS_STATE.SUCCESS_PAYMENT &&
+      !reservationRequest.reservation_id
+    ) {
+      mutate(reservationRequest);
+    }
+  }, [reservationRequest, mutate]);
+
+  useEffect(() => {
+    if (reservationRequestResponse) {
+      if (reservationRequestResponse.res.code == 0) {
+        if (reservationRequestResponse.res?.data?.reservation_created != 1) {
+          setModalData({
+            open: true,
+            errorType: RESERVATION_ERRORS.NOT_CREATED,
+          });
+        } else {
+          setReservationData({
+            id_public: reservationRequestResponse.res.data.id_public,
+            reservation_id: reservationRequestResponse.res.data.reservation_id,
+          });
+        }
+      } else if (reservationRequestResponse.res.code == 2087) {
+        setModalData({
+          open: true,
+          errorType: RESERVATION_ERRORS.INVALID_PAYMENT,
+        });
+      } else {
+        setModalData({ open: true, errorType: RESERVATION_ERRORS.NOT_CREATED });
+      }
+    }
+  }, [reservationRequestResponse, setReservationData]);
+
+  if (isLoading || roomLoading || isPending) {
     return <SkeletonComponent />;
   }
 
-  if (error || roomError) {
+  if (error || roomError || reservationRequestError) {
     return <span>Error</span>;
   }
 
@@ -93,6 +163,24 @@ export default function SummaryFeature({ className, roomTypeId }: Props) {
       data-testid='test-element'
     >
       <BackButton href='/'>{t('title.summary')}</BackButton>
+      <Modal
+        isOpen={modalData.open}
+        onClose={() => closeModalHandler(modalData.errorType)}
+        size='md'
+        footerClassName='p-2'
+        headerClassName='p-6'
+        header={
+          <Typography variant='h2' weight='normal' className=''>
+            {t('summary.modal-header')}
+          </Typography>
+        }
+      >
+        <Typography variant='base' weight='normal' className=''>
+          {modalData.errorType === RESERVATION_ERRORS.INVALID_PAYMENT
+            ? t('summary.modal-body.invalid-payment')
+            : t('summary.modal-body.not-created')}
+        </Typography>
+      </Modal>
       <div className='mb-1'>
         <div className='layout'>
           <div

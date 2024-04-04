@@ -15,5 +15,6 @@ export default function useReservationRequestMutation() {
     mutationKey: [PROPERTY, RESERVATION],
     mutationFn: postReservationRequest,
     retry: 3,
+    retryDelay: (attemptIndex) => Math.min(2000 * 2 ** attemptIndex, 30000),
   });
 }

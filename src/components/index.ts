@@ -1,3 +1,5 @@
+import { ScrollArea, ScrollBar } from '@/components/scroll-area';
+
 import Button from './button';
 import Carousel from './carousel';
 import Checkbox from './checkbox';
@@ -27,6 +29,8 @@ export {
   Loading,
   Modal,
   Radio,
+  ScrollArea,
+  ScrollBar,
   Seo,
   Sticky,
   Swiper,

@@ -43,6 +43,7 @@ export const AVAILABILITY = 'availability';
 export const RATES = 'rates';
 export const CALENDAR = 'calendar';
 export const GUESTSINFO = 'guestsinfo';
+export const COUNTRY = 'country';
 export const MOBILE_DEVICE_CSS_QUERY = 'only screen and (max-width : 768px)';
 export const MEDIUM_DEVICE_CSS_QUERY =
   'only screen and (min-width : 769px) and (max-width : 992px)';

@@ -1,4 +1,6 @@
 /* eslint-disable simple-import-sort/exports */
+import useCountryQuery from '@/queries/use-country.query';
+
 import useAvailabilityQuery from './use-availabity.query';
 import usePropertyQuery from './use-property.query';
 import useRatesPlanQuery from './use-rates-plan.query';
@@ -10,6 +12,7 @@ import useStripePaymentIntentQuery from './use-stripe.query';
 
 export {
   useAvailabilityQuery,
+  useCountryQuery,
   usePropertyQuery,
   useRatesPlanQuery,
   useRoomTypeQuery,

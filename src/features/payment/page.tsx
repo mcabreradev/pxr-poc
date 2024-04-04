@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import BackButton from '@/components/common/back-button';
 
 import {
+  useGlobalStore,
   useReservationRequestStore,
   useReservationStore,
   useSessionStore,
@@ -52,6 +53,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
     isLoading: roomLoading,
     data: room,
   } = useRoomTypeQuery(roomTypeId);
+  const { country } = useGlobalStore();
   const { setReservationRequest, setReservationRequestId, reservationRequest } =
     useReservationRequestStore();
   const { session } = useSessionStore();
@@ -143,7 +145,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
         confirmed_agreement: 0,
         guest_preferred_language: language.toLowerCase(),
         guest_email: session?.email,
-        guest_country_code: property.countryISO, // For now, later use country detected in IP
+        guest_country_code: country ?? property.countryISO, // For now, later use country detected in IP
       };
       setReservationRequest(reservationRequest);
       setRequestSetupError(false);
@@ -156,6 +158,7 @@ export default function PaymentFeature({ roomTypeId }: Props) {
     reservation,
     session,
     setReservationRequest,
+    country,
   ]);
 
   // useEffect(() => {

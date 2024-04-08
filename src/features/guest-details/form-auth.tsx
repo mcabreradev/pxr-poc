@@ -14,7 +14,6 @@ import Typography from '@/components/typography';
 
 import { QUERY, URL } from '@/constants';
 import filterParams from '@/features/guest-details/filter-params';
-import SocialSignOn from '@/features/guest-details/social-sign-on';
 import { authSchema } from '@/schemas';
 import useUserStore from '@/store/use-user.store';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -110,8 +109,6 @@ export default function FormAuthComponent({ className, roomTypeId }: Props) {
       </form>
 
       <hr />
-
-      <SocialSignOn roomTypeId={roomTypeId} />
     </Container>
   );
 }

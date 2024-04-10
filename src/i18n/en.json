@@ -68,6 +68,10 @@
     },
     "title": "¡Ups!"
   },
+  "error-modal": {
+    "header": "An Error has occurred",
+    "body": "Please, try again in a few minutes"
+  },
   "form": {
     "date_of_birth": {
       "invalid": "Date of birth is invalid",
@@ -222,6 +226,11 @@
     "guests": "Guests",
     "hotel-information": "View hotel information",
     "invoice": "Get invoice",
+    "modal-body": {
+      "not-created": "Your payment has been successful. We'll notify you when your reservation is confirmed. Don't worry! it will only take a few minutes",
+      "invalid-payment": "There was an error verifying your payment"
+    },
+    "modal-header": "Important",
     "no-payment": "No payment has been made",
     "no-reviews": "No reviews yet",
     "payment-title": "Payments",
@@ -268,5 +277,9 @@
     "wanna-sleep": "Where do you wanna sleep?"
   },
   "to": "to",
+  "unavailable-modal": {
+    "header": "Room unavailable",
+    "body": "Sorry, there are no rooms of this type available on the selected date"
+  },
   "until": "until"
 }

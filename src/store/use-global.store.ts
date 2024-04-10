@@ -15,6 +15,7 @@ type State = {
   guestForm?: {
     isIntersecting?: boolean;
   };
+  country?: string;
 };
 
 const innitalState = {
@@ -38,6 +39,7 @@ type Actions = {
   resetCalendar: () => void;
   setGalleryIntersecting: (isIntersecting: boolean) => void;
   setGuestFormIntersecting: (isIntersecting: boolean) => void;
+  setCountry: (country: string) => void;
 };
 
 type Persist = (
@@ -93,6 +95,12 @@ const useGlobalStore = create<State & Actions, []>(
           ...get().guestForm,
           isIntersecting,
         },
+      }));
+    },
+
+    setCountry(country: string) {
+      set(() => ({
+        country: country,
       }));
     },
   })),

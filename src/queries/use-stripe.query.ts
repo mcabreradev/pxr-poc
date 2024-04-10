@@ -7,7 +7,7 @@ import { Payment } from '@/types';
 
 const createPaymentIntent = async (body: Payment) => {
   const { data } = await axios.post(`/api/payment-intent`, body);
-  return data.clientSecret;
+  return data;
 };
 
 export default function useStripePaymentIntentQuery(body: Payment) {
@@ -17,5 +17,6 @@ export default function useStripePaymentIntentQuery(body: Payment) {
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    gcTime: 0,
   });
 }

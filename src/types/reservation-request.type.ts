@@ -6,12 +6,12 @@ export type ReservationRequest = {
   process_state: string;
   date_in: string | Date;
   date_out: string | Date;
-  mon_id: number;
+  mon_id?: number;
   mon_iso: string | number | null | undefined;
   total_cost: number | null | undefined;
-  room_types_cost: number;
+  room_types_cost: number | null | undefined;
   guest_mon_iso: string | number | null | undefined;
-  mon_commission_id: number;
+  mon_commission_id?: number;
   commission_mon_iso: string | number | null | undefined;
   is_default_commission: number;
   reservation_status: string;
@@ -37,7 +37,6 @@ export type ReservationRequest = {
 };
 
 export type RemainingReservationRequestData = {
-  payment_id: number;
   guest_preferred_language: string;
   guest_email: string | undefined;
   guest_country_code: string;
@@ -142,10 +141,10 @@ export type CMAValue = {
 
 export type Extras = {
   ext_id: number;
-  mon_id: number;
-  quantity: number;
-  cost: number;
-  cma_values: CMAValue[];
+  mon_id?: number;
+  exr_quantity?: number;
+  exr_cost: number | null | undefined;
+  exr_cma_values?: CMAValue[];
 };
 
 export type Coupon = {

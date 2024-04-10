@@ -24,6 +24,7 @@ import HotelRules from '@/features/common/hotel-rules';
 
 import {
   useAvailabilityQuery,
+  useCountryQuery,
   usePropertyQuery,
   useRatesPlanQuery,
 } from '@/queries';
@@ -54,12 +55,13 @@ const PropertyPage = memo(function HotelPage() {
   const { removeBlacklistParam } = useQueryString();
   const { resetReservation } = useReservationStore();
   const { resetReservationRequest } = useReservationRequestStore();
-  const { resetGlobalStore } = useGlobalStore();
+  const { resetGlobalStore, setCountry } = useGlobalStore();
   const { checkin, checkout } = useCheckinCheckoutHook();
   const { refetch: fetchAvailability } = useAvailabilityQuery({
     checkin,
     checkout,
   });
+  const { data: countryData } = useCountryQuery();
 
   // Fetch rates plan
   const { refetch: fetchRatesPlan } = useRatesPlanQuery({
@@ -81,11 +83,16 @@ const PropertyPage = memo(function HotelPage() {
     resetReservation();
     resetGlobalStore();
     resetReservationRequest();
+    if (countryData) {
+      setCountry(countryData.data.country);
+    }
   }, [
     removeBlacklistParam,
+    countryData,
     resetGlobalStore,
     resetReservation,
     resetReservationRequest,
+    setCountry,
   ]);
 
   const { ref: roomSelectedRef, entry } = useIntersectionObserver({

@@ -13,7 +13,7 @@ import { Button, Icon, Typography } from '@/components';
 import { useUserStore } from '@/store';
 
 import { QUERY, URL } from '@/constants';
-import SocialSignOn from '@/features/guest-details/social-sign-on';
+import filterParams from '@/features/guest-details/filter-params';
 import { authSchema } from '@/schemas';
 
 interface IForm {
@@ -45,9 +45,10 @@ export default function FormAuthComponent({ className, roomTypeId }: Props) {
     },
   });
   const onSubmit: SubmitHandler<IForm> = (data) => {
+    const filteredSearchParams: string[] = filterParams(searchParams);
     router.push(
       `/room-type/${roomTypeId}/details?${URL.ACTION}=${QUERY.IDENTIFICATION}&` +
-        searchParams.toString() +
+        filteredSearchParams.join('&') +
         `&email=${data.email}`,
     );
   };
@@ -107,8 +108,6 @@ export default function FormAuthComponent({ className, roomTypeId }: Props) {
       </form>
 
       <hr />
-
-      <SocialSignOn roomTypeId={roomTypeId} />
     </Container>
   );
 }

@@ -3,7 +3,7 @@
 import { Metadata } from 'next';
 import { useTranslation } from 'react-i18next';
 
-import Button from '@/components/button';
+import { Button } from '@/components';
 import Typography from '@/components/typography';
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ export default function Component() {
       >
         {t('error.not-connected.message')}
       </Typography>
-      <Button className='mt-6' type='link' href={window.location.href}>
+      <Button className='mt-6' tag='link' href={window.location.href}>
         {t('button.try-reconnect')}
       </Button>
     </div>

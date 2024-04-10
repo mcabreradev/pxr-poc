@@ -52,7 +52,7 @@ export default function CardComponent({
         />
       </div>
 
-      <div className='p-4'>
+      <div className='p-4 pb-4'>
         <Typography variant='h3' weight='medium' className='pb-4'>
           {name ?? t('title.room')}
         </Typography>
@@ -75,7 +75,7 @@ export default function CardComponent({
           </>
         </Typography>
 
-        <Button type='button' className='mb-4 w-full' onClick={onClick}>
+        <Button type='button' onClick={onClick} size='full' tag='button'>
           {t('button.reserve')}
         </Button>
       </div>

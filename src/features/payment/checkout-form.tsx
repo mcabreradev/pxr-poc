@@ -262,7 +262,7 @@ export default function CheckoutForm({ roomTypeId }: Props) {
             disabled={isLoading || !stripe || !elements}
             id='submit'
             onClick={handleSubmit}
-            className='w-full'
+            size='full'
           >
             {isLoading ? (
               <span className='flex items-center justify-between'>

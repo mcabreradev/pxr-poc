@@ -8,7 +8,6 @@ const meta: Meta<typeof Button> = {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    fullWidth: { control: 'boolean' },
     variant: {
       control: 'select',
       options: [
@@ -19,6 +18,10 @@ const meta: Meta<typeof Button> = {
         'danger',
         'text',
       ],
+    },
+    size: {
+      control: 'select',
+      options: ['sm', 'lg', 'full', 'icon'],
     },
   },
 };

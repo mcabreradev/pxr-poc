@@ -1,181 +1,159 @@
-'use client';
-
-import { Button as Base } from '@material-tailwind/react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import React from 'react';
-import tw from 'tailwind-styled-components';
+import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-import Icon from '@/components/icon';
+import { Icon } from '@/components';
 
-import { ACTION } from '@/constants';
+import { ACTION, BUTTON, LINK } from '@/constants';
 
-interface ButtonProps {
+const buttonVariants = cva(
+  'cursor-pointer flex items-center justify-center flex-row shadow-none hover:shadow-none py-[10px] px-6 rounded text-[14px] font-medium font-poppins normal-case h-auto text-white flex-grow text-center gap-1 flex-wrap justify-between',
+  {
+    variants: {
+      variant: {
+        default: 'bg-green-500',
+        primary: 'bg-green-500',
+        secondary:
+          'border-[1px] border-solid border-neutral-60 bg-white text-black hover:opacity-[0.90]',
+        alternative: 'bg-blue',
+        warning: 'bg-orange',
+        danger: 'bg-red',
+        text: 'border-[1px] border-none border-white !bg-transparent text-black underline hover:bg-white-100 px-2 py-2 rounded-lg',
+      },
+      size: {
+        default: 'px-6',
+        sm: 'px-2',
+        lg: 'px-10',
+        full: 'w-full',
+        icon: 'h-10 w-10',
+      },
+      state: {
+        default: '',
+        disabled: 'opacity-[0.90] cursor-not-allowed',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+      state: 'default',
+    },
+  },
+);
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  tag?: typeof BUTTON | typeof LINK;
   id?: string;
-  type?: 'submit' | 'link' | 'button';
-  ref?: React.MutableRefObject<null>;
-  onClick?: (e: unknown) => void;
-  onBlur?: (e: unknown) => void;
-  onChange?: (e: unknown) => void;
-  onMouseEnter?: (e: unknown) => void;
-  onMouseLeave?: (e: unknown) => void;
-  onFocus?: (e: unknown) => void;
-  className?: string;
-  children: React.ReactNode;
-  fullWidth?: boolean;
-  disabled?: boolean;
   withSearchParams?: boolean;
   query?: { [key: string]: string };
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'alternative'
-    | 'warning'
-    | 'danger'
-    | 'text';
   href?: string;
-  icon?: React.ReactNode | string;
   replace?: boolean;
   scroll?: boolean;
   loading?: boolean;
-  slim?: boolean | undefined;
+  icon?: React.ReactNode | string;
+  iconAlignment?: 'left' | 'right';
 }
 
-const ButtonComponent = tw(Base)<Partial<ButtonProps>>`
-  cursor-pointer flex items-center justify-center flex-row
-  shadow-none hover:shadow-none py-[10px] px-6 rounded
-  text-[14px] font-medium font-poppins normal-case
-  md:w-auto h-auto
-  ${({ slim }) => slim && 'px-2'}
-  ${({ fullWidth }) => fullWidth && 'w-full'}
-  ${({ disabled }) =>
-    disabled
-      ? 'opacity-[0.90] cursor-not-allowed'
-      : 'transition hover:delay-100 hover:opacity-[0.90] duration-100 delay-100 '}
-`;
+const Button = React.forwardRef<HTMLElement, ButtonProps>(
+  (
+    {
+      className,
+      variant,
+      size,
+      disabled,
+      loading = false,
+      tag = BUTTON,
+      href,
+      replace = true,
+      scroll = true,
+      icon,
+      query,
+      withSearchParams = false,
+      iconAlignment = 'left',
+      children,
+      ...props
+    },
+    ref,
+  ) => {
+    const state = disabled ? 'disabled' : 'default';
 
-export default function Button({
-  id,
-  type = 'button',
-  className,
-  children,
-  variant = 'primary',
-  fullWidth = false,
-  disabled = false,
-  onClick,
-  onBlur,
-  onChange,
-  onMouseEnter,
-  onMouseLeave,
-  ref,
-  href = '',
-  icon,
-  replace = true,
-  scroll = true,
-  slim = false,
-  query,
-  withSearchParams = false,
-  loading = false,
-  ...props
-}: ButtonProps) {
-  const styling = {
-    primary: 'bg-green-500',
-    secondary:
-      'border-[1px] border-solid border-neutral-60 bg-white text-black hover:opacity-[0.90]',
-    alternative: 'bg-blue',
-    warning: 'bg-orange',
-    danger: 'bg-red',
-    text: 'border-[1px] border-none border-white !bg-transparent text-black underline hover:bg-white-100 px-2 py-2 rounded-lg',
-  };
-  const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
+    const createCustomHref = (
+      href,
+      query,
+      searchParams,
+      withSearchParams: boolean,
+    ) => {
+      const params = new URLSearchParams(query);
+      const search = new URLSearchParams(searchParams);
+      search.delete(ACTION);
 
-  if (type === 'link') {
-    const params = new URLSearchParams(query);
-    const search = new URLSearchParams(searchParams.toString());
-    search.delete(ACTION);
+      return withSearchParams
+        ? `${href}?${params}&${search}`
+        : `${href}?${params}`;
+    };
 
-    const url = withSearchParams
-      ? `${href}?${params}&${search}`
-      : `${href}?${params}`;
+    if (tag === LINK) {
+      const customHref = createCustomHref(
+        href,
+        query,
+        searchParams.toString(),
+        withSearchParams,
+      );
 
-    return (
-      <Link
-        href={disabled ? '' : url}
-        className={cn('', { 'w-full': fullWidth })}
-        scroll={scroll}
-        replace={replace}
-      >
-        <ButtonComponent
-          id={id}
-          ref={ref}
-          className={cn(styling[variant], className)}
-          ripple={false}
-          fullWidth={fullWidth}
-          data-testid='test-element'
-          disabled={disabled}
-          onClick={onClick}
-          onBlur={onBlur}
-          onChange={onChange}
-          onMouseLeave={onMouseLeave}
-          onMouseEnter={onMouseEnter}
-          slim={!!slim}
-          {...props}
+      return (
+        <Link
+          ref={ref as React.RefObject<HTMLAnchorElement>}
+          data-testid='test-button-element'
+          className={cn(buttonVariants({ variant, size, state, className }))}
+          href={customHref}
+          scroll={scroll}
+          replace={replace}
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
         >
-          {!loading && icon && <span className='mr-2'>{icon}</span>}
-
-          {loading && (
-            <span className='mr-2'>
-              <Icon
-                variant='loading'
-                style={{ color: 'white' }}
-                width={24}
-                height={24}
-              />
-            </span>
-          )}
-
-          <span className='flex-grow cursor-pointer text-center'>
+          <span>{!loading && icon && iconAlignment === 'left' && icon}</span>
+          <span className='flex flex-row'>
+            {loading && <LoadingIcon />}
             {children}
           </span>
-        </ButtonComponent>
-      </Link>
-    );
-  }
+          <span>{!loading && icon && iconAlignment === 'right' && icon}</span>
+        </Link>
+      );
+    }
 
-  return (
-    <ButtonComponent
-      id={id}
-      ref={ref}
-      type={type}
-      className={cn(styling[variant], className)}
-      ripple={false}
-      fullWidth={fullWidth}
-      data-testid='test-element'
-      disabled={disabled}
-      onClick={onClick}
-      onBlur={onBlur}
-      onChange={onChange}
-      onMouseLeave={onMouseLeave}
-      onMouseEnter={onMouseEnter}
-      slim={!!slim}
-      {...props}
-    >
-      {!loading && icon && <span className='mr-2'>{icon}</span>}
-
-      {loading && (
-        <span className='mr-2'>
-          <Icon
-            variant='loading'
-            style={{ color: 'white' }}
-            width={24}
-            height={24}
-          />
+    return (
+      <button
+        ref={ref as React.RefObject<HTMLButtonElement>}
+        data-testid='test-button-element'
+        className={cn(buttonVariants({ variant, size, state, className }))}
+        disabled={disabled}
+        {...props}
+      >
+        <span>{!loading && icon && iconAlignment === 'left' && icon}</span>
+        <span className='flex flex-row'>
+          {loading && <LoadingIcon />}
+          {children}
         </span>
-      )}
+        <span>{!loading && icon && iconAlignment === 'right' && icon}</span>
+      </button>
+    );
+  },
+);
+Button.displayName = 'Button';
 
-      <span className='flex-grow cursor-pointer text-center'>{children}</span>
-    </ButtonComponent>
-  );
-}
+export { Button, buttonVariants };
+export default Button;
+
+const LoadingIcon = () => (
+  <span className='mr-2'>
+    <Icon variant='loading' style={{ color: 'white' }} width={24} height={24} />
+  </span>
+);

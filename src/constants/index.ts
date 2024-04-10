@@ -101,6 +101,8 @@ export const SPAN = 'span';
 export const INPUT = 'input';
 export const TEXTAREA = 'textarea';
 export const A = 'a';
+export const LINK = 'link';
+export const BUTTON = 'button';
 export const TAG = {
   DIV,
   SPAN,
@@ -108,6 +110,8 @@ export const TAG = {
   LABEL,
   TEXTAREA,
   A,
+  BUTTON,
+  LINK,
 };
 
 export const AUTH = 'auth';

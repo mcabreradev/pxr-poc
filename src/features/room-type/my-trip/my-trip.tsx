@@ -434,7 +434,7 @@ export default function MyTrip({ className, roomTypeId }: Props) {
             className='font-semibold md:w-full'
             variant='primary'
             type='button'
-            fullWidth
+            size='full'
             onClick={handlePaymentSubmit}
             loading={loading}
           >

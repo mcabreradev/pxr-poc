@@ -286,6 +286,7 @@ export default function FormIdentificationComponent({
           variant='primary'
           type='submit'
           disabled={isSubmitting}
+          size='full'
         >
           {t('button.accept')}
         </Button>

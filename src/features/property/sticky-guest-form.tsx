@@ -52,7 +52,7 @@ export default function MobileDatepickerComponent() {
         </Typography>
       </div>
       <div>
-        <Button type='button' slim={true} onClick={handleClick}>
+        <Button type='button' size='sm' onClick={handleClick}>
           {t('button.choose-room')}
         </Button>
       </div>

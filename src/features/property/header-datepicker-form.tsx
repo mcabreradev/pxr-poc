@@ -46,7 +46,7 @@ export default function HeaderDatepickerComponent() {
         </Typography>
       </div>
       <div>
-        <Button type='button' slim={true} className='cursor-pointer'>
+        <Button type='button' size='sm' className='cursor-pointer'>
           {t('button.choose-room')}
         </Button>
       </div>

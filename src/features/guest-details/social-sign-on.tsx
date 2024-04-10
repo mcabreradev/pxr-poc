@@ -49,10 +49,9 @@ export default function SocialSignOn({ roomTypeId }: Props) {
   return (
     <div className='flex flex-col gap-5 py-3 pb-10'>
       <Button
-        className='w-full'
         variant='secondary'
         icon={<Icon variant='google' height='24' />}
-        type='link'
+        tag='link'
         onClick={() => openPopupCenter(googleUrl, window)}
         replace={true}
         withSearchParams={true}
@@ -61,10 +60,9 @@ export default function SocialSignOn({ roomTypeId }: Props) {
       </Button>
 
       <Button
-        className='w-full'
         variant='secondary'
         icon={<Icon variant='facebook' height='24' />}
-        type='link'
+        tag='link'
         onClick={() => openPopupCenter(facebookUrl, window)}
         replace={true}
         withSearchParams={true}
@@ -74,10 +72,9 @@ export default function SocialSignOn({ roomTypeId }: Props) {
       </Button>
 
       <Button
-        className='w-full'
         variant='secondary'
         icon={<Icon variant='apple' height='24' />}
-        type='link'
+        tag='link'
         href={`/room-type/${roomTypeId}/details`}
         replace={true}
         withSearchParams={true}

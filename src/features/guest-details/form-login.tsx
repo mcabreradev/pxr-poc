@@ -16,9 +16,7 @@ import {
 } from '@/hooks';
 import { cn } from '@/lib/utils';
 
-import Button from '@/components/button';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { Button, Icon, Typography } from '@/components';
 
 import { useUserStore } from '@/store';
 

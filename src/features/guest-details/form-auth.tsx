@@ -1,22 +1,20 @@
 'use client';
 
-/* eslint-disable simple-import-sort/imports */
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
-import Button from '@/components/button';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { Button, Icon, Typography } from '@/components';
+
+import { useUserStore } from '@/store';
 
 import { QUERY, URL } from '@/constants';
 import filterParams from '@/features/guest-details/filter-params';
 import { authSchema } from '@/schemas';
-import useUserStore from '@/store/use-user.store';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 interface IForm {
   email: string;
@@ -100,9 +98,10 @@ export default function FormAuthComponent({ className, roomTypeId }: Props) {
           </span>
         </div>
         <Button
-          className='mt-3 w-full font-semibold'
+          className='mt-3 font-semibold'
           variant='primary'
           type='submit'
+          size='full'
         >
           {t('button.continue')}
         </Button>

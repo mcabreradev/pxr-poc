@@ -5,9 +5,7 @@ import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
-import Button from '@/components/button';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { Button, Icon, Typography } from '@/components';
 
 import { URL } from '@/constants';
 import { forgotSchema } from '@/schemas';
@@ -96,7 +94,7 @@ export default function FormForgotComponent({ className, roomTypeId }: Props) {
         <Button
           variant='text'
           className='mt-4 w-full text-neutral-400 underline'
-          type='link'
+          tag='link'
           href={`/room-type/${roomTypeId}/details?${URL.ACTION}=login`}
           replace={true}
         >

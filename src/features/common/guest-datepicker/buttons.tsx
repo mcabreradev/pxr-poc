@@ -29,7 +29,7 @@ const ButtonsComponent = ({
         <Button
           type='button'
           variant='text'
-          slim={true}
+          size='sm'
           onClick={resetCalendarHandler}
         >
           Reestableecer
@@ -40,7 +40,7 @@ const ButtonsComponent = ({
         <Button
           type='button'
           variant='text'
-          slim={true}
+          size='sm'
           onClick={() => setShowHandler(null)}
         >
           Omitir
@@ -51,7 +51,7 @@ const ButtonsComponent = ({
         <Button
           type='button'
           variant='text'
-          slim={true}
+          size='sm'
           onClick={() => setShowHandler(CALENDAR)}
         >
           Regresar
@@ -62,7 +62,7 @@ const ButtonsComponent = ({
         <Button
           type='button'
           variant='text'
-          slim={true}
+          size='sm'
           onClick={resetAllHandler}
         >
           Borrar todo

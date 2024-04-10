@@ -7,10 +7,7 @@ import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
 
-import Button from '@/components/button';
-import Checkbox from '@/components/checkbox';
-import Icon from '@/components/icon';
-import Typography from '@/components/typography';
+import { Button, Checkbox, Icon, Typography } from '@/components';
 
 import { FORM, URL } from '@/constants';
 import { registerSchema } from '@/schemas';

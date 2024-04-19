@@ -1,5 +1,6 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/react-stripe-js/node_modules/@stripe/stripe-js';
+import { Stripe } from '@stripe/react-stripe-js/node_modules/@stripe/stripe-js/types/stripe-js/stripe';
 import { memo, useEffect } from 'react';
 
 import { uuid } from '@/lib/utils';
@@ -11,6 +12,7 @@ import {
   useUserStore,
 } from '@/store';
 
+import { CURRENCIES_ID } from '@/constants';
 import { usePropertyQuery, useStripePaymentIntentQuery } from '@/queries';
 
 import CheckoutForm from './checkout-form';
@@ -46,7 +48,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
     clientId: reservation.guestPaxerId,
     email: user?.email,
     currency: {
-      currencyId: 1,
+      currencyId: currency ? CURRENCIES_ID[currency] : CURRENCIES_ID['INVALID'],
       code: currency as CurrencyCode,
     },
     description: `Estadia en ${property.name} del ${checkin} al ${checkout}.`,

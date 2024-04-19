@@ -1,6 +1,5 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/react-stripe-js/node_modules/@stripe/stripe-js';
-import { Stripe } from '@stripe/react-stripe-js/node_modules/@stripe/stripe-js/types/stripe-js/stripe';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { memo, useEffect } from 'react';
 
 import { uuid } from '@/lib/utils';

@@ -6,7 +6,7 @@ frontend:
         - curl -fsSL https://bun.sh/install | bash && ~/.bun/bin/bun install
     build:
       commands:
-        - ~/.bun/bin/bun run build
+        - ~/.bun/bin/bun run dev
   artifacts:
     baseDirectory: .next
     files:

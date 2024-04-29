@@ -148,7 +148,7 @@
     "semver": "^7.5.2"
   },
   "scripts": {
-    "build": "next build",
+    "build": "next build --no-mangling --debug",
     "build-storybook": "storybook build",
     "build:storybook": "storybook build",
     "bun:build": "~/.bun/bin/bun run build",

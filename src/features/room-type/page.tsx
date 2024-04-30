@@ -123,7 +123,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
               <Typography variant='h1'>{room.name[i18n.language]}</Typography>
               <Typography variant='sm'>{`Max ${room.maxCapacity} ${t(
                 'person.plural',
-              )} • ${room.description}`}</Typography>
+              )} ${room.description && room.description[i18n.language] ? `• ${room.description[i18n.language]}` : ''}`}</Typography>
             </Section>
             <hr />
             <Section>
@@ -159,7 +159,7 @@ export default function RoomTypePage({ className, roomTypeId }: Props) {
                   {ratesPlan && ratesPlan.length > 0
                     ? ratesPlan[0].reservationPolicies[0].cancellationPolicy
                         .policyDescription
-                    : t('info.non-refundabled')}
+                    : t('info.non-refundable')}
                 </Typography>
               </div>
             </Section>

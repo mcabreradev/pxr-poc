@@ -31,7 +31,7 @@ export default function CardComponent({
   onClick,
   image,
 }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <Card
@@ -59,7 +59,9 @@ export default function CardComponent({
         <Typography className='pb-1'>
           {`Max ${maxCapacity} ${t('person.plural')}`}
         </Typography>
-        <Typography className='pb-4'>{description}</Typography>
+        <Typography className='pb-4'>
+          {description ? description[i18n.language] ?? null : null}
+        </Typography>
 
         <Typography
           weight='medium'

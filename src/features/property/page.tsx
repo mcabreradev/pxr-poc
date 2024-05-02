@@ -116,8 +116,6 @@ const PropertyPage = memo(function HotelPage() {
     return <span>Error</span>;
   }
 
-  // console.log(property);
-
   return (
     <motion.main
       initial={{ opacity: 0 }}
@@ -126,7 +124,7 @@ const PropertyPage = memo(function HotelPage() {
       data-id-test='test-componet'
       className='layout'
     >
-      <Gallery photos={property?.photos} />
+      <Gallery photos={property?.photos.slice(0, 5)} />
 
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>

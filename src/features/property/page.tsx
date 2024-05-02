@@ -124,7 +124,7 @@ const PropertyPage = memo(function HotelPage() {
       data-id-test='test-componet'
       className='layout'
     >
-      <Gallery photos={property?.photos.slice(0, 5)} />
+      <Gallery photos={property?.photos} />
 
       <div className='relative flex'>
         <div className='w-full md:w-8/12'>

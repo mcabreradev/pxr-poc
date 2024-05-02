@@ -16,6 +16,7 @@ import Icon from '@/components/icon';
 
 import { useGlobalStore } from '@/store';
 
+import { Swiper } from '@/components';
 import {
   DEFAULT_HEIGHT,
   DEFAULT_WIDTH,
@@ -120,7 +121,10 @@ export default function Gallery({
   return (
     <>
       <div
-        className={cn('mb-5 h-[295px] gap-3 md:grid md:grid-cols-2', className)}
+        className={cn(
+          'mb-5 hidden h-[295px] gap-3 md:grid md:grid-cols-2',
+          className,
+        )}
         data-testid='test-calendar-element'
         ref={ref}
       >
@@ -134,7 +138,7 @@ export default function Gallery({
         />
 
         <div className='hidden gap-3 md:grid md:grid-cols-2'>
-          {photos.slice(1, photos.length).map((photo, i) => (
+          {photos.slice(1, 5).map((photo, i) => (
             <Image
               key={`header-photo-${i}`}
               alt='...'
@@ -147,6 +151,24 @@ export default function Gallery({
           ))}
         </div>
       </div>
+
+      <Swiper
+        className='h-[300px] w-full pb-3 pt-0 md:hidden'
+        withArrow={false}
+        innerClassName='gap-x-0 w-full mr-0'
+      >
+        {photos.map((photo, i) => (
+          <Image
+            alt='...'
+            src={photo.url ?? ''}
+            width={DEFAULT_WIDTH}
+            height={DEFAULT_HEIGHT}
+            key={`header-mobile-photo-${i}`}
+            className='opacity-effect d-block aspect-video w-screen cursor-pointer object-cover'
+            onClick={openDrawer}
+          />
+        ))}
+      </Swiper>
 
       <Drawer
         size={9000}

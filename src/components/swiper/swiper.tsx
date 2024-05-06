@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 import { cn } from '@/lib/utils';
@@ -12,6 +12,7 @@ interface Props {
   withArrow?: boolean;
   scroll?: number;
   ref?: unknown;
+  skipToNext?: boolean;
 }
 
 const Container = tw.div`
@@ -28,8 +29,39 @@ export default function Swiper({
   children,
   withArrow = false,
   scroll = 200,
+  skipToNext = false,
 }: Props) {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [blockPositionUpdate, setBlockPositionUpdate] = useState(false);
+  const prevScrollPosition = useRef<number>(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollThreshold = window.innerWidth * 0.01;
+
+  const moveSlide = useCallback(() => {
+    if (
+      Math.abs(scrollPosition - prevScrollPosition.current) < scrollThreshold
+    ) {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft = prevScrollPosition.current;
+        setBlockPositionUpdate(true);
+        return;
+      }
+    }
+
+    if (scrollPosition - prevScrollPosition.current > 0) {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft =
+          Math.ceil(scrollPosition / window.innerWidth) * window.innerWidth;
+        setBlockPositionUpdate(true);
+      }
+    } else if (scrollPosition - prevScrollPosition.current < 0) {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft =
+          Math.floor(scrollPosition / window.innerWidth) * window.innerWidth;
+        setBlockPositionUpdate(true);
+      }
+    }
+  }, [scrollPosition, scrollThreshold]);
 
   const scrollLeft = useCallback(() => {
     if (scrollContainerRef.current) {
@@ -42,6 +74,26 @@ export default function Swiper({
       scrollContainerRef.current.scrollLeft += scroll;
     }
   }, [scroll]);
+
+  const handleScroll = useCallback(() => {
+    if (skipToNext) {
+      prevScrollPosition.current = scrollPosition;
+      const position = scrollContainerRef.current?.scrollLeft ?? 0;
+
+      setScrollPosition(position);
+    }
+  }, [scrollPosition, skipToNext]);
+
+  useEffect(() => {
+    if (scrollPosition % window.innerWidth == 0) {
+      setBlockPositionUpdate(false);
+      return;
+    }
+
+    if (!blockPositionUpdate) {
+      moveSlide();
+    }
+  }, [scrollPosition, moveSlide, blockPositionUpdate]);
 
   return (
     <div className='md:flex md:flex-row md:items-center'>
@@ -58,6 +110,7 @@ export default function Swiper({
         className={cn(className)}
         data-testid='test-element'
         ref={scrollContainerRef}
+        onScroll={handleScroll}
       >
         <Inner className={cn(innerClassName)}>{children}</Inner>
       </Container>

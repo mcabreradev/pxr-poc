@@ -16,7 +16,7 @@ import Icon from '@/components/icon';
 
 import { useGlobalStore } from '@/store';
 
-import { Swiper } from '@/components';
+import { Swiper, Typography } from '@/components';
 import {
   DEFAULT_HEIGHT,
   DEFAULT_WIDTH,
@@ -156,17 +156,28 @@ export default function Gallery({
         className='h-[300px] w-full pb-3 pt-0 md:hidden'
         withArrow={false}
         innerClassName='gap-x-0 w-full mr-0'
+        scroll={300}
+        skipToNext={true}
       >
         {photos.map((photo, i) => (
-          <Image
-            alt='...'
-            src={photo.url ?? ''}
-            width={DEFAULT_WIDTH}
-            height={DEFAULT_HEIGHT}
+          <div
             key={`header-mobile-photo-${i}`}
-            className='opacity-effect d-block aspect-video w-screen cursor-pointer object-cover'
-            onClick={openDrawer}
-          />
+            className='relative aspect-video w-full shrink-0 grow-0 basis-full'
+          >
+            <Image
+              alt='...'
+              src={photo.url ?? ''}
+              width={DEFAULT_WIDTH}
+              height={DEFAULT_HEIGHT}
+              className='opacity-effect d-block aspect-video h-[45vh] w-screen cursor-pointer object-cover'
+              onClick={openDrawer}
+            />
+            <span className='absolute bottom-1 right-2.5 rounded bg-black px-3 py-0 text-white opacity-80'>
+              <Typography variant='sm2'>
+                {`${i + 1}/${photos.length}`}
+              </Typography>
+            </span>
+          </div>
         ))}
       </Swiper>
 

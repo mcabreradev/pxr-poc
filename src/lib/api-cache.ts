@@ -40,10 +40,20 @@ const get = async (url: string) => {
 };
 
 const post = async (url: string, body) => {
+  let environment = '';
+
+  if (environmentDefined) {
+    environment = isLocal ? 'dev' : 'prod';
+  } else {
+    environment = 'invalid';
+  }
+  console.log(
+    process.env.SITE_API_URL + url.replace(':environment', environment),
+  );
   const options = {
     method: 'POST',
     maxBodyLength: Infinity,
-    url: process.env.SITE_API_URL + url,
+    url: process.env.SITE_API_URL + url.replace(':environment', environment),
     headers: await getHeaders(),
     data: JSON.stringify(body),
   };

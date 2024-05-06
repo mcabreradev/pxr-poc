@@ -332,3 +332,29 @@ export const PLAN_COSTS = [100, 150, 200, 250, 300, 350, 400, 450, 500];
 export const IMG = 'img';
 export const IMAGES = 'images';
 export const HEADER = 'header';
+
+export const CURRENCIES_ID = {
+  AWG: 20,
+  BOB: 28,
+  BRL: 8,
+  CLP: 4,
+  COP: 6,
+  CRC: 16,
+  CVC: 21,
+  DOP: 27,
+  EUR: 5,
+  GTQ: 25,
+  GYD: 31,
+  HNL: 18,
+  JMD: 30,
+  MXN: 13,
+  NIO: 23,
+  PEN: 9,
+  PYG: 26,
+  TTD: 32,
+  TZS: 29,
+  USD: 1,
+  UYU: 14,
+  XCD: 33,
+  INVALID: -1,
+};

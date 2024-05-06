@@ -11,6 +11,7 @@ import {
   useUserStore,
 } from '@/store';
 
+import { CURRENCIES_ID } from '@/constants';
 import { usePropertyQuery, useStripePaymentIntentQuery } from '@/queries';
 
 import CheckoutForm from './checkout-form';
@@ -46,7 +47,7 @@ const StripePayment = memo(({ roomTypeId }: Props) => {
     clientId: reservation.guestPaxerId,
     email: user?.email,
     currency: {
-      currencyId: 1,
+      currencyId: currency ? CURRENCIES_ID[currency] : CURRENCIES_ID['INVALID'],
       code: currency as CurrencyCode,
     },
     description: `Estadia en ${property.name} del ${checkin} al ${checkout}.`,

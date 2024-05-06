@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios from 'axios';
 
 import { getAccessToken } from '@/lib/auth';
@@ -19,6 +20,9 @@ const get = async (url: string) => {
   } else {
     environment = 'invalid';
   }
+  console.log(
+    process.env.SITE_API_URL + url.replace(':environment', environment),
+  );
   const options = {
     method: 'GET',
     url: process.env.SITE_API_URL + url.replace(':environment', environment),

@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { getAccessToken } from '@/lib/auth';
 
+import { environmentDefined, isLocal } from '@/constants/env';
+
 const getHeaders = async () => {
   return {
     'Content-Type': 'application/json',
@@ -10,9 +12,17 @@ const getHeaders = async () => {
 };
 
 const get = async (url: string) => {
+  let environment = '';
+
+  if (environmentDefined) {
+    environment = isLocal ? 'dev' : 'prod';
+  } else {
+    environment = 'invalid';
+  }
+
   const options = {
     method: 'GET',
-    url: process.env.SITE_API_URL + url,
+    url: process.env.SITE_API_URL + url.replace(':environment', environment),
     headers: await getHeaders(),
   };
 
@@ -27,10 +37,18 @@ const get = async (url: string) => {
 };
 
 const post = async (url: string, body) => {
+  let environment = '';
+
+  if (environmentDefined) {
+    environment = isLocal ? 'dev' : 'prod';
+  } else {
+    environment = 'invalid';
+  }
+
   const options = {
     method: 'POST',
     maxBodyLength: Infinity,
-    url: process.env.SITE_API_URL + url,
+    url: process.env.SITE_API_URL + url.replace(':environment', environment),
     headers: await getHeaders(),
     data: JSON.stringify(body),
   };
